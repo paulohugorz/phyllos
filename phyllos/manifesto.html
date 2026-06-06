@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYLLOS wear — Manifesto</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-header-left">
+      <span class="cart-phi">Φ</span>
+      <div class="cart-title">Seleção</div>
+    </div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items"></div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-value">R$ 0</span>
+    </div>
+    <div class="cart-note">Frete grátis · Embalagem certificada · Troca em 30 dias</div>
+    <button class="cart-checkout">Finalizar Pedido →</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-phi">Φ</span>
+    <div class="nav-rule"></div>
+    <span class="nav-wordmark">Phyllos</span>
+    <span class="nav-sub">wear</span>
+  </a>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="colecoes.html">Coleções</a></li>
+    <li><a href="essencial.html">Essencial</a></li>
+    <li><a href="presenca.html">Presença</a></li>
+    <li><a href="materiais.html">Materiais</a></li>
+    <li><a href="manifesto.html">Manifesto</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon" style="font-size:18px" onclick="toggleCart()">◻<span class="cart-count" id="cartCount">0</span></button>
+    <button class="nav-icon">♡</button>
+    <button class="nav-icon">⊙</button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero" style="background:var(--obsidian);border-bottom-color:rgba(184,154,106,0.1)">
+  <div class="page-hero-label" style="color:var(--gold)">Φ Phyllos wear</div>
+  <h1 class="page-hero-title" style="color:var(--linen)">O <em>Manifesto</em></h1>
+  <p class="page-hero-sub" style="color:rgba(232,228,220,0.5)">Por que a Phyllos existe, para quem ela foi feita e o que nos recusamos a fazer.</p>
+</div>
+
+<!-- MANIFESTO BODY -->
+<div style="background:var(--cream)">
+<div class="manifesto-page">
+
+  <div class="manifesto-chapter">
+    <div class="manifesto-chapter-num">01 — Origem</div>
+    <h2 class="manifesto-chapter-title">
+      Existe uma mulher que<br>
+      o mercado <em>ignora.</em>
+    </h2>
+    <div class="manifesto-chapter-body">
+      <p>Ela treina cedo. Antes do trabalho, antes das reuniões, antes de qualquer obrigação do dia. Não porque precisa — porque escolhe. O treino é o momento que é dela.</p>
+      <p>Depois do treino, ela vai para o trabalho. Um trabalho de responsabilidade, onde a forma como ela aparece importa. Onde a presença é um instrumento — consciente ou não.</p>
+      <p>O mercado oferece duas opções: roupas de treino que parecem descartáveis, ou roupas de trabalho que não sobrevivem a um agachamento. A Phyllos foi criada para essa mulher que recusa escolher entre as duas.</p>
+    </div>
+
+    <blockquote class="manifesto-pullquote">
+      "Performance e presença não são atributos separados. São o mesmo compromisso com quem você decidiu ser."
+    </blockquote>
+
+    <div class="manifesto-chapter-body">
+      <p>A Phyllos não inventa uma categoria. Ela serve uma que sempre existiu — e que só agora tem nome, atenção e produto à altura.</p>
+    </div>
+  </div>
+
+  <div class="manifesto-chapter">
+    <div class="manifesto-chapter-num">02 — Posição</div>
+    <h2 class="manifesto-chapter-title">
+      Elegância e responsabilidade<br>
+      não são <em>opostos.</em>
+    </h2>
+    <div class="manifesto-chapter-body">
+      <p>A narrativa dominante da moda sustentável ainda é sobre privação. Sobre escolher menos, comprar menos, abrir mão. Como se a consciência ambiental exigisse um custo estético.</p>
+      <p>Recusamos essa narrativa.</p>
+      <p>Acreditamos que é possível — e necessário — fazer produtos que sejam tecnicamente superiores, esteticamente impecáveis e ambientalmente responsáveis ao mesmo tempo. Não como exceção. Como padrão.</p>
+      <p>A Phyllos existe como prova disso. Cada peça é a demonstração de que você não precisa escolher entre performance, estética e consciência. As três coexistem — quando quem faz a peça se recusa a simplificar.</p>
+    </div>
+
+    <blockquote class="manifesto-pullquote">
+      "Sustentabilidade é estrutura — não decoração. Procedência rastreável, insumos certificados, embalagem biodegradável. Transparente sobre o que ainda não somos."
+    </blockquote>
+  </div>
+
+  <div class="manifesto-chapter">
+    <div class="manifesto-chapter-num">03 — Método</div>
+    <h2 class="manifesto-chapter-title">
+      Fazemos menos.<br>
+      Fazemos <em>melhor.</em>
+    </h2>
+    <div class="manifesto-chapter-body">
+      <p>A Phyllos não lança 200 peças por temporada. Lançamos o que testamos, o que acreditamos e o que podemos defender com especificação técnica e procedência documentada.</p>
+      <p>Cada tecido passa por critérios objetivos antes de entrar em uma peça: comportamento técnico, procedência rastreável, durabilidade testada em número de ciclos de lavagem. Performance não é promessa — é especificação.</p>
+      <p>Cada fornecedor passou por inspeção presencial. Cada fibra tem certificação ou rastreabilidade comprovada. Cada peça tem um código de origem que você pode consultar.</p>
+      <p>Não porque é obrigação — porque é o mínimo que alguém que compra da Phyllos merece saber.</p>
+    </div>
+
+    <blockquote class="manifesto-pullquote">
+      "Não fazemos roupa de treino. Fazemos peças para quem treina — e que isso diz algo sobre quem ela decidiu ser."
+    </blockquote>
+
+    <div class="manifesto-chapter-body">
+      <p>Somos transparentes sobre o que já alcançamos e honestos sobre o que ainda não somos. A jornada de responsabilidade não tem linha de chegada — tem etapas, e a Phyllos documenta cada uma delas.</p>
+    </div>
+  </div>
+
+  <div class="manifesto-chapter">
+    <div class="manifesto-chapter-num">04 — Para quem</div>
+    <h2 class="manifesto-chapter-title">
+      Para a executiva que<br>
+      acorda às <em>5h40.</em>
+    </h2>
+    <div class="manifesto-chapter-body">
+      <p>Para a mulher que acorda às 5h40 e coloca o tênis antes de qualquer reunião. Que recusa usar roupa de treino que parece descartável. Que sabe que descartável é caro — no bolso e no planeta.</p>
+      <p>Para quem transita entre a trilha e a sala de diretoria e quer que suas escolhas de vestuário reflitam a mesma exigência que aplica às suas decisões profissionais.</p>
+      <p>Para quem já entendeu que o que você veste é uma declaração — e prefere que essa declaração seja sobre valores, não sobre tendências.</p>
+      <p>A Phyllos não é para todo mundo. É para quem sabe o que quer e está disposta a pagar por algo feito com o mesmo nível de exigência que ela aplica ao próprio trabalho.</p>
+    </div>
+  </div>
+
+  <div class="manifesto-chapter">
+    <div class="manifesto-chapter-num">05 — Compromisso</div>
+    <h2 class="manifesto-chapter-title">
+      O que nos recusamos<br>
+      a <em>fazer.</em>
+    </h2>
+    <div class="manifesto-chapter-body">
+      <p>Nos recusamos a lançar peças que não testamos internamente por pelo menos seis meses. Nos recusamos a usar fornecedores que não passaram por auditoria presencial. Nos recusamos a afirmar algo sobre sustentabilidade que não podemos comprovar com documentação.</p>
+      <p>Nos recusamos a fazer greenwashing. Nos recusamos a participar do ciclo de tendências que torna peças "ultrapassadas" em meses. Nos recusamos a cobrar menos colocando menos — na qualidade, na procedência ou no cuidado.</p>
+      <p>Nos recusamos a tratar a mulher que compra da Phyllos como alguém que precisa ser convencida por marketing. Ela decide com informação — e nós fornecemos a informação.</p>
+    </div>
+
+    <blockquote class="manifesto-pullquote">
+      "A simplicidade da Phyllos é uma escolha — não uma ausência."
+    </blockquote>
+  </div>
+
+</div>
+</div>
+
+<!-- DARK SECTION -->
+<div class="manifesto-dark">
+  <div class="manifesto-dark-phi">Φ</div>
+  <p class="manifesto-dark-text">
+    O que você escolhe vestir<br>
+    diz quem você é.<br>
+    <em>Escolha com intenção.</em>
+  </p>
+  <a href="colecoes.html" class="btn-primary">Ver as Coleções</a>
+</div>
+
+<!-- PILARES -->
+<div class="pillars">
+  <div class="pillar">
+    <div class="pillar-number">01</div>
+    <div class="pillar-title">Alta <em>performance</em></div>
+    <p class="pillar-body">Cada tecido é selecionado por comportamento técnico: elasticidade, termorregulação, compressão. Performance não é promessa — é especificação.</p>
+  </div>
+  <div class="pillar">
+    <div class="pillar-number">02</div>
+    <div class="pillar-title">Consciência <em>real</em></div>
+    <p class="pillar-body">Sustentabilidade estrutural — não decoração. Procedência rastreável, insumos certificados, embalagem biodegradável. Transparente sobre o que ainda não somos.</p>
+  </div>
+  <div class="pillar">
+    <div class="pillar-number">03</div>
+    <div class="pillar-title">Presença <em>atemporal</em></div>
+    <p class="pillar-body">O padrão estético de quem transita entre a trilha e a sala de diretoria. Peças que não existem em tendência — existem em escolha.</p>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-left">
+    <span class="newsletter-phi">Φ</span>
+    <h2 class="newsletter-title">
+      Decisões melhores<br>
+      começam com <em>mais<br>informação.</em>
+    </h2>
+    <p class="newsletter-body">Lançamentos, bastidores de processo, relatórios de procedência e curadoria de materiais. Para quem decide com informação.</p>
+  </div>
+  <div class="newsletter-right">
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" placeholder="seu@email.com">
+      <button class="newsletter-submit">Quero receber</button>
+    </div>
+    <p class="newsletter-note">Sem frequência excessiva · Conteúdo com curadoria · Cancele quando quiser</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-brand-phi">Φ</span>
+      <span class="footer-brand-name">Phyllos</span>
+      <span class="footer-brand-sub">wear</span>
+      <p class="footer-tagline">"A simplicidade da Phyllos é uma escolha — não uma ausência."</p>
+    </div>
+    <div class="footer-col">
+      <h4>Coleções</h4>
+      <ul>
+        <li><a href="essencial.html">Essencial Run</a></li>
+        <li><a href="presenca.html">Studio Presence</a></li>
+        <li><a href="trail.html">Trail Essencial</a></li>
+        <li><a href="colecoes.html">Todas as coleções</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Marca</h4>
+      <ul>
+        <li><a href="manifesto.html">Manifesto</a></li>
+        <li><a href="materiais.html">Materiais</a></li>
+        <li><a href="materiais.html">Procedência</a></li>
+        <li><a href="manifesto.html">Nossa história</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Suporte</h4>
+      <ul>
+        <li><a href="#">Minha conta</a></li>
+        <li><a href="#">Trocas e devoluções</a></li>
+        <li><a href="#">Guia de tamanhos</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Phyllos · Todos os direitos reservados</span>
+    <span>wear · beauty · tech</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYLLOS wear — Trail Essencial</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-header-left">
+      <span class="cart-phi">Φ</span>
+      <div class="cart-title">Seleção</div>
+    </div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items"></div>
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-value">R$ 0</span>
+    </div>
+    <div class="cart-note">Frete grátis · Embalagem certificada · Troca em 30 dias</div>
+    <button class="cart-checkout">Finalizar Pedido →</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-phi">Φ</span>
+    <div class="nav-rule"></div>
+    <span class="nav-wordmark">Phyllos</span>
+    <span class="nav-sub">wear</span>
+  </a>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="colecoes.html">Coleções</a></li>
+    <li><a href="essencial.html">Essencial</a></li>
+    <li><a href="presenca.html">Presença</a></li>
+    <li><a href="materiais.html">Materiais</a></li>
+    <li><a href="manifesto.html">Manifesto</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-icon" style="font-size:18px" onclick="toggleCart()">◻<span class="cart-count" id="cartCount">0</span></button>
+    <button class="nav-icon">♡</button>
+    <button class="nav-icon">⊙</button>
+  </div>
+</nav>
+
+<!-- COLLECTION HERO -->
+<section class="col-hero">
+  <div class="col-hero-left">
+    <div class="col-hero-count">6 peças · SS26</div>
+    <div class="hero-season">Coleção</div>
+    <h1 class="hero-title">Trail<br><em>Essencial</em></h1>
+    <p class="hero-body">Quando a trilha é o laboratório. Peças projetadas para quem sabe que a natureza não aceita improvisação — mas também não pede que você abra mão do estilo.</p>
+    <div class="hero-actions">
+      <a href="colecoes.html" class="btn-text">← Todas as coleções</a>
+    </div>
+  </div>
+  <div class="col-hero-right">
+    <div style="position:absolute;inset:0;background:linear-gradient(160deg,#1c2018,#242a1e)"></div>
+    <div class="col-hero-phi">Φ</div>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-bar-left">
+    <button class="filter-btn active">Todos</button>
+    <button class="filter-btn">Shorts</button>
+    <button class="filter-btn">Camisetas</button>
+    <button class="filter-btn">Jaquetas</button>
+    <button class="filter-btn">Acessórios</button>
+  </div>
+  <span class="filter-count">6 peças</span>
+</div>
+
+<!-- PRODUCT GRID -->
+<section class="product-section">
+  <div class="product-grid-3" style="padding-top:1px">
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-inner pb4"><div class="product-img-label">Shorts<br>Trail Pro</div></div>
+        <div class="product-tag tag-trail">Trail</div>
+        <button class="product-wish">♡</button>
+        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-collection">wear · trail essencial</div>
+        <div class="product-name">Shorts Trail Pro</div>
+        <div class="product-desc">Liner integrado · 4 bolsos · Quick-dry · Anti-atrito</div>
+        <div class="product-bottom">
+          <div class="product-price">R$ 380</div>
+          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-inner pb8"><div class="product-img-label">Camiseta<br>Trail</div></div>
+        <div class="product-tag tag-trail">Trail</div>
+        <button class="product-wish">♡</button>
+        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-collection">wear · trail essencial</div>
+        <div class="product-name">Camiseta Trail</div>
+        <div class="product-desc">Mesh respirável · UPF 50+ · Costuras planas · Levíssima</div>
+        <div class="product-bottom">
+          <div class="product-price">R$ 220</div>
+          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span><span class="size">GG</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-inner pb3"><div class="product-img-label">Jaqueta<br>Trail</div></div>
+        <div class="product-tag tag-new">Novo</div>
+        <button class="product-wish">♡</button>
+        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-collection">wear · trail essencial</div>
+        <div class="product-name">Jaqueta Trail</div>
+        <div class="product-desc">Impermeável 3L · Empacotável · Costuras termossoldadas</div>
+        <div class="product-bottom">
+          <div class="product-price">R$ 680</div>
+          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-inner pb1"><div class="product-img-label">Legging<br>Trail</div></div>
+        <div class="product-tag tag-trail">Trail</div>
+        <button class="product-wish">♡</button>
+        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-collection">wear · trail essencial</div>
+        <div class="product-name">Legging Trail</div>
+        <div class="product-desc">Compressão muscular · Bolso traseiro · Anti-gancho</div>
+        <div class="product-bottom">
+          <div class="product-price">R$ 440</div>
+          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-inner pb11"><div class="product-img-label">Colete<br>Trail</div></div>
+        <div class="product-tag tag-new">Novo</div>
+        <button class="product-wish">♡</button>
+        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-collection">wear · trail essencial</div>
+        <div class="product-name">Colete Trail</div>
+        <div class="product-desc">Fleece técnico · Bolsos com zíper · Sem mangas · Leve</div>
+        <div class="product-bottom">
+          <div class="product-price">R$ 520</div>
+          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img">
+        <div class="product-img-inner pb6"><div class="product-img-label">Meia<br>Trail</div></div>
+        <button class="product-wish">♡</button>
+        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
+      </div>
+      <div class="product-info">
+        <div class="product-collection">wear · trail essencial</div>
+        <div class="product-name">Meia Trail</div>
+        <div class="product-desc">Lã merino + poliamida · Reforço em calcanhar · Anti-bolha</div>
+        <div class="product-bottom">
+          <div class="product-price">R$ 110</div>
+          <div class="sizes"><span class="size">P/M</span><span class="size">G/GG</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SUSTENTABILIDADE -->
+<section class="sustain">
+  <div>
+    <div class="sustain-label">Materiais de trilha</div>
+    <h2 class="sustain-title">
+      A natureza<br>
+      <em>não aceita<br>improviso.</em>
+    </h2>
+    <p class="sustain-body">
+      A Trail Essencial usa os materiais técnicos mais avançados — com a mesma exigência de procedência que guia toda a Phyllos. Impermeabilidade DWR sem PFAS, malhas de poliamida reciclada, merino rastreável.
+    </p>
+    <div class="sustain-stats">
+      <div>
+        <div class="sustain-stat-num">3L</div>
+        <div class="sustain-stat-label">Impermeabilidade da Jaqueta Trail — nível técnico profissional</div>
+      </div>
+      <div>
+        <div class="sustain-stat-num">50+</div>
+        <div class="sustain-stat-label">UPF nas peças de base — proteção solar total</div>
+      </div>
+      <div>
+        <div class="sustain-stat-num">0</div>
+        <div class="sustain-stat-label">PFAS nos tratamentos impermeabilizantes — DWR ecológico</div>
+      </div>
+      <div>
+        <div class="sustain-stat-num">BR</div>
+        <div class="sustain-stat-label">Produção nacional · Procedência rastreável em cada peça</div>
+      </div>
+    </div>
+  </div>
+  <div class="sustain-visual">
+    <div class="sustain-phi">Φ</div>
+    <div class="sustain-tag">
+      <div class="sustain-tag-main">Trail Essencial SS26</div>
+      <div class="sustain-tag-sub">DWR ecológico · Merino rastreável</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="newsletter-left">
+    <span class="newsletter-phi">Φ</span>
+    <h2 class="newsletter-title">
+      A trilha começa<br>
+      na <em>escolha<br>do equipamento.</em>
+    </h2>
+    <p class="newsletter-body">Novidades da Trail Essencial, guias de terreno e bastidores de desenvolvimento.</p>
+  </div>
+  <div class="newsletter-right">
+    <div class="newsletter-form">
+      <input class="newsletter-input" type="email" placeholder="seu@email.com">
+      <button class="newsletter-submit">Quero receber</button>
+    </div>
+    <p class="newsletter-note">Sem frequência excessiva · Conteúdo com curadoria · Cancele quando quiser</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-brand-phi">Φ</span>
+      <span class="footer-brand-name">Phyllos</span>
+      <span class="footer-brand-sub">wear</span>
+      <p class="footer-tagline">"A simplicidade da Phyllos é uma escolha — não uma ausência."</p>
+    </div>
+    <div class="footer-col">
+      <h4>Coleções</h4>
+      <ul>
+        <li><a href="essencial.html">Essencial Run</a></li>
+        <li><a href="presenca.html">Studio Presence</a></li>
+        <li><a href="trail.html">Trail Essencial</a></li>
+        <li><a href="colecoes.html">Todas as coleções</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Marca</h4>
+      <ul>
+        <li><a href="manifesto.html">Manifesto</a></li>
+        <li><a href="materiais.html">Materiais</a></li>
+        <li><a href="materiais.html">Procedência</a></li>
+        <li><a href="manifesto.html">Nossa história</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Suporte</h4>
+      <ul>
+        <li><a href="#">Minha conta</a></li>
+        <li><a href="#">Trocas e devoluções</a></li>
+        <li><a href="#">Guia de tamanhos</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Phyllos · Todos os direitos reservados</span>
+    <span>wear · beauty · tech</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
