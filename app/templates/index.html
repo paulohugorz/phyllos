@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fashion OS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0F0F0D',
+            linen:    '#E8E4DC',
+            cream:    '#F5F2EB',
+            gold:     '#B89A6A',
+            muted:    '#9E9B95',
+          },
+          fontFamily: {
+            display: ['Cormorant Garamond', 'Georgia', 'serif'],
+            body:    ['Jost', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    body { background-color: #F5F2EB; color: #0F0F0D; }
+
+    textarea:focus { outline: none; }
+
+    #drop-zone.drag-over {
+      border-color: #B89A6A;
+      background-color: #E8E4DC;
+    }
+
+    #image-preview {
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: #0F0F0D;
+      color: #F5F2EB;
+      transition: background-color 0.2s;
+    }
+    .btn-primary:hover { background-color: #2a2a26; }
+
+    .btn-ghost {
+      border: 1px solid #9E9B95;
+      color: #9E9B95;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: #0F0F0D; color: #0F0F0D; }
+
+    ::selection { background: #B89A6A33; }
+  </style>
+</head>
+<body class="min-h-screen font-body">
+
+  <!-- Header -->
+  <header class="border-b border-obsidian/10 px-8 py-4 flex items-center justify-between">
+    <span class="font-display text-xl tracking-widest uppercase text-obsidian">Fashion OS</span>
+    <span class="text-xs text-muted tracking-widest uppercase">v1</span>
+  </header>
+
+  <!-- Main layout -->
+  <main class="flex h-[calc(100vh-57px)]">
+
+    <!-- Left — Input panel -->
+    <section class="w-1/2 flex flex-col border-r border-obsidian/10 p-8 gap-6">
+
+      <div>
+        <h1 class="font-display text-3xl font-light">Descreva a peça</h1>
+        <p class="text-sm text-muted mt-1">Escreva o conceito, materiais, silhueta ou referência visual.</p>
+      </div>
+
+      <textarea
+        id="description"
+        placeholder="Ex: calça de alfaiataria preta com mobilidade total, cintura alta, perna reta levemente afunilada no tornozelo, tecido com caimento fluido..."
+        class="flex-1 resize-none bg-transparent text-obsidian placeholder-muted/60 text-sm leading-relaxed font-body border-b border-obsidian/20 pb-4 focus:border-obsidian/60 transition-colors duration-200"
+      ></textarea>
+
+      <div class="flex gap-3">
+        <button onclick="handleGenerate()" class="btn-primary px-6 py-2.5 text-sm tracking-wide rounded-sm flex-1">
+          Gerar visualização
+        </button>
+        <button onclick="clearAll()" class="btn-ghost px-4 py-2.5 text-sm tracking-wide rounded-sm">
+          Limpar
+        </button>
+      </div>
+
+      <!-- Metadata (aparece após input) -->
+      <div id="meta-panel" class="hidden border border-obsidian/10 rounded-sm p-4 bg-linen/50 text-xs text-muted space-y-1.5">
+        <div class="flex justify-between">
+          <span class="uppercase tracking-widest">Caracteres</span>
+          <span id="char-count">0</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="uppercase tracking-widest">Palavras</span>
+          <span id="word-count">0</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="uppercase tracking-widest">Salvo como</span>
+          <span id="save-status" class="text-gold">—</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Right — Image panel -->
+    <section class="w-1/2 flex flex-col p-8 gap-6">
+
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="font-display text-3xl font-light">Referência visual</h2>
+          <p class="text-sm text-muted mt-1">Arraste uma imagem ou clique para fazer upload.</p>
+        </div>
+        <label for="file-input" class="btn-ghost px-4 py-2 text-xs tracking-widest uppercase cursor-pointer rounded-sm">
+          Upload
+        </label>
+        <input id="file-input" type="file" accept="image/*" class="hidden" onchange="handleFileInput(event)" />
+      </div>
+
+      <!-- Drop zone / Preview area -->
+      <div
+        id="drop-zone"
+        class="flex-1 border border-obsidian/15 rounded-sm flex flex-col items-center justify-center relative overflow-hidden cursor-pointer transition-all duration-200"
+        onclick="document.getElementById('file-input').click()"
+        ondragover="handleDragOver(event)"
+        ondragleave="handleDragLeave(event)"
+        ondrop="handleDrop(event)"
+      >
+        <!-- Empty state -->
+        <div id="empty-state" class="flex flex-col items-center gap-3 text-center p-8">
+          <div class="w-12 h-12 border border-obsidian/20 rounded-full flex items-center justify-center">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 4v12M4 10h12" stroke="#9E9B95" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="text-sm text-muted">Arraste uma imagem aqui</p>
+          <p class="text-xs text-muted/60">JPG, PNG, WEBP — máx. 10 MB</p>
+        </div>
+
+        <!-- Image preview -->
+        <img
+          id="image-preview"
+          class="hidden absolute inset-0 w-full h-full object-contain p-4"
+          alt="Referência visual"
+        />
+
+        <!-- Loading overlay -->
+        <div id="loading-overlay" class="hidden absolute inset-0 bg-cream/80 flex items-center justify-center">
+          <div class="flex flex-col items-center gap-3">
+            <div class="w-6 h-6 border-2 border-obsidian/20 border-t-obsidian rounded-full animate-spin"></div>
+            <span class="text-xs text-muted tracking-widest uppercase">Processando</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image actions (aparecem com imagem carregada) -->
+      <div id="image-actions" class="hidden flex gap-3">
+        <button onclick="savePromptAndImage()" class="btn-primary px-6 py-2.5 text-sm tracking-wide rounded-sm flex-1">
+          Salvar peça
+        </button>
+        <button onclick="removeImage()" class="btn-ghost px-4 py-2.5 text-sm tracking-wide rounded-sm">
+          Remover
+        </button>
+      </div>
+
+      <!-- Success message -->
+      <div id="success-msg" class="hidden text-center py-3 text-xs tracking-widest uppercase text-gold border border-gold/30 rounded-sm">
+        Peça salva com sucesso
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    let currentFile = null;
+
+    // --- Textarea counter ---
+    const textarea = document.getElementById('description');
+    const metaPanel = document.getElementById('meta-panel');
+    const charCount = document.getElementById('char-count');
+    const wordCount = document.getElementById('word-count');
+
+    textarea.addEventListener('input', () => {
+      const text = textarea.value;
+      charCount.textContent = text.length;
+      wordCount.textContent = text.trim() ? text.trim().split(/\s+/).length : 0;
+      metaPanel.classList.toggle('hidden', text.length === 0);
+    });
+
+    // --- Drag and drop ---
+    function handleDragOver(e) {
+      e.preventDefault();
+      document.getElementById('drop-zone').classList.add('drag-over');
+    }
+
+    function handleDragLeave(e) {
+      document.getElementById('drop-zone').classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      document.getElementById('drop-zone').classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) loadImage(file);
+    }
+
+    function handleFileInput(e) {
+      const file = e.target.files[0];
+      if (file) loadImage(file);
+    }
+
+    // --- Load image ---
+    function loadImage(file) {
+      if (file.size > 10 * 1024 * 1024) {
+        alert('Arquivo muito grande. Máximo 10 MB.');
+        return;
+      }
+      currentFile = file;
+      const reader = new FileReader();
+      reader.onload = (e) => showImage(e.target.result);
+      reader.readAsDataURL(file);
+    }
+
+    function showImage(src) {
+      const preview = document.getElementById('image-preview');
+      const emptyState = document.getElementById('empty-state');
+      const actions = document.getElementById('image-actions');
+
+      preview.src = src;
+      preview.classList.remove('hidden');
+      emptyState.classList.add('hidden');
+      actions.classList.remove('hidden');
+    }
+
+    function removeImage() {
+      currentFile = null;
+      const preview = document.getElementById('image-preview');
+      const emptyState = document.getElementById('empty-state');
+      const actions = document.getElementById('image-actions');
+
+      preview.classList.add('hidden');
+      preview.src = '';
+      emptyState.classList.remove('hidden');
+      actions.classList.add('hidden');
+      document.getElementById('file-input').value = '';
+      document.getElementById('success-msg').classList.add('hidden');
+    }
+
+    // --- Gerar (placeholder — Fase 3: integração com ComfyUI) ---
+    function handleGenerate() {
+      const desc = textarea.value.trim();
+      if (!desc) {
+        textarea.focus();
+        return;
+      }
+      if (currentFile) return; // já tem imagem, salvar direto
+
+      const overlay = document.getElementById('loading-overlay');
+      overlay.classList.remove('hidden');
+
+      // Fase 3: aqui vai a chamada ao ComfyUI
+      // Por enquanto, simula carregamento e abre o seletor de arquivo
+      setTimeout(() => {
+        overlay.classList.add('hidden');
+        document.getElementById('file-input').click();
+      }, 800);
+    }
+
+    // --- Salvar peça na API ---
+    async function savePromptAndImage() {
+      const desc = textarea.value.trim();
+      if (!desc && !currentFile) return;
+
+      const saveStatus = document.getElementById('save-status');
+      saveStatus.textContent = 'salvando...';
+
+      try {
+        // 1. Criar peça via API
+        const ts = Date.now().toString().slice(-4);
+        const sku = `PH${new Date().getFullYear().toString().slice(-2)}${ts}`;
+
+        const pecaRes = await fetch('/pecas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            codigo: sku,
+            nome: desc.slice(0, 60) || 'Nova peça',
+            prompt_foto: desc,
+            status: 'conceito',
+            prioridade: 'media',
+          }),
+        });
+
+        if (!pecaRes.ok) throw new Error('Erro ao criar peça');
+        const peca = await pecaRes.json();
+
+        // 2. Upload da imagem se existir
+        if (currentFile) {
+          const formData = new FormData();
+          formData.append('file', currentFile);
+          await fetch(`/imagens/upload/${peca.id}`, {
+            method: 'POST',
+            body: formData,
+          });
+        }
+
+        saveStatus.textContent = sku;
+        document.getElementById('success-msg').classList.remove('hidden');
+        metaPanel.classList.remove('hidden');
+
+      } catch (err) {
+        saveStatus.textContent = 'erro';
+        console.error(err);
+      }
+    }
+
+    // --- Limpar tudo ---
+    function clearAll() {
+      textarea.value = '';
+      textarea.dispatchEvent(new Event('input'));
+      removeImage();
+      document.getElementById('success-msg').classList.add('hidden');
+    }
+  </script>
+
+</body>
+</html>
