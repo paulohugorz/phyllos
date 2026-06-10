@@ -338,203 +338,224 @@
 
   <script>
 
+    // ── Mapeamento de peças PT → EN + tokens de prompt ────────────────────────
+    const GARMENT_MAP = [
+      { pt: ['vestido','dress'],        en: 'dress',      slug: 'vestido',           base: 'dress, full body, fashion editorial, woman' },
+      { pt: ['saia'],                   en: 'skirt',      slug: 'saia',              base: 'skirt, full body, fashion editorial, woman' },
+      { pt: ['calça','calca','pants','trousers'], en: 'trousers', slug: 'calca',     base: 'trousers, full body, fashion editorial, woman' },
+      { pt: ['camisa','shirt'],         en: 'shirt',      slug: 'camisa',            base: 'shirt, full body, fashion editorial, woman' },
+      { pt: ['blusa'],                  en: 'blouse',     slug: 'top-blusa',         base: 'blouse, full body, fashion editorial, woman' },
+      { pt: ['top','bralette','cropped'], en: 'top',      slug: 'top-blusa',         base: 'fashion top, full body, fashion editorial, woman' },
+      { pt: ['jaqueta','jacket'],       en: 'jacket',     slug: 'jaqueta',           base: 'jacket, full body, fashion editorial, woman' },
+      { pt: ['blazer'],                 en: 'blazer',     slug: 'jaqueta',           base: 'blazer, full body, fashion editorial, woman' },
+      { pt: ['casaco','coat','trench'], en: 'coat',       slug: 'jaqueta',           base: 'coat, full body, fashion editorial, woman' },
+      { pt: ['legging','leggings','leggins'], en: 'leggings', slug: 'legging-activewear', base: 'leggings, full body, fashion editorial, woman' },
+      { pt: ['shorts','bermuda'],       en: 'shorts',     slug: 'legging-activewear', base: 'shorts, full body, fashion editorial, woman' },
+      { pt: ['macacão','macacao','jumpsuit'], en: 'jumpsuit', slug: 'vestido',       base: 'jumpsuit, full body, fashion editorial, woman' },
+    ];
+
+    // Detecta o tipo de peça no texto
+    function detectGarment(txt) {
+      const q = normalize(txt);
+      for (const g of GARMENT_MAP) {
+        if (g.pt.some(p => q.includes(normalize(p)))) return g;
+      }
+      return null;
+    }
+
+    // Extrai cor e tecido do texto
+    function extractMeta(txt) {
+      const corMatch = txt.match(/pret[ao]|branc[ao]|cinz[ao]|azul|verde|vermelh[ao]|beg[eê]|crem[ae]|marrom|caramelo|dourad[ao]|off.white|nude|terrac[oô]|areia|lavanda/i);
+      const tecMatch = txt.match(/linho|seda|algodão|lã|jersey|crepe|tweed|veludo|cetim|tencel|viscose|denim|malha|modal|lyocell|neoprene|couro/i);
+      const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '—';
+      return { cor: cap(corMatch?.[0]), tec: cap(tecMatch?.[0]) };
+    }
+
     function gerar() {
       const txt = document.getElementById('description').value.trim();
       if (!txt) { document.getElementById('description').focus(); return; }
-
       const btn = document.getElementById('btn-gerar');
       const bar = document.getElementById('loading-bar');
       btn.disabled = true;
       bar.classList.add('visible');
-
       setTimeout(() => {
         btn.disabled = false;
         bar.classList.remove('visible');
         mostrarResultado(txt);
-      }, 700);
+      }, 400);
     }
 
     function mostrarResultado(txt) {
       const ts = Date.now().toString().slice(-4);
       const sku = 'PH' + new Date().getFullYear().toString().slice(-2) + ts;
-
-      const catMatch = txt.match(/calça|saia|blusa|vestido|jaqueta|casaco|camisa|shorts|top|macacão|blazer/i);
-      const corMatch = txt.match(/pret[ao]|branc[ao]|cinz[ao]|azul|verde|vermelh[ao]|beg[eê]|crem[ae]|marrom|caramelo|dourad[ao]|off.white/i);
-      const tecMatch = txt.match(/linho|seda|algodão|lã|jersey|crepe|tweed|veludo|cetim|tencel|viscose|denim/i);
-
-      const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-      const cat = catMatch ? cap(catMatch[0]) : '—';
-      const cor = corMatch ? cap(corMatch[0]) : '—';
-      const tec = tecMatch ? cap(tecMatch[0]) : '—';
+      const garment = detectGarment(txt);
+      const { cor, tec } = extractMeta(txt);
 
       document.getElementById('result-sku').textContent = sku;
       document.getElementById('meta-table').innerHTML = `
-        <tr><td>Categoria</td><td>${cat}</td></tr>
+        <tr><td>Categoria</td><td>${garment ? garment.en.charAt(0).toUpperCase()+garment.en.slice(1) : '—'}</td></tr>
         <tr><td>Cor</td><td>${cor}</td></tr>
         <tr><td>Tecido</td><td>${tec}</td></tr>
         <tr><td>Status</td><td><span class="status-badge">Rascunho</span></td></tr>
       `;
-
       document.getElementById('empty-state').style.display = 'none';
       document.getElementById('result-panel').classList.add('visible');
       document.getElementById('fashion-os-references').classList.remove('visible');
-
-      gerarImagem(txt);
+      gerarImagem(txt, garment);
     }
 
-    // ── Dados carregados uma vez e cacheados ─────────────────────────────────
+    // ── Cache de dados ────────────────────────────────────────────────────────
     let _fashionTerms = null;
     let _visualRefs   = null;
 
+    function normalize(s) {
+      return String(s || '').toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g,' ').trim();
+    }
+
     async function loadFashionTerms() {
       if (_fashionTerms) return _fashionTerms;
-      const r = await fetch('./js/fashion-terms.json', { cache: 'force-cache' });
-      _fashionTerms = await r.json();
+      try { const r = await fetch('./js/fashion-terms.json',{cache:'force-cache'}); _fashionTerms = await r.json(); } catch(_){ _fashionTerms = []; }
       return _fashionTerms;
     }
 
     async function loadVisualRefs() {
       if (_visualRefs) return _visualRefs;
-      const r = await fetch('./js/visual-references.json', { cache: 'force-cache' });
-      _visualRefs = await r.json();
+      try { const r = await fetch('./js/visual-references.json',{cache:'force-cache'}); _visualRefs = await r.json(); } catch(_){ _visualRefs = []; }
       return _visualRefs;
     }
 
-    function normalize(s) {
-      return String(s || '').toLowerCase()
-        .normalize('NFD').replace(/[̀-ͯ]/g, '')
-        .replace(/[^a-z0-9\s]/g, ' ').trim();
-    }
-
-    // Cruza texto do usuário com termos técnicos — devolve termos que casam
-    function matchTerms(txt, terms) {
+    // Retorna termos técnicos que combinam com o texto E com a categoria da peça
+    function matchTerms(txt, garment, terms) {
       const q = normalize(txt);
+      const catFilter = garment ? normalize(garment.en) : null;
       return terms.filter(t => {
-        const hay = normalize([t.termo_pt, t.termo_en, t.subcategoria, t.definicao, t.atributos_visuais].join(' '));
-        return q.split(' ').some(w => w.length > 3 && hay.includes(w));
+        const hay = normalize([t.termo_pt, t.termo_en, t.subcategoria, t.categoria, t.definicao, t.atributos_visuais].join(' '));
+        const wordMatch = q.split(' ').some(w => w.length > 3 && hay.includes(w));
+        // Se detectamos a peça, o termo precisa estar na mesma subcategoria OU ser de tecido/acabamento (universal)
+        if (catFilter && garment) {
+          const isUniversal = ['tecido','acabamento','costura','fechamento'].includes(t.categoria);
+          const isSameCat   = hay.includes(normalize(garment.en)) || hay.includes(normalize(garment.pt?.[0]||''));
+          return wordMatch && (isUniversal || isSameCat);
+        }
+        return wordMatch;
       });
     }
 
-    // Cruza texto com referências visuais — ordena por contexto e prioridade
-    function matchRefs(txt, refs) {
+    // Retorna referências visuais APENAS da categoria da peça detectada
+    function matchRefs(txt, garment, refs) {
       const q = normalize(txt);
       return refs
         .map(r => {
-          const hay = normalize([r.categoria, r.contexto_uso, r.titulo, r.styling_notes, r.pecas_chave, r.prompt_tokens].join(' '));
-          const score = q.split(' ').filter(w => w.length > 3 && hay.includes(w)).length + (r.prioridade || 0);
+          const hay = normalize([r.categoria, r.contexto_uso, r.titulo, r.pecas_chave, r.prompt_tokens].join(' '));
+          // Se detectamos a peça, exige que a referência mencione essa categoria
+          const catOk = garment
+            ? hay.includes(normalize(garment.en)) || hay.includes(normalize(garment.slug)) || hay.includes(normalize(garment.pt?.[0]||''))
+            : true;
+          if (!catOk) return { ...r, _score: -1 };
+          const score = q.split(' ').filter(w => w.length > 3 && hay.includes(w)).length + (Number(r.prioridade)||0);
           return { ...r, _score: score };
         })
         .filter(r => r._score > 0)
-        .sort((a, b) => b._score - a._score);
+        .sort((a,b) => b._score - a._score);
     }
 
-    // Monta prompt unificado: taxonomia + referências + base PHYLLOS
-    function buildPrompt(txt, matchedTerms, matchedRefs) {
-      const posTokens = new Set([
-        'fashion editorial photography', 'full body', 'studio lighting',
-        'minimalist white background', 'photorealistic', 'high quality',
-        'natural pose', 'premium fabric', 'clean finish'
-      ]);
-      const negTokens = new Set([
-        'blurry', 'low quality', 'watermark', 'text', 'disfigured',
-        'deformed', 'logo', 'cartoon', 'illustration', 'painting'
-      ]);
+    // Compila prompt positivo e negativo a partir da taxonomia + referências
+    function buildPrompt(userTxt, garment, terms, refs) {
+      const pos = new Set(['fashion editorial photography', 'full body', 'soft studio lighting',
+        'minimalist white background', 'photorealistic', 'high quality', 'natural pose',
+        'premium fabric texture', 'clean garment construction', 'real person wearing clothes']);
+      const neg = new Set(['blurry', 'low quality', 'watermark', 'text overlay', 'logo',
+        'disfigured', 'deformed hands', 'extra limbs', 'cartoon', 'illustration',
+        'painting', 'render', 'plastic skin', 'overexposed', 'bad anatomy']);
 
-      matchedTerms.forEach(t => {
-        t.prompt_tokens.split(',').map(s => s.trim()).filter(Boolean).forEach(s => posTokens.add(s));
-        t.prompt_negativo.split(',').map(s => s.trim()).filter(Boolean).forEach(s => negTokens.add(s));
-      });
-      matchedRefs.slice(0, 4).forEach(r => {
-        r.prompt_tokens.split(',').map(s => s.trim()).filter(Boolean).forEach(s => posTokens.add(s));
-        r.prompt_negativo.split(',').map(s => s.trim()).filter(Boolean).forEach(s => negTokens.add(s));
+      // Base da peça
+      if (garment) garment.base.split(',').map(s=>s.trim()).forEach(s=>pos.add(s));
+
+      // Tokens da taxonomia
+      terms.forEach(t => {
+        t.prompt_tokens.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>pos.add(s));
+        t.prompt_negativo.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>neg.add(s));
       });
 
-      const pos = txt + ', ' + Array.from(posTokens).join(', ');
-      const neg = Array.from(negTokens).join(', ');
-      return { pos, neg };
+      // Tokens das referências visuais
+      refs.slice(0,4).forEach(r => {
+        String(r.prompt_tokens||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>pos.add(s));
+        String(r.prompt_negativo||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>neg.add(s));
+      });
+
+      return {
+        pos: userTxt + ', ' + [...pos].join(', '),
+        neg: [...neg].join(', ')
+      };
     }
 
-    // Renderiza painel de referências visuais com imagens armazenadas
+    // Renderiza o painel de referências — só mostra imagens da categoria certa
     function renderRefs(refs) {
       const panel = document.getElementById('fashion-os-references');
-      const hasImg = refs.filter(r => r.image_url);
-      const noImg  = refs.filter(r => !r.image_url);
+      panel.innerHTML = '<p class="refs-label">Referências da categoria</p>';
 
-      panel.innerHTML = '<p class="refs-label">Referências visuais</p>';
+      const withImg = refs.filter(r => r.image_url);
+      const noImg   = refs.filter(r => !r.image_url).slice(0, 3);
 
-      if (hasImg.length) {
+      if (withImg.length) {
         const grid = document.createElement('div');
-        grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;';
-        hasImg.slice(0, 3).forEach(r => {
-          const div = document.createElement('div');
-          div.style.cssText = 'position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:2px;border:1px solid var(--border);';
-          div.innerHTML = `
-            <img src="${r.image_url}" alt="${r.titulo}"
-              style="width:100%;height:100%;object-fit:cover;"
-              onerror="this.parentElement.style.display='none'">
-            <span style="position:absolute;bottom:0;left:0;right:0;
-              padding:4px 6px;font-size:9px;letter-spacing:0.06em;
-              text-transform:uppercase;color:var(--muted);
-              background:rgba(245,242,235,0.85)">${r.categoria || ''}</span>`;
-          grid.appendChild(div);
+        grid.style.cssText = 'display:grid;grid-template-columns:repeat('+Math.min(withImg.length,3)+',1fr);gap:6px;margin-bottom:10px;';
+        withImg.slice(0,3).forEach(r => {
+          const cell = document.createElement('div');
+          cell.style.cssText = 'position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:2px;border:1px solid var(--border);background:rgba(232,228,220,.4)';
+          cell.innerHTML = `<img src="${r.image_url}" alt="${r.titulo}"
+            style="width:100%;height:100%;object-fit:cover"
+            onerror="this.parentElement.style.display='none'">
+            <span style="position:absolute;bottom:0;left:0;right:0;padding:4px 6px;
+              font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+              background:rgba(245,242,235,.88)">${r.categoria||''}</span>`;
+          grid.appendChild(cell);
         });
         panel.appendChild(grid);
       }
 
-      noImg.slice(0, 3).forEach(r => {
-        const div = document.createElement('div');
-        div.className = 'fashion-ref-card';
-        div.innerHTML = `
-          <div class="fashion-ref-thumb">${(r.categoria||'ref').slice(0,4)}</div>
-          <div>
-            <strong>${r.titulo}</strong>
-            <p>${r.contexto_uso||''}</p>
-            <small>${r.styling_notes||''}</small>
-          </div>`;
-        panel.appendChild(div);
+      noImg.forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'fashion-ref-card';
+        card.innerHTML = `<div class="fashion-ref-thumb">${(r.categoria||'ref').slice(0,4)}</div>
+          <div><strong>${r.titulo}</strong>
+          <p>${r.contexto_uso||''}</p>
+          <small>${(r.styling_notes||'').slice(0,80)}</small></div>`;
+        panel.appendChild(card);
       });
 
-      panel.classList.toggle('visible', refs.length > 0);
+      panel.classList.toggle('visible', withImg.length + noImg.length > 0);
     }
 
-    async function gerarImagem(txt) {
-      const img = document.getElementById('generated-img');
-      const loading = document.getElementById('img-loading');
+    async function gerarImagem(txt, garment) {
+      const img          = document.getElementById('generated-img');
+      const loading      = document.getElementById('img-loading');
       const loadingLabel = loading.querySelector('.img-loading-label');
-      const empty = document.getElementById('img-empty');
+      const empty        = document.getElementById('img-empty');
 
       img.style.display = 'none';
       empty.style.display = 'none';
       loading.classList.add('visible');
       loadingLabel.textContent = 'Buscando referências';
 
-      // ── 1. Carrega bancos e cruza com o texto ───────────────────────────
-      let matchedTerms = [], matchedRefs = [];
+      // ── 1. Carrega taxonomia e referências filtradas pela categoria ──────
+      let terms = [], refs = [];
       try {
-        const [terms, refs] = await Promise.all([loadFashionTerms(), loadVisualRefs()]);
-        matchedTerms = matchTerms(txt, terms);
-        matchedRefs  = matchRefs(txt, refs);
-        renderRefs(matchedRefs);
-      } catch (_) {}
+        [terms, refs] = await Promise.all([loadFashionTerms(), loadVisualRefs()]);
+        terms = matchTerms(txt, garment, terms);
+        refs  = matchRefs(txt, garment, refs);
+        if (refs.length) renderRefs(refs);
+      } catch(_) {}
 
-      // ── 2. Enriquece com catálogo de imagens externo (fashion-os-catalog) ─
-      if (window.FashionOSCatalog) {
-        try {
-          const catalogRefs = await window.FashionOSCatalog.searchFashionCatalog(txt, { limit: 6 });
-          if (catalogRefs.length > 0) {
-            const catalogPrompt = window.FashionOSCatalog.buildEnrichedFashionPrompt(txt, catalogRefs);
-            txt = catalogPrompt; // usa o prompt enriquecido como base
-          }
-        } catch (_) {}
-      }
+      // ── 2. Compila prompt enriquecido ────────────────────────────────────
+      const { pos, neg } = buildPrompt(txt, garment, terms, refs);
+      loadingLabel.textContent = 'Gerando imagem';
 
-      // ── 3. Compila prompt final ──────────────────────────────────────────
-      const { pos, neg } = buildPrompt(txt, matchedTerms, matchedRefs);
-
-      loadingLabel.textContent = 'Gerando';
-
+      // ── 3. Envia para Stable Horde — modelo AbsoluteReality (fila curta) ─
       try {
-        const submitRes = await fetch('https://stablehorde.net/api/v2/generate/async', {
+        const sub = await fetch('https://stablehorde.net/api/v2/generate/async', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'apikey': '0000000000' },
           body: JSON.stringify({
@@ -542,33 +563,29 @@
             params: {
               sampler_name: 'k_euler_a',
               cfg_scale: 7.5,
-              steps: 30,
+              steps: 25,
               width: 512,
               height: 768,
               n: 1,
               karras: true
             },
             r2: false,
-            slow_workers: true,
-            models: ['AlbedoBase XL (SDXL)']
+            slow_workers: false,
+            models: ['AbsoluteReality']
           })
         });
 
-        if (!submitRes.ok) { showImgError('Erro ao enviar geração'); return; }
-        const { id } = await submitRes.json();
+        if (!sub.ok) { showImgError('Erro ao enviar'); return; }
+        const { id } = await sub.json();
 
-        let attempts = 0;
-        while (attempts < 60) {
-          await new Promise(r => setTimeout(r, 3000));
-          attempts++;
-          const checkRes = await fetch(`https://stablehorde.net/api/v2/generate/check/${id}`);
-          const check = await checkRes.json();
-          if (check.faulted) { showImgError('Falha na geração — tente novamente'); return; }
-          if (check.wait_time > 0) loadingLabel.textContent = `~${check.wait_time}s`;
-          if (check.done) {
-            const statusRes = await fetch(`https://stablehorde.net/api/v2/generate/status/${id}`);
-            const status = await statusRes.json();
-            const b64 = status?.generations?.[0]?.img;
+        for (let i = 0; i < 80; i++) {
+          await new Promise(r => setTimeout(r, 4000));
+          const chk = await (await fetch(`https://stablehorde.net/api/v2/generate/check/${id}`)).json();
+          if (chk.faulted) { showImgError('Falha na geração — tente novamente'); return; }
+          if (chk.wait_time > 0) loadingLabel.textContent = `~${chk.wait_time}s`;
+          if (chk.done) {
+            const st  = await (await fetch(`https://stablehorde.net/api/v2/generate/status/${id}`)).json();
+            const b64 = st?.generations?.[0]?.img;
             if (!b64) { showImgError('Imagem não retornada'); return; }
             img.src = 'data:image/webp;base64,' + b64;
             img.style.display = 'block';
@@ -577,7 +594,7 @@
           }
         }
         showImgError('Tempo esgotado — tente novamente');
-      } catch (e) {
+      } catch(e) {
         showImgError('Sem conexão com a API');
       }
     }
