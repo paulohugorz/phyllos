@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYLLOS wear — Fashion OS</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="home-development fashion-os-page">
+
+<div class="cursor" id="cursor"></div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo"><span class="nav-phi">Φ</span><div class="nav-rule"></div><span class="nav-wordmark">Phyllos</span><span class="nav-sub">wear</span></a>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="colecoes.html">Coleções</a></li>
+    <li><a href="essencial.html">Essencial</a></li>
+    <li><a href="fashion-os.html">Fashion OS</a></li>
+    <li><a href="materiais.html">Materiais</a></li>
+    <li><a href="manifesto.html">Manifesto</a></li>
+  </ul>
+  <div class="nav-actions nav-status"><span>Em desenvolvimento</span></div>
+</nav>
+
+<section class="fos-hero">
+  <div class="fos-hero-copy">
+    <div class="hero-season">PHYLLOS operating system</div>
+    <h1 class="hero-title">A infraestrutura<br>que transforma tese<br>em <em>produto.</em></h1>
+    <p class="hero-body">
+      O Fashion OS organiza a operação interna da PHYLLOS: pesquisa, desenho, ficha técnica, imagem, produção e lançamento em um fluxo único. Nesta versão pública, ele aparece como laboratório de conceito.
+    </p>
+    <div class="hero-actions">
+      <a href="#laboratorio" class="btn-primary">Testar gerador</a>
+      <a href="business-plan.html" class="btn-text">Ver plano vivo</a>
+    </div>
+  </div>
+  <div class="fos-hero-panel" aria-label="Interface conceitual do Fashion OS">
+    <div class="fos-panel-bar"><span></span><span></span><span></span></div>
+    <div class="fos-panel-grid">
+      <div><small>Pipeline</small><strong>Coleção → Peça → Ficha</strong></div>
+      <div><small>Status</small><strong>Rascunho validável</strong></div>
+      <div><small>Saída</small><strong>Croqui + metadados</strong></div>
+      <div><small>Regra</small><strong>Sem prova, sem claim</strong></div>
+    </div>
+    <div class="fos-panel-line"></div>
+    <p>Descrição vira estrutura. Estrutura vira decisão. Decisão vira documentação.</p>
+  </div>
+</section>
+
+<section class="fos-method">
+  <div>
+    <div class="section-label">Como o sistema pensa</div>
+    <h2 class="section-title">Moda tratada como <em>operação de aprendizado</em></h2>
+  </div>
+  <div class="fos-method-grid">
+    <article class="fos-card"><span>01</span><h3>Entrada</h3><p>Uma hipótese de peça: silhueta, material, contexto de uso, restrições e intenção.</p></article>
+    <article class="fos-card"><span>02</span><h3>Estrutura</h3><p>O sistema separa categoria, cor, tecido, status, prompt e próximos campos técnicos.</p></article>
+    <article class="fos-card"><span>03</span><h3>Imagem</h3><p>O croqui local cria uma referência visual sem API externa, token ou custo de geração.</p></article>
+    <article class="fos-card"><span>04</span><h3>Decisão</h3><p>O output serve para discutir a peça antes de prometer produto, performance ou material.</p></article>
+  </div>
+</section>
+
+<section class="fos-lab" id="laboratorio">
+  <div class="fos-lab-head">
+    <div>
+      <div class="section-label">Laboratório Fashion OS</div>
+      <h2 class="section-title">Gerar uma peça em <em>rascunho técnico</em></h2>
+    </div>
+    <p>Descreva uma peça. O site cria um SKU temporário, extrai metadados básicos e desenha um croqui SVG local, sem fal.ai, sem token e sem crédito.</p>
+  </div>
+
+  <div class="fos-tool">
+    <div class="fos-tool-input">
+      <label for="fos-description">Descrição da peça</label>
+      <textarea id="fos-description" placeholder="Ex: calça preta de alfaiataria com cintura alta, tecido crepe com elastano, caimento reto e confortável para treino, trabalho e deslocamento"></textarea>
+      <div class="fos-tool-actions">
+        <button class="btn-primary" id="fos-generate" onclick="gerarFashionOs()">Gerar peça</button>
+        <button class="btn-text" onclick="limparFashionOs()">Limpar</button>
+      </div>
+    </div>
+
+    <div class="fos-tool-output">
+      <div class="fos-output-empty" id="fos-empty">A peça aparecerá aqui</div>
+      <div class="fos-output-result" id="fos-result">
+        <div class="fos-result-top">
+          <span id="fos-sku">PH260000</span>
+          <span>Rascunho</span>
+        </div>
+        <div class="fos-image-slot">
+          <img id="fos-image" alt="Croqui gerado pelo Fashion OS">
+        </div>
+        <a class="btn-text fos-download" id="fos-download" download="phyllos-croqui.svg">Baixar croqui</a>
+        <table class="fos-meta" id="fos-meta"></table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="communication-section">
+  <div class="comm-left">
+    <div class="section-label">Status honesto</div>
+    <h2 class="section-title">O que esta página <em>é e não é</em></h2>
+  </div>
+  <div class="comm-right">
+    <div class="comm-row"><span>É</span><p>Uma demonstração pública do método operacional da PHYLLOS e um gerador local de referência visual.</p></div>
+    <div class="comm-row"><span>Não é</span><p>Um SaaS aberto, um gerador fotorealista final ou uma promessa de produto disponível.</p></div>
+    <div class="comm-row"><span>Próximo</span><p>Conectar coleções, fichas técnicas, galeria e PDF quando a Fase 2 do Fashion OS estiver pronta.</p></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div><span class="footer-brand-phi">Φ</span><span class="footer-brand-name">Phyllos</span><span class="footer-brand-sub">wear</span><p class="footer-tagline">"Antes de vender uma peça, precisamos saber exatamente o que ela sustenta."</p></div>
+    <div class="footer-col"><h4>Explorar</h4><ul><li><a href="index.html#dossier">Dossier</a></li><li><a href="colecoes.html">Coleções</a></li><li><a href="fashion-os.html">Fashion OS</a></li><li><a href="manifesto.html">Manifesto</a></li></ul></div>
+    <div class="footer-col"><h4>Construção</h4><ul><li><a href="business-plan.html">Plano vivo</a></li><li><a href="materiais.html">Pesquisa material</a></li><li><a href="colecoes.html">Territórios de uso</a></li></ul></div>
+    <div class="footer-col"><h4>Status</h4><ul><li><a href="#laboratorio">Gerador local</a></li><li><a href="manifesto.html">Sem prova, sem claim</a></li><li><a href="index.html#dossier">Produto em desenvolvimento</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Phyllos · Em desenvolvimento</span><span>wear · beauty · tech</span></div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+function gerarFashionOs() {
+  const input = document.getElementById('fos-description');
+  const txt = input.value.trim();
+  if (!txt) { input.focus(); return; }
+
+  const sku = 'PH' + new Date().getFullYear().toString().slice(-2) + Date.now().toString().slice(-4);
+  const lower = txt.toLowerCase();
+  const tipo = matchFashionOs(lower, ['calça', 'saia', 'vestido', 'jaqueta', 'casaco', 'camisa', 'shorts', 'top', 'macacão', 'blazer']) || 'peça';
+  const cor = matchFashionOs(lower, ['preta', 'preto', 'branca', 'branco', 'cinza', 'azul', 'verde', 'vermelha', 'vermelho', 'bege', 'creme', 'marrom', 'caramelo', 'off white']) || 'natural';
+  const tecido = matchFashionOs(lower, ['linho', 'seda', 'algodão', 'lã', 'jersey', 'crepe', 'tweed', 'veludo', 'cetim', 'tencel', 'viscose', 'denim', 'malha']) || 'tecido';
+  const svg = criarFashionOsSvg(txt, tipo, cor, tecido);
+  const src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+
+  document.getElementById('fos-sku').textContent = sku;
+  document.getElementById('fos-image').src = src;
+  document.getElementById('fos-download').href = src;
+  document.getElementById('fos-download').download = `${sku}-croqui.svg`;
+  document.getElementById('fos-meta').innerHTML = `
+    <tr><td>Categoria</td><td>${capFashionOs(tipo)}</td></tr>
+    <tr><td>Cor</td><td>${capFashionOs(cor)}</td></tr>
+    <tr><td>Tecido</td><td>${capFashionOs(tecido)}</td></tr>
+    <tr><td>Origem</td><td>Geração local</td></tr>
+  `;
+  document.getElementById('fos-empty').style.display = 'none';
+  document.getElementById('fos-result').classList.add('visible');
+}
+
+function limparFashionOs() {
+  document.getElementById('fos-description').value = '';
+  document.getElementById('fos-image').src = '';
+  document.getElementById('fos-result').classList.remove('visible');
+  document.getElementById('fos-empty').style.display = 'flex';
+}
+
+function criarFashionOsSvg(txt, tipo, cor, tecido) {
+  const fill = corFashionOs(cor);
+  const title = xmlFashionOs(capFashionOs(tipo));
+  const details = xmlFashionOs(`${capFashionOs(cor)} · ${capFashionOs(tecido)}`);
+  const notes = xmlFashionOs(txt.slice(0, 92));
+  const paths = desenhoFashionOs(tipo, fill);
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200">
+    <rect width="900" height="1200" fill="#FAF8F4"/>
+    <rect x="54" y="54" width="792" height="1092" fill="none" stroke="#D8D1C4" stroke-width="2"/>
+    <text x="96" y="122" fill="#0F0F0D" font-family="Georgia, serif" font-size="42" letter-spacing="6">${title}</text>
+    <text x="96" y="166" fill="#9E9B95" font-family="Arial, sans-serif" font-size="20" letter-spacing="3">${details}</text>
+    <g transform="translate(0 18)">${paths}</g>
+    <line x1="96" y1="1015" x2="804" y2="1015" stroke="#D8D1C4" stroke-width="2"/>
+    <text x="96" y="1060" fill="#0F0F0D" font-family="Arial, sans-serif" font-size="20">Prompt base</text>
+    <text x="96" y="1096" fill="#6F6B64" font-family="Arial, sans-serif" font-size="18">${notes}</text>
+  </svg>`;
+}
+
+function desenhoFashionOs(tipo, fill) {
+  if (tipo.includes('calça') || tipo.includes('shorts')) {
+    return `<path d="M340 250h220l38 650h-120l-34-430-38 430H286l38-650z" fill="${fill}" stroke="#0F0F0D" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M340 250c35 24 185 24 220 0" fill="none" stroke="#0F0F0D" stroke-width="5"/>
+      <path d="M450 270v625" fill="none" stroke="#0F0F0D" stroke-width="3" stroke-dasharray="10 12"/>
+      <path d="M365 310c32 32 58 44 85 44M535 310c-32 32-58 44-85 44" fill="none" stroke="#0F0F0D" stroke-width="3"/>`;
+  }
+  if (tipo.includes('vestido') || tipo.includes('macacão')) {
+    return `<path d="M390 230h120l46 160 124 492H220l124-492z" fill="${fill}" stroke="#0F0F0D" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M390 230c18 42 102 42 120 0M344 390c64 42 148 42 212 0" fill="none" stroke="#0F0F0D" stroke-width="4"/>
+      <path d="M450 250v600" fill="none" stroke="#0F0F0D" stroke-width="3" stroke-dasharray="10 12"/>`;
+  }
+  return `<path d="M345 250h210l80 120-70 70-42-54v470H377V386l-42 54-70-70z" fill="${fill}" stroke="#0F0F0D" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M410 250c10 46 70 46 80 0M377 386h146M450 270v585" fill="none" stroke="#0F0F0D" stroke-width="4"/>
+    <circle cx="450" cy="452" r="6" fill="#0F0F0D"/><circle cx="450" cy="515" r="6" fill="#0F0F0D"/><circle cx="450" cy="578" r="6" fill="#0F0F0D"/>`;
+}
+
+function matchFashionOs(text, words) { return words.find(word => text.includes(word)); }
+function capFashionOs(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function xmlFashionOs(s) { return s.replace(/[<>&"']/g, c => ({'<':'&lt;', '>':'&gt;', '&':'&amp;', '"':'&quot;', "'":'&apos;'}[c])); }
+function corFashionOs(cor) {
+  const map = {
+    preta: '#171714', preto: '#171714', branca: '#F8F6EF', branco: '#F8F6EF',
+    cinza: '#8E8D88', azul: '#526B82', verde: '#657563', vermelha: '#8D3F38',
+    vermelho: '#8D3F38', bege: '#CDBF9F', creme: '#E7DFCF', marrom: '#6D5642',
+    caramelo: '#B47A45', 'off white': '#EDE8DC', natural: '#D8C9AD'
+  };
+  return map[cor] || '#D8C9AD';
+}
+</script>
+</body>
+</html>

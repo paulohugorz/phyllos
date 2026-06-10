@@ -2112,6 +2112,228 @@ footer {
   .cursor { display: none !important; }
 }
 
+/* FASHION OS PAGE */
+.fashion-os-page .section-label { padding: 0; }
+.fos-hero {
+  min-height: 100vh;
+  padding: 128px 48px 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.78fr);
+  gap: 56px;
+  align-items: center;
+  background: var(--cream);
+  border-bottom: 1px solid rgba(184,154,106,0.14);
+}
+.fos-hero-copy .hero-body { max-width: 520px; }
+.fos-hero-panel {
+  background: var(--obsidian);
+  color: var(--linen);
+  border: 1px solid rgba(184,154,106,0.34);
+  padding: 28px;
+  min-height: 460px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.fos-panel-bar { display: flex; gap: 8px; }
+.fos-panel-bar span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(232,228,220,0.35);
+}
+.fos-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid rgba(232,228,220,0.14);
+}
+.fos-panel-grid div {
+  min-height: 118px;
+  padding: 20px;
+  border-right: 1px solid rgba(232,228,220,0.14);
+  border-bottom: 1px solid rgba(232,228,220,0.14);
+}
+.fos-panel-grid div:nth-child(2n) { border-right: none; }
+.fos-panel-grid div:nth-child(n+3) { border-bottom: none; }
+.fos-panel-grid small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+}
+.fos-panel-grid strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 27px;
+  font-weight: 300;
+  line-height: 1.12;
+}
+.fos-panel-line {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.fos-hero-panel p {
+  color: rgba(232,228,220,0.72);
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 360px;
+}
+.fos-method,
+.fos-lab { padding: 96px 48px; }
+.fos-method {
+  display: grid;
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 56px;
+  border-bottom: 1px solid rgba(184,154,106,0.12);
+}
+.fos-method-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: rgba(184,154,106,0.18);
+  border: 1px solid rgba(184,154,106,0.18);
+}
+.fos-card {
+  background: var(--cream);
+  min-height: 240px;
+  padding: 32px;
+}
+.fos-card span {
+  font-family: var(--serif);
+  font-size: 44px;
+  color: rgba(184,154,106,0.34);
+}
+.fos-card h3 {
+  margin: 18px 0 12px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.fos-card p { color: var(--graphite); line-height: 1.8; }
+.fos-lab {
+  background: var(--sand);
+  border-bottom: 1px solid rgba(184,154,106,0.12);
+}
+.fos-lab-head {
+  display: grid;
+  grid-template-columns: 1fr 0.65fr;
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 40px;
+}
+.fos-lab-head p {
+  color: var(--graphite);
+  line-height: 1.8;
+}
+.fos-tool {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
+  border: 1px solid rgba(15,15,13,0.14);
+  background: var(--cream);
+  min-height: 660px;
+}
+.fos-tool-input,
+.fos-tool-output { padding: 32px; }
+.fos-tool-input {
+  border-right: 1px solid rgba(15,15,13,0.14);
+  display: flex;
+  flex-direction: column;
+}
+.fos-tool-input label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.fos-tool-input textarea {
+  flex: 1;
+  min-height: 380px;
+  resize: none;
+  border: none;
+  border-top: 1px solid rgba(15,15,13,0.12);
+  border-bottom: 1px solid rgba(15,15,13,0.12);
+  background: transparent;
+  padding: 24px 0;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.9;
+  color: var(--obsidian);
+  outline: none;
+}
+.fos-tool-input textarea::placeholder { color: rgba(58,58,53,0.45); }
+.fos-tool-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 24px;
+}
+.fos-tool-output {
+  display: flex;
+  min-width: 0;
+}
+.fos-output-empty {
+  flex: 1;
+  border: 1px dashed rgba(15,15,13,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--mid-gray);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.fos-output-result {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  gap: 18px;
+}
+.fos-output-result.visible { display: flex; }
+.fos-result-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.fos-result-top span:last-child { color: var(--mid-gray); }
+.fos-image-slot {
+  flex: 1;
+  min-height: 430px;
+  border: 1px solid rgba(15,15,13,0.12);
+  background: rgba(232,228,220,0.34);
+  overflow: hidden;
+}
+.fos-image-slot img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.fos-download { align-self: flex-start; }
+.fos-meta {
+  width: 100%;
+  border-collapse: collapse;
+}
+.fos-meta tr { border-bottom: 1px solid rgba(15,15,13,0.1); }
+.fos-meta td {
+  padding: 10px 0;
+  font-size: 13px;
+}
+.fos-meta td:first-child { color: var(--mid-gray); }
+.fos-meta td:last-child {
+  text-align: right;
+  color: var(--obsidian);
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   nav { padding: 16px 20px; flex-wrap: wrap; }
@@ -2367,4 +2589,60 @@ footer {
   .product-grid { grid-template-columns: 1fr; }
   .product-grid-3 { grid-template-columns: 1fr; }
   nav { padding: 14px 16px; }
+}
+
+@media (max-width: 768px) {
+  .fos-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding: 112px 24px 56px;
+    gap: 36px;
+  }
+  .fos-hero-panel {
+    min-height: 420px;
+    padding: 22px;
+  }
+  .fos-panel-grid {
+    grid-template-columns: 1fr;
+  }
+  .fos-panel-grid div,
+  .fos-panel-grid div:nth-child(2n),
+  .fos-panel-grid div:nth-child(n+3) {
+    border-right: none;
+    border-bottom: 1px solid rgba(232,228,220,0.14);
+  }
+  .fos-panel-grid div:last-child { border-bottom: none; }
+  .fos-method,
+  .fos-lab {
+    padding: 64px 24px;
+  }
+  .fos-method,
+  .fos-lab-head,
+  .fos-tool {
+    grid-template-columns: 1fr;
+  }
+  .fos-method-grid {
+    grid-template-columns: 1fr;
+  }
+  .fos-tool {
+    min-height: auto;
+  }
+  .fos-tool-input {
+    border-right: none;
+    border-bottom: 1px solid rgba(15,15,13,0.14);
+  }
+  .fos-tool-input,
+  .fos-tool-output {
+    padding: 24px;
+  }
+  .fos-tool-input textarea {
+    min-height: 280px;
+  }
+  .fos-tool-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .fos-image-slot {
+    min-height: 360px;
+  }
 }
