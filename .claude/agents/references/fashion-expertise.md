@@ -1,7 +1,6 @@
 # Expertise em Moda, Arte, Futurismo e Marketing — Base de Conhecimento da Diretoria Phyllos
 
-Este documento é leitura obrigatória para toda a diretoria Phyllos. O conhecimento aqui não é
-enciclopédico — é operacional. Cada seção termina com implicações diretas para decisões reais.
+Este documento é referência histórica para a diretoria Phyllos. Ele deve ser lido subordinado ao racional vigente em `positioning-rationale-2026-06.md`: a PHYLLOS não deve ser limitada a "mulher executiva", "athleisure executivo" ou qualquer recorte elitista de público. O conhecimento aqui não é enciclopédico — é operacional. Cada seção termina com implicações diretas para decisões reais.
 
 ---
 
