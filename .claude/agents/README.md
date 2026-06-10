@@ -31,6 +31,7 @@ Essa distribuição corrige o risco de excesso de foco em IA, automação e tecn
 | CRM Agent | [email-crm-agent.md](email-crm-agent.md) | Segmentação, automações, recuperação, newsletter e fidelidade |
 | Data Agent | [data-intelligence-lead.md](data-intelligence-lead.md) | Warehouse, eventos, dashboards, cohort, LTV, segmentação e previsão de demanda |
 | AI Agent | [ai-automation-lead.md](ai-automation-lead.md) | Sistema operacional, memória, automações, relatórios e RAG |
+| Daily Executive Briefing Agent | [daily-executive-briefing-agent.md](daily-executive-briefing-agent.md) | Síntese diária do trabalho dos agentes, próximos passos, dúvidas, riscos e pauta para decisão |
 | Investor Relations Agent | [pr-press-agent.md](pr-press-agent.md) | Pitch deck, one pager, data room, projeções e narrativa de captação |
 
 ## Regra de prioridade
@@ -57,7 +58,8 @@ Essa distribuição corrige o risco de excesso de foco em IA, automação e tecn
 10. CRM nutre leads e mede intenção.
 11. Data cria eventos e dashboards mínimos.
 12. AI organiza memória, relatórios e automações úteis.
-13. Investor Relations só entra forte quando houver validação suficiente.
+13. Daily Executive Briefing fecha o ciclo diário, sintetiza avanços, dúvidas, riscos e pauta para o founder.
+14. Investor Relations só entra forte quando houver validação suficiente.
 
 ## Gates de decisão
 
@@ -70,6 +72,7 @@ Essa distribuição corrige o risco de excesso de foco em IA, automação e tecn
 | Caixa | Finance | Cabe no caixa e preserva margem? |
 | Mercado | Marketing/Growth | Conseguimos gerar demanda mensurável? |
 | Dados/IA | Data/AI | Estamos medindo e automatizando o que importa? |
+| Síntese | Daily Executive Briefing | O founder tem clareza sobre o que foi feito, o que decidir e quem deve agir agora? |
 
 ## Como escolher rapidamente
 
@@ -82,4 +85,5 @@ Essa distribuição corrige o risco de excesso de foco em IA, automação e tecn
 - Aquisição e funil: [analytics-agent.md](analytics-agent.md)
 - Dados: [data-intelligence-lead.md](data-intelligence-lead.md)
 - IA e memória: [ai-automation-lead.md](ai-automation-lead.md)
+- Síntese diária e próximos passos: [daily-executive-briefing-agent.md](daily-executive-briefing-agent.md)
 - Captação: [pr-press-agent.md](pr-press-agent.md)
