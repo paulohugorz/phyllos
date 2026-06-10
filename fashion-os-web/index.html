@@ -382,6 +382,121 @@
       gerarImagem(txt);
     }
 
+    // ── Dados carregados uma vez e cacheados ─────────────────────────────────
+    let _fashionTerms = null;
+    let _visualRefs   = null;
+
+    async function loadFashionTerms() {
+      if (_fashionTerms) return _fashionTerms;
+      const r = await fetch('./js/fashion-terms.json', { cache: 'force-cache' });
+      _fashionTerms = await r.json();
+      return _fashionTerms;
+    }
+
+    async function loadVisualRefs() {
+      if (_visualRefs) return _visualRefs;
+      const r = await fetch('./js/visual-references.json', { cache: 'force-cache' });
+      _visualRefs = await r.json();
+      return _visualRefs;
+    }
+
+    function normalize(s) {
+      return String(s || '').toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9\s]/g, ' ').trim();
+    }
+
+    // Cruza texto do usuário com termos técnicos — devolve termos que casam
+    function matchTerms(txt, terms) {
+      const q = normalize(txt);
+      return terms.filter(t => {
+        const hay = normalize([t.termo_pt, t.termo_en, t.subcategoria, t.definicao, t.atributos_visuais].join(' '));
+        return q.split(' ').some(w => w.length > 3 && hay.includes(w));
+      });
+    }
+
+    // Cruza texto com referências visuais — ordena por contexto e prioridade
+    function matchRefs(txt, refs) {
+      const q = normalize(txt);
+      return refs
+        .map(r => {
+          const hay = normalize([r.categoria, r.contexto_uso, r.titulo, r.styling_notes, r.pecas_chave, r.prompt_tokens].join(' '));
+          const score = q.split(' ').filter(w => w.length > 3 && hay.includes(w)).length + (r.prioridade || 0);
+          return { ...r, _score: score };
+        })
+        .filter(r => r._score > 0)
+        .sort((a, b) => b._score - a._score);
+    }
+
+    // Monta prompt unificado: taxonomia + referências + base PHYLLOS
+    function buildPrompt(txt, matchedTerms, matchedRefs) {
+      const posTokens = new Set([
+        'fashion editorial photography', 'full body', 'studio lighting',
+        'minimalist white background', 'photorealistic', 'high quality',
+        'natural pose', 'premium fabric', 'clean finish'
+      ]);
+      const negTokens = new Set([
+        'blurry', 'low quality', 'watermark', 'text', 'disfigured',
+        'deformed', 'logo', 'cartoon', 'illustration', 'painting'
+      ]);
+
+      matchedTerms.forEach(t => {
+        t.prompt_tokens.split(',').map(s => s.trim()).filter(Boolean).forEach(s => posTokens.add(s));
+        t.prompt_negativo.split(',').map(s => s.trim()).filter(Boolean).forEach(s => negTokens.add(s));
+      });
+      matchedRefs.slice(0, 4).forEach(r => {
+        r.prompt_tokens.split(',').map(s => s.trim()).filter(Boolean).forEach(s => posTokens.add(s));
+        r.prompt_negativo.split(',').map(s => s.trim()).filter(Boolean).forEach(s => negTokens.add(s));
+      });
+
+      const pos = txt + ', ' + Array.from(posTokens).join(', ');
+      const neg = Array.from(negTokens).join(', ');
+      return { pos, neg };
+    }
+
+    // Renderiza painel de referências visuais com imagens armazenadas
+    function renderRefs(refs) {
+      const panel = document.getElementById('fashion-os-references');
+      const hasImg = refs.filter(r => r.image_url);
+      const noImg  = refs.filter(r => !r.image_url);
+
+      panel.innerHTML = '<p class="refs-label">Referências visuais</p>';
+
+      if (hasImg.length) {
+        const grid = document.createElement('div');
+        grid.style.cssText = 'display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px;';
+        hasImg.slice(0, 3).forEach(r => {
+          const div = document.createElement('div');
+          div.style.cssText = 'position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:2px;border:1px solid var(--border);';
+          div.innerHTML = `
+            <img src="${r.image_url}" alt="${r.titulo}"
+              style="width:100%;height:100%;object-fit:cover;"
+              onerror="this.parentElement.style.display='none'">
+            <span style="position:absolute;bottom:0;left:0;right:0;
+              padding:4px 6px;font-size:9px;letter-spacing:0.06em;
+              text-transform:uppercase;color:var(--muted);
+              background:rgba(245,242,235,0.85)">${r.categoria || ''}</span>`;
+          grid.appendChild(div);
+        });
+        panel.appendChild(grid);
+      }
+
+      noImg.slice(0, 3).forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'fashion-ref-card';
+        div.innerHTML = `
+          <div class="fashion-ref-thumb">${(r.categoria||'ref').slice(0,4)}</div>
+          <div>
+            <strong>${r.titulo}</strong>
+            <p>${r.contexto_uso||''}</p>
+            <small>${r.styling_notes||''}</small>
+          </div>`;
+        panel.appendChild(div);
+      });
+
+      panel.classList.toggle('visible', refs.length > 0);
+    }
+
     async function gerarImagem(txt) {
       const img = document.getElementById('generated-img');
       const loading = document.getElementById('img-loading');
@@ -391,36 +506,47 @@
       img.style.display = 'none';
       empty.style.display = 'none';
       loading.classList.add('visible');
-      loadingLabel.textContent = 'Gerando';
+      loadingLabel.textContent = 'Buscando referências';
 
-      // Enriquece prompt com catálogo de referências
-      let prompt = txt + ', fashion editorial photo, studio lighting, minimalist white background, full body outfit, high quality, photorealistic';
+      // ── 1. Carrega bancos e cruza com o texto ───────────────────────────
+      let matchedTerms = [], matchedRefs = [];
+      try {
+        const [terms, refs] = await Promise.all([loadFashionTerms(), loadVisualRefs()]);
+        matchedTerms = matchTerms(txt, terms);
+        matchedRefs  = matchRefs(txt, refs);
+        renderRefs(matchedRefs);
+      } catch (_) {}
+
+      // ── 2. Enriquece com catálogo de imagens externo (fashion-os-catalog) ─
       if (window.FashionOSCatalog) {
         try {
-          const refs = await window.FashionOSCatalog.searchFashionCatalog(txt, { limit: 8 });
-          if (refs.length > 0) {
-            prompt = window.FashionOSCatalog.buildEnrichedFashionPrompt(txt, refs)
-              + '\nFashion editorial photo, studio lighting, minimalist white background, full body, photorealistic.';
-            window.FashionOSCatalog.renderFashionResults('#fashion-os-references', refs.slice(0, 4));
-            document.getElementById('fashion-os-references').classList.add('visible');
+          const catalogRefs = await window.FashionOSCatalog.searchFashionCatalog(txt, { limit: 6 });
+          if (catalogRefs.length > 0) {
+            const catalogPrompt = window.FashionOSCatalog.buildEnrichedFashionPrompt(txt, catalogRefs);
+            txt = catalogPrompt; // usa o prompt enriquecido como base
           }
         } catch (_) {}
       }
 
+      // ── 3. Compila prompt final ──────────────────────────────────────────
+      const { pos, neg } = buildPrompt(txt, matchedTerms, matchedRefs);
+
+      loadingLabel.textContent = 'Gerando';
+
       try {
-        // Submete para Stable Horde (rede comunitária de GPUs — sem token necessário)
         const submitRes = await fetch('https://stablehorde.net/api/v2/generate/async', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'apikey': '0000000000' },
           body: JSON.stringify({
-            prompt: prompt + ' ### blurry, low quality, watermark, text, disfigured, deformed',
+            prompt: pos + ' ### ' + neg,
             params: {
               sampler_name: 'k_euler_a',
-              cfg_scale: 7,
-              steps: 25,
+              cfg_scale: 7.5,
+              steps: 30,
               width: 512,
               height: 768,
-              n: 1
+              n: 1,
+              karras: true
             },
             r2: false,
             slow_workers: true,
@@ -431,18 +557,14 @@
         if (!submitRes.ok) { showImgError('Erro ao enviar geração'); return; }
         const { id } = await submitRes.json();
 
-        // Polling até a imagem ficar pronta
         let attempts = 0;
         while (attempts < 60) {
           await new Promise(r => setTimeout(r, 3000));
           attempts++;
-
           const checkRes = await fetch(`https://stablehorde.net/api/v2/generate/check/${id}`);
           const check = await checkRes.json();
-
           if (check.faulted) { showImgError('Falha na geração — tente novamente'); return; }
           if (check.wait_time > 0) loadingLabel.textContent = `~${check.wait_time}s`;
-
           if (check.done) {
             const statusRes = await fetch(`https://stablehorde.net/api/v2/generate/status/${id}`);
             const status = await statusRes.json();
@@ -454,7 +576,6 @@
             return;
           }
         }
-
         showImgError('Tempo esgotado — tente novamente');
       } catch (e) {
         showImgError('Sem conexão com a API');
