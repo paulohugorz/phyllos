@@ -237,15 +237,31 @@
       letter-spacing: 0.08em;
       color: var(--muted);
     }
-    .image-actions {
-      display: none;
-      gap: 8px;
-      margin-top: -10px;
-    }
-    .image-actions.visible { display: flex; }
-    .image-actions .btn { flex: 1; text-align: center; text-decoration: none; }
 
     ::selection { background: rgba(184,154,106,0.15); }
+
+    #fashion-os-references { display: none; flex-direction: column; gap: 8px; }
+    #fashion-os-references.visible { display: flex; }
+    .refs-label {
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+    .fashion-ref-card {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+    }
+    .fashion-ref-card:last-child { border-bottom: none; }
+    .fashion-ref-thumb {
+      width: 36px; height: 36px; border-radius: 2px;
+      background: rgba(232,228,220,0.6); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); flex-shrink: 0;
+    }
+    .fashion-ref-card strong { font-size: 11px; font-weight: 400; display: block; }
+    .fashion-ref-card p { font-size: 10px; color: var(--muted); margin: 2px 0; }
+    .fashion-ref-card small { font-size: 10px; color: var(--muted); opacity: 0.7; }
   </style>
 </head>
 <body>
@@ -305,16 +321,27 @@
             </svg>
           </div>
         </div>
-        <div class="image-actions" id="image-actions">
-          <a class="btn btn-ghost" id="download-img" download="phyllos-imagem-realista.png">Baixar imagem</a>
-        </div>
 
         <table class="meta-table" id="meta-table"></table>
+
+        <div id="fashion-os-references">
+          <p class="refs-label">Referências do catálogo</p>
+        </div>
       </div>
 
       <div class="panel-footer" style="flex-direction:column;gap:6px;align-items:stretch;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <input
+            id="api-token"
+            type="password"
+            placeholder="Token Hugging Face (hf_...)"
+            style="flex:1;padding:8px 12px;font-family:inherit;font-size:12px;font-weight:300;
+                   border:1px solid var(--border-md);border-radius:2px;background:transparent;
+                   color:var(--obsidian);outline:none;letter-spacing:0.03em;"
+          />
+        </div>
         <p style="font-size:11px;color:var(--muted);letter-spacing:0.03em;">
-          Prévia realista com cenário e styling, usando referências visuais locais da PHYLLOS.
+          Conta gratuita em <a href="https://huggingface.co/settings/tokens" target="_blank" style="color:var(--gold);text-decoration:none;">huggingface.co</a> → Settings → Access Tokens → New token (Read) → cole aqui.
         </p>
       </div>
     </section>
@@ -322,6 +349,14 @@
   </main>
 
   <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('hf_token');
+      if (saved) document.getElementById('api-token').value = saved;
+      document.getElementById('api-token').addEventListener('input', e => {
+        localStorage.setItem('hf_token', e.target.value);
+      });
+    });
+
     function gerar() {
       const txt = document.getElementById('description').value.trim();
       if (!txt) { document.getElementById('description').focus(); return; }
@@ -357,99 +392,70 @@
         <tr><td>Cor</td><td>${cor}</td></tr>
         <tr><td>Tecido</td><td>${tec}</td></tr>
         <tr><td>Status</td><td><span class="status-badge">Rascunho</span></td></tr>
-        <tr><td>Imagem atual</td><td>Fotografia realista com cenário</td></tr>
-        <tr><td>Motor realista</td><td>Referência local agora; ComfyUI/API na Fase 3</td></tr>
-        <tr><td>Prompt realista</td><td>${escapeXml(promptRealista(txt, catMatch ? catMatch[0].toLowerCase() : 'peça', corMatch ? corMatch[0].toLowerCase() : 'natural', tecMatch ? tecMatch[0].toLowerCase() : 'tecido'))}</td></tr>
       `;
 
       document.getElementById('empty-state').style.display = 'none';
       document.getElementById('result-panel').classList.add('visible');
+      document.getElementById('fashion-os-references').classList.remove('visible');
 
       gerarImagem(txt);
     }
 
-    function gerarImagem(txt) {
+    async function gerarImagem(txt) {
+      const token = localStorage.getItem('hf_token') || document.getElementById('api-token').value;
       const img = document.getElementById('generated-img');
       const loading = document.getElementById('img-loading');
       const empty = document.getElementById('img-empty');
-      const actions = document.getElementById('image-actions');
-      const download = document.getElementById('download-img');
 
       img.style.display = 'none';
       empty.style.display = 'none';
-      actions.classList.remove('visible');
       loading.classList.add('visible');
 
-      window.setTimeout(() => {
-        const selected = selecionarImagemRealista(txt);
-        const src = selected.src;
-        img.src = src;
-        img.alt = selected.alt;
-        img.style.display = 'block';
-        download.href = src;
-        download.download = `${document.getElementById('result-sku').textContent || 'phyllos'}-imagem-realista.png`;
-        actions.classList.add('visible');
+      if (!token) {
         loading.classList.remove('visible');
-      }, 450);
-    }
-
-    function selecionarImagemRealista(txt) {
-      const lower = txt.toLowerCase();
-      if (lower.includes('alfaiataria') || lower.includes('crepe') || lower.includes('trabalho') || lower.includes('performance')) {
-        return {
-          src: '/static/img/calca-alfaiataria-performance-realista.png',
-          alt: 'Calça preta de alfaiataria performance em fotografia realista de estúdio com cenário e detalhes técnicos'
-        };
+        empty.style.display = 'flex';
+        document.getElementById('api-token').focus();
+        return;
       }
-      if (lower.includes('dia a dia') || lower.includes('viagem') || lower.includes('versatil') || lower.includes('cordão') || lower.includes('elástico')) {
-        return {
-          src: '/static/img/calca-conforto-versatilidade-realista.png',
-          alt: 'Calça preta confortável e versátil em fotografia realista com cenários de rotina'
-        };
+
+      // Enriquece prompt com catálogo de referências
+      let prompt = txt + ', fashion editorial photo, studio lighting, minimalist white background, full body outfit, high quality, photorealistic';
+      if (window.FashionOSCatalog) {
+        try {
+          const refs = await window.FashionOSCatalog.searchFashionCatalog(txt, { limit: 8 });
+          if (refs.length > 0) {
+            prompt = window.FashionOSCatalog.buildEnrichedFashionPrompt(txt, refs)
+              + '\nFashion editorial photo, studio lighting, minimalist white background, full body, photorealistic.';
+            window.FashionOSCatalog.renderFashionResults('#fashion-os-references', refs.slice(0, 4));
+            document.getElementById('fashion-os-references').classList.add('visible');
+          }
+        } catch (_) {}
       }
-      return {
-        src: '/static/img/calca-cenario-performance.png',
-        alt: 'Calça preta de performance em fotografia realista com modelos diversas, academia, alongamento e rotina'
-      };
-    }
 
-    function matchFirst(text, words) {
-      return words.find(word => text.includes(word));
-    }
+      try {
+        const res = await fetch(
+          'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell',
+          {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ inputs: prompt, parameters: { num_inference_steps: 4 } })
+          }
+        );
 
-    function promptRealista(txt, tipo, cor, tecido) {
-      const lexicon = {
-        'calça': 'tailored trousers, high waist, clean front waistband, realistic seated and standing drape',
-        shorts: 'tailored shorts, refined waistband, clean hem, realistic fabric folds',
-        camisa: 'performance shirt, refined collar construction, clean placket, natural shoulder fit',
-        blazer: 'unstructured blazer, soft tailoring, natural shoulder, breathable refined fabric',
-        jaqueta: 'lightweight transitional jacket, clean seams, functional minimal details',
-        vestido: 'versatile dress, controlled ease, realistic garment weight and movement',
-        saia: 'comfortable skirt, clean waistband, realistic hem and movement',
-        top: 'minimal performance top, clean neckline, smooth technical fabric',
-        macacão: 'tailored jumpsuit, balanced proportions, clean waist construction'
-      };
-      const fabrics = {
-        crepe: 'matte stretch crepe, subtle pebbled texture, structured drape',
-        malha: 'premium technical knit, smooth recovery, soft stretch',
-        viscose: 'viscose blend, soft breathable drape',
-        tencel: 'lyocell fabric, fluid breathable drape, soft surface',
-        linho: 'linen blend, natural slub texture, breathable structure',
-        algodão: 'cotton blend, soft matte surface',
-        denim: 'refined lightweight denim texture',
-        cetim: 'soft satin surface, controlled low shine'
-      };
-      const base = lexicon[tipo] || 'realistic fashion garment, precise construction details';
-      const fabric = fabrics[tecido] || `${tecido} fabric, plausible texture and garment weight`;
-      return `${base}, ${capitalize(cor)} color, ${fabric}, PHYLLOS conscious performance wear, elegant comfort, mobility, natural light editorial product photography, no logo, no text, no watermark. Negative: leggings look, plastic shine, distorted seams, unrealistic folds, generic stock photo styling. Brief: ${txt.slice(0, 120)}`;
-    }
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          const msg = err?.error || 'Erro na API';
+          showImgError(res.status === 401 ? 'Token inválido' : res.status === 503 ? 'Modelo carregando, tente em 20s' : msg);
+          return;
+        }
 
-    function capitalize(s) {
-      return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-
-    function escapeXml(s) {
-      return s.replace(/[<>&"']/g, c => ({'<':'&lt;', '>':'&gt;', '&':'&amp;', '"':'&quot;', "'":'&apos;'}[c]));
+        const blob = await res.blob();
+        img.src = URL.createObjectURL(blob);
+        img.style.display = 'block';
+        loading.classList.remove('visible');
+      } catch (e) {
+        showImgError('Sem conexão com a API');
+      }
     }
 
     function showImgError(msg) {
@@ -470,14 +476,15 @@
       document.getElementById('description').value = '';
       document.getElementById('result-panel').classList.remove('visible');
       document.getElementById('empty-state').style.display = '';
+      document.getElementById('fashion-os-references').classList.remove('visible');
       const img = document.getElementById('generated-img');
       img.style.display = 'none';
       img.src = '';
       document.getElementById('img-empty').style.display = 'flex';
       document.getElementById('img-loading').classList.remove('visible');
-      document.getElementById('image-actions').classList.remove('visible');
     }
   </script>
 
+  <script src="./js/fashion-os-catalog.js"></script>
 </body>
 </html>

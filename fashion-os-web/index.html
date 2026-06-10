@@ -334,14 +334,14 @@
           <input
             id="api-token"
             type="password"
-            placeholder="Chave fal.ai"
+            placeholder="Token Hugging Face (hf_...)"
             style="flex:1;padding:8px 12px;font-family:inherit;font-size:12px;font-weight:300;
                    border:1px solid var(--border-md);border-radius:2px;background:transparent;
                    color:var(--obsidian);outline:none;letter-spacing:0.03em;"
           />
         </div>
         <p style="font-size:11px;color:var(--muted);letter-spacing:0.03em;">
-          Cadastro gratuito em <a href="https://fal.ai" target="_blank" style="color:var(--gold);text-decoration:none;">fal.ai</a> → Dashboard → API Keys → criar chave. Ganha $10 de crédito sem cartão.
+          Conta gratuita em <a href="https://huggingface.co/settings/tokens" target="_blank" style="color:var(--gold);text-decoration:none;">huggingface.co</a> → Settings → Access Tokens → New token (Read) → cole aqui.
         </p>
       </div>
     </section>
@@ -350,10 +350,10 @@
 
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const saved = localStorage.getItem('fal_token');
+      const saved = localStorage.getItem('hf_token');
       if (saved) document.getElementById('api-token').value = saved;
       document.getElementById('api-token').addEventListener('input', e => {
-        localStorage.setItem('fal_token', e.target.value);
+        localStorage.setItem('hf_token', e.target.value);
       });
     });
 
@@ -402,7 +402,7 @@
     }
 
     async function gerarImagem(txt) {
-      const token = localStorage.getItem('fal_token') || document.getElementById('api-token').value;
+      const token = localStorage.getItem('hf_token') || document.getElementById('api-token').value;
       const img = document.getElementById('generated-img');
       const loading = document.getElementById('img-loading');
       const empty = document.getElementById('img-empty');
@@ -433,28 +433,24 @@
       }
 
       try {
-        const res = await fetch('https://fal.run/fal-ai/flux/schnell', {
-          method: 'POST',
-          headers: { 'Authorization': `Key ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            prompt,
-            image_size: 'portrait_4_3',
-            num_inference_steps: 4,
-            num_images: 1
-          })
-        });
-        const data = await res.json();
+        const res = await fetch(
+          'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell',
+          {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ inputs: prompt, parameters: { num_inference_steps: 4 } })
+          }
+        );
 
         if (!res.ok) {
-          const msg = data?.detail || data?.message || 'Erro na API';
-          showImgError(res.status === 401 ? 'Chave inválida' : msg);
+          const err = await res.json().catch(() => ({}));
+          const msg = err?.error || 'Erro na API';
+          showImgError(res.status === 401 ? 'Token inválido' : res.status === 503 ? 'Modelo carregando, tente em 20s' : msg);
           return;
         }
 
-        const src = data?.images?.[0]?.url;
-        if (!src) { showImgError('Resposta inesperada'); return; }
-
-        img.src = src;
+        const blob = await res.blob();
+        img.src = URL.createObjectURL(blob);
         img.style.display = 'block';
         loading.classList.remove('visible');
       } catch (e) {
