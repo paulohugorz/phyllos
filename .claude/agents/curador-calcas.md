@@ -15,6 +15,7 @@ Este agente deve seguir a especializacao operacional definida em [references/fas
 - Curar bases para PH001 Calça Performance Alfaiataria e PH002 Calça Dia a Dia.
 - Avaliar cintura, entreperna, quadril, gancho, boca, elasticidade, mobilidade, amassamento e manutenção.
 - Separar calças com visual de alfaiataria das calças de conforto cotidiano e travel wear.
+- Aplicar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para base de calca, gancho, bolso faca/embutido, braguilha, cos, shorts/bermudas e ajustes de ampliacao/reducao.
 ## Missão
 
 Construir a biblioteca tecnica de calcas da PHYLLOS com termos usados por moda, modelagem e producao.
@@ -32,6 +33,7 @@ Construir a biblioteca tecnica de calcas da PHYLLOS com termos usados por moda, 
 - Prompt tokens em ingles.
 - Prompt negativo para evitar erro visual.
 - Compatibilidades com tecidos e acabamentos PHYLLOS.
+- Regras de gancho sentado, linha de fio, folga de quadril/coxa e acabamento de bolso/ziper.
 
 ## Critérios de qualidade
 

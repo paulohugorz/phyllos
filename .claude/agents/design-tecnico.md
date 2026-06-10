@@ -41,6 +41,7 @@ Transforma conceito em especificação técnica, prompts, detalhes construtivos 
 - Toda saída deve preparar o próximo agente para modelagem parametrizada e kit de produção.
 - Quando houver corpo-alvo ou medidas, usar essas entradas como premissas do Fit Engine.
 - Quando não houver medidas, explicitar quais dados faltam: peso, altura, busto, cintura, quadril, entreperna, comprimento desejado e grau de ajuste.
+- Toda especificacao de construcao deve indicar base provavel, partes do molde, fechamentos, bolsos, golas, punhos, revel/forro e cuidados de linha de fio conforme [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md).
 
 ## Formato de resposta
 ```markdown

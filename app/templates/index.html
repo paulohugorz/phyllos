@@ -4,329 +4,478 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fashion OS</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            obsidian: '#0F0F0D',
-            linen:    '#E8E4DC',
-            cream:    '#F5F2EB',
-            gold:     '#B89A6A',
-            muted:    '#9E9B95',
-          },
-          fontFamily: {
-            display: ['Cormorant Garamond', 'Georgia', 'serif'],
-            body:    ['Jost', 'system-ui', 'sans-serif'],
-          },
-        }
-      }
-    }
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    body { background-color: #F5F2EB; color: #0F0F0D; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    textarea:focus { outline: none; }
-
-    #drop-zone.drag-over {
-      border-color: #B89A6A;
-      background-color: #E8E4DC;
+    :root {
+      --obsidian: #0F0F0D;
+      --cream:    #F5F2EB;
+      --gold:     #B89A6A;
+      --muted:    #9E9B95;
+      --border:   rgba(15,15,13,0.12);
+      --border-md: rgba(15,15,13,0.22);
     }
 
-    #image-preview {
-      transition: opacity 0.3s ease;
+    body {
+      background: var(--cream);
+      color: var(--obsidian);
+      font-family: 'Jost', system-ui, sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
     }
 
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .version {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    main {
+      display: flex;
+      height: calc(100vh - 49px);
+    }
+
+    .panel {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel-left { border-right: 1px solid var(--border); }
+
+    .panel-header {
+      padding: 20px 32px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    textarea {
+      flex: 1;
+      resize: none;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 24px 32px;
+      font-family: 'Jost', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--obsidian);
+    }
+    textarea::placeholder { color: rgba(158,155,149,0.55); }
+
+    .panel-footer {
+      padding: 16px 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn {
+      padding: 10px 20px;
+      font-family: 'Jost', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.18s;
+    }
     .btn-primary {
-      background-color: #0F0F0D;
-      color: #F5F2EB;
-      transition: background-color 0.2s;
+      flex: 1;
+      background: var(--obsidian);
+      color: var(--cream);
+      border: 1px solid var(--obsidian);
     }
-    .btn-primary:hover { background-color: #2a2a26; }
-
+    .btn-primary:hover { background: #2a2a26; }
+    .btn-primary:disabled { opacity: 0.4; cursor: default; }
     .btn-ghost {
-      border: 1px solid #9E9B95;
-      color: #9E9B95;
-      transition: all 0.2s;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(158,155,149,0.5);
     }
-    .btn-ghost:hover { border-color: #0F0F0D; color: #0F0F0D; }
+    .btn-ghost:hover { border-color: var(--obsidian); color: var(--obsidian); }
 
-    ::selection { background: #B89A6A33; }
+    .loading-bar {
+      display: none;
+      height: 1px;
+      width: 40%;
+      background: var(--gold);
+      animation: sweep 0.9s ease-in-out infinite;
+      position: absolute;
+      bottom: 0; left: 0;
+    }
+    .loading-bar.visible { display: block; }
+    @keyframes sweep { 0%{left:-40%} 100%{left:100%} }
+
+    /* Right: empty */
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0.35;
+    }
+    .empty-icon {
+      width: 52px; height: 52px;
+      border: 1px solid var(--border-md);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .empty-label { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
+
+    /* Right: result */
+    .result-panel {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 24px 32px;
+      gap: 20px;
+    }
+    .result-panel.visible { display: flex; }
+
+    .result-sku {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .img-slot {
+      width: 100%;
+      min-height: 260px;
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: rgba(232,228,220,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .img-slot span {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+    .img-slot img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .img-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .img-slot .img-loading {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(245,242,235,0.85);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .img-slot .img-loading.visible { display: flex; }
+    .img-spinner {
+      width: 20px; height: 20px;
+      border: 1.5px solid rgba(15,15,13,0.15);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .img-loading-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .meta-table { width: 100%; border-collapse: collapse; }
+    .meta-table tr { border-bottom: 1px solid var(--border); }
+    .meta-table tr:last-child { border-bottom: none; }
+    .meta-table td { padding: 9px 0; font-size: 12px; }
+    .meta-table td:first-child { color: var(--muted); }
+    .meta-table td:last-child { text-align: right; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .image-actions {
+      display: none;
+      gap: 8px;
+      margin-top: -10px;
+    }
+    .image-actions.visible { display: flex; }
+    .image-actions .btn { flex: 1; text-align: center; text-decoration: none; }
+
+    ::selection { background: rgba(184,154,106,0.15); }
   </style>
 </head>
-<body class="min-h-screen font-body">
+<body>
 
-  <!-- Header -->
-  <header class="border-b border-obsidian/10 px-8 py-4 flex items-center justify-between">
-    <span class="font-display text-xl tracking-widest uppercase text-obsidian">Fashion OS</span>
-    <span class="text-xs text-muted tracking-widest uppercase">v1</span>
+  <header>
+    <span class="logo">Fashion OS</span>
+    <span class="version">v1</span>
   </header>
 
-  <!-- Main layout -->
-  <main class="flex h-[calc(100vh-57px)]">
+  <main>
 
-    <!-- Left — Input panel -->
-    <section class="w-1/2 flex flex-col border-r border-obsidian/10 p-8 gap-6">
-
-      <div>
-        <h1 class="font-display text-3xl font-light">Descreva a peça</h1>
-        <p class="text-sm text-muted mt-1">Escreva o conceito, materiais, silhueta ou referência visual.</p>
+    <section class="panel panel-left">
+      <div class="panel-header">
+        <span class="panel-label">Descrição da peça</span>
       </div>
 
       <textarea
         id="description"
-        placeholder="Ex: calça de alfaiataria preta com mobilidade total, cintura alta, perna reta levemente afunilada no tornozelo, tecido com caimento fluido..."
-        class="flex-1 resize-none bg-transparent text-obsidian placeholder-muted/60 text-sm leading-relaxed font-body border-b border-obsidian/20 pb-4 focus:border-obsidian/60 transition-colors duration-200"
+        placeholder="Descreva a peça — silhueta, tecido, caimento, cor, referências..."
       ></textarea>
 
-      <div class="flex gap-3">
-        <button onclick="handleGenerate()" class="btn-primary px-6 py-2.5 text-sm tracking-wide rounded-sm flex-1">
-          Gerar visualização
-        </button>
-        <button onclick="clearAll()" class="btn-ghost px-4 py-2.5 text-sm tracking-wide rounded-sm">
-          Limpar
-        </button>
+      <div class="panel-footer">
+        <button class="btn btn-primary" id="btn-gerar" onclick="gerar()">Gerar peça</button>
+        <button class="btn btn-ghost" onclick="limpar()">Limpar</button>
+        <div class="loading-bar" id="loading-bar"></div>
       </div>
-
-      <!-- Metadata (aparece após input) -->
-      <div id="meta-panel" class="hidden border border-obsidian/10 rounded-sm p-4 bg-linen/50 text-xs text-muted space-y-1.5">
-        <div class="flex justify-between">
-          <span class="uppercase tracking-widest">Caracteres</span>
-          <span id="char-count">0</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="uppercase tracking-widest">Palavras</span>
-          <span id="word-count">0</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="uppercase tracking-widest">Salvo como</span>
-          <span id="save-status" class="text-gold">—</span>
-        </div>
-      </div>
-
     </section>
 
-    <!-- Right — Image panel -->
-    <section class="w-1/2 flex flex-col p-8 gap-6">
-
-      <div class="flex items-center justify-between">
-        <div>
-          <h2 class="font-display text-3xl font-light">Referência visual</h2>
-          <p class="text-sm text-muted mt-1">Arraste uma imagem ou clique para fazer upload.</p>
-        </div>
-        <label for="file-input" class="btn-ghost px-4 py-2 text-xs tracking-widest uppercase cursor-pointer rounded-sm">
-          Upload
-        </label>
-        <input id="file-input" type="file" accept="image/*" class="hidden" onchange="handleFileInput(event)" />
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-label">Peça formada</span>
       </div>
 
-      <!-- Drop zone / Preview area -->
-      <div
-        id="drop-zone"
-        class="flex-1 border border-obsidian/15 rounded-sm flex flex-col items-center justify-center relative overflow-hidden cursor-pointer transition-all duration-200"
-        onclick="document.getElementById('file-input').click()"
-        ondragover="handleDragOver(event)"
-        ondragleave="handleDragLeave(event)"
-        ondrop="handleDrop(event)"
-      >
-        <!-- Empty state -->
-        <div id="empty-state" class="flex flex-col items-center gap-3 text-center p-8">
-          <div class="w-12 h-12 border border-obsidian/20 rounded-full flex items-center justify-center">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10 4v12M4 10h12" stroke="#9E9B95" stroke-width="1.5" stroke-linecap="round"/>
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M7 3H4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-3M7 3a2 2 0 0 0 4 0M7 3a2 2 0 0 1 4 0" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="empty-label">A peça aparecerá aqui</span>
+      </div>
+
+      <div class="result-panel" id="result-panel">
+        <span class="result-sku" id="result-sku"></span>
+
+        <div class="img-slot" id="img-slot">
+          <img id="generated-img" alt="Peça gerada" />
+          <div class="img-loading" id="img-loading">
+            <div class="img-spinner"></div>
+            <span class="img-loading-label">Gerando</span>
+          </div>
+          <div class="img-empty" id="img-empty">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="opacity:.35">
+              <rect x="3" y="5" width="22" height="18" rx="2" stroke="#9E9B95" stroke-width="1.2"/>
+              <circle cx="9.5" cy="11" r="2" stroke="#9E9B95" stroke-width="1.2"/>
+              <path d="M3 19l5-5 4 4 4-4 6 6" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <p class="text-sm text-muted">Arraste uma imagem aqui</p>
-          <p class="text-xs text-muted/60">JPG, PNG, WEBP — máx. 10 MB</p>
+        </div>
+        <div class="image-actions" id="image-actions">
+          <a class="btn btn-ghost" id="download-img" download="phyllos-imagem-realista.png">Baixar imagem</a>
         </div>
 
-        <!-- Image preview -->
-        <img
-          id="image-preview"
-          class="hidden absolute inset-0 w-full h-full object-contain p-4"
-          alt="Referência visual"
-        />
-
-        <!-- Loading overlay -->
-        <div id="loading-overlay" class="hidden absolute inset-0 bg-cream/80 flex items-center justify-center">
-          <div class="flex flex-col items-center gap-3">
-            <div class="w-6 h-6 border-2 border-obsidian/20 border-t-obsidian rounded-full animate-spin"></div>
-            <span class="text-xs text-muted tracking-widest uppercase">Processando</span>
-          </div>
-        </div>
+        <table class="meta-table" id="meta-table"></table>
       </div>
 
-      <!-- Image actions (aparecem com imagem carregada) -->
-      <div id="image-actions" class="hidden flex gap-3">
-        <button onclick="savePromptAndImage()" class="btn-primary px-6 py-2.5 text-sm tracking-wide rounded-sm flex-1">
-          Salvar peça
-        </button>
-        <button onclick="removeImage()" class="btn-ghost px-4 py-2.5 text-sm tracking-wide rounded-sm">
-          Remover
-        </button>
+      <div class="panel-footer" style="flex-direction:column;gap:6px;align-items:stretch;">
+        <p style="font-size:11px;color:var(--muted);letter-spacing:0.03em;">
+          Prévia realista com cenário e styling, usando referências visuais locais da PHYLLOS.
+        </p>
       </div>
-
-      <!-- Success message -->
-      <div id="success-msg" class="hidden text-center py-3 text-xs tracking-widest uppercase text-gold border border-gold/30 rounded-sm">
-        Peça salva com sucesso
-      </div>
-
     </section>
 
   </main>
 
   <script>
-    let currentFile = null;
+    function gerar() {
+      const txt = document.getElementById('description').value.trim();
+      if (!txt) { document.getElementById('description').focus(); return; }
 
-    // --- Textarea counter ---
-    const textarea = document.getElementById('description');
-    const metaPanel = document.getElementById('meta-panel');
-    const charCount = document.getElementById('char-count');
-    const wordCount = document.getElementById('word-count');
+      const btn = document.getElementById('btn-gerar');
+      const bar = document.getElementById('loading-bar');
+      btn.disabled = true;
+      bar.classList.add('visible');
 
-    textarea.addEventListener('input', () => {
-      const text = textarea.value;
-      charCount.textContent = text.length;
-      wordCount.textContent = text.trim() ? text.trim().split(/\s+/).length : 0;
-      metaPanel.classList.toggle('hidden', text.length === 0);
-    });
-
-    // --- Drag and drop ---
-    function handleDragOver(e) {
-      e.preventDefault();
-      document.getElementById('drop-zone').classList.add('drag-over');
-    }
-
-    function handleDragLeave(e) {
-      document.getElementById('drop-zone').classList.remove('drag-over');
-    }
-
-    function handleDrop(e) {
-      e.preventDefault();
-      document.getElementById('drop-zone').classList.remove('drag-over');
-      const file = e.dataTransfer.files[0];
-      if (file && file.type.startsWith('image/')) loadImage(file);
-    }
-
-    function handleFileInput(e) {
-      const file = e.target.files[0];
-      if (file) loadImage(file);
-    }
-
-    // --- Load image ---
-    function loadImage(file) {
-      if (file.size > 10 * 1024 * 1024) {
-        alert('Arquivo muito grande. Máximo 10 MB.');
-        return;
-      }
-      currentFile = file;
-      const reader = new FileReader();
-      reader.onload = (e) => showImage(e.target.result);
-      reader.readAsDataURL(file);
-    }
-
-    function showImage(src) {
-      const preview = document.getElementById('image-preview');
-      const emptyState = document.getElementById('empty-state');
-      const actions = document.getElementById('image-actions');
-
-      preview.src = src;
-      preview.classList.remove('hidden');
-      emptyState.classList.add('hidden');
-      actions.classList.remove('hidden');
-    }
-
-    function removeImage() {
-      currentFile = null;
-      const preview = document.getElementById('image-preview');
-      const emptyState = document.getElementById('empty-state');
-      const actions = document.getElementById('image-actions');
-
-      preview.classList.add('hidden');
-      preview.src = '';
-      emptyState.classList.remove('hidden');
-      actions.classList.add('hidden');
-      document.getElementById('file-input').value = '';
-      document.getElementById('success-msg').classList.add('hidden');
-    }
-
-    // --- Gerar (placeholder — Fase 3: integração com ComfyUI) ---
-    function handleGenerate() {
-      const desc = textarea.value.trim();
-      if (!desc) {
-        textarea.focus();
-        return;
-      }
-      if (currentFile) return; // já tem imagem, salvar direto
-
-      const overlay = document.getElementById('loading-overlay');
-      overlay.classList.remove('hidden');
-
-      // Fase 3: aqui vai a chamada ao ComfyUI
-      // Por enquanto, simula carregamento e abre o seletor de arquivo
       setTimeout(() => {
-        overlay.classList.add('hidden');
-        document.getElementById('file-input').click();
-      }, 800);
+        btn.disabled = false;
+        bar.classList.remove('visible');
+        mostrarResultado(txt);
+      }, 700);
     }
 
-    // --- Salvar peça na API ---
-    async function savePromptAndImage() {
-      const desc = textarea.value.trim();
-      if (!desc && !currentFile) return;
+    function mostrarResultado(txt) {
+      const ts = Date.now().toString().slice(-4);
+      const sku = 'PH' + new Date().getFullYear().toString().slice(-2) + ts;
 
-      const saveStatus = document.getElementById('save-status');
-      saveStatus.textContent = 'salvando...';
+      const catMatch = txt.match(/calça|saia|blusa|vestido|jaqueta|casaco|camisa|shorts|top|macacão|blazer/i);
+      const corMatch = txt.match(/pret[ao]|branc[ao]|cinz[ao]|azul|verde|vermelh[ao]|beg[eê]|crem[ae]|marrom|caramelo|dourad[ao]|off.white/i);
+      const tecMatch = txt.match(/linho|seda|algodão|lã|jersey|crepe|tweed|veludo|cetim|tencel|viscose|denim/i);
 
-      try {
-        // 1. Criar peça via API
-        const ts = Date.now().toString().slice(-4);
-        const sku = `PH${new Date().getFullYear().toString().slice(-2)}${ts}`;
+      const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+      const cat = catMatch ? cap(catMatch[0]) : '—';
+      const cor = corMatch ? cap(corMatch[0]) : '—';
+      const tec = tecMatch ? cap(tecMatch[0]) : '—';
 
-        const pecaRes = await fetch('/pecas', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            codigo: sku,
-            nome: desc.slice(0, 60) || 'Nova peça',
-            prompt_foto: desc,
-            status: 'conceito',
-            prioridade: 'media',
-          }),
-        });
+      document.getElementById('result-sku').textContent = sku;
+      document.getElementById('meta-table').innerHTML = `
+        <tr><td>Categoria</td><td>${cat}</td></tr>
+        <tr><td>Cor</td><td>${cor}</td></tr>
+        <tr><td>Tecido</td><td>${tec}</td></tr>
+        <tr><td>Status</td><td><span class="status-badge">Rascunho</span></td></tr>
+        <tr><td>Imagem atual</td><td>Fotografia realista com cenário</td></tr>
+        <tr><td>Motor realista</td><td>Referência local agora; ComfyUI/API na Fase 3</td></tr>
+        <tr><td>Prompt realista</td><td>${escapeXml(promptRealista(txt, catMatch ? catMatch[0].toLowerCase() : 'peça', corMatch ? corMatch[0].toLowerCase() : 'natural', tecMatch ? tecMatch[0].toLowerCase() : 'tecido'))}</td></tr>
+      `;
 
-        if (!pecaRes.ok) throw new Error('Erro ao criar peça');
-        const peca = await pecaRes.json();
+      document.getElementById('empty-state').style.display = 'none';
+      document.getElementById('result-panel').classList.add('visible');
 
-        // 2. Upload da imagem se existir
-        if (currentFile) {
-          const formData = new FormData();
-          formData.append('file', currentFile);
-          await fetch(`/imagens/upload/${peca.id}`, {
-            method: 'POST',
-            body: formData,
-          });
-        }
+      gerarImagem(txt);
+    }
 
-        saveStatus.textContent = sku;
-        document.getElementById('success-msg').classList.remove('hidden');
-        metaPanel.classList.remove('hidden');
+    function gerarImagem(txt) {
+      const img = document.getElementById('generated-img');
+      const loading = document.getElementById('img-loading');
+      const empty = document.getElementById('img-empty');
+      const actions = document.getElementById('image-actions');
+      const download = document.getElementById('download-img');
 
-      } catch (err) {
-        saveStatus.textContent = 'erro';
-        console.error(err);
+      img.style.display = 'none';
+      empty.style.display = 'none';
+      actions.classList.remove('visible');
+      loading.classList.add('visible');
+
+      window.setTimeout(() => {
+        const selected = selecionarImagemRealista(txt);
+        const src = selected.src;
+        img.src = src;
+        img.alt = selected.alt;
+        img.style.display = 'block';
+        download.href = src;
+        download.download = `${document.getElementById('result-sku').textContent || 'phyllos'}-imagem-realista.png`;
+        actions.classList.add('visible');
+        loading.classList.remove('visible');
+      }, 450);
+    }
+
+    function selecionarImagemRealista(txt) {
+      const lower = txt.toLowerCase();
+      if (lower.includes('alfaiataria') || lower.includes('crepe') || lower.includes('trabalho') || lower.includes('performance')) {
+        return {
+          src: '/static/img/calca-alfaiataria-performance-realista.png',
+          alt: 'Calça preta de alfaiataria performance em fotografia realista de estúdio com cenário e detalhes técnicos'
+        };
       }
+      if (lower.includes('dia a dia') || lower.includes('viagem') || lower.includes('versatil') || lower.includes('cordão') || lower.includes('elástico')) {
+        return {
+          src: '/static/img/calca-conforto-versatilidade-realista.png',
+          alt: 'Calça preta confortável e versátil em fotografia realista com cenários de rotina'
+        };
+      }
+      return {
+        src: '/static/img/calca-cenario-performance.png',
+        alt: 'Calça preta de performance em fotografia realista com modelos diversas, academia, alongamento e rotina'
+      };
     }
 
-    // --- Limpar tudo ---
-    function clearAll() {
-      textarea.value = '';
-      textarea.dispatchEvent(new Event('input'));
-      removeImage();
-      document.getElementById('success-msg').classList.add('hidden');
+    function matchFirst(text, words) {
+      return words.find(word => text.includes(word));
+    }
+
+    function promptRealista(txt, tipo, cor, tecido) {
+      const lexicon = {
+        'calça': 'tailored trousers, high waist, clean front waistband, realistic seated and standing drape',
+        shorts: 'tailored shorts, refined waistband, clean hem, realistic fabric folds',
+        camisa: 'performance shirt, refined collar construction, clean placket, natural shoulder fit',
+        blazer: 'unstructured blazer, soft tailoring, natural shoulder, breathable refined fabric',
+        jaqueta: 'lightweight transitional jacket, clean seams, functional minimal details',
+        vestido: 'versatile dress, controlled ease, realistic garment weight and movement',
+        saia: 'comfortable skirt, clean waistband, realistic hem and movement',
+        top: 'minimal performance top, clean neckline, smooth technical fabric',
+        macacão: 'tailored jumpsuit, balanced proportions, clean waist construction'
+      };
+      const fabrics = {
+        crepe: 'matte stretch crepe, subtle pebbled texture, structured drape',
+        malha: 'premium technical knit, smooth recovery, soft stretch',
+        viscose: 'viscose blend, soft breathable drape',
+        tencel: 'lyocell fabric, fluid breathable drape, soft surface',
+        linho: 'linen blend, natural slub texture, breathable structure',
+        algodão: 'cotton blend, soft matte surface',
+        denim: 'refined lightweight denim texture',
+        cetim: 'soft satin surface, controlled low shine'
+      };
+      const base = lexicon[tipo] || 'realistic fashion garment, precise construction details';
+      const fabric = fabrics[tecido] || `${tecido} fabric, plausible texture and garment weight`;
+      return `${base}, ${capitalize(cor)} color, ${fabric}, PHYLLOS conscious performance wear, elegant comfort, mobility, natural light editorial product photography, no logo, no text, no watermark. Negative: leggings look, plastic shine, distorted seams, unrealistic folds, generic stock photo styling. Brief: ${txt.slice(0, 120)}`;
+    }
+
+    function capitalize(s) {
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    function escapeXml(s) {
+      return s.replace(/[<>&"']/g, c => ({'<':'&lt;', '>':'&gt;', '&':'&amp;', '"':'&quot;', "'":'&apos;'}[c]));
+    }
+
+    function showImgError(msg) {
+      document.getElementById('img-loading').classList.remove('visible');
+      const empty = document.getElementById('img-empty');
+      empty.innerHTML = `
+        <div style="text-align:center;padding:16px;display:flex;flex-direction:column;gap:8px;align-items:center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="opacity:.3">
+            <rect x="3" y="5" width="18" height="14" rx="2" stroke="#9E9B95" stroke-width="1.2"/>
+            <path d="M12 10v4M12 16h.01" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <span style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">${msg}</span>
+        </div>`;
+      empty.style.display = 'flex';
+    }
+
+    function limpar() {
+      document.getElementById('description').value = '';
+      document.getElementById('result-panel').classList.remove('visible');
+      document.getElementById('empty-state').style.display = '';
+      const img = document.getElementById('generated-img');
+      img.style.display = 'none';
+      img.src = '';
+      document.getElementById('img-empty').style.display = 'flex';
+      document.getElementById('img-loading').classList.remove('visible');
+      document.getElementById('image-actions').classList.remove('visible');
     }
   </script>
 

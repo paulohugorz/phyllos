@@ -3,11 +3,13 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app.core.database import get_db
-from app.models.models import Colecao, Peca, FichaTecnica
+from app.models.models import Colecao, Peca, FichaTecnica, VisualReference, PecaVisualReference
 from app.schemas.schemas import (
     ColecaoCreate, ColecaoOut,
     PecaCreate, PecaUpdate, PecaOut,
     FichaTecnicaCreate, FichaTecnicaOut,
+    VisualReferenceCreate, VisualReferenceOut,
+    PecaVisualReferenceCreate, PecaVisualReferenceOut,
 )
 
 router = APIRouter()
@@ -99,6 +101,76 @@ def obter_ficha(peca_id: int, db: Session = Depends(get_db)):
     if not ficha:
         raise HTTPException(status_code=404, detail="Ficha técnica não encontrada")
     return ficha
+
+
+# ---------- Referências Visuais ----------
+
+@router.get("/referencias-visuais", response_model=List[VisualReferenceOut], tags=["Referências Visuais"])
+def listar_referencias_visuais(
+    contexto: str | None = None,
+    categoria: str | None = None,
+    status: str | None = None,
+    db: Session = Depends(get_db),
+):
+    query = db.query(VisualReference)
+    if contexto:
+        query = query.filter(VisualReference.contexto_uso.contains(contexto))
+    if categoria:
+        query = query.filter(VisualReference.categoria == categoria)
+    if status:
+        query = query.filter(VisualReference.status == status)
+    return query.order_by(VisualReference.prioridade.desc(), VisualReference.titulo.asc()).all()
+
+
+@router.post("/referencias-visuais", response_model=VisualReferenceOut, status_code=201, tags=["Referências Visuais"])
+def criar_referencia_visual(data: VisualReferenceCreate, db: Session = Depends(get_db)):
+    if db.query(VisualReference).filter(VisualReference.slug == data.slug).first():
+        raise HTTPException(status_code=400, detail="Referência visual já existe")
+    referencia = VisualReference(**data.model_dump())
+    db.add(referencia)
+    db.commit()
+    db.refresh(referencia)
+    return referencia
+
+
+@router.get("/referencias-visuais/{slug}", response_model=VisualReferenceOut, tags=["Referências Visuais"])
+def obter_referencia_visual(slug: str, db: Session = Depends(get_db)):
+    referencia = db.query(VisualReference).filter(VisualReference.slug == slug).first()
+    if not referencia:
+        raise HTTPException(status_code=404, detail="Referência visual não encontrada")
+    return referencia
+
+
+@router.post("/pecas/{codigo}/referencias-visuais", response_model=PecaVisualReferenceOut, status_code=201, tags=["Referências Visuais"])
+def vincular_referencia_visual(
+    codigo: str,
+    data: PecaVisualReferenceCreate,
+    db: Session = Depends(get_db),
+):
+    peca = db.query(Peca).filter(Peca.codigo == codigo).first()
+    if not peca:
+        raise HTTPException(status_code=404, detail="Peça não encontrada")
+    if not db.query(VisualReference).filter(VisualReference.id == data.visual_reference_id).first():
+        raise HTTPException(status_code=404, detail="Referência visual não encontrada")
+    vinculo = PecaVisualReference(peca_id=peca.id, **data.model_dump())
+    db.add(vinculo)
+    db.commit()
+    db.refresh(vinculo)
+    return vinculo
+
+
+@router.get("/pecas/{codigo}/referencias-visuais", response_model=List[VisualReferenceOut], tags=["Referências Visuais"])
+def listar_referencias_da_peca(codigo: str, db: Session = Depends(get_db)):
+    peca = db.query(Peca).filter(Peca.codigo == codigo).first()
+    if not peca:
+        raise HTTPException(status_code=404, detail="Peça não encontrada")
+    return (
+        db.query(VisualReference)
+        .join(PecaVisualReference)
+        .filter(PecaVisualReference.peca_id == peca.id)
+        .order_by(VisualReference.prioridade.desc(), VisualReference.titulo.asc())
+        .all()
+    )
 
 
 # ---------- Health ----------

@@ -17,6 +17,7 @@ Converte design técnico em modelagem 2D, bases, ajustes e graduação.
 - Definir medidas finais da peça, folgas de vestibilidade, distribuição de elasticidade e proporções adequadas.
 - Indicar margem de costura, piques, linha de fio, plano de corte e premissas para paginação A4.
 - Explicar como elasticidade, gramatura, fluidez, estrutura e memória do tecido afetam o molde.
+- Aplicar a referencia de construcao em [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para escolher base, transformacoes, margem, piques, linha de fio, fechamentos e sequencia de montagem.
 
 ## Entradas esperadas
 - Contexto da coleção ou peça
@@ -30,6 +31,7 @@ Converte design técnico em modelagem 2D, bases, ajustes e graduação.
 - Entregável da etapa
 - Medidas finais da peça e folgas de vestibilidade
 - Premissas de molde parametrizado, margem de costura, piques, linha de fio e plano de corte
+- Base de modelagem escolhida e transformacoes construtivas aplicadas
 - Riscos e pendências
 - Próximo agente sugerido
 

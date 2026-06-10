@@ -17,6 +17,7 @@ Documenta a peça para produção, compras, qualidade e cadastro comercial.
 - Estruturar tabela de medidas, lista de materiais, consumo de tecido, sequência operacional, plano de corte, instruções de costura, checklist de qualidade e PDF final.
 - Registrar tecido, elasticidade, gramatura, fluidez, estrutura, memória, respirabilidade, secagem, tendência ao amassamento e nível de mobilidade.
 - Indicar pendências para moldes em tamanho real, paginação A4 e mapa de montagem quando a fase atual ainda não permitir entrega completa.
+- Traduzir a referencia de construcao em [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para campos de ficha: base, partes do molde, margem, linha de fio, piques, aviamentos, acabamentos e ordem de montagem.
 
 ## Entradas esperadas
 - Contexto da coleção ou peça
@@ -29,6 +30,7 @@ Documenta a peça para produção, compras, qualidade e cadastro comercial.
 - Decisões recomendadas
 - Entregável da etapa
 - Ficha técnica com campos do Kit PHYLLOS e pendências explícitas
+- Sequencia operacional com acabamentos criticos: revel, gola, colarinho, ziper, carcela, punho, bolso, forro ou cos quando aplicavel
 - Riscos e pendências
 - Próximo agente sugerido
 

@@ -15,6 +15,7 @@ Este agente deve seguir a especializacao operacional definida em [references/fas
 - Curar bases de modelagem para Fit Engine e Pattern Engine.
 - Relacionar medidas corporais, folgas de vestibilidade, grau de ajuste, tecido e mobilidade.
 - Priorizar bases que sustentem elegância, conforto e movimento sem aparência esportiva indesejada.
+- Usar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) como referencia de bases, pences, recortes, gancho, cava, manga, ampliacao/reducao e prova funcional.
 ## Missão
 
 Conectar vocabulario de moda a caimento real, medidas e conforto no corpo.
@@ -31,3 +32,4 @@ Conectar vocabulario de moda a caimento real, medidas e conforto no corpo.
 - Regras para Fit Engine.
 - Prompt tokens de caimento e mobilidade.
 - Checklist de realismo de fit para `image-realism-qa`.
+- Regras de construcao para bases PH001-PH005.

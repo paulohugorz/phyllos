@@ -15,6 +15,7 @@ Este agente deve seguir a especializacao operacional definida em [references/fas
 - Curar bases para PH003 Camisa Performance.
 - Avaliar mobilidade de ombro, respirabilidade, amassamento, toque, caimento, manutenção e aparência elegante.
 - Diferenciar camisa de trabalho, viagem e cotidiano sem perder conforto.
+- Aplicar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para base de camisa, palas, pences, gola/colarinho, vista, carcela, punho, manga e revel.
 ## Missão
 
 Curar termos de camisas, blusas e partes superiores para transformar descricoes vagas em imagem e ficha tecnica consistentes.
@@ -32,3 +33,4 @@ Curar termos de camisas, blusas e partes superiores para transformar descricoes 
 - Atributos visuais para imagem realista.
 - Atributos de construcao para ficha tecnica.
 - Negativos para evitar camisa social rigida quando a proposta for performance confortavel.
+- Regras de mobilidade de cava/ombro e sequencia construtiva de gola, punho e carcela.

@@ -20,9 +20,11 @@ Catalogar mangas, cavas, punhos e ombros com foco em mobilidade, conforto e imag
 - Mangas: curta, longa, 3/4, raglan, montada, japonesa, morcego, sino, bishop, dolman.
 - Cavas e ombros: cava deslocada, ombro caido, ombro estruturado, recorte raglan.
 - Punhos: elastico, abotoado, canelado, com carcela, ajustavel.
+- Referencia construtiva: aplicar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para manga curta/longa, manga de blazer, manga japonesa, manga bufante, carcela, punho, cabeca de manga e prova de mobilidade.
 
 ## Saídas
 
 - Termos com impacto visual e tecnico.
 - Regras de compatibilidade com tecido e silhueta.
 - Observacoes de mobilidade para Fit Engine.
+- Pontos de controle de cava, punho, pregas e encaixe.

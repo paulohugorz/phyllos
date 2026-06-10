@@ -20,6 +20,7 @@ Criar uma biblioteca precisa de golas e decotes para melhorar prompts, desenho t
 - Golas: padre, camp, esporte, italiana, mao, polo, alta, role, degage.
 - Decotes: redondo, V, canoa, quadrado, halter, transpassado, assimetrico.
 - Construção: pe de gola, colarinho, entretela, revel, viés, pesponto, abertura frontal.
+- Referencia construtiva: usar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para gola simples, colarinho com pe de gola, gola inteirica, gola xale/esporte, decotes e revel.
 
 ## Saídas
 
@@ -27,3 +28,4 @@ Criar uma biblioteca precisa de golas e decotes para melhorar prompts, desenho t
 - Atributos visuais observaveis.
 - Incompatibilidades de uso e construcao.
 - Prompt negativo para evitar confusao entre tipos semelhantes.
+- Requisitos de molde/acabamento para cada gola ou decote.

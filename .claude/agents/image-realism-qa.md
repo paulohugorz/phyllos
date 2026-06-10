@@ -21,6 +21,7 @@ Avaliar imagens geradas antes de virarem referencia de produto no Fashion OS.
 - O tecido parece ter textura, brilho e peso plausiveis.
 - O caimento respeita folga, elasticidade e estrutura.
 - A imagem respeita peso, altura, proporcoes corporais, tecido, elasticidade, folgas de vestibilidade e caimento real.
+- A construcao e coerente com [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md): linha de fio, pences, recortes, cava, gancho, golas, bolsos, ziper, punhos, carcela, revel e barras.
 - O contexto visual corresponde ao tipo pedido: editorial, e-commerce, lifestyle, viagem, trabalho, alongamento, caminhada ou academia leve.
 - Bolsos, gola, manga, fechamento e barra nao foram inventados.
 - O corpo e a pose nao distorcem a peca.

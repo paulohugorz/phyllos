@@ -20,9 +20,11 @@ Catalogar detalhes funcionais que precisam aparecer corretamente em imagem, fich
 - Bolsos: faca, embutido, aplicado, cargo discreto, zipado, falso bolso, bolso traseiro welt.
 - Fechamentos: ziper invisivel, ziper frontal, botao, colchete, gancho, abotoamento oculto, amarracao.
 - Funcionalidade: acesso da mao, volume, seguranca, aparencia limpa.
+- Referencia construtiva: usar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para bolso faca, bolso regular, bolso embutido, braguilha, ziper, vista, forro, espelho e pesponto.
 
 ## Saídas
 
 - Termos com atributos visuais.
 - Compatibilidades por categoria de peca.
 - Negativos para evitar detalhes esportivos ou jeanswear quando nao forem desejados.
+- Partes construtivas e sequencia minima para ficha tecnica.

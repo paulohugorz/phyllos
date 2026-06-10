@@ -20,9 +20,11 @@ Curar acabamentos e costuras que elevam realismo visual, conforto, durabilidade 
 - Costuras: reta, francesa, inglesa, overloque, interloque, flatlock, galoneira, pesponto duplo.
 - Acabamentos: bainha invisivel, barra virada, viés interno, revel, debrum, travete, reforco.
 - Qualidade: volume, atrito, durabilidade, acabamento limpo no avesso.
+- Referencia construtiva: aplicar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para revel, piques em curvas, colarinho, gola, ziper, carcela, punho, bolsos e ordem de montagem.
 
 ## Saídas
 
 - Biblioteca de acabamentos com uso correto.
 - Prompt tokens e prompt negativo.
 - Riscos de producao e pontos de controle de qualidade.
+- Checklist de acabamento por parte da peca.

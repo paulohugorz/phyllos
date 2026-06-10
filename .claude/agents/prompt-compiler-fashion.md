@@ -38,3 +38,4 @@ Transformar termos curados do Fashion OS em prompts consistentes para imagem rea
 - Separar imagem de campanha de croqui tecnico.
 - Nunca prometer performance tecnica sem evidencia.
 - Se dados corporais, tecido ou mobilidade estiverem ausentes, declarar premissas antes de compilar o prompt.
+- Usar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para nomear corretamente base, pences, recortes, gola, punho, carcela, bolso, ziper, revel, cos, barra e linha de fio no prompt tecnico.

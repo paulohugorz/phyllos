@@ -17,6 +17,7 @@ Valida conformidade da peça com ficha técnica, medidas e acabamento.
 - Verificar conforto, mobilidade, caimento, costura, acabamento, manutenção, amassamento, secagem e durabilidade.
 - Comparar peça real contra imagem aprovada, ficha técnica, tabela de medidas e molde.
 - Bloquear claims técnicos quando não houver evidência de teste, documentação ou amostra aprovada.
+- Validar se a construcao segue a referencia em [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md): folgas, gancho, cava, linha de fio, margem, piques, bolsos, golas, ziperes, punhos, revel e prova funcional.
 
 ## Entradas esperadas
 - Contexto da coleção ou peça
