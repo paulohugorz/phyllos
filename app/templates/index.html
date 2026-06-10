@@ -329,33 +329,14 @@
         </div>
       </div>
 
-      <div class="panel-footer" style="flex-direction:column;gap:6px;align-items:stretch;">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <input
-            id="api-token"
-            type="password"
-            placeholder="Token Hugging Face (hf_...)"
-            style="flex:1;padding:8px 12px;font-family:inherit;font-size:12px;font-weight:300;
-                   border:1px solid var(--border-md);border-radius:2px;background:transparent;
-                   color:var(--obsidian);outline:none;letter-spacing:0.03em;"
-          />
-        </div>
-        <p style="font-size:11px;color:var(--muted);letter-spacing:0.03em;">
-          Conta gratuita em <a href="https://huggingface.co/settings/tokens" target="_blank" style="color:var(--gold);text-decoration:none;">huggingface.co</a> → Settings → Access Tokens → New token (Read) → cole aqui.
-        </p>
+      <div class="panel-footer">
+        <span style="font-size:11px;color:var(--muted);letter-spacing:0.04em;">Powered by Stable Horde — geração gratuita, sem cadastro.</span>
       </div>
     </section>
 
   </main>
 
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const saved = localStorage.getItem('hf_token');
-      if (saved) document.getElementById('api-token').value = saved;
-      document.getElementById('api-token').addEventListener('input', e => {
-        localStorage.setItem('hf_token', e.target.value);
-      });
-    });
 
     function gerar() {
       const txt = document.getElementById('description').value.trim();
@@ -402,21 +383,15 @@
     }
 
     async function gerarImagem(txt) {
-      const token = localStorage.getItem('hf_token') || document.getElementById('api-token').value;
       const img = document.getElementById('generated-img');
       const loading = document.getElementById('img-loading');
+      const loadingLabel = loading.querySelector('.img-loading-label');
       const empty = document.getElementById('img-empty');
 
       img.style.display = 'none';
       empty.style.display = 'none';
       loading.classList.add('visible');
-
-      if (!token) {
-        loading.classList.remove('visible');
-        empty.style.display = 'flex';
-        document.getElementById('api-token').focus();
-        return;
-      }
+      loadingLabel.textContent = 'Gerando';
 
       // Enriquece prompt com catálogo de referências
       let prompt = txt + ', fashion editorial photo, studio lighting, minimalist white background, full body outfit, high quality, photorealistic';
@@ -433,26 +408,54 @@
       }
 
       try {
-        const res = await fetch(
-          'https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell',
-          {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ inputs: prompt, parameters: { num_inference_steps: 4 } })
-          }
-        );
+        // Submete para Stable Horde (rede comunitária de GPUs — sem token necessário)
+        const submitRes = await fetch('https://stablehorde.net/api/v2/generate/async', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': '0000000000' },
+          body: JSON.stringify({
+            prompt: prompt + ' ### blurry, low quality, watermark, text, disfigured, deformed',
+            params: {
+              sampler_name: 'k_euler_a',
+              cfg_scale: 7,
+              steps: 25,
+              width: 512,
+              height: 768,
+              n: 1
+            },
+            r2: false,
+            slow_workers: true,
+            models: ['AlbedoBase XL (SDXL)']
+          })
+        });
 
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          const msg = err?.error || 'Erro na API';
-          showImgError(res.status === 401 ? 'Token inválido' : res.status === 503 ? 'Modelo carregando, tente em 20s' : msg);
-          return;
+        if (!submitRes.ok) { showImgError('Erro ao enviar geração'); return; }
+        const { id } = await submitRes.json();
+
+        // Polling até a imagem ficar pronta
+        let attempts = 0;
+        while (attempts < 60) {
+          await new Promise(r => setTimeout(r, 3000));
+          attempts++;
+
+          const checkRes = await fetch(`https://stablehorde.net/api/v2/generate/check/${id}`);
+          const check = await checkRes.json();
+
+          if (check.faulted) { showImgError('Falha na geração — tente novamente'); return; }
+          if (check.wait_time > 0) loadingLabel.textContent = `~${check.wait_time}s`;
+
+          if (check.done) {
+            const statusRes = await fetch(`https://stablehorde.net/api/v2/generate/status/${id}`);
+            const status = await statusRes.json();
+            const b64 = status?.generations?.[0]?.img;
+            if (!b64) { showImgError('Imagem não retornada'); return; }
+            img.src = 'data:image/webp;base64,' + b64;
+            img.style.display = 'block';
+            loading.classList.remove('visible');
+            return;
+          }
         }
 
-        const blob = await res.blob();
-        img.src = URL.createObjectURL(blob);
-        img.style.display = 'block';
-        loading.classList.remove('visible');
+        showImgError('Tempo esgotado — tente novamente');
       } catch (e) {
         showImgError('Sem conexão com a API');
       }
