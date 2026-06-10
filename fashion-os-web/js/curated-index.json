@@ -1,0 +1,578 @@
+[
+  {
+    "path": "./img/curated/vestido__01__unsplash.jpg",
+    "categoria": "vestido",
+    "fonte": "unsplash",
+    "credito": "Lauro Rodríguez",
+    "url_original": "https://images.unsplash.com/photo-1664076458686-3449062080ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxlbGVnYW50JTIwZHJlc3MlMjBlZGl0b3JpYWwlMjBmYXNoaW9ufGVufDF8MXx8fDE3ODExMzI3OTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "a woman in a dress"
+  },
+  {
+    "path": "./img/curated/vestido__02__unsplash.jpg",
+    "categoria": "vestido",
+    "fonte": "unsplash",
+    "credito": "Khaled Ghareeb",
+    "url_original": "https://images.unsplash.com/photo-1567777301743-3b7ef158aadf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxlbGVnYW50JTIwZHJlc3MlMjBlZGl0b3JpYWwlMjBmYXNoaW9ufGVufDF8MXx8fDE3ODExMzI3OTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman standing beside opened door"
+  },
+  {
+    "path": "./img/curated/vestido__03__pexels.jpg",
+    "categoria": "vestido",
+    "fonte": "pexels",
+    "credito": "Diana Reyes",
+    "url_original": "https://images.pexels.com/photos/32443161/pexels-photo-32443161.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Stunning editorial photo of a woman in a luxurious purple gown, highlighted by dramatic lighting."
+  },
+  {
+    "path": "./img/curated/vestido__04__pexels.jpg",
+    "categoria": "vestido",
+    "fonte": "pexels",
+    "credito": "Diana Reyes",
+    "url_original": "https://images.pexels.com/photos/32443160/pexels-photo-32443160.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Woman in a stunning purple gown poses elegantly in a sun-drenched archway."
+  },
+  {
+    "path": "./img/curated/vestido__05__unsplash.jpg",
+    "categoria": "vestido",
+    "fonte": "unsplash",
+    "credito": "The AW Creative Digital Marketing",
+    "url_original": "https://images.unsplash.com/photo-1618244965061-1d27b208d6e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxtaWRpJTIwZHJlc3MlMjB3b21hbiUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyNzk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in brown coat standing beside black wooden door"
+  },
+  {
+    "path": "./img/curated/vestido__06__unsplash.jpg",
+    "categoria": "vestido",
+    "fonte": "unsplash",
+    "credito": "GLOBALDSIO IT SOLUTION",
+    "url_original": "https://images.unsplash.com/photo-1704775989614-8435994e4e97?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxtaWRpJTIwZHJlc3MlMjB3b21hbiUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyNzk4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "Woman in a dark blue dress on a maroon background"
+  },
+  {
+    "path": "./img/curated/vestido__07__pexels.jpg",
+    "categoria": "vestido",
+    "fonte": "pexels",
+    "credito": "Marlon Schmeiski",
+    "url_original": "https://images.pexels.com/photos/18953352/pexels-photo-18953352.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Fashion portrait of a woman in an orange dress and boots posing indoors on a rock."
+  },
+  {
+    "path": "./img/curated/vestido__08__pexels.jpg",
+    "categoria": "vestido",
+    "fonte": "pexels",
+    "credito": "Iren Fedo",
+    "url_original": "https://images.pexels.com/photos/17901631/pexels-photo-17901631.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Woman in a patterned midi dress leaning against a kiosk in a vibrant city street during spring."
+  },
+  {
+    "path": "./img/curated/calca__01__unsplash.jpg",
+    "categoria": "calca",
+    "fonte": "unsplash",
+    "credito": "Olga Zhuravleva",
+    "url_original": "https://images.unsplash.com/photo-1614786269829-d24616faf56d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHx0YWlsb3JlZCUyMHRyb3VzZXJzJTIwd29tYW4lMjBlZGl0b3JpYWx8ZW58MXwxfHx8MTc4MTEzMjgwNnww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black long sleeve shirt and black pants"
+  },
+  {
+    "path": "./img/curated/calca__02__unsplash.jpg",
+    "categoria": "calca",
+    "fonte": "unsplash",
+    "credito": "Anni Peng",
+    "url_original": "https://images.unsplash.com/photo-1629511565591-a1d494ad6c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHx0YWlsb3JlZCUyMHRyb3VzZXJzJTIwd29tYW4lMjBlZGl0b3JpYWx8ZW58MXwxfHx8MTc4MTEzMjgwNnww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black blazer sitting on bed"
+  },
+  {
+    "path": "./img/curated/calca__03__pexels.jpg",
+    "categoria": "calca",
+    "fonte": "pexels",
+    "credito": "Kris",
+    "url_original": "https://images.pexels.com/photos/4936952/pexels-photo-4936952.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Elegant black and white portrait of a woman in a stylish suit, combining modern and classic vibes."
+  },
+  {
+    "path": "./img/curated/calca__04__pexels.jpg",
+    "categoria": "calca",
+    "fonte": "pexels",
+    "credito": "cottonbro studio",
+    "url_original": "https://images.pexels.com/photos/6467707/pexels-photo-6467707.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "A fashionable woman in a blue suit poses gracefully in a luxurious hotel interior."
+  },
+  {
+    "path": "./img/curated/calca__05__unsplash.jpg",
+    "categoria": "calca",
+    "fonte": "unsplash",
+    "credito": "Happy Face Emoji",
+    "url_original": "https://images.unsplash.com/photo-1610241532145-96771e5088e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHx3aWRlJTIwbGVnJTIwcGFudHMlMjBmYXNoaW9ufGVufDF8MXx8fDE3ODExMzI4MDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black long sleeve shirt and blue denim jeans standing beside black metal roll up"
+  },
+  {
+    "path": "./img/curated/calca__06__unsplash.jpg",
+    "categoria": "calca",
+    "fonte": "unsplash",
+    "credito": "Stephen Tettey Atsu",
+    "url_original": "https://images.unsplash.com/photo-1769569611856-75e1c7084517?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHx3aWRlJTIwbGVnJTIwcGFudHMlMjBmYXNoaW9ufGVufDF8MXx8fDE3ODExMzI4MDh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "Young woman with braided hair in stylish outfit"
+  },
+  {
+    "path": "./img/curated/calca__07__pexels.jpg",
+    "categoria": "calca",
+    "fonte": "pexels",
+    "credito": "pedro furtado",
+    "url_original": "https://images.pexels.com/photos/28168172/pexels-photo-28168172.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Elegant portrait of a woman in a trendy black outfit posing confidently."
+  },
+  {
+    "path": "./img/curated/calca__08__pexels.jpg",
+    "categoria": "calca",
+    "fonte": "pexels",
+    "credito": "Néo Rioux",
+    "url_original": "https://images.pexels.com/photos/9489467/pexels-photo-9489467.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Low angle view of a fashionable woman posing dramatically in urban setting."
+  },
+  {
+    "path": "./img/curated/camisa__01__unsplash.jpg",
+    "categoria": "camisa",
+    "fonte": "unsplash",
+    "credito": "Valeria Lendel",
+    "url_original": "https://images.unsplash.com/photo-1636153279424-cb5d1e00f5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHx3aGl0ZSUyMHNoaXJ0JTIwd29tYW4lMjBlZGl0b3JpYWwlMjBmYXNoaW9ufGVufDF8MXx8fDE3ODExMzI4MTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "a woman with long black hair standing in front of a wall"
+  },
+  {
+    "path": "./img/curated/camisa__02__unsplash.jpg",
+    "categoria": "camisa",
+    "fonte": "unsplash",
+    "credito": "YASU SHOTS",
+    "url_original": "https://images.unsplash.com/photo-1617019114583-affb34d1b3cd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHx3aGl0ZSUyMHNoaXJ0JTIwd29tYW4lMjBlZGl0b3JpYWwlMjBmYXNoaW9ufGVufDF8MXx8fDE3ODExMzI4MTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in white long sleeve dress wearing black sunglasses"
+  },
+  {
+    "path": "./img/curated/camisa__03__pexels.jpg",
+    "categoria": "camisa",
+    "fonte": "pexels",
+    "credito": "Карина  Каржавина",
+    "url_original": "https://images.pexels.com/photos/7945552/pexels-photo-7945552.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Side view of young pensive woman with brown hair in ban wearing white blouse and trousers standing against gray background holding hands near neck looking at camera"
+  },
+  {
+    "path": "./img/curated/camisa__04__pexels.jpg",
+    "categoria": "camisa",
+    "fonte": "pexels",
+    "credito": "Карина  Каржавина",
+    "url_original": "https://images.pexels.com/photos/7945662/pexels-photo-7945662.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Young female blogger wearing white casual shirt and beige trousers in studio on background of brown photo screen looking at camera"
+  },
+  {
+    "path": "./img/curated/camisa__05__unsplash.jpg",
+    "categoria": "camisa",
+    "fonte": "unsplash",
+    "credito": "tian dayong",
+    "url_original": "https://images.unsplash.com/photo-1713881842156-3d9ef36418cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxsaW5lbiUyMHNoaXJ0JTIwZmFzaGlvbiUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyODE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "a blue shirt hanging on a clothes line"
+  },
+  {
+    "path": "./img/curated/camisa__06__unsplash.jpg",
+    "categoria": "camisa",
+    "fonte": "unsplash",
+    "credito": "Oriol Hausmann",
+    "url_original": "https://images.unsplash.com/photo-1591357037205-166318b51afd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxsaW5lbiUyMHNoaXJ0JTIwZmFzaGlvbiUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyODE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "man in white button up shirt standing during daytime"
+  },
+  {
+    "path": "./img/curated/camisa__07__pexels.jpg",
+    "categoria": "camisa",
+    "fonte": "pexels",
+    "credito": "Luiz Fernando",
+    "url_original": "https://images.pexels.com/photos/3021600/pexels-photo-3021600.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Stylish woman wearing a straw hat and linen shirt exuding a chic fashion statement."
+  },
+  {
+    "path": "./img/curated/camisa__08__pexels.jpg",
+    "categoria": "camisa",
+    "fonte": "pexels",
+    "credito": "emre keshavarz",
+    "url_original": "https://images.pexels.com/photos/5191435/pexels-photo-5191435.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Black and white of busy pensive male buttoning shirt in sunny clear weather"
+  },
+  {
+    "path": "./img/curated/jaqueta__01__unsplash.jpg",
+    "categoria": "jaqueta",
+    "fonte": "unsplash",
+    "credito": "Nicolas Ladino Silva",
+    "url_original": "https://images.unsplash.com/photo-1580478491436-fd6a937acc9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxibGF6ZXIlMjBqYWNrZXQlMjB3b21hbiUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyODI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in red blazer sitting on stairs"
+  },
+  {
+    "path": "./img/curated/jaqueta__02__unsplash.jpg",
+    "categoria": "jaqueta",
+    "fonte": "unsplash",
+    "credito": "Anni Peng",
+    "url_original": "https://images.unsplash.com/photo-1629511565591-a1d494ad6c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxibGF6ZXIlMjBqYWNrZXQlMjB3b21hbiUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyODI2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black blazer sitting on bed"
+  },
+  {
+    "path": "./img/curated/jaqueta__03__pexels.jpg",
+    "categoria": "jaqueta",
+    "fonte": "pexels",
+    "credito": "Laura Chouette",
+    "url_original": "https://images.pexels.com/photos/20837256/pexels-photo-20837256.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Elegant monochrome portrait of a woman in a checkered blazer posing gracefully."
+  },
+  {
+    "path": "./img/curated/jaqueta__04__pexels.jpg",
+    "categoria": "jaqueta",
+    "fonte": "pexels",
+    "credito": "Sonia Ribeiro",
+    "url_original": "https://images.pexels.com/photos/30050044/pexels-photo-30050044.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Stylish woman wearing a beige suit and sunglasses, posing against a neutral backdrop."
+  },
+  {
+    "path": "./img/curated/jaqueta__05__unsplash.jpg",
+    "categoria": "jaqueta",
+    "fonte": "unsplash",
+    "credito": "Mohamad Khosravi",
+    "url_original": "https://images.unsplash.com/photo-1630173250799-2813d34ed14b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHx0YWlsb3JlZCUyMGphY2tldCUyMGZhc2hpb258ZW58MXwxfHx8MTc4MTEzMjgyOHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "man in gray suit jacket and black pants standing beside white wall"
+  },
+  {
+    "path": "./img/curated/jaqueta__06__unsplash.jpg",
+    "categoria": "jaqueta",
+    "fonte": "unsplash",
+    "credito": "Mohamad Khosravi",
+    "url_original": "https://images.unsplash.com/photo-1630667208073-82d53b1db540?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHx0YWlsb3JlZCUyMGphY2tldCUyMGZhc2hpb258ZW58MXwxfHx8MTc4MTEzMjgyOHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "man in gray suit jacket wearing black sunglasses"
+  },
+  {
+    "path": "./img/curated/jaqueta__07__pexels.jpg",
+    "categoria": "jaqueta",
+    "fonte": "pexels",
+    "credito": "Zayona Fashion",
+    "url_original": "https://images.pexels.com/photos/18951526/pexels-photo-18951526.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Elegant brown wool blazer displayed on a mannequin in a stylish fashion setup."
+  },
+  {
+    "path": "./img/curated/jaqueta__08__pexels.jpg",
+    "categoria": "jaqueta",
+    "fonte": "pexels",
+    "credito": "Zayona Fashion",
+    "url_original": "https://images.pexels.com/photos/19303745/pexels-photo-19303745.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "A stylish tan blazer displayed on a mannequin in a fashion store setting, showcasing elegant design."
+  },
+  {
+    "path": "./img/curated/casaco__01__unsplash.jpg",
+    "categoria": "casaco",
+    "fonte": "unsplash",
+    "credito": "Alireza Dolati",
+    "url_original": "https://images.unsplash.com/photo-1601762603339-fd61e28b698a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHx0cmVuY2glMjBjb2F0JTIwd29tYW4lMjBlZGl0b3JpYWx8ZW58MXwxfHx8MTc4MTEzMjgzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black long sleeve shirt covering her face"
+  },
+  {
+    "path": "./img/curated/casaco__02__unsplash.jpg",
+    "categoria": "casaco",
+    "fonte": "unsplash",
+    "credito": "Tamara Harhai",
+    "url_original": "https://images.unsplash.com/photo-1692180142575-c31fcd106b5b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHx0cmVuY2glMjBjb2F0JTIwd29tYW4lMjBlZGl0b3JpYWx8ZW58MXwxfHx8MTc4MTEzMjgzNnww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "a woman leaning against a metal structure in a city"
+  },
+  {
+    "path": "./img/curated/casaco__03__pexels.jpg",
+    "categoria": "casaco",
+    "fonte": "pexels",
+    "credito": "Nataliya Vaitkevich",
+    "url_original": "https://images.pexels.com/photos/4456718/pexels-photo-4456718.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "A fashion model poses in a trench coat against a studio backdrop, highlighting style and elegance."
+  },
+  {
+    "path": "./img/curated/casaco__04__pexels.jpg",
+    "categoria": "casaco",
+    "fonte": "pexels",
+    "credito": "Alina  Rossoshanska",
+    "url_original": "https://images.pexels.com/photos/17040863/pexels-photo-17040863.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Monochrome studio portrait of a woman in sunglasses and trench coat, embodying classic elegance."
+  },
+  {
+    "path": "./img/curated/casaco__05__unsplash.jpg",
+    "categoria": "casaco",
+    "fonte": "unsplash",
+    "credito": "Taras Chernus",
+    "url_original": "https://images.unsplash.com/photo-1619603364904-c0498317e145?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHx3b29sJTIwY29hdCUyMGZhc2hpb24lMjBlZGl0b3JpYWx8ZW58MXwxfHx8MTc4MTEzMjgzOHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "man in brown coat and black pants"
+  },
+  {
+    "path": "./img/curated/casaco__06__unsplash.jpg",
+    "categoria": "casaco",
+    "fonte": "unsplash",
+    "credito": "Chyntia Juls",
+    "url_original": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHx3b29sJTIwY29hdCUyMGZhc2hpb24lMjBlZGl0b3JpYWx8ZW58MXwxfHx8MTc4MTEzMjgzOHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black blazer covering her face with gray scarf"
+  },
+  {
+    "path": "./img/curated/casaco__07__pexels.jpg",
+    "categoria": "casaco",
+    "fonte": "pexels",
+    "credito": "Mâide Arslan",
+    "url_original": "https://images.pexels.com/photos/19169498/pexels-photo-19169498.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Fashion portrait of a woman in a beige coat posing stylishly against a rustic stone wall."
+  },
+  {
+    "path": "./img/curated/casaco__08__pexels.jpg",
+    "categoria": "casaco",
+    "fonte": "pexels",
+    "credito": "Darya Grey_Owl",
+    "url_original": "https://images.pexels.com/photos/16208693/pexels-photo-16208693.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "A woman poses thoughtfully under a large oak tree, wearing a stylish gray coat in an outdoor setting."
+  },
+  {
+    "path": "./img/curated/top-blusa__01__unsplash.jpg",
+    "categoria": "top-blusa",
+    "fonte": "unsplash",
+    "credito": "fariba gh",
+    "url_original": "https://images.unsplash.com/photo-1756887267535-6e25b59fe9c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxibG91c2UlMjB3b21hbiUyMGVkaXRvcmlhbCUyMGZhc2hpb258ZW58MXwxfHx8MTc4MTEzMjg0N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "Woman in white shirt and brown skirt with draped fabric"
+  },
+  {
+    "path": "./img/curated/top-blusa__02__unsplash.jpg",
+    "categoria": "top-blusa",
+    "fonte": "unsplash",
+    "credito": "Rizky Sabriansyah",
+    "url_original": "https://images.unsplash.com/photo-1626708132296-c9cb4cf5f5ba?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxibG91c2UlMjB3b21hbiUyMGVkaXRvcmlhbCUyMGZhc2hpb258ZW58MXwxfHx8MTc4MTEzMjg0N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in yellow dress shirt with black headphones"
+  },
+  {
+    "path": "./img/curated/top-blusa__03__pexels.jpg",
+    "categoria": "top-blusa",
+    "fonte": "pexels",
+    "credito": "Inna Mykytas",
+    "url_original": "https://images.pexels.com/photos/14416339/pexels-photo-14416339.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Classic monochrome portrait of a stylish woman posing in a studio setting, showcasing elegance and grace."
+  },
+  {
+    "path": "./img/curated/top-blusa__04__pexels.jpg",
+    "categoria": "top-blusa",
+    "fonte": "pexels",
+    "credito": "Jo Kassis",
+    "url_original": "https://images.pexels.com/photos/5005541/pexels-photo-5005541.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "A woman in ruffled long sleeves poses confidently in black and white, with hands on waist and dramatic lighting."
+  },
+  {
+    "path": "./img/curated/top-blusa__05__unsplash.jpg",
+    "categoria": "top-blusa",
+    "fonte": "unsplash",
+    "credito": "Lauro Rodríguez",
+    "url_original": "https://images.unsplash.com/photo-1664076458686-3449062080ac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxzaWxrJTIwdG9wJTIwZWRpdG9yaWFsfGVufDF8MXx8fDE3ODExMzI4NDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "a woman in a dress"
+  },
+  {
+    "path": "./img/curated/top-blusa__06__unsplash.jpg",
+    "categoria": "top-blusa",
+    "fonte": "unsplash",
+    "credito": "Susan Wilkinson",
+    "url_original": "https://images.unsplash.com/photo-1607300110506-273ab1cf41f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxzaWxrJTIwdG9wJTIwZWRpdG9yaWFsfGVufDF8MXx8fDE3ODExMzI4NDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "white textile in black background"
+  },
+  {
+    "path": "./img/curated/top-blusa__07__pexels.jpg",
+    "categoria": "top-blusa",
+    "fonte": "pexels",
+    "credito": "Mikhail Nilov",
+    "url_original": "https://images.pexels.com/photos/6833803/pexels-photo-6833803.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Elegant African woman posing in a neutral-toned outfit in a studio setting."
+  },
+  {
+    "path": "./img/curated/top-blusa__08__pexels.jpg",
+    "categoria": "top-blusa",
+    "fonte": "pexels",
+    "credito": "Mâide Arslan",
+    "url_original": "https://images.pexels.com/photos/20636648/pexels-photo-20636648.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Stylish woman in a blue blouse posing against a textured urban wall, embracing modern fashion."
+  },
+  {
+    "path": "./img/curated/legging-activewear__01__unsplash.jpg",
+    "categoria": "legging-activewear",
+    "fonte": "unsplash",
+    "credito": "Cesar La Rosa",
+    "url_original": "https://images.unsplash.com/photo-1540827109409-17f40944f276?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxhdGhsZWlzdXJlJTIwd29tYW4lMjBlZGl0b3JpYWx8ZW58MXwxfHx8MTc4MTEzMjg1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman leaning beside wall"
+  },
+  {
+    "path": "./img/curated/legging-activewear__02__unsplash.jpg",
+    "categoria": "legging-activewear",
+    "fonte": "unsplash",
+    "credito": "Chyntia Juls",
+    "url_original": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxhdGhsZWlzdXJlJTIwd29tYW4lMjBlZGl0b3JpYWx8ZW58MXwxfHx8MTc4MTEzMjg1N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black blazer covering her face with gray scarf"
+  },
+  {
+    "path": "./img/curated/legging-activewear__03__pexels.jpg",
+    "categoria": "legging-activewear",
+    "fonte": "pexels",
+    "credito": "Danik Prihodko",
+    "url_original": "https://images.pexels.com/photos/15759604/pexels-photo-15759604.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Fashionable woman in grey Adidas attire posing indoors with a confident expression."
+  },
+  {
+    "path": "./img/curated/legging-activewear__04__pexels.jpg",
+    "categoria": "legging-activewear",
+    "fonte": "pexels",
+    "credito": "mahdi chaghari",
+    "url_original": "https://images.pexels.com/photos/28484979/pexels-photo-28484979.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Striking pose in casual urban attire on a rooftop, capturing night vibes."
+  },
+  {
+    "path": "./img/curated/legging-activewear__05__unsplash.jpg",
+    "categoria": "legging-activewear",
+    "fonte": "unsplash",
+    "credito": "ALMA",
+    "url_original": "https://images.unsplash.com/photo-1619042220193-1764e5a87fce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxsZWdnaW5ncyUyMG91dGZpdCUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyODU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in pink shirt and black pants holding walking stick"
+  },
+  {
+    "path": "./img/curated/legging-activewear__06__unsplash.jpg",
+    "categoria": "legging-activewear",
+    "fonte": "unsplash",
+    "credito": "SHAYAN Rostami",
+    "url_original": "https://images.unsplash.com/photo-1777020111870-cdc001f861c6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxsZWdnaW5ncyUyMG91dGZpdCUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyODU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "A blonde woman in purple leggings dances on white"
+  },
+  {
+    "path": "./img/curated/legging-activewear__07__pexels.jpg",
+    "categoria": "legging-activewear",
+    "fonte": "pexels",
+    "credito": "Daniel Olivier",
+    "url_original": "https://images.pexels.com/photos/18361232/pexels-photo-18361232.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Stylish individual posing against concrete wall, showcasing modern urban fashion in Rio de Janeiro."
+  },
+  {
+    "path": "./img/curated/legging-activewear__08__pexels.jpg",
+    "categoria": "legging-activewear",
+    "fonte": "pexels",
+    "credito": "Daniel Olivier",
+    "url_original": "https://images.pexels.com/photos/18361223/pexels-photo-18361223.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Stylish model posing in urban setting with brown jacket and bag in Rio de Janeiro."
+  },
+  {
+    "path": "./img/curated/saia__01__unsplash.jpg",
+    "categoria": "saia",
+    "fonte": "unsplash",
+    "credito": "Jonas Horsch",
+    "url_original": "https://images.unsplash.com/photo-1727282741278-c65b90ffb00a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxtaWRpJTIwc2tpcnQlMjB3b21hbiUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "A woman sitting on top of a fire hydrant"
+  },
+  {
+    "path": "./img/curated/saia__02__unsplash.jpg",
+    "categoria": "saia",
+    "fonte": "unsplash",
+    "credito": "Jonas Horsch",
+    "url_original": "https://images.unsplash.com/photo-1729116283277-668f2ff2a0d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxtaWRpJTIwc2tpcnQlMjB3b21hbiUyMGVkaXRvcmlhbHxlbnwxfDF8fHwxNzgxMTMyODY2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "A woman is sitting on top of a pole"
+  },
+  {
+    "path": "./img/curated/saia__03__pexels.jpg",
+    "categoria": "saia",
+    "fonte": "pexels",
+    "credito": "Frank Castañeda Peña",
+    "url_original": "https://images.pexels.com/photos/20891131/pexels-photo-20891131.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Stylish woman poses downtown Tokyo showcasing modern fashion in urban setting."
+  },
+  {
+    "path": "./img/curated/saia__04__pexels.jpg",
+    "categoria": "saia",
+    "fonte": "pexels",
+    "credito": "Narmin Aslanli",
+    "url_original": "https://images.pexels.com/photos/19097370/pexels-photo-19097370.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Black and white photo of a stylish woman in a sweater and midi skirt, posing thoughtfully."
+  },
+  {
+    "path": "./img/curated/saia__05__unsplash.jpg",
+    "categoria": "saia",
+    "fonte": "unsplash",
+    "credito": "Liviu Boldis",
+    "url_original": "https://images.unsplash.com/photo-1708363390847-b4af54f45273?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxhLWxpbmUlMjBza2lydCUyMGZhc2hpb258ZW58MXwxfHx8MTc4MTEzMjg2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "a woman with long hair wearing a white shirt and black skirt"
+  },
+  {
+    "path": "./img/curated/saia__06__unsplash.jpg",
+    "categoria": "saia",
+    "fonte": "unsplash",
+    "credito": "Vladimir Yelizarov",
+    "url_original": "https://images.unsplash.com/photo-1615898290907-0ad011905389?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxhLWxpbmUlMjBza2lydCUyMGZhc2hpb258ZW58MXwxfHx8MTc4MTEzMjg2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black blazer and black and white skirt standing beside black metal stand"
+  },
+  {
+    "path": "./img/curated/saia__07__pexels.jpg",
+    "categoria": "saia",
+    "fonte": "pexels",
+    "credito": "Rajat Sahu",
+    "url_original": "https://images.pexels.com/photos/30188058/pexels-photo-30188058.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Stylish woman in cityscape wearing sunglasses and modern attire."
+  },
+  {
+    "path": "./img/curated/saia__08__pexels.jpg",
+    "categoria": "saia",
+    "fonte": "pexels",
+    "credito": "Léo Vinícius",
+    "url_original": "https://images.pexels.com/photos/3714451/pexels-photo-3714451.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Stylish young woman with curly red hair walking confidently down a sunlit street in summer."
+  },
+  {
+    "path": "./img/curated/conjunto__01__unsplash.jpg",
+    "categoria": "conjunto",
+    "fonte": "unsplash",
+    "credito": "Anni Peng",
+    "url_original": "https://images.unsplash.com/photo-1629511565591-a1d494ad6c58?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxtYXRjaGluZyUyMHNldCUyMHdvbWFuJTIwZWRpdG9yaWFsfGVufDF8MXx8fDE3ODExMzI4NzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black blazer sitting on bed"
+  },
+  {
+    "path": "./img/curated/conjunto__02__unsplash.jpg",
+    "categoria": "conjunto",
+    "fonte": "unsplash",
+    "credito": "The AW Creative Digital Marketing",
+    "url_original": "https://images.unsplash.com/photo-1618333452884-5c8d211ed2ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxtYXRjaGluZyUyMHNldCUyMHdvbWFuJTIwZWRpdG9yaWFsfGVufDF8MXx8fDE3ODExMzI4NzV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in brown coat and gray pants standing on white concrete staircase"
+  },
+  {
+    "path": "./img/curated/conjunto__03__pexels.jpg",
+    "categoria": "conjunto",
+    "fonte": "pexels",
+    "credito": "KoolShooters",
+    "url_original": "https://images.pexels.com/photos/7346296/pexels-photo-7346296.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Elegant woman with afro hair in stylish pink outfit holding a rose against a pink background."
+  },
+  {
+    "path": "./img/curated/conjunto__04__pexels.jpg",
+    "categoria": "conjunto",
+    "fonte": "pexels",
+    "credito": "Sasha  Kim",
+    "url_original": "https://images.pexels.com/photos/8484108/pexels-photo-8484108.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Two fashionable women posing with sunglasses in a studio setting, showcasing modern style."
+  },
+  {
+    "path": "./img/curated/conjunto__05__unsplash.jpg",
+    "categoria": "conjunto",
+    "fonte": "unsplash",
+    "credito": "Nicolas Ladino Silva",
+    "url_original": "https://images.unsplash.com/photo-1580478491436-fd6a937acc9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwxfHxjby1vcmQlMjBzZXQlMjBmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDF8MXx8fDE3ODExMzI4Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in red blazer sitting on stairs"
+  },
+  {
+    "path": "./img/curated/conjunto__06__unsplash.jpg",
+    "categoria": "conjunto",
+    "fonte": "unsplash",
+    "credito": "Chyntia Juls",
+    "url_original": "https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NzQ0NTd8MHwxfHNlYXJjaHwyfHxjby1vcmQlMjBzZXQlMjBmYXNoaW9uJTIwZWRpdG9yaWFsfGVufDF8MXx8fDE3ODExMzI4Nzd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    "descricao": "woman in black blazer covering her face with gray scarf"
+  },
+  {
+    "path": "./img/curated/conjunto__07__pexels.jpg",
+    "categoria": "conjunto",
+    "fonte": "pexels",
+    "credito": "Rulo Davila",
+    "url_original": "https://images.pexels.com/photos/11588275/pexels-photo-11588275.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Fashionable woman in an orange suit sitting outside on a bench against a colorful wall."
+  },
+  {
+    "path": "./img/curated/conjunto__08__pexels.jpg",
+    "categoria": "conjunto",
+    "fonte": "pexels",
+    "credito": "cottonbro studio",
+    "url_original": "https://images.pexels.com/photos/7516557/pexels-photo-7516557.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+    "descricao": "Fashion photoshoot featuring a stylish woman walking against a vibrant yellow and red backdrop in a studio."
+  }
+]
