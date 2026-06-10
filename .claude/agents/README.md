@@ -1,217 +1,85 @@
-# Φ PHYLLOS — Time de Agentes Claude
+# PHYLLOS — Sistema Operacional de Agentes
 
-Time completo de agentes IA em quatro diretorias estratégicas. **49 agentes** cobrindo marca, produto, tecnologia e inovação.
+A PHYLLOS deve operar como uma startup real desde o início. A prioridade agora não é criar mais agentes, mas transformar cada agente-chave em um departamento com responsabilidade, entradas, saídas, KPIs e handoffs claros.
 
----
+## Tese de alocação
 
-## Arquitetura de Diretores
+| Área | Peso esperado |
+|---|---:|
+| Customer Research | 25% |
+| Produto | 25% |
+| Supply Chain | 20% |
+| Marketing/Growth | 15% |
+| Financeiro | 10% |
+| IA e Dados | 5% |
 
-```
-brand-director ◄────────────────────────────────► product-director
-       │  ▲                                               │
-       │  │ sinais, hipóteses, briefings de inovação      │
-       │  └──────────── innovation-director ──────────────┘
-       │         Digital Experience Brief                 │  Brand Brief de Coleção
-       │◄──────────────────────────────────────┐          │◄─────────────────────────────┐
-       │                                       │          │                              │
-       └──────────────────────────────────────►│          └─────────────────────────────►│
-       │         Digital Capability Report     │          │  Dossier de Lançamento       │
-       │                                       │          │                              │
-       └─────────────► technology-director ◄──────────────┘
-                              │
-                    Product Tech Brief ◄► Product Tech Infrastructure Report
-```
+Essa distribuição corrige o risco de excesso de foco em IA, automação e tecnologia antes de validar cliente, produto, produção e caixa.
 
-**Quatro diretores** — três de operação + um de inovação. Toda decisão de impacto cruzado tem documento de handoff formal.
+## Departamentos principais
 
----
+| Departamento | Arquivo | Responsabilidade central |
+|---|---|---|
+| CEO / Founder Agent | [founder-orchestrator.md](founder-orchestrator.md) | Coerência da tese, OKRs, roadmap, risco e decisões de investimento |
+| Strategy Agent | [innovation-director.md](innovation-director.md) | Mercado, TAM/SAM/SOM, concorrentes, benchmark, unit economics e tese para investidores |
+| Customer Research Agent | [cx-lead.md](cx-lead.md) | ICP, 50 entrevistas, dores, objeções, disposição para pagar, lista de espera e pré-venda |
+| Product Agent | [product-director.md](product-director.md) | Materiais, primeira coleção, calça MVP, camisa, blazer, fichas técnicas e custos |
+| Supply Chain Agent | [operations-lead.md](operations-lead.md) | Fornecedores, cotação, produção, PCP, lead time, qualidade e estoque |
+| Finance Agent | [cfo.md](cfo.md) | Caixa, CMV, margem, markup, cenários, captação e dashboard financeiro |
+| Brand Agent | [brand-director.md](brand-director.md) | Manifesto, voz, identidade visual, campanhas e storytelling |
+| Marketing Agent | [marketing-lead.md](marketing-lead.md) | Audiência, conteúdo, canais, SEO, lançamentos e influenciadores |
+| Growth Agent | [analytics-agent.md](analytics-agent.md) | Funil, CAC, conversão, retenção, anúncios, landing pages e A/B tests |
+| CRM Agent | [email-crm-agent.md](email-crm-agent.md) | Segmentação, automações, recuperação, newsletter e fidelidade |
+| Data Agent | [data-intelligence-lead.md](data-intelligence-lead.md) | Warehouse, eventos, dashboards, cohort, LTV, segmentação e previsão de demanda |
+| AI Agent | [ai-automation-lead.md](ai-automation-lead.md) | Sistema operacional, memória, automações, relatórios e RAG |
+| Investor Relations Agent | [pr-press-agent.md](pr-press-agent.md) | Pitch deck, one pager, data room, projeções e narrativa de captação |
 
-## DIRETORIA DE MARCA — Brand Director coordena
+## Regra de prioridade
 
-| Arquivo | Agente | Papel |
-|---------|--------|-------|
-| [brand-director.md](brand-director.md) | **Brand Director** | Estratégia, posicionamento, voz, credibilidade, stack de marketing. Aprova toda comunicação pública. |
+1. Validar cliente.
+2. Validar produto.
+3. Viabilizar produção.
+4. Proteger caixa.
+5. Construir audiência e funil.
+6. Instrumentar dados.
+7. Automatizar apenas o que já funciona.
 
-### Líderes de Marca
-| Arquivo | Agente | Time |
-|---------|--------|------|
-| [social-media-lead.md](social-media-lead.md) | Social Media Lead | Calendário editorial, briefing, aprovação de conteúdo |
-| [marketing-lead.md](marketing-lead.md) | Marketing Lead | Aquisição, campanhas, funil, KPIs |
-| [communication-lead.md](communication-lead.md) | Communication Lead | Narrativa pública, PR, crise, parcerias |
-| [cx-lead.md](cx-lead.md) | CX Lead | Atendimento, políticas, análise sistêmica |
-| [operations-lead.md](operations-lead.md) | Operations Lead | Cadeia produtiva, certificações, estoque |
+## Fluxo recomendado para a PHYLLOS agora
 
-### Executores — Social Media
-| [content-creator.md](content-creator.md) | Content Creator | Captions, Reels, stories |
-| [visual-briefer.md](visual-briefer.md) | Visual Briefer | Briefings para designer ou IA |
-| [analytics-agent.md](analytics-agent.md) | Analytics Agent | Métricas, relatório semanal |
+1. CEO define OKRs e o que não fazer.
+2. Strategy atualiza mercado, concorrentes e tese.
+3. Customer Research executa 50 entrevistas e valida disposição para pagar.
+4. Product fecha MVP da calça e sequência camisa/blazer.
+5. Supply Chain cota fornecedores, tecidos, produção e lote inicial.
+6. Finance calcula CMV, margem, markup, caixa e cenários.
+7. Brand cria narrativa e identidade aplicada à oferta.
+8. Marketing constrói audiência e lista.
+9. Growth testa landing pages, anúncios e conversão.
+10. CRM nutre leads e mede intenção.
+11. Data cria eventos e dashboards mínimos.
+12. AI organiza memória, relatórios e automações úteis.
+13. Investor Relations só entra forte quando houver validação suficiente.
 
-### Executores — Marketing
-| [paid-media-agent.md](paid-media-agent.md) | Paid Media Agent | Copies, campanhas, A/B |
-| [email-crm-agent.md](email-crm-agent.md) | Email & CRM Agent | Automações, newsletters, régua |
-| [seo-blog-agent.md](seo-blog-agent.md) | SEO & Blog Agent | Artigos, palavras-chave |
+## Gates de decisão
 
-### Executores — Comunicação
-| [pr-press-agent.md](pr-press-agent.md) | PR & Press Agent | Press releases, pitches |
-| [brand-voice-agent.md](brand-voice-agent.md) | Brand Voice Agent | Guardião do manifesto e do tom |
-| [influencer-collab-agent.md](influencer-collab-agent.md) | Influencer & Collab Agent | Seleção de parceiros, briefing |
+| Gate | Dono | Pergunta |
+|---|---|---|
+| Tese | CEO | Esta iniciativa fortalece a tese ou dispersa foco? |
+| Cliente | Customer Research | Existe desejo, dor e disposição para pagar? |
+| Produto | Product | Conseguimos fazer com qualidade e diferenciação? |
+| Produção | Supply Chain | Conseguimos produzir com prazo, custo e controle? |
+| Caixa | Finance | Cabe no caixa e preserva margem? |
+| Mercado | Marketing/Growth | Conseguimos gerar demanda mensurável? |
+| Dados/IA | Data/AI | Estamos medindo e automatizando o que importa? |
 
-### Executores — CX
-| [support-agent.md](support-agent.md) | Support Agent | Dúvidas pré e pós-compra |
-| [returns-agent.md](returns-agent.md) | Returns & Exchange Agent | Trocas e devoluções |
-| [loyalty-agent.md](loyalty-agent.md) | Loyalty Agent | Retenção e fidelização |
+## Como escolher rapidamente
 
-### Executores — Operações
-| [supply-chain-agent.md](supply-chain-agent.md) | Supply Chain Agent | Fornecedores, procedência |
-| [certification-agent.md](certification-agent.md) | Certification Agent | GOTS, GRS, transparência |
-| [inventory-agent.md](inventory-agent.md) | Inventory Agent | Estoque por SKU, reposição |
-
----
-
-## DIRETORIA DE PRODUTO — Product Director coordena
-
-| Arquivo | Agente | Papel |
-|---------|--------|-------|
-| [product-director.md](product-director.md) | **Product Director** | Viabiliza a visão da marca em produto físico. Colecão, materiais, desenvolvimento, teste, lançamento. |
-
-### Líderes de Produto
-| Arquivo | Agente | Time |
-|---------|--------|------|
-| [design-lead.md](design-lead.md) | Design Lead | Direção criativa, aprovação estética |
-| [materials-lead.md](materials-lead.md) | Materials Lead | Seleção de material, certificações |
-| [product-dev-lead.md](product-dev-lead.md) | Product Dev Lead | Stage-Gate, Dossier de Lançamento, QC |
-
-### Executores — Design
-| [product-designer.md](product-designer.md) | Product Designer | Flat sketches, construção, colorways |
-| [fit-technical-designer.md](fit-technical-designer.md) | Fit & Technical Designer | Modelagem, fitting, gradação |
-
-### Executores — Materiais
-| [materials-researcher.md](materials-researcher.md) | Materials Researcher | Pesquisa de tecidos técnicos e sustentáveis |
-| [sourcing-agent.md](sourcing-agent.md) | Sourcing Agent | Negociação, auditoria, procedência |
-
-### Executores — Desenvolvimento
-| [tech-spec-writer.md](tech-spec-writer.md) | Tech Spec Writer | Tech Pack + Ficha Técnica |
-| [product-testing-agent.md](product-testing-agent.md) | Product Testing Agent | Teste de 6 meses, validação de claims |
-| [launch-coordinator.md](launch-coordinator.md) | Launch Coordinator | Timeline reversa, handoff, go/no-go |
-
----
-
-## DIRETORIA DE TECNOLOGIA — Technology Director coordena
-
-| Arquivo | Agente | Papel |
-|---------|--------|-------|
-| [technology-director.md](technology-director.md) | **Technology Director** | Infraestrutura digital, dados, AI, segurança, LGPD, roadmap tech. Par dos outros dois diretores. |
-
-### Líderes de Tecnologia
-| Arquivo | Agente | Time |
-|---------|--------|------|
-| [digital-products-lead.md](digital-products-lead.md) | Digital Products Lead | Site, e-commerce, UX tech, backlog digital |
-| [data-intelligence-lead.md](data-intelligence-lead.md) | Data Intelligence Lead | Dados, analytics, BI, first-party data, LGPD |
-| [ai-automation-lead.md](ai-automation-lead.md) | AI & Automation Lead | Agentes Claude, automações, integrações, DevOps, segurança |
-
-### Executores — Produto Digital
-| [frontend-agent.md](frontend-agent.md) | Frontend Agent | HTML/CSS/JS, design system Phyllos |
-| [ecommerce-agent.md](ecommerce-agent.md) | E-commerce Agent | Plataforma, checkout, integrações de pagamento |
-| [qa-agent.md](qa-agent.md) | QA Agent | Testes, acessibilidade, regressão |
-
-### Executores — Dados e Inteligência
-| [data-engineer.md](data-engineer.md) | Data Engineer | Pipelines, warehouse, qualidade de dados |
-| [bi-analyst.md](bi-analyst.md) | BI Analyst | Dashboards, relatórios, insights acionáveis |
-
-### Executores — AI, Automação e Infra
-| [ai-ops-agent.md](ai-ops-agent.md) | AI Ops Agent | Validação e monitoramento dos agentes Claude |
-| [integration-agent.md](integration-agent.md) | Integration Agent | APIs, webhooks, n8n, integrações de sistema |
-| [devops-security-agent.md](devops-security-agent.md) | DevOps & Security Agent | CI/CD, monitoramento, LGPD, segurança |
-
----
-
-## DIRETORIA DE INOVAÇÃO — Innovation Director coordena
-
-| Arquivo | Agente | Papel |
-|---------|--------|-------|
-| [innovation-director.md](innovation-director.md) | **Innovation Director** | Inteligência de mercado têxtil, estudos, hipóteses estratégicas, conceitos de produto, evolução de voz. Interface com Brand e Product Director. |
-
-### Executores — Inovação
-| Arquivo | Agente | Time |
-|---------|--------|------|
-| [trend-intelligence-agent.md](trend-intelligence-agent.md) | Trend Intelligence Agent | Monitoramento contínuo do setor têxtil, marcas de referência, comportamento de consumo |
-| [product-innovation-agent.md](product-innovation-agent.md) | Product Innovation Agent | Conceitos de novas peças, features, briefings de inovação para o Product Director |
-| [voice-evolution-agent.md](voice-evolution-agent.md) | Voice Evolution Agent | Diagnóstico de coerência de voz, propostas de evolução, direcionamento para novas verticais |
-
----
-
-## Protocolos de Interface Entre Diretorias
-
-### Brand ↔ Product
-```
-Brand Director envia:   Brand Brief de Coleção
-Product Director retorna: Resposta Estratégica → Atualização de Proto → Dossier de Lançamento
-Brand Director envia:   Feedback Loop de Mercado (pós-lançamento)
-```
-
-### Brand ↔ Technology
-```
-Brand Director envia:   Digital Experience Brief (UX, canais, padrões de marca)
-Technology Director retorna: Digital Capability Report (viabilidade, roadmap, trade-offs)
-```
-
-### Product ↔ Technology
-```
-Product Director envia: Product Tech Brief (PLM, traceabilidade, dados de produto)
-Technology Director retorna: Product Tech Infrastructure Report (sistemas, APIs, status)
-```
-
----
-
-## Ciclo de Produto (Stage-Gate)
-
-```
-Brand Brief → Gate 1 → Gate 2 → Gate 3 → Gate 4 (6 meses) → Gate 5 → Gate 6
-(Brand Dir)  Definição  Proto  Fitting    Teste            Aprovação  Lançamento
-                │         │       │           │                │
-           Materials  Design  Fit-Tech    Testing          Dossier
-              Lead     Lead   Designer     Agent         ao Brand Dir
-```
-
----
-
-## Ciclo de Dado
-
-```
-Coleta (GA4 + Klaviyo + Survey)
-      ↓
-Data Engineer (pipeline + warehouse)
-      ↓
-BI Analyst (dashboards por audiência)
-      ↓
-Brand Director / Marketing Lead / Product Director / CX Lead / Technology Director
-```
-
----
-
-## Como Usar
-
-```
-use agent: founder-orchestrator  → demanda ampla, ambígua ou que atravessa múltiplas diretorias
-use agent: brand-director        → estratégia de marca, aprovações, comunicação pública
-use agent: product-director      → produto, coleção, materiais, lançamento
-use agent: technology-director   → arquitetura, plataformas, dados, AI, segurança
-use agent: innovation-director   → tendências de mercado, estudos, hipóteses, evolução de voz
-use agent: [qualquer outro]      → tarefa específica daquele agente
-```
-
-## Skills compartilhadas
-
-Regras reutilizáveis que múltiplos agentes aplicam. Disponíveis em `.claude/skills/`:
-
-| Skill | Quando usar |
-|-------|------------|
-| [anti-greenwashing-check](../skills/anti-greenwashing-check.md) | Antes de publicar qualquer claim ambiental ou de sustentabilidade |
-| [claim-validation](../skills/claim-validation.md) | Antes de publicar claim técnico de produto |
-| [lgpd-review](../skills/lgpd-review.md) | Antes de lançar sistema que coleta ou processa dados pessoais |
-| [content-voice-review](../skills/content-voice-review.md) | Revisão de tom e voz em qualquer texto da marca |
-| [launch-dossier](../skills/launch-dossier.md) | Gate final antes de lançar qualquer produto |
-
----
-
-**Total: 50 agentes** — 1 orquestrador + 4 diretores + 11 líderes + 34 executores
+- Decisão estratégica: [founder-orchestrator.md](founder-orchestrator.md)
+- Pesquisa com cliente: [cx-lead.md](cx-lead.md)
+- Produto físico: [product-director.md](product-director.md)
+- Produção e fornecedores: [operations-lead.md](operations-lead.md)
+- Caixa e margem: [cfo.md](cfo.md)
+- Audiência: [marketing-lead.md](marketing-lead.md)
+- Aquisição e funil: [analytics-agent.md](analytics-agent.md)
+- Dados: [data-intelligence-lead.md](data-intelligence-lead.md)
+- IA e memória: [ai-automation-lead.md](ai-automation-lead.md)
+- Captação: [pr-press-agent.md](pr-press-agent.md)
