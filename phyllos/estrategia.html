@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phyllos — Estratégia 2026–2031</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --obsidian: #0F0F0D;
+      --linen: #E8E4DC;
+      --cream: #F5F2EB;
+      --gold: #B89A6A;
+      --white: #FFFFFF;
+      --text: #2A2A28;
+      --muted: #666660;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--text); min-height: 100vh; }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--obsidian);
+      display: flex; align-items: center;
+      padding: 0 40px; height: 56px; gap: 4px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold); font-size: 20px; font-weight: 500;
+      letter-spacing: 0.15em; margin-right: 40px; flex-shrink: 0;
+    }
+    .nav-tab {
+      padding: 6px 14px; color: rgba(232,228,220,0.55);
+      font-size: 11px; font-weight: 400; letter-spacing: 0.1em;
+      text-transform: uppercase; cursor: pointer;
+      border: none; background: none;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .nav-tab:hover { color: var(--linen); }
+    .nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .page { display: none; padding: 56px 64px; max-width: 1280px; margin: 0 auto; }
+    .page.active { display: block; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 52px; line-height: 1.05; }
+    h2 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 34px; margin: 56px 0 24px; }
+    h3 { font-family: 'Jost', sans-serif; font-weight: 500; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin: 32px 0 12px; }
+    p { font-size: 14px; line-height: 1.75; color: var(--text); margin-bottom: 14px; font-weight: 300; }
+    p strong { font-weight: 500; }
+    hr.div { border: none; border-top: 1px solid var(--linen); margin: 48px 0; }
+    .hero { padding: 8px 0 48px; border-bottom: 1px solid var(--linen); margin-bottom: 48px; }
+    .eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 20px; }
+    .hero-sub { font-size: 17px; font-weight: 300; color: var(--muted); max-width: 640px; line-height: 1.6; margin-top: 16px; }
+    .card-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin: 32px 0; }
+    .card { background: var(--white); border: 1px solid var(--linen); padding: 24px 20px; }
+    .card-val { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 400; line-height: 1; margin-bottom: 6px; }
+    .card-val.gold { color: var(--gold); }
+    .card-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+    .card-note { font-size: 11px; color: var(--muted); margin-top: 8px; font-weight: 300; }
+    .callout { background: var(--obsidian); color: var(--linen); padding: 28px 36px; margin: 32px 0; }
+    .callout h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; color: var(--gold); margin-bottom: 8px; }
+    .callout p { color: var(--linen); font-size: 14px; margin: 0; line-height: 1.65; }
+    .callout p + p { margin-top: 10px; }
+    .callout ul { padding-left: 0; list-style: none; margin-top: 12px; }
+    .callout ul li { color: var(--linen); font-size: 13px; font-weight: 300; padding: 4px 0; }
+    .callout ul li::before { content: "— "; color: var(--gold); }
+    .table-wrap { overflow-x: auto; margin: 8px 0; border: 1px solid var(--linen); }
+    table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    thead th { background: var(--obsidian); color: var(--linen); padding: 11px 14px; text-align: left; font-weight: 500; letter-spacing: 0.07em; font-size: 10px; text-transform: uppercase; white-space: nowrap; }
+    thead th.num { text-align: right; }
+    td { padding: 9px 14px; border-bottom: 1px solid #EFEBE3; vertical-align: middle; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    td.month-cell { font-weight: 500; color: var(--muted); }
+    tr.ph-0 td { background: #FAFAF8; }
+    tr.ph-1a td { background: #F7F3EC; }
+    tr.ph-1b td { background: #F3EDE2; }
+    tr.ph-2a td { background: #EFE8D6; }
+    tr.ph-2b td { background: #EBE2CA; }
+    tr.ph-prod td { background: #F7F0E0; }
+    tr.ph-launch td { background: #FFF8EC; }
+    tr.ph-ops td { background: #F5F2EB; }
+    tr.milestone-row td { background: var(--obsidian) !important; color: var(--linen) !important; }
+    tr.milestone-row td.num { color: var(--gold) !important; font-weight: 600; }
+    tr.milestone-row td.month-cell { color: rgba(232,228,220,0.5) !important; }
+    tr.highlight-row td { background: #FFF8EC !important; font-weight: 500; }
+    tr.total-row td { background: var(--linen) !important; font-weight: 600; }
+    .badge {
+      display: inline-block; padding: 2px 8px; font-size: 9px;
+      letter-spacing: 0.09em; text-transform: uppercase; font-weight: 500; border-radius: 1px;
+    }
+    .b-prep   { background: #E8E4DC; color: #777; }
+    .b-setup  { background: #D4C9B7; color: #555; }
+    .b-dev    { background: #C8BCA830; color: #7A6A50; border: 1px solid #C8BCA8; }
+    .b-certif { background: #B89A6A25; color: #8A7050; border: 1px solid #B89A6A50; }
+    .b-test   { background: #9EA86A20; color: #606A40; border: 1px solid #9EA86A50; }
+    .b-prod   { background: var(--gold); color: #fff; }
+    .b-launch { background: var(--obsidian); color: var(--gold); }
+    .b-ops    { background: #2A2A2810; color: #555; border: 1px solid #2A2A2820; }
+    .b-warn   { background: #CC442215; color: #CC4422; border: 1px solid #CC442230; }
+    .b-ok     { background: #4A8A4A15; color: #4A8A4A; border: 1px solid #4A8A4A30; }
+    .gate-icon { color: var(--gold); font-weight: 700; }
+    .note-text { color: var(--muted); font-size: 11px; font-weight: 300; }
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 16px 0; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+    .legend-dot { width: 12px; height: 12px; border-radius: 1px; flex-shrink: 0; }
+    .phase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--linen); margin: 24px 0; border: 1px solid var(--linen); }
+    .phase-block { background: var(--white); padding: 24px; }
+    .phase-num { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; color: var(--linen); line-height: 1; }
+    .phase-name { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin: 8px 0 12px; }
+    .phase-period { font-size: 12px; font-weight: 500; margin-bottom: 8px; }
+    .phase-total { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; }
+    .phase-desc { font-size: 12px; color: var(--muted); font-weight: 300; margin-top: 8px; line-height: 1.5; }
+    .horizon-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin: 24px 0; }
+    .horizon { border: 1px solid var(--linen); padding: 28px; background: var(--white); }
+    .hor-year { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 300; color: var(--linen); line-height: 1; }
+    .hor-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin: 8px 0 4px; }
+    .hor-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; margin-bottom: 20px; line-height: 1.2; }
+    .hor-body p { font-size: 13px; line-height: 1.7; color: var(--text); font-weight: 300; margin-bottom: 10px; }
+    .hor-kpis { margin-top: 20px; border-top: 1px solid var(--linen); padding-top: 16px; }
+    .kpi { font-size: 12px; font-weight: 300; color: var(--muted); padding: 5px 0; border-bottom: 1px solid var(--linen); display: flex; gap: 8px; }
+    .kpi::before { content: "→"; color: var(--gold); flex-shrink: 0; }
+    .kpi strong { color: var(--text); font-weight: 500; }
+    .not-list { list-style: none; margin: 12px 0; }
+    .not-list li { font-size: 12px; color: var(--muted); padding: 4px 0; font-weight: 300; border-bottom: 1px solid #f0ece4; display: flex; gap: 8px; }
+    .not-list li::before { content: "✗"; color: #CC4444; flex-shrink: 0; }
+    .do-list { list-style: none; margin: 12px 0; }
+    .do-list li { font-size: 12px; color: var(--text); padding: 5px 0; font-weight: 300; border-bottom: 1px solid #f0ece4; display: flex; gap: 8px; line-height: 1.5; }
+    .do-list li::before { content: "—"; color: var(--gold); flex-shrink: 0; }
+    .stack-table td { font-size: 12px; }
+    .stack-table td:first-child { font-weight: 500; }
+    .cost-zero { color: #4A8A4A; font-weight: 500; }
+    .cost-low { color: var(--gold); }
+    .cost-med { color: #C07020; }
+    .cost-high { color: #A03030; }
+    .risk { background: #FFF8F0; border-left: 3px solid var(--gold); padding: 12px 16px; margin: 8px 0; font-size: 13px; font-weight: 300; line-height: 1.6; }
+    .risk strong { font-weight: 500; }
+    .alert { background: #FFF0F0; border-left: 3px solid #CC4422; padding: 12px 16px; margin: 8px 0; font-size: 13px; font-weight: 300; line-height: 1.6; }
+    .alert strong { font-weight: 500; color: #CC4422; }
+    .success { background: #F0FFF0; border-left: 3px solid #4A8A4A; padding: 12px 16px; margin: 8px 0; font-size: 13px; font-weight: 300; line-height: 1.6; }
+    .calib-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .calib-card { background: var(--white); border: 1px solid var(--linen); padding: 20px; }
+    .calib-title { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 12px; }
+    .calib-card p { font-size: 12px; margin-bottom: 8px; font-weight: 300; line-height: 1.6; }
+    .scenario-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 24px 0; }
+    .scenario { border: 1px solid var(--linen); padding: 20px; background: var(--white); }
+    .scenario.best { border-color: #4A8A4A; }
+    .scenario.base { border-color: var(--gold); }
+    .scenario.worst { border-color: #CC4422; }
+    .scenario-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-bottom: 8px; }
+    .scenario.best .scenario-label { color: #4A8A4A; }
+    .scenario.base .scenario-label { color: var(--gold); }
+    .scenario.worst .scenario-label { color: #CC4422; }
+    .scenario-val { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 400; line-height: 1; margin-bottom: 4px; }
+    .scenario-note { font-size: 11px; color: var(--muted); font-weight: 300; line-height: 1.5; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0; }
+    .stat-block { background: var(--white); border: 1px solid var(--linen); padding: 20px; }
+    .stat-val { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 400; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .stat-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+    .stat-note { font-size: 11px; color: var(--muted); font-weight: 300; margin-top: 6px; line-height: 1.5; }
+    @media (max-width: 900px) {
+      .page { padding: 32px 24px; }
+      .horizon-grid { grid-template-columns: 1fr; }
+      .calib-row { grid-template-columns: 1fr; }
+      .scenario-grid { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 36px; }
+      .card-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">Φ Phyllos</span>
+  <button class="nav-tab active" data-page="overview"   onclick="show('overview')">Visão Geral</button>
+  <button class="nav-tab"        data-page="mercado"    onclick="show('mercado')">Mercado</button>
+  <button class="nav-tab"        data-page="financeiro" onclick="show('financeiro')">Financeiro</button>
+  <button class="nav-tab"        data-page="marca"      onclick="show('marca')">Marca</button>
+  <button class="nav-tab"        data-page="produto"    onclick="show('produto')">Produto</button>
+  <button class="nav-tab"        data-page="tecnologia" onclick="show('tecnologia')">Tecnologia</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE 1: VISÃO GERAL -->
+<div id="overview" class="page active">
+  <div class="hero">
+    <p class="eyebrow">Sessão Estratégica · Junho 2026</p>
+    <h1>Estratégia Phyllos<br>2026 — 2031</h1>
+    <p class="hero-sub">Do zero ao relevante. Cinco anos, três horizontes, quatro diretores. Construído sobre números reais — não sobre otimismo. O plano que funciona no cenário moderado é o único plano honesto.</p>
+  </div>
+
+  <h3>Resumo executivo</h3>
+  <div class="card-row">
+    <div class="card">
+      <div class="card-val gold">R$73k</div>
+      <div class="card-label">Capital para o 1º lançamento</div>
+      <div class="card-note">Produto + Tecnologia + Fotografia</div>
+    </div>
+    <div class="card">
+      <div class="card-val">25</div>
+      <div class="card-label">Meses até o primeiro lançamento</div>
+      <div class="card-note">Com 6 meses obrigatórios de teste</div>
+    </div>
+    <div class="card">
+      <div class="card-val">2,4 anos</div>
+      <div class="card-label">Payback (cenário otimista)</div>
+      <div class="card-note">Cenário base: 4,8 anos</div>
+    </div>
+    <div class="card">
+      <div class="card-val gold">R$1.050</div>
+      <div class="card-label">LTV médio por cliente (36m)</div>
+      <div class="card-note">CAC máximo sustentável: R$163–237</div>
+    </div>
+    <div class="card">
+      <div class="card-val">R$4,2M</div>
+      <div class="card-label">Receita bruta projetada — Ano 5</div>
+      <div class="card-note">EBITDA 32% · 3.960 pedidos/ano</div>
+    </div>
+    <div class="card">
+      <div class="card-val gold">R$12,5M</div>
+      <div class="card-label">Valuation base — Ano 5</div>
+      <div class="card-note">Múltiplo 3x receita · faixa R$8,3–16,6M</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h4>A tensão central resolvida</h4>
+    <p>A Phyllos nasce com R$500/mês disponíveis e um produto que exige R$73k para ser lançado corretamente. Essa tensão não é resolvida cortando o padrão do produto — é resolvida sendo preciso sobre o que o capital faz em cada fase.</p>
+    <p>O lote inicial de 60 unidades <strong>não recupera o investimento</strong> — recupera 36% dele. Isso não é falha do modelo. É a função correta de um lote de validação. O retorno vem do segundo ciclo em diante, quando os custos de certificação já estão amortizados e a margem bruta chega a 47–55%.</p>
+  </div>
+
+  <h2>Fases da estratégia</h2>
+  <div class="phase-grid">
+    <div class="phase-block">
+      <div class="phase-num">0</div>
+      <div class="phase-name">Preparação</div>
+      <div class="phase-period">Meses 1–3</div>
+      <div class="phase-total">R$ 270</div>
+      <div class="phase-desc">Marca digital, mapeamento de fornecedores, narrativa do fundador. Sem produto, sem gasto.</div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-num">1A</div>
+      <div class="phase-name">Setup + Auditorias</div>
+      <div class="phase-period">Meses 4–6</div>
+      <div class="phase-total">R$ 11.564</div>
+      <div class="phase-desc">Infraestrutura digital, auditorias presenciais de fornecedores. Investimento inicial recebido.</div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-num">1B</div>
+      <div class="phase-name">Desenvolvimento</div>
+      <div class="phase-period">Meses 7–11</div>
+      <div class="phase-total">R$ 12.150</div>
+      <div class="phase-desc">Modelagem técnica com flatlock seam, protótipos, fitting multisize, tech pack da peça âncora.</div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-num">2A</div>
+      <div class="phase-name">Certificações + Teste</div>
+      <div class="phase-period">Meses 12–21</div>
+      <div class="phase-total">R$ 16.226</div>
+      <div class="phase-desc">Certificações GRS + Oeko-Tex, testes SENAI, 6 meses de teste interno formal com registro de uso.</div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-num">2B</div>
+      <div class="phase-name">Produção + Lançamento</div>
+      <div class="phase-period">Meses 22–25</div>
+      <div class="phase-total">R$ 32.890</div>
+      <div class="phase-desc">Lote inicial de 60 unidades, fotografia editorial, e-commerce ao vivo. LANÇAMENTO.</div>
+    </div>
+    <div class="phase-block">
+      <div class="phase-num">3</div>
+      <div class="phase-name">Operação e Expansão</div>
+      <div class="phase-period">Meses 26–60</div>
+      <div class="phase-total">R$ 540+/mês</div>
+      <div class="phase-desc">Rastreabilidade ativa, CRM com dados reais, segundo ciclo de produção, segunda coleção em desenvolvimento.</div>
+    </div>
+  </div>
+
+  <hr class="div">
+  <h3>O que cada diretor entrega</h3>
+
+  <h3>Brand Director</h3>
+  <p>Mercado brasileiro de sportswear premium: <strong>R$350–600M/ano</strong>, crescendo 9–13% a.a. A Phyllos mira SAM de R$450–680M e SOM de R$680k–2,7M em 5 anos. Posicionamento de preço abaixo do Lululemon importado (R$650–950) e acima do Farm Rio activewear (R$180–320) — o espaço mais defensável e menos ocupado por marca nacional com credencial técnica verificável.</p>
+
+  <h3>Product Director</h3>
+  <p>Calça com margem bruta de <strong>47% em escala de 200 unidades</strong> (vs. 10% no lote inicial — efeito de rateio de certificação). O blazer exige decisão estratégica antes do lançamento: subsidiar como investimento de marca no lote inicial ou adiar para o segundo ciclo de produção quando o custo cai de R$826 para R$450/unidade. LTV de R$1.050 com 3 compras em 36 meses é o indicador mais crítico dos próximos 36 meses.</p>
+
+  <h3>Technology Director</h3>
+  <p>Nuvemshop poupa <strong>R$51.486 em taxas ao longo de 3 anos</strong> vs. Shopify no Brasil. 25 agentes Claude na Fase 3 custam R$2.510/mês — equivalente a R$90.000–150.000/mês em pessoal humano equivalente. ROI da rastreabilidade Supabase: <strong>538% no Ano 2</strong> via incremento de ticket médio e redução de CAC por compartilhamento orgânico.</p>
+
+  <h3>Innovation Director</h3>
+  <p>Três hipóteses com alta confiança para 2026–2027: rastreabilidade digital como mecanismo de venda (não apenas compliance), narrativa de "curadoria inteligente" substituindo o argumento ambiental como ponto de entrada na conversa com a cliente executiva, e PCM para termorregulação ativa como feature diferencial que justifica o teto de preço. Lululemon e Vuori estão convergindo para o mesmo espaço — <strong>a janela de pioneirismo se fecha em 18–24 meses</strong>.</p>
+
+  <hr class="div">
+  <div class="callout">
+    <h4>R$60.000 — o número operacional</h4>
+    <p>O investimento externo não é plano B. É parte do plano. R$500/mês financia apenas o Ano 0 de preparação. Para chegar ao primeiro lançamento cumprindo o próprio manifesto da marca — produto auditado, certificado e testado por 6 meses — o capital necessário está entre <strong>R$52.000 e R$109.000</strong>. Número operacional para planejamento: <strong>R$60.000 mínimo · R$73.000 realista · R$80.000 com margem de segurança</strong>.</p>
+    <ul>
+      <li>Buscar este capital como prioridade do Mês 3</li>
+      <li>Sem este capital no Mês 4, o prazo desloca — não os critérios de produto</li>
+      <li>A peça âncora só lança depois que o teste de 6 meses for concluído, independente de pressão externa</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE 2: MERCADO -->
+<div id="mercado" class="page">
+  <div class="hero">
+    <p class="eyebrow">Análise de Mercado · Brand Director + Innovation Director</p>
+    <h1>Onde a Phyllos<br>compete — e por quê</h1>
+    <p class="hero-sub">Mercado de moda premium brasileira com dados de comportamento estrutural. Não tendência de temporada — transformação duradoura no estilo de vida da executiva.</p>
+  </div>
+
+  <h3>TAM / SAM / SOM</h3>
+  <div class="card-row">
+    <div class="card">
+      <div class="card-val">R$18–22B</div>
+      <div class="card-label">TAM — Sportswear total Brasil</div>
+      <div class="card-note">Mercado total de vestuário esportivo e athleisure</div>
+    </div>
+    <div class="card">
+      <div class="card-val gold">R$450–680M</div>
+      <div class="card-label">SAM — Premium feminino, classe A/B</div>
+      <div class="card-note">Segmento endereçável com precificação R$300–1.000/peça · CAGR 9–13%</div>
+    </div>
+    <div class="card">
+      <div class="card-val">R$680k–2,7M</div>
+      <div class="card-label">SOM — Meta Phyllos em 5 anos</div>
+      <div class="card-note">0,15–0,6% do SAM · 450–1.800 clientes ativos</div>
+    </div>
+    <div class="card">
+      <div class="card-val gold">9–13%</div>
+      <div class="card-label">CAGR do segmento premium</div>
+      <div class="card-note">Vs. sportswear total: 5–7% — o premium cresce 2x mais rápido</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h4>O segmento específico que a Phyllos ocupa</h4>
+    <p>O athleisure executivo feminino premium não é uma trend de cor de temporada. É a resposta a uma mudança estrutural: a executiva de alta performance que treina às 5h40 e vai direto para reunião recusou a escolha binária entre "roupa de treino" e "roupa de trabalho". O mercado ainda não tem, no Brasil, uma marca nacional com especificação técnica verificável, material certificado e rastreabilidade de cadeia nesse espaço. Essa é a oportunidade.</p>
+  </div>
+
+  <h2>Mapa competitivo de preço</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Marca</th>
+          <th>Produto referência</th>
+          <th class="num">Preço (R$)</th>
+          <th>Canal</th>
+          <th>Certificação</th>
+          <th>Rastreabilidade</th>
+          <th>Observação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Lululemon</strong></td>
+          <td>Align Pant / blazer</td>
+          <td class="num">R$650–950</td>
+          <td>Loja BR + DTC</td>
+          <td>Parcial</td>
+          <td>Não pública</td>
+          <td class="note-text">Importado. Impostos de importação embutidos. Maior reconhecimento de marca.</td>
+        </tr>
+        <tr>
+          <td><strong>Vuori</strong></td>
+          <td>Performance jogger</td>
+          <td class="num">R$420–680</td>
+          <td>Importado / DTC limitado</td>
+          <td>Não declarada</td>
+          <td>Não</td>
+          <td class="note-text">Distribuição limitada no Brasil. Valuation USD 4B (2021). Referência de modelo de negócio.</td>
+        </tr>
+        <tr>
+          <td><strong>Osklen tech</strong></td>
+          <td>Calça técnica premium</td>
+          <td class="num">R$380–520</td>
+          <td>DTC + lojas</td>
+          <td>Parcial</td>
+          <td>Não pública</td>
+          <td class="note-text">Nacional, premium, menor spec técnica declarada. Concorrente direto de posicionamento.</td>
+        </tr>
+        <tr>
+          <td><strong>Farm Rio activewear</strong></td>
+          <td>Legging estampada</td>
+          <td class="num">R$180–320</td>
+          <td>DTC + lojas + internacional</td>
+          <td>Não declarada</td>
+          <td>Não</td>
+          <td class="note-text">Estética tropical, sem spec técnica. Volume alto, margem via atacado.</td>
+        </tr>
+        <tr>
+          <td><strong>On Running</strong></td>
+          <td>Apparel executivo</td>
+          <td class="num">R$450–750</td>
+          <td>DTC + lojas selecionadas</td>
+          <td>Parcial</td>
+          <td>Não</td>
+          <td class="note-text">Performance real. Parceria On × Loewe sinalizou convergência performance/luxo.</td>
+        </tr>
+        <tr style="background:#F7F3EC">
+          <td><strong>Phyllos</strong></td>
+          <td>Calça / blazer técnico</td>
+          <td class="num"><strong>R$480 / R$570–620</strong></td>
+          <td>100% DTC</td>
+          <td><strong>GRS + Oeko-Tex auditado</strong></td>
+          <td><strong>QR público por peça</strong></td>
+          <td class="note-text">Nacional. Abaixo do Lululemon importado. Única com rastreabilidade verificável por cliente.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="risk">
+    <strong>Análise de posicionamento:</strong> a Phyllos compete no espaço entre Osklen (R$380–520, sem spec técnica pública) e Lululemon importado (R$650–950). O diferencial não é o preço — é ser a única marca nacional com material GRS certificado + rastreabilidade consultável + spec técnica declarada. Esse triângulo não tem equivalente no mercado brasileiro em 2026.
+  </div>
+
+  <h2>Perfil da cliente</h2>
+  <div class="calib-row">
+    <div class="calib-card">
+      <div class="calib-title">Quem é</div>
+      <p><strong>Mulher executiva, 28–45 anos, classe A/B.</strong> Rende R$12.000–35.000/mês. Treina 4–6 vezes por semana, geralmente às 5h–7h. Vai do treino para reunião sem trocar de roupa — não por descuido, por escolha.</p>
+      <p>Não se identifica primariamente como "ambientalista". Identifica-se como executiva de alta performance que toma decisões precisas. A sustentabilidade é consequência de um padrão de escolha, não a motivação principal.</p>
+    </div>
+    <div class="calib-card">
+      <div class="calib-title">O que ela compra (e por quê)</div>
+      <p>Está migrando para "consumo de curadoria": <strong>menos peças, melhor qualidade, maior valor por peça</strong>. Um guarda-roupa com 8 peças de R$480 supera 24 peças de R$160 não apenas economicamente — supera como identidade.</p>
+      <p>Quando paga R$480, quer saber de onde veio cada fio. Não como triagem ética — como extensão do mesmo rigor que aplica às decisões profissionais.</p>
+    </div>
+    <div class="calib-card">
+      <div class="calib-title">O que ela segue</div>
+      <p>Não segue influencers de moda genérica. Segue <strong>especialistas de performance, longevidade e liderança</strong>. Consome Substack de gestão, podcasts de saúde executiva, newsletters de lifestyle profissional.</p>
+      <p>A hierarquia de credibilidade para essa cliente: editorial especializado &gt; PR qualificado &gt; influencer de nicho com autoridade real &gt; paid media. Qualquer inversão dessa hierarquia sinaliza marca que não entende a cliente.</p>
+    </div>
+    <div class="calib-card">
+      <div class="calib-title">O que a converte — e retém</div>
+      <p><strong>Primeira compra:</strong> especificidade técnica verificável (certificações com número de laudo, não logo de certificação), rastreabilidade real (QR que leva a dado, não a página genérica), e preço que está abaixo do importado.</p>
+      <p><strong>Recompra:</strong> produto que cumpriu o que prometeu após 50+ lavagens. A cliente Phyllos que compra uma calça e usa por 3 anos é mais valiosa que uma cliente que compra 3 peças por ano sem lealdade. LTV de R$1.050 é construído por qualidade — não por frequência induzida.</p>
+    </div>
+  </div>
+
+  <h2>Sinais estruturais de mercado</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Sinal</th>
+          <th>Classificação</th>
+          <th>Implicação para a Phyllos</th>
+          <th>Horizonte</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Lululemon no Brasil acima de R$650</strong></td>
+          <td><span class="badge b-ok">Oportunidade</span></td>
+          <td>Espaço R$300–620 com credencial técnica comparável está em aberto para marca nacional</td>
+          <td>Imediato</td>
+        </tr>
+        <tr>
+          <td><strong>Consumo de curadoria em alta — executiva premium</strong></td>
+          <td><span class="badge b-ok">Confirmação da tese</span></td>
+          <td>Narrativa de "curadoria inteligente" (durabilidade como decisão, não como argumento ambiental) amplifica o pool de cliente sem trair o manifesto</td>
+          <td>Imediato</td>
+        </tr>
+        <tr>
+          <td><strong>Vuori e On Running convergindo para executivo feminino</strong></td>
+          <td><span class="badge b-warn">Urgência</span></td>
+          <td>Janela de pioneirismo se fecha em 18–24 meses. Prioridade: construir profundidade (rastreabilidade, comunidade, data) antes que o volume chegue</td>
+          <td>2026–2027</td>
+        </tr>
+        <tr>
+          <td><strong>EU Digital Product Passport (2027–2030)</strong></td>
+          <td><span class="badge b-ok">Vantagem estrutural</span></td>
+          <td>A Phyllos antecipa o padrão regulatório global com QR de rastreabilidade. Conformidade futura sem custo de adaptação</td>
+          <td>2027–2030</td>
+        </tr>
+        <tr>
+          <td><strong>Fibras recicladas pós-consumo chegando à escala</strong></td>
+          <td><span class="badge b-ok">Sinal antecipado</span></td>
+          <td>Próximo nível de credencial: de "reciclagem de PET" para "fechamento real do ciclo têxtil". Encaminhar para materials-lead em 2027</td>
+          <td>2027–2028</td>
+        </tr>
+        <tr>
+          <td><strong>Green Claims Directive — proibição de claims vagos na UE</strong></td>
+          <td><span class="badge b-ok">Favorável</span></td>
+          <td>Elimina concorrentes de greenwashing. A Phyllos já opera com política de zero alegação sem documentação — não precisa mudar nada</td>
+          <td>2026–2028</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE 3: FINANCEIRO -->
+<div id="financeiro" class="page">
+  <div class="hero">
+    <p class="eyebrow">Planejamento Financeiro · Product Director + Technology Director</p>
+    <h1>Do custo ao retorno:<br>o modelo financeiro completo</h1>
+    <p class="hero-sub">Unit economics, break-even, payback, projeções de receita, LTV/CAC e valuation. Premissas declaradas explicitamente. Nenhum número neste documento existe sem a premissa que o gerou.</p>
+  </div>
+
+  <h2>Unit Economics por SKU</h2>
+  <p>Premissa: material GRS certificado com 30% de componente importado; CMT em confecção especializada São Paulo; testes SENAI com bateria completa; embalagem kraft certificada.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Componente de custo</th>
+          <th class="num">Calça (lote 36 un.)</th>
+          <th class="num">Calça (lote 200+ un.)</th>
+          <th class="num">Blazer (lote 24 un.)</th>
+          <th class="num">Blazer (lote 100+ un.)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Material principal (tecido técnico GRS)</td>
+          <td class="num">R$97</td>
+          <td class="num">R$97</td>
+          <td class="num">R$175</td>
+          <td class="num">R$175</td>
+        </tr>
+        <tr>
+          <td>Aviamentos + hardware</td>
+          <td class="num">R$18</td>
+          <td class="num">R$18</td>
+          <td class="num">R$32</td>
+          <td class="num">R$32</td>
+        </tr>
+        <tr>
+          <td>CMT — Corte, Montagem, Acabamento (flatlock)</td>
+          <td class="num">R$85</td>
+          <td class="num">R$85</td>
+          <td class="num">R$140</td>
+          <td class="num">R$140</td>
+        </tr>
+        <tr>
+          <td>Embalagem certificada</td>
+          <td class="num">R$14</td>
+          <td class="num">R$14</td>
+          <td class="num">R$18</td>
+          <td class="num">R$18</td>
+        </tr>
+        <tr>
+          <td>Teste e certificação (rateado no lote)</td>
+          <td class="num">R$117</td>
+          <td class="num">R$21</td>
+          <td class="num">R$233</td>
+          <td class="num">R$56</td>
+        </tr>
+        <tr>
+          <td>Overhead de desenvolvimento (rateado)</td>
+          <td class="num">R$100</td>
+          <td class="num">R$18</td>
+          <td class="num">R$200</td>
+          <td class="num">R$48</td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>Custo total por unidade</strong></td>
+          <td class="num"><strong>R$431</strong></td>
+          <td class="num"><strong>R$253</strong></td>
+          <td class="num"><strong>R$798</strong></td>
+          <td class="num"><strong>R$469</strong></td>
+        </tr>
+        <tr class="highlight-row">
+          <td>Margem bruta a preço de lançamento (R$480 / R$570)</td>
+          <td class="num" style="color:#C07020">10,2%</td>
+          <td class="num" style="color:#4A8A4A">47,3%</td>
+          <td class="num" style="color:#CC4422">-28,6%</td>
+          <td class="num" style="color:#C07020">17,7%</td>
+        </tr>
+        <tr>
+          <td>Margem ao teto de preço (R$480 / R$620)</td>
+          <td class="num" style="color:#C07020">10,2%</td>
+          <td class="num" style="color:#4A8A4A">47,3%</td>
+          <td class="num" style="color:#A03030">-28,6%</td>
+          <td class="num" style="color:#C07020">24,3%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert">
+    <strong>Achado crítico — blazer no lote inicial:</strong> A calça tem break-even de margem no lote de 36 unidades e atinge 47% de margem bruta em lote de 200+. O blazer, por complexidade de alfaiataria e rateio de certificação sobre 24 unidades, opera em prejuízo no lote inicial independente do preço dentro da faixa declarada. Isso exige uma decisão antes do lançamento — ver Estratégia de Produto.
+  </div>
+
+  <div class="success">
+    <strong>O que a escala resolve:</strong> O rateio de certificação e desenvolvimento em lote de 36 unidades representa R$217/calça. Em 200 unidades, cai para R$39. Em 500 unidades, cai para R$16. O problema não é o produto — é a decisão de validar com volume pequeno. Essa é a escolha correta para um lançamento de marca, mas precisa ser comunicada internamente como tal.
+  </div>
+
+  <h3>Benchmark de margem bruta — DTC moda premium</h3>
+  <div class="card-row">
+    <div class="card">
+      <div class="card-val gold">57–59%</div>
+      <div class="card-label">Lululemon (reportado)</div>
+      <div class="card-note">Escala global, tecidos proprietários</div>
+    </div>
+    <div class="card">
+      <div class="card-val">~52%</div>
+      <div class="card-label">Vuori (estimado)</div>
+      <div class="card-note">DTC + wholesale, USD 4B valuation</div>
+    </div>
+    <div class="card">
+      <div class="card-val">~45–50%</div>
+      <div class="card-label">Girlfriend Collective</div>
+      <div class="card-note">DTC sustentabilidade, similar à Phyllos</div>
+    </div>
+    <div class="card">
+      <div class="card-val gold">47%</div>
+      <div class="card-label">Phyllos — lote 200+ unidades</div>
+      <div class="card-note">Dentro do benchmark. Meta para Ano 2.</div>
+    </div>
+  </div>
+
+  <hr class="div">
+  <h2>Break-Even Analysis</h2>
+  <p>O lote inicial de 60 unidades vendidas ao preço médio (calça R$480, blazer R$570) gera receita líquida de R$26.464 após impostos (12% Simples) e subsídio de frete. Percentual do investimento inicial recuperado na primeira venda completa do lote:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Cenário de investimento</th>
+          <th class="num">Investimento inicial</th>
+          <th class="num">Receita líquida — Lote 1</th>
+          <th class="num">% recuperado</th>
+          <th class="num">Unidades adicionais p/ break-even</th>
+          <th class="num">Total unidades p/ break-even</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Base (mínimo funcional)</td>
+          <td class="num">R$60.000</td>
+          <td class="num">R$26.464</td>
+          <td class="num" style="color:#C07020">44,1%</td>
+          <td class="num">194 un.</td>
+          <td class="num"><strong>254 unidades</strong></td>
+        </tr>
+        <tr class="highlight-row">
+          <td>Realista (médio)</td>
+          <td class="num">R$73.000</td>
+          <td class="num">R$26.464</td>
+          <td class="num" style="color:#C07020">36,2%</td>
+          <td class="num">269 un.</td>
+          <td class="num"><strong>329 unidades</strong></td>
+        </tr>
+        <tr>
+          <td>Com margem de segurança</td>
+          <td class="num">R$90.000</td>
+          <td class="num">R$26.464</td>
+          <td class="num" style="color:#C07020">29,4%</td>
+          <td class="num">367 un.</td>
+          <td class="num"><strong>427 unidades</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note-text">Unidades adicionais calculadas com margem de contribuição líquida do Lote 2+ (R$173/unidade no mix 60/40), quando os custos de certificação e desenvolvimento já estão amortizados.</p>
+
+  <hr class="div">
+  <h2>Payback Period</h2>
+  <p>Premissas de cadência de vendas por cenário:</p>
+
+  <div class="scenario-grid">
+    <div class="scenario worst">
+      <div class="scenario-label">Conservador — 30 unidades/ano</div>
+      <div class="scenario-val">8,5–12,7 anos</div>
+      <div class="scenario-note">Crescimento 100% orgânico, sem PR ativo. Este cenário é o floor — não a meta. É o limite que não podemos atingir.</div>
+    </div>
+    <div class="scenario base">
+      <div class="scenario-label">Moderado — 60 unidades/ano</div>
+      <div class="scenario-val">4,25–5,8 anos</div>
+      <div class="scenario-note">1 drop por semestre + base orgânica ativa. Aceitável para marca de especialidade premium com crescimento de portfólio.</div>
+    </div>
+    <div class="scenario best">
+      <div class="scenario-label">Otimista — 120 unidades/ano</div>
+      <div class="scenario-val">2,2–3,0 anos</div>
+      <div class="scenario-note">PR ativo + editorial + waitlist de lançamento. O único cenário compatível com narrativa de captação de recursos.</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h4>O payback não é resolvido vendendo mais — é resolvido com LTV</h4>
+    <p>Uma cliente que compra 1 calça + 1 blazer gera R$1.100 de receita bruta no mesmo ciclo vs. R$480 de uma cliente mono-produto. A alavanca principal é o portfólio (mais SKUs para a mesma base de clientes) e a taxa de recompra. Um payback de 2,4 anos com 120 unidades/ano é o único que viabiliza expansão de coleção antes do break-even.</p>
+  </div>
+
+  <hr class="div">
+  <h2>Projeção de Receita por Horizonte</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Horizonte</th>
+          <th class="num">GMV Bruto</th>
+          <th class="num">Receita Líquida</th>
+          <th class="num">COGS (~%)</th>
+          <th class="num">Margem Bruta</th>
+          <th class="num">Desp. Operacionais</th>
+          <th class="num">EBITDA</th>
+          <th class="num">EBITDA %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Ano 1 pós-lançamento</strong><br><span class="note-text">110 unidades · ticket médio R$520</span></td>
+          <td class="num">R$59.700</td>
+          <td class="num">R$52.536</td>
+          <td class="num">R$36.200</td>
+          <td class="num">R$16.336</td>
+          <td class="num">R$18.000</td>
+          <td class="num" style="color:#C07020">-R$1.664</td>
+          <td class="num" style="color:#C07020">-2,8%</td>
+        </tr>
+        <tr class="highlight-row">
+          <td><strong>Ano 3</strong><br><span class="note-text">810 pedidos · ticket médio R$820 · 9 SKUs</span></td>
+          <td class="num">R$664.200</td>
+          <td class="num">R$589.810</td>
+          <td class="num">R$298.890</td>
+          <td class="num">R$290.920</td>
+          <td class="num">R$156.000</td>
+          <td class="num" style="color:#4A8A4A"><strong>R$134.920</strong></td>
+          <td class="num" style="color:#4A8A4A"><strong>20,3%</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Ano 5</strong><br><span class="note-text">3.960 pedidos · ticket médio R$1.050 · 14–16 SKUs</span></td>
+          <td class="num">R$4.158.000</td>
+          <td class="num">R$3.618.000</td>
+          <td class="num">R$1.746.360</td>
+          <td class="num">R$1.871.640</td>
+          <td class="num">R$540.000</td>
+          <td class="num" style="color:#4A8A4A"><strong>R$1.331.640</strong></td>
+          <td class="num" style="color:#4A8A4A"><strong>32,0%</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note-text">Ano 1 é break-even operacional (excluindo o investimento inicial já feito). Ano 3 é o primeiro ano com EBITDA robusto — ponto de inflexão do negócio. Ano 5 habilita loja física flagship SP sem comprometer o modelo.</p>
+
+  <hr class="div">
+  <h2>Modelo de LTV e CAC</h2>
+  <div class="scenario-grid">
+    <div class="scenario worst">
+      <div class="scenario-label">Conservador</div>
+      <div class="scenario-val">R$840</div>
+      <div class="scenario-note">2 compras em 36 meses · ticket médio R$420 · sem up-sell de portfólio</div>
+    </div>
+    <div class="scenario base">
+      <div class="scenario-label">Base</div>
+      <div class="scenario-val">R$1.050</div>
+      <div class="scenario-note">2,5 compras em 36 meses · ticket médio R$420 · 1 produto adicional</div>
+    </div>
+    <div class="scenario best">
+      <div class="scenario-label">Otimista</div>
+      <div class="scenario-val">R$1.380</div>
+      <div class="scenario-note">3 compras em 36 meses · ticket médio R$460 · 2 produtos adicionais + indicação</div>
+    </div>
+  </div>
+
+  <div class="table-wrap" style="margin-top:24px">
+    <table>
+      <thead>
+        <tr>
+          <th>Métrica</th>
+          <th class="num">Conservador</th>
+          <th class="num">Base</th>
+          <th class="num">Otimista</th>
+          <th>Referência / benchmark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>LTV (36 meses)</td>
+          <td class="num">R$840</td>
+          <td class="num">R$1.050</td>
+          <td class="num">R$1.380</td>
+          <td class="note-text">DTC moda premium internacional: USD 200–400</td>
+        </tr>
+        <tr>
+          <td>CAC máximo sustentável (LTV/CAC ≥ 3,5x)</td>
+          <td class="num">R$163</td>
+          <td class="num">R$210</td>
+          <td class="num">R$237</td>
+          <td class="note-text">LTV/CAC saudável para DTC: 3x mínimo · 8x+ robusto</td>
+        </tr>
+        <tr>
+          <td>LTV/CAC ratio — meta Ano 3</td>
+          <td class="num">—</td>
+          <td class="num"><strong>15x</strong></td>
+          <td class="num">—</td>
+          <td class="note-text">Com CAC de R$70 por indicação orgânica</td>
+        </tr>
+        <tr>
+          <td>Taxa de recompra — meta Ano 2</td>
+          <td class="num">20%</td>
+          <td class="num">35%</td>
+          <td class="num">50%</td>
+          <td class="note-text">Benchmark DTC moda premium: 30–40% em 12 meses</td>
+        </tr>
+        <tr>
+          <td>Receita atribuída ao email (Ano 2)</td>
+          <td class="num">—</td>
+          <td class="num">R$1.440/mês</td>
+          <td class="num">—</td>
+          <td class="note-text">R$0,45/email enviado · lista 800 contatos · Brevo (R$0/mês)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="div">
+  <h2>Valuation — Cenários para Ano 5</h2>
+  <p>Metodologia: múltiplo de receita bruta anual. Benchmark para DTC de moda premium: 2–4x receita. Marcas com tese de sustentabilidade verificável e data de cliente proprietária tendem ao teto da faixa.</p>
+
+  <div class="scenario-grid">
+    <div class="scenario worst">
+      <div class="scenario-label">Conservador — 2x receita</div>
+      <div class="scenario-val">R$8,3M</div>
+      <div class="scenario-note">R$4,158M GMV × 2x · cenário de saída em mercado adverso</div>
+    </div>
+    <div class="scenario base">
+      <div class="scenario-label">Base — 3x receita</div>
+      <div class="scenario-val">R$12,5M</div>
+      <div class="scenario-note">R$4,158M GMV × 3x · referência para marcas DTC sustentáveis com LTV documentado</div>
+    </div>
+    <div class="scenario best">
+      <div class="scenario-label">Otimista — 4x receita</div>
+      <div class="scenario-val">R$16,6M</div>
+      <div class="scenario-note">R$4,158M GMV × 4x · se primeira vertical adicional (beauty/tech) estiver operando</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h4>O que determina o múltiplo</h4>
+    <ul>
+      <li>Rastreabilidade documentada de cadeia produtiva aumenta múltiplo em marcas de impacto</li>
+      <li>LTV/CAC &gt; 8x é condição para múltiplo acima de 3x em moda DTC</li>
+      <li>Relatórios de Transparência anuais publicados constroem o IP de dados que justifica o topo da faixa</li>
+      <li>Segunda vertical operando antes do Ano 5 expande o endereçável e eleva o múltiplo</li>
+    </ul>
+  </div>
+
+  <hr class="div">
+  <h3>Calibrações entre diretores</h3>
+  <div class="calib-row">
+    <div class="calib-card">
+      <div class="calib-title">Tech Director × Product Director</div>
+      <p><strong>Resolução:</strong> infraestrutura de e-commerce <em>construída</em> nos meses 4–6 (R$6.500 one-time). Loja <em>ao vivo</em> apenas no mês 23. Custo de desenvolvimento da rastreabilidade (R$16.000–30.000) está separado do setup básico da Nuvemshop — lacuna identificada no orçamento original.</p>
+    </div>
+    <div class="calib-card">
+      <div class="calib-title">Preço de lançamento — Product Director</div>
+      <p><strong>Decisão necessária:</strong> o piso de R$380 para a calça destrói margem e âncora percepção de valor no número errado. O preço de lançamento recomendado é <strong>R$480</strong> — abaixo do Lululemon importado, acima do Osklen tech, com justificativa técnica documentada para a cliente.</p>
+    </div>
+    <div class="calib-card">
+      <div class="calib-title">Impostos e custo de frete</div>
+      <p>Regime Simples Nacional: alíquota efetiva de 12% sobre receita bruta no início. Subsídio de frete: R$10–15 por pedido absorvido pela marca (cliente paga R$20, custo real R$30–35). Ambos incluídos nos cálculos de margem e LTV deste documento.</p>
+    </div>
+    <div class="calib-card">
+      <div class="calib-title">Premissas gerais</div>
+      <p>Câmbio USD/BRL: R$5,70. Valores são pontos médios das faixas estimadas pelos diretores. Variação real: ±30%. O número crítico é o Gate 0: sem os R$60.000 captados até o mês 4, os meses seguintes deslocam — não os critérios de produto.</p>
+    </div>
+  </div>
+
+  <h3>Resumo por fase — investimento mês a mês</h3>
+  <div class="card-row">
+    <div class="card">
+      <div class="card-val">R$270</div>
+      <div class="card-label">Fase 0 · M1–3</div>
+      <div class="card-note">R$90/mês · infra only</div>
+    </div>
+    <div class="card">
+      <div class="card-val">R$11.564</div>
+      <div class="card-label">Fase 1A · M4–6</div>
+      <div class="card-note">Setup tech + auditorias</div>
+    </div>
+    <div class="card">
+      <div class="card-val">R$12.150</div>
+      <div class="card-label">Fase 1B · M7–11</div>
+      <div class="card-note">Desenvolvimento da peça âncora</div>
+    </div>
+    <div class="card">
+      <div class="card-val">R$16.226</div>
+      <div class="card-label">Fase 2A · M12–21</div>
+      <div class="card-note">Certificações + teste 6 meses</div>
+    </div>
+    <div class="card">
+      <div class="card-val gold">R$32.890</div>
+      <div class="card-label">Fase 2B · M22–25</div>
+      <div class="card-note">Produção + fotografia + lançamento</div>
+    </div>
+    <div class="card">
+      <div class="card-val gold">R$73.100</div>
+      <div class="card-label">Total ao lançamento</div>
+      <div class="card-note">Meses 1–25</div>
+    </div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#FAFAF8;border:1px solid #ddd"></div> Preparação</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#F7F3EC"></div> Setup + Auditorias</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#EFE8D6"></div> Desenvolvimento</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#EBE2CA"></div> Certificações</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#E8DDB8;border:1px solid #ddd"></div> Teste Formal</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#F7F0E0"></div> Produção</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#FFF0CC"></div> Lançamento / Ops</div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Mês</th>
+          <th>Fase</th>
+          <th class="num">Produto (R$)</th>
+          <th class="num">Tecnologia (R$)</th>
+          <th class="num">Marca (R$)</th>
+          <th class="num">Total Mês (R$)</th>
+          <th class="num">Acumulado (R$)</th>
+          <th>Atividades / Milestones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="ph-0">
+          <td class="month-cell">01</td>
+          <td><span class="badge b-prep">Preparação</span></td>
+          <td class="num">—</td><td class="num">90</td><td class="num">—</td>
+          <td class="num">90</td><td class="num">90</td>
+          <td class="note-text">Mapeamento de fornecedores, narrativa do fundador, SEO editorial</td>
+        </tr>
+        <tr class="ph-0">
+          <td class="month-cell">02</td>
+          <td><span class="badge b-prep">Preparação</span></td>
+          <td class="num">—</td><td class="num">90</td><td class="num">—</td>
+          <td class="num">90</td><td class="num">180</td>
+          <td class="note-text">Conteúdo fundacional LinkedIn, protocolo de auditoria documentado</td>
+        </tr>
+        <tr class="ph-0">
+          <td class="month-cell">03</td>
+          <td><span class="badge b-prep">Preparação</span></td>
+          <td class="num">—</td><td class="num">90</td><td class="num">—</td>
+          <td class="num">90</td><td class="num">270</td>
+          <td class="note-text"><span class="gate-icon">⚑</span> Meta: investimento de R$60k confirmado</td>
+        </tr>
+        <tr class="milestone-row">
+          <td class="month-cell">—</td>
+          <td colspan="5"><span class="gate-icon">★ GATE 0</span> Investimento inicial captado — R$60.000 mínimo necessário para continuar</td>
+          <td class="num">R$60.000</td><td></td>
+        </tr>
+        <tr class="ph-1a">
+          <td class="month-cell">04</td>
+          <td><span class="badge b-setup">Setup</span></td>
+          <td class="num">1.400</td><td class="num">6.788</td><td class="num">—</td>
+          <td class="num">8.188</td><td class="num">8.458</td>
+          <td class="note-text">Setup Nuvemshop + Auth0 (one-time: R$6.500) · Auditoria presencial #1</td>
+        </tr>
+        <tr class="ph-1a">
+          <td class="month-cell">05</td>
+          <td><span class="badge b-setup">Auditorias</span></td>
+          <td class="num">1.400</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">1.688</td><td class="num">10.146</td>
+          <td class="note-text">Auditoria presencial #2 · Pré-qualificação de fornecedores de malha</td>
+        </tr>
+        <tr class="ph-1a">
+          <td class="month-cell">06</td>
+          <td><span class="badge b-setup">Auditorias</span></td>
+          <td class="num">1.400</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">1.688</td><td class="num">11.834</td>
+          <td class="note-text"><span class="gate-icon">✓</span> Auditoria #3 · Fornecedores selecionados e contratos assinados</td>
+        </tr>
+        <tr class="ph-1b">
+          <td class="month-cell">07</td>
+          <td><span class="badge b-dev">Desenvolvimento</span></td>
+          <td class="num">2.500</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">2.788</td><td class="num">14.622</td>
+          <td class="note-text">Modelagem plana — calça (elasticidade, compressão, flatlock seam)</td>
+        </tr>
+        <tr class="ph-1b">
+          <td class="month-cell">08</td>
+          <td><span class="badge b-dev">Desenvolvimento</span></td>
+          <td class="num">3.000</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">3.288</td><td class="num">17.910</td>
+          <td class="note-text">Modelagem técnica — blazer (estrutura de ombro, mobilidade, forro técnico)</td>
+        </tr>
+        <tr class="ph-1b">
+          <td class="month-cell">09</td>
+          <td><span class="badge b-dev">Desenvolvimento</span></td>
+          <td class="num">1.800</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">2.088</td><td class="num">19.998</td>
+          <td class="note-text">Proto #1 calça + blazer · Avaliação funcional (agachamento, postura de escritório)</td>
+        </tr>
+        <tr class="ph-1b">
+          <td class="month-cell">10</td>
+          <td><span class="badge b-dev">Desenvolvimento</span></td>
+          <td class="num">1.500</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">1.788</td><td class="num">21.786</td>
+          <td class="note-text">Proto #2 — revisões de fit e comportamento da malha sob tensão</td>
+        </tr>
+        <tr class="ph-1b">
+          <td class="month-cell">11</td>
+          <td><span class="badge b-dev">Desenvolvimento</span></td>
+          <td class="num">2.100</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">2.388</td><td class="num">24.174</td>
+          <td class="note-text"><span class="gate-icon">✓</span> Fitting multisize (PP–G) · Proto aprovado em 4 tamanhos</td>
+        </tr>
+        <tr class="milestone-row">
+          <td class="month-cell">—</td>
+          <td colspan="5"><span class="gate-icon">★ GATE 1</span> Proto da peça âncora aprovado — 6 meses de teste interno começam</td>
+          <td class="num">R$24.174</td><td></td>
+        </tr>
+        <tr class="ph-2a">
+          <td class="month-cell">12</td>
+          <td><span class="badge b-certif">Certificações</span></td>
+          <td class="num">3.650</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">3.938</td><td class="num">28.112</td>
+          <td class="note-text">Tech pack final · Início aplicação GRS e Oeko-Tex</td>
+        </tr>
+        <tr class="ph-2a">
+          <td class="month-cell">13</td>
+          <td><span class="badge b-certif">Certificações</span></td>
+          <td class="num">4.000</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">4.288</td><td class="num">32.400</td>
+          <td class="note-text">GRS + Oeko-Tex Standard 100 · Testes solidez de cor e pilling (SENAI)</td>
+        </tr>
+        <tr class="ph-2a">
+          <td class="month-cell">14</td>
+          <td><span class="badge b-certif">Certificações</span></td>
+          <td class="num">4.000</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">4.288</td><td class="num">36.688</td>
+          <td class="note-text">Certificações finalizadas · Testes laboratoriais completos</td>
+        </tr>
+        <tr class="ph-2a">
+          <td class="month-cell">15</td>
+          <td><span class="badge b-certif">Certificações</span></td>
+          <td class="num">2.000</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">2.288</td><td class="num">38.976</td>
+          <td class="note-text">Taxas remanescentes · Documentação de procedência arquivada</td>
+        </tr>
+        <tr class="ph-2a" style="background:#E8DDB8 !important">
+          <td class="month-cell">16</td>
+          <td><span class="badge b-test">Teste 6m · 1/6</span></td>
+          <td class="num">—</td><td class="num">288</td><td class="num">—</td>
+          <td class="num">288</td><td class="num">39.264</td>
+          <td class="note-text">Uso intensivo documentado · Registro: lavagens, treinos, ambiente de escritório</td>
+        </tr>
+        <tr class="ph-2a" style="background:#E8DDB8 !important">
+          <td class="month-cell">17–21</td>
+          <td><span class="badge b-test">Teste 6m · 2–6/6</span></td>
+          <td class="num">—</td><td class="num">288/mês</td><td class="num">—</td>
+          <td class="num">288</td><td class="num">40.704</td>
+          <td class="note-text">Avaliação de durabilidade · elasticidade após X ciclos · ajuste de gradação se necessário</td>
+        </tr>
+        <tr class="milestone-row">
+          <td class="month-cell">—</td>
+          <td colspan="5"><span class="gate-icon">★ GATE 2</span> Testes aprovados — GO para produção do lote inicial</td>
+          <td class="num">R$40.704</td><td></td>
+        </tr>
+        <tr class="ph-prod">
+          <td class="month-cell">22</td>
+          <td><span class="badge b-prod">Produção</span></td>
+          <td class="num">6.450</td><td class="num">348</td><td class="num">2.500</td>
+          <td class="num">9.298</td><td class="num">50.002</td>
+          <td class="note-text">Lote 1/4 · Material certificado · Fotografia editorial (R$2.500)</td>
+        </tr>
+        <tr class="ph-prod">
+          <td class="month-cell">23</td>
+          <td><span class="badge b-prod">Produção</span></td>
+          <td class="num">6.450</td><td class="num">348</td><td class="num">1.000</td>
+          <td class="num">7.798</td><td class="num">57.800</td>
+          <td class="note-text">Lote 2/4 · CMT calça · E-commerce ao vivo · Press kit</td>
+        </tr>
+        <tr class="ph-prod">
+          <td class="month-cell">24</td>
+          <td><span class="badge b-prod">Produção</span></td>
+          <td class="num">6.450</td><td class="num">348</td><td class="num">—</td>
+          <td class="num">6.798</td><td class="num">64.598</td>
+          <td class="note-text">Lote 3/4 · CMT blazer · Aviamentos técnicos</td>
+        </tr>
+        <tr class="ph-launch">
+          <td class="month-cell">25</td>
+          <td><span class="badge b-prod">Produção</span></td>
+          <td class="num">6.450</td><td class="num">348</td><td class="num">—</td>
+          <td class="num">6.798</td><td class="num">71.396</td>
+          <td class="note-text">Lote 4/4 · Embalagem biodegradável · QR codes de rastreabilidade</td>
+        </tr>
+        <tr class="milestone-row">
+          <td class="month-cell">—</td>
+          <td colspan="5"><span class="gate-icon">★ LANÇAMENTO</span> Primeiro produto Phyllos disponível para venda · 100% DTC</td>
+          <td class="num">R$71.396</td><td></td>
+        </tr>
+        <tr class="ph-ops">
+          <td class="month-cell">26–30</td>
+          <td><span class="badge b-launch">Lançamento</span></td>
+          <td class="num">—</td><td class="num">348</td><td class="num">500</td>
+          <td class="num">848</td><td class="num">~75.000</td>
+          <td class="note-text">Primeiras vendas · Lote 1 esgotado · support-agent ativo · Analytics de conversão</td>
+        </tr>
+        <tr class="ph-ops">
+          <td class="month-cell">31–36</td>
+          <td><span class="badge b-ops">Operação</span></td>
+          <td class="num">~2.000</td><td class="num">540</td><td class="num">—</td>
+          <td class="num">~2.540</td><td class="num">~90.000</td>
+          <td class="note-text">Supabase rastreabilidade ao vivo · Lote 2 (150 un.) em produção · 1º Relatório de Transparência</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE 4: MARCA -->
+<div id="marca" class="page">
+  <div class="hero">
+    <p class="eyebrow">Brand Director</p>
+    <h1>Estratégia de Marca<br>2026 — 2031</h1>
+    <p class="hero-sub">Construir autoridade antes do produto, provar com o produto, permanecer quando o mercado muda. SAM de R$450–680M crescendo 9–13% a.a. com espaço de entrada claro no mercado nacional.</p>
+  </div>
+
+  <div class="callout">
+    <h4>Destino declarado pelo fundador</h4>
+    <p><em>"Estes souberam como permanecer. Dá para sentir que a moda continua viva, ainda que mais funcional e em um contexto com tantas limitações em recursos."</em></p>
+    <ul>
+      <li>Referência de comprometimento: Natura</li>
+      <li>O que a marca nunca será: indústria farmacêutica (fria, impessoal, sem alma)</li>
+      <li>Linha vermelha: nunca se associar com empresas fora dos protocolos de sustentabilidade</li>
+    </ul>
+  </div>
+
+  <h2>Os três horizontes</h2>
+  <div class="horizon-grid">
+    <div class="horizon">
+      <div class="hor-year">01</div>
+      <div class="hor-label">Ano 1 · 2026–2027</div>
+      <div class="hor-title">A marca constrói o chão antes de construir a casa</div>
+      <div class="hor-body">
+        <p>A Phyllos não tem produto físico. Tem convicção, linguagem e um fundador disposto a ser rosto. O fundador é o produto do Ano 1 — não como influencer, mas como testemunha de uma convicção com custo real.</p>
+        <p>A narrativa de "curadoria inteligente" (durabilidade como decisão de executiva, não como argumento ambiental) amplia o pool de cliente sem trair o manifesto.</p>
+      </div>
+      <h3>O que a marca faz</h3>
+      <ul class="do-list">
+        <li>Texto longo no LinkedIn quinzenal — canal primário do público-alvo</li>
+        <li>Processo de desenvolvimento documentado como prova de método</li>
+        <li>Captura de email: "receba o dossier de procedência quando o produto existir"</li>
+        <li>Conteúdo técnico: o que é elastano vs. poliamida reciclada GRS, o que é flatlock seam</li>
+      </ul>
+      <h3>O que a marca não faz</h3>
+      <ul class="not-list">
+        <li>Não anuncia coleção como se existisse produto físico</li>
+        <li>Não faz parceria com influencer genérico</li>
+        <li>Não faz PR ativo (PR sem produto = vaidade)</li>
+        <li>Não faz anúncio pago — sem dado de LTV, paid media é queimar capital sem aprendizado</li>
+      </ul>
+      <div class="hor-kpis">
+        <h3>KPIs quantitativos — Ano 1</h3>
+        <div class="kpi"><strong>500 emails</strong> capturados via dossier de procedência (medido: Brevo)</div>
+        <div class="kpi"><strong>2.000+ seguidores LinkedIn</strong> com taxa de engajamento &gt;3% (medido: LinkedIn Analytics)</div>
+        <div class="kpi"><strong>3 artigos</strong> com &gt;1.000 visualizações orgânicas (medido: GA4)</div>
+        <div class="kpi"><strong>Zero</strong> promessa pública não cumprível documentada</div>
+        <div class="kpi"><strong>Proto aprovado</strong> + fornecedor auditado ao final do ano (medido: gate de produto)</div>
+      </div>
+    </div>
+
+    <div class="horizon">
+      <div class="hor-year">03</div>
+      <div class="hor-label">Ano 3 · 2028–2029</div>
+      <div class="hor-title">A marca prova o que disse</div>
+      <div class="hor-body">
+        <p>O produto físico existe. Há clientes. Há feedback real. O Ano 3 descobre se o que foi construído antes do produto era fundação ou fantasia. O critério é <strong>recompra</strong>, não primeira compra.</p>
+        <p>PR qualificado entra apenas com vendas reais documentadas. Veículos alvo: Época Negócios, Exame, Forbes Women, Runner's World — não Vogue na seção de tendências.</p>
+      </div>
+      <h3>O que a marca faz</h3>
+      <ul class="do-list">
+        <li>Publica dados de uso real: taxa de recompra, lavagens documentadas, tempo de uso</li>
+        <li>1º Relatório de Transparência — o que cumpriu, o que ainda não cumpriu, com números reais</li>
+        <li>PR qualificado em veículos especializados (sem tendência, sem moda genérica)</li>
+        <li>Expande coleção por dado de recompra — não por tendência de mercado</li>
+      </ul>
+      <h3>O que a marca não faz</h3>
+      <ul class="not-list">
+        <li>Não participa de Black Friday com desconto agressivo</li>
+        <li>Não escala acima da capacidade de rastrear</li>
+        <li>Não muda o tom para parecer mais acessível</li>
+      </ul>
+      <div class="hor-kpis">
+        <h3>KPIs quantitativos — Ano 3</h3>
+        <div class="kpi"><strong>Taxa de recompra &gt;35%</strong> em 12 meses (medido: Klaviyo / Nuvemshop)</div>
+        <div class="kpi"><strong>NPS &gt;55</strong> (medido: pesquisa pós-compra automatizada)</div>
+        <div class="kpi"><strong>LTV/CAC &gt;8x</strong> (medido: Klaviyo attribution + GA4)</div>
+        <div class="kpi"><strong>3 menções editoriais</strong> sem solicitação em veículos qualificados</div>
+        <div class="kpi"><strong>Relatório de Transparência</strong> citado por pelo menos 1 terceiro</div>
+        <div class="kpi"><strong>Receita bruta Ano 3: R$664k</strong> (810 pedidos · ticket R$820)</div>
+      </div>
+    </div>
+
+    <div class="horizon">
+      <div class="hor-year">05</div>
+      <div class="hor-label">Ano 5 · 2030–2031</div>
+      <div class="hor-title">A marca que soube permanecer</div>
+      <div class="hor-body">
+        <p>A frase do fundador não é sobre o que a Phyllos comunica — é sobre o que <strong>provocou</strong>. Quem a diz é quem observa de fora. O trabalho do Ano 5 não é criar essa percepção. É ter feito escolhas coerentes o suficiente para que ela seja inevitável.</p>
+      </div>
+      <h3>Teste de permanência</h3>
+      <ul class="do-list">
+        <li>Peças de 2027 ainda no portfólio ativo em 2031</li>
+        <li>3º Relatório de Transparência com dados longitudinais de 5 anos</li>
+        <li>Expansão de vertical com mesmo rigor — ou não expande</li>
+        <li>Fundador como âncora de valores, sem precisar ser onipresente</li>
+      </ul>
+      <div class="hor-kpis">
+        <h3>KPIs quantitativos — Ano 5</h3>
+        <div class="kpi"><strong>Taxa de recompra &gt;50%</strong> (medido: cohort analysis 12 meses)</div>
+        <div class="kpi"><strong>1.800 clientes ativos</strong> com 2,2 pedidos/ano (medido: CRM)</div>
+        <div class="kpi"><strong>Receita bruta R$4,2M</strong> · EBITDA 32% (medido: P&amp;L mensal)</div>
+        <div class="kpi"><strong>5 Relatórios de Transparência</strong> publicados</div>
+        <div class="kpi"><strong>Citada como referência de categoria</strong> por veículo editorial nacional</div>
+        <div class="kpi"><strong>Valuation R$8,3–16,6M</strong> (metodologia: 2–4x receita bruta anual)</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+  <h3>Como a credibilidade se constrói sem produto (Ano 1)</h3>
+  <div class="risk">
+    <strong>1. Especificidade do ponto de vista.</strong> Marcas genéricas falam de "qualidade". A Phyllos fala de elastano versus poliamida reciclada GRS, de flatlock seam versus costura convencional, de o que é gradação proporcional e por que importa. Quem sabe o detalhe antes do produto demonstra que vai entregar o detalhe no produto.
+  </div>
+  <div class="risk">
+    <strong>2. Transparência sobre o que ainda não é.</strong> "Ainda não temos produto à venda porque recusamos lançar sem procedência auditada." Isso é mais poderoso que qualquer campanha — é verificável, e quase ninguém faz.
+  </div>
+  <div class="risk">
+    <strong>3. O fundador como pessoa com custo.</strong> As escolhas que custaram algo: fornecedor rejeitado, prazo estendido por teste insuficiente, capital não gasto em velocidade para ser gasto em qualidade.
+  </div>
+
+  <hr class="div">
+  <h3>Funil de conversão — benchmarks DTC moda premium</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Estágio do funil</th>
+          <th class="num">Benchmark mercado</th>
+          <th class="num">Meta Phyllos (lista quente)</th>
+          <th>Instrumento de medição</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Taxa de conversão e-commerce</td>
+          <td class="num">1,5–2,5%</td>
+          <td class="num" style="color:#4A8A4A"><strong>2,0–3,5%</strong></td>
+          <td class="note-text">GA4 + Nuvemshop dashboard</td>
+        </tr>
+        <tr>
+          <td>Abandono de carrinho (com automação)</td>
+          <td class="num">62–68%</td>
+          <td class="num" style="color:#4A8A4A"><strong>52–58%</strong></td>
+          <td class="note-text">Brevo / Klaviyo flows de abandono</td>
+        </tr>
+        <tr>
+          <td>Open rate de email</td>
+          <td class="num">38–45%</td>
+          <td class="num" style="color:#4A8A4A"><strong>45–55%</strong></td>
+          <td class="note-text">Brevo Analytics (lista construída por convicção)</td>
+        </tr>
+        <tr>
+          <td>Click rate de email</td>
+          <td class="num">2,5–4,0%</td>
+          <td class="num" style="color:#4A8A4A"><strong>3,5–6,0%</strong></td>
+          <td class="note-text">Brevo / Klaviyo</td>
+        </tr>
+        <tr>
+          <td>Receita atribuída por email enviado</td>
+          <td class="num">R$0,14–0,28</td>
+          <td class="num" style="color:#4A8A4A"><strong>R$0,35–0,60</strong></td>
+          <td class="note-text">Ticket alto + lista quente = multiplicador</td>
+        </tr>
+        <tr>
+          <td>CSAT de atendimento (agente Claude)</td>
+          <td class="num">3,8–4,2/5</td>
+          <td class="num"><strong>&gt;4,0/5</strong></td>
+          <td class="note-text">Pesquisa pós-resolução automatizada</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE 5: PRODUTO -->
+<div id="produto" class="page">
+  <div class="hero">
+    <p class="eyebrow">Product Director</p>
+    <h1>Estratégia de Produto<br>2026 — 2031</h1>
+    <p class="hero-sub">Nada vai ao mercado no Ano 1. Tudo que acontece no Ano 1 determina se a marca pode cumprir o que prometeu. A peça âncora define o padrão de tudo que vem depois.</p>
+  </div>
+
+  <div class="alert">
+    <strong>Decisão pendente antes do lançamento — o blazer:</strong> O blazer a R$520–620 em lote de 24 unidades com material certificado e CMT de alfaiataria opera em prejuízo operacional por unidade (-28 a -44%). Não é anomalia — é o custo real de certificação rateado em volume pequeno. Existem duas saídas defensáveis:
+    <br><br>
+    <strong>Opção B (recomendada):</strong> subsidiar o blazer no lote inicial conscientemente, documentando como investimento de marca. O produto existe para mostrar que a Phyllos domina alfaiataria técnica. O lucro no lote inicial vem da calça.
+    <br>
+    <strong>Opção C:</strong> adiar o lançamento do blazer para o segundo ciclo (Lote 2 de 100 unidades), quando o custo cai de R$798 para R$469 e a margem sobe para 24%. A calça lança primeiro, valida o mercado, e o blazer entra 6 meses depois.
+  </div>
+
+  <div class="callout">
+    <h4>Preço de lançamento recomendado</h4>
+    <p><strong>Calça: R$480</strong> — não R$380. O piso de R$380 destrói a margem já apertada do lote inicial e âncora a percepção de valor no número errado. A calça a R$480 está abaixo do Lululemon Align importado (R$499–699), acima do Osklen tech (R$380–520), e tem justificativa técnica verificável: 78% do custo de material é certificado GRS ou Oeko-Tex, CMT em flatlock seam em confecção especializada SP, e R$117 de certificação SENAI por peça documentados com número de laudo.</p>
+    <p><strong>Blazer: R$570–620</strong> — manter a faixa mas ser transparente internamente sobre a margem negativa no lote inicial. Não reportar como "preço que fecha".</p>
+  </div>
+
+  <h2>Análise de capital inicial</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Bloco de custo</th>
+          <th>O que inclui</th>
+          <th class="num">Mínimo (R$)</th>
+          <th class="num">Máximo (R$)</th>
+          <th class="num">Ponto médio (R$)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Desenvolvimento</strong></td>
+          <td>Modelagem plana (calça + blazer), protos, fitting multisize, tech pack final</td>
+          <td class="num">8.500</td><td class="num">16.600</td><td class="num">12.550</td>
+        </tr>
+        <tr>
+          <td><strong>Testes e certificações</strong></td>
+          <td>SENAI-SP (pilling, elasticidade, wicking), GRS, Oeko-Tex Standard 100</td>
+          <td class="num">9.000</td><td class="num">19.000</td><td class="num">14.000</td>
+        </tr>
+        <tr>
+          <td><strong>Auditorias presenciais</strong></td>
+          <td>3 fornecedores (malha, acabamento, aviamentos) — deslocamento + diária</td>
+          <td class="num">2.400</td><td class="num">6.000</td><td class="num">4.200</td>
+        </tr>
+        <tr>
+          <td><strong>Lote inicial (60 unid.)</strong></td>
+          <td>30 calças + 30 blazers · material certificado + CMT + aviamentos + embalagem</td>
+          <td class="num">17.400</td><td class="num">34.200</td><td class="num">25.800</td>
+        </tr>
+        <tr>
+          <td><strong>Tech setup (one-time)</strong></td>
+          <td>Nuvemshop + Auth0 + páginas de rastreabilidade básica</td>
+          <td class="num">4.000</td><td class="num">10.000</td><td class="num">6.500</td>
+        </tr>
+        <tr>
+          <td><strong>Rastreabilidade Supabase</strong></td>
+          <td>Desenvolvimento completo: schema, API pública, páginas QR — lacuna identificada</td>
+          <td class="num">16.000</td><td class="num">30.000</td><td class="num">20.000</td>
+        </tr>
+        <tr>
+          <td><strong>Fotografia editorial</strong></td>
+          <td>Lookbook de lançamento (adicionado na calibração entre diretores)</td>
+          <td class="num">2.000</td><td class="num">5.000</td><td class="num">3.500</td>
+        </tr>
+        <tr style="background:#F5F2EB">
+          <td><strong>Subtotal</strong></td>
+          <td></td>
+          <td class="num"><strong>59.300</strong></td>
+          <td class="num"><strong>120.800</strong></td>
+          <td class="num"><strong>86.550</strong></td>
+        </tr>
+        <tr style="background:#EFE8D8">
+          <td><strong>+ Margem de segurança (20%)</strong></td>
+          <td>Rodadas extras de proto, deslocamento não previsto</td>
+          <td class="num"><strong>71.160</strong></td>
+          <td class="num"><strong>144.960</strong></td>
+          <td class="num"><strong>103.860</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <h4>O número para buscar investimento</h4>
+    <p>O orçamento original de R$60–73k não incluía o desenvolvimento completo de rastreabilidade (R$16–30k one-time). Incluindo essa linha: <strong>R$73k mínimo funcional</strong> (sem rastreabilidade completa no lançamento, apenas QR básico) · <strong>R$90k realista</strong> (com rastreabilidade parcial) · <strong>R$103k+ com margem de segurança completa</strong>.</p>
+    <ul>
+      <li>R$500/mês financia apenas o Ano 0 de preparação — mapeamento, processo, primeiros contatos</li>
+      <li>O investimento externo não é plano B. É parte estrutural do plano desde a origem</li>
+      <li>A rastreabilidade pode ser implementada em fases: API simples no Mês 28, página completa no Mês 30</li>
+    </ul>
+  </div>
+
+  <h2>Estratégia de produto por horizonte</h2>
+  <div class="horizon-grid">
+    <div class="horizon">
+      <div class="hor-year">01</div>
+      <div class="hor-label">Ano 1 · 2026–2027</div>
+      <div class="hor-title">Construção do alicerce</div>
+      <div class="hor-body">
+        <p>Nenhuma peça vai ao mercado. Tudo que acontece aqui determina se a marca pode cumprir o que prometeu.</p>
+      </div>
+      <h3>Sequência de entrega (4 trimestres)</h3>
+      <ul class="do-list">
+        <li><strong>T1:</strong> Protocolo de auditoria, mapeamento fornecedores, 8–12 candidatos por categoria</li>
+        <li><strong>T2:</strong> Visitas presenciais 3–5 finalistas, seleção e contratos com rastreabilidade</li>
+        <li><strong>T3:</strong> Modelagem plana calça + blazer, Proto #1, avaliação funcional real</li>
+        <li><strong>T4:</strong> Protos 2–3, fitting multisize (PP–GG), início teste de 6 meses</li>
+      </ul>
+      <div class="hor-kpis">
+        <h3>KPIs quantitativos — Ano 1</h3>
+        <div class="kpi"><strong>2+ fornecedores</strong> auditados presencialmente e contratados</div>
+        <div class="kpi"><strong>Proto da peça âncora</strong> aprovado em fitting real em 4 tamanhos</div>
+        <div class="kpi"><strong>Protocolo de 6 meses</strong> iniciado e documentado</div>
+        <div class="kpi"><strong>Zero claim público</strong> sobre produto não existente</div>
+      </div>
+    </div>
+
+    <div class="horizon">
+      <div class="hor-year">03</div>
+      <div class="hor-label">Ano 3 · 2028–2029</div>
+      <div class="hor-title">Primeiro produto no mercado</div>
+      <div class="hor-body">
+        <p>Lançamento controlado de 60 unidades, DTC exclusivo. Expansão apenas com dado de uso real — não por tendência de mercado.</p>
+      </div>
+      <h3>Peça âncora no mercado</h3>
+      <ul class="do-list">
+        <li>Dossier de Lançamento: ficha técnica completa, testes com números de laudo, certificações auditáveis</li>
+        <li>QR code em cada peça → página pública de origem com fornecedor + certificações linkadas</li>
+        <li>Venda exclusivamente DTC para manter margem e dados de cliente proprietários</li>
+      </ul>
+      <div class="hor-kpis">
+        <h3>KPIs quantitativos — Ano 3</h3>
+        <div class="kpi"><strong>Lote inicial vendido</strong> a R$480 (calça) sem desconto sobre preço declarado</div>
+        <div class="kpi"><strong>Margem bruta Lote 2+: 47%</strong> (200 unidades, custo R$253)</div>
+        <div class="kpi"><strong>QR rastreabilidade ativo</strong> em 100% dos SKUs</div>
+        <div class="kpi"><strong>Receita bruta Ano 1: R$59.700</strong> (110 unidades)</div>
+        <div class="kpi"><strong>Taxa de retorno por defeito &lt;3%</strong> (medido: CX)</div>
+      </div>
+    </div>
+
+    <div class="horizon">
+      <div class="hor-year">05</div>
+      <div class="hor-label">Ano 5 · 2030–2031</div>
+      <div class="hor-title">Maturidade e cadeia consolidada</div>
+      <div class="hor-body">
+        <p>Portfolio de 14–16 peças. Cadeia produtiva rastreável com dados reais de impacto. Versões 2.0 com dado de uso documentado.</p>
+      </div>
+      <h3>O que produto faz</h3>
+      <ul class="do-list">
+        <li>Rastreabilidade fibra-a-peça com dado real: água/metro, energia/lote, carbono de transporte</li>
+        <li>Parcerias com laboratório têxtil (SENAI, USP) para materiais emergentes (fibras pós-consumo, PCM)</li>
+        <li>Versões 2.0 com dados de iteração documentados publicamente</li>
+        <li>Programa de reparo com ateliê auditado (circular design operacional)</li>
+      </ul>
+      <div class="hor-kpis">
+        <h3>KPIs quantitativos — Ano 5</h3>
+        <div class="kpi"><strong>Taxa de retorno por defeito &lt;2%</strong></div>
+        <div class="kpi"><strong>2+ peças</strong> em versão 2.0 com dados documentados</div>
+        <div class="kpi"><strong>Relatório de impacto</strong> (água, energia, carbono) publicado anualmente</div>
+        <div class="kpi"><strong>Margem bruta 45%</strong> em escala madura (benchmark DTC premium)</div>
+        <div class="kpi"><strong>COGS 42%</strong> da receita bruta em portfólio de 14+ SKUs</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="div">
+  <h3>Arquitetura de coleções por horizonte</h3>
+  <div class="table-wrap">
+    <table class="stack-table">
+      <thead>
+        <tr>
+          <th>Coleção</th>
+          <th>Status Ano 1</th>
+          <th>Status Ano 3</th>
+          <th>Status Ano 5</th>
+          <th>Justificativa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Studio Presence</strong></td>
+          <td><span class="badge b-test">Teste formal</span></td>
+          <td><span class="badge b-prod">Lançamento</span></td>
+          <td><span class="badge b-ok">Versão 2.0</span></td>
+          <td>Job-to-be-done primário: escritório + pilates</td>
+        </tr>
+        <tr>
+          <td><strong>Essencial Run</strong></td>
+          <td><span class="badge b-prep">Mapeamento</span></td>
+          <td><span class="badge b-dev">Em desenvolvimento</span></td>
+          <td><span class="badge b-prod">Mercado</span></td>
+          <td>Segundo job — cliente treina, versatilidade vem primeiro</td>
+        </tr>
+        <tr>
+          <td><strong>Trail Essencial</strong></td>
+          <td>—</td>
+          <td><span class="badge b-prep">Mapeamento</span></td>
+          <td><span class="badge b-dev">Desenvolvimento</span></td>
+          <td>Exige spec diferente (abrasão, clima) — aguarda validação do core</td>
+        </tr>
+        <tr>
+          <td><strong>Expansão vertical</strong></td>
+          <td>—</td>
+          <td>—</td>
+          <td><span class="badge b-prep">Hipótese</span></td>
+          <td>Beauty ou Tech apenas com dado de LTV confirmado + capital disponível</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PAGE 6: TECNOLOGIA -->
+<div id="tecnologia" class="page">
+  <div class="hero">
+    <p class="eyebrow">Technology Director</p>
+    <h1>Estratégia de Tecnologia<br>2026 — 2031</h1>
+    <p class="hero-sub">Simplicidade antes de escala. Cada decisão tecnológica tem ROI calculado. O stack cresce quando o processo cresce — não antes.</p>
+  </div>
+
+  <h3>ROI por decisão tecnológica — resumo</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Decisão / Investimento</th>
+          <th class="num">Custo (3 anos)</th>
+          <th class="num">Valor gerado</th>
+          <th class="num">ROI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td><strong>Nuvemshop vs. Shopify</strong></td>
+          <td class="num">R$4.038 (mensalidades)</td>
+          <td class="num" style="color:#4A8A4A">R$51.486 economizados</td>
+          <td class="num" style="color:#4A8A4A">Economia direta</td>
+        </tr>
+        <tr>
+          <td><strong>25 Agentes Claude (Fase 3)</strong></td>
+          <td class="num">R$2.510/mês</td>
+          <td class="num" style="color:#4A8A4A">Equiv. R$90–150k/mês em pessoal</td>
+          <td class="num" style="color:#4A8A4A">14,5x</td>
+        </tr>
+        <tr class="highlight-row">
+          <td><strong>Rastreabilidade Supabase</strong></td>
+          <td class="num">R$20.000 one-time + R$0/mês</td>
+          <td class="num" style="color:#4A8A4A">R$127.680/ano (Ano 2)</td>
+          <td class="num" style="color:#4A8A4A">538%</td>
+        </tr>
+        <tr>
+          <td><strong>Email automação Brevo → Klaviyo</strong></td>
+          <td class="num">R$0 → R$800/mês (Fase 3)</td>
+          <td class="num" style="color:#4A8A4A">R$6.750–9.000/mês atribuídos</td>
+          <td class="num" style="color:#4A8A4A">8–11x</td>
+        </tr>
+        <tr>
+          <td><strong>LGPD compliance preventivo</strong></td>
+          <td class="num">R$0–120/mês</td>
+          <td class="num" style="color:#4A8A4A">Evita R$14k–100k em multa</td>
+          <td class="num" style="color:#4A8A4A">Proteção de risco</td>
+        </tr>
+        <tr>
+          <td><strong>Headless Next.js</strong></td>
+          <td class="num">R$60.000+</td>
+          <td class="num" style="color:#C07020">Somente &gt;500 pedidos/mês</td>
+          <td class="num" style="color:#C07020">Avaliar Ano 4</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <h4>3 decisões que definem tudo</h4>
+    <ul>
+      <li><strong>Nuvemshop sobre Shopify</strong> — R$51.486 em taxas de transação economizadas ao longo de 3 anos. O Shopify Payments não opera no Brasil: toda transação via gateway terceiro incorre em taxa dupla (2% plataforma + 3,5–4,9% gateway)</li>
+      <li><strong>Supabase sobre blockchain</strong> — rastreabilidade real não é questão de tecnologia, é questão de qualidade do dado. Dado de fornecedor não auditado numa blockchain continua sendo dado não confiável. Custo de desenvolvimento: R$16–30k. ROI no Ano 2: 538%</li>
+      <li><strong>Agentes ativam com processo, não com permissão</strong> — agente sem dado confiável é custo, não alavanca. O ROI dos agentes se realiza quando os sistemas que os alimentam (CRM, estoque, CX) têm dado real</li>
+    </ul>
+  </div>
+
+  <h2>Métricas de performance esperada por sistema</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Sistema</th>
+          <th>Métrica</th>
+          <th class="num">Benchmark mercado</th>
+          <th class="num">Meta Phyllos</th>
+          <th>Instrumento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="3"><strong>E-commerce (Nuvemshop)</strong></td>
+          <td>Taxa de conversão</td>
+          <td class="num">1,5–2,5%</td>
+          <td class="num" style="color:#4A8A4A">2,0–3,5%</td>
+          <td class="note-text">GA4 + Nuvemshop</td>
+        </tr>
+        <tr>
+          <td>Abandono de carrinho (com automação)</td>
+          <td class="num">62–68%</td>
+          <td class="num" style="color:#4A8A4A">52–58%</td>
+          <td class="note-text">Brevo / Klaviyo flows</td>
+        </tr>
+        <tr>
+          <td>Receita recuperada por abandono (Ano 2)</td>
+          <td class="num">—</td>
+          <td class="num" style="color:#4A8A4A">R$84.672/ano</td>
+          <td class="note-text">10% de recuperação · R$0 custo adicional</td>
+        </tr>
+        <tr>
+          <td rowspan="3"><strong>Atendimento (support-agent)</strong></td>
+          <td>Tempo de resposta</td>
+          <td class="num">4–8h (humano)</td>
+          <td class="num" style="color:#4A8A4A">&lt;5 min (24/7)</td>
+          <td class="note-text">Brevo / Nuvemshop integration</td>
+        </tr>
+        <tr>
+          <td>Tickets resolvidos sem escalamento (Tier 1)</td>
+          <td class="num">45–60% (humano)</td>
+          <td class="num" style="color:#4A8A4A">70–80%</td>
+          <td class="note-text">Log de tickets + escalamentos</td>
+        </tr>
+        <tr>
+          <td>Custo por ticket</td>
+          <td class="num">R$12–25 (CLT)</td>
+          <td class="num" style="color:#4A8A4A">R$0,40–1,20</td>
+          <td class="note-text">API cost / volume de tickets</td>
+        </tr>
+        <tr>
+          <td rowspan="2"><strong>Email marketing (Brevo)</strong></td>
+          <td>Open rate</td>
+          <td class="num">38–45%</td>
+          <td class="num" style="color:#4A8A4A">45–55%</td>
+          <td class="note-text">Brevo Analytics</td>
+        </tr>
+        <tr>
+          <td>Receita atribuída por email enviado</td>
+          <td class="num">R$0,14–0,28</td>
+          <td class="num" style="color:#4A8A4A">R$0,35–0,60</td>
+          <td class="note-text">UTM tracking + Nuvemshop</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Análise de risco tecnológico — impacto financeiro</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Risco</th>
+          <th>Probabilidade</th>
+          <th class="num">Custo estimado se ocorrer</th>
+          <th class="num">Custo de mitigação</th>
+          <th>Mitigação implementada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Nuvemshop aumenta preços 30%+</strong></td>
+          <td><span class="badge b-prep">Baixa (3–5 anos)</span></td>
+          <td class="num">R$28–80k (migração)</td>
+          <td class="num">R$0</td>
+          <td class="note-text">Backup mensal de dados de cliente em CSV/JSON. Dados não ficam presos — só a loja.</td>
+        </tr>
+        <tr>
+          <td><strong>Anthropic API dobra de preço</strong></td>
+          <td><span class="badge b-prep">Baixa (tendência deflacionária)</span></td>
+          <td class="num">+R$300–400/mês</td>
+          <td class="num">R$0</td>
+          <td class="note-text">System prompts versionados no GitHub — portáveis para Gemini ou GPT-4o. Zero lock-in de dado.</td>
+        </tr>
+        <tr>
+          <td><strong>Downtime no dia do lançamento</strong></td>
+          <td><span class="badge b-prep">Muito baixa (Netlify SLA 99,99%)</span></td>
+          <td class="num">R$2.880/hora (6 pedidos × R$480)</td>
+          <td class="num">R$0</td>
+          <td class="note-text">UptimeRobot alerta em 5 min. Rollback Netlify em &lt;1 clique. Teste staging 72h antes.</td>
+        </tr>
+        <tr style="background:#FFF0F0">
+          <td><strong>LGPD — multa por não conformidade</strong></td>
+          <td><span class="badge b-warn">Médio sem ação</span></td>
+          <td class="num">R$14k–100k+ (2% do faturamento)</td>
+          <td class="num">R$0–120/mês</td>
+          <td class="note-text">3 ações necessárias antes do lançamento: (1) cookie banner com registro de consentimento, (2) processo de exclusão de dados SLA 15 dias, (3) plano de resposta a incidente de 1 página.</td>
+        </tr>
+        <tr>
+          <td><strong>Auth0 excede 7.000 MAU (tier free)</strong></td>
+          <td><span class="badge b-prep">Baixa no Ano 1</span></td>
+          <td class="num">R$120/mês (upgrade)</td>
+          <td class="num">R$0 agora</td>
+          <td class="note-text">7.000 MAU cobre Ano 1 inteiro. Monitorar mensalmente — upgrade automático quando necessário.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert">
+    <strong>LGPD — ação obrigatória antes do lançamento (Mês 25):</strong> Cookie banner com CookieYes ou Cookiebot (R$0–120/mês). Processo documentado de exclusão de dados com SLA de 15 dias úteis. Plano de resposta a incidente de 1 página com alert configurado no Supabase. Custo: 1 dia de trabalho + R$0–120/mês. Alternativa: multa de 2% do faturamento bruto.
+  </div>
+
+  <h2>Stack por fase</h2>
+
+  <h3>Fase 0 · Pré-produto (Meses 1–3) · R$65–115/mês</h3>
+  <div class="table-wrap">
+    <table class="stack-table">
+      <thead><tr><th>Ferramenta</th><th>Uso</th><th>Custo/mês</th></tr></thead>
+      <tbody>
+        <tr><td>Netlify Free</td><td>Hospedagem + CDN do site estático</td><td class="cost-zero">R$0</td></tr>
+        <tr><td>GitHub Free</td><td>Repositório + CI/CD</td><td class="cost-zero">R$0</td></tr>
+        <tr><td>GA4</td><td>Analytics de comportamento</td><td class="cost-zero">R$0</td></tr>
+        <tr><td>Brevo Starter</td><td>Email transacional + lista (até 9k/mês)</td><td class="cost-zero">R$0</td></tr>
+        <tr><td>UptimeRobot Free</td><td>Monitoramento de uptime</td><td class="cost-zero">R$0</td></tr>
+        <tr><td>Sentry Free</td><td>Erros de frontend (5k eventos/mês)</td><td class="cost-zero">R$0</td></tr>
+        <tr><td>Anthropic API</td><td>25 agentes Claude — uso inicial baixo</td><td class="cost-low">R$50–100</td></tr>
+        <tr><td>Registro.br</td><td>Domínio phyllos.com.br (anual rateado)</td><td class="cost-low">R$15</td></tr>
+        <tr><td colspan="2"><strong>Total Fase 0</strong></td><td class="cost-low"><strong>R$65–115</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Fase 1 · E-commerce funcional (Meses 4–25) · R$228–348/mês</h3>
+  <div class="table-wrap">
+    <table class="stack-table">
+      <thead><tr><th>Ferramenta</th><th>Uso</th><th>Custo/mês</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Nuvemshop Básico</strong></td><td>E-commerce DTC — integrações nativas BR (NF-e, Pix, frete multi-carrier)</td><td class="cost-low">R$79</td></tr>
+        <tr><td>Mercado Pago</td><td>Pix + cartão + boleto (sem mensalidade, ~3,5–4,9%/venda)</td><td class="cost-zero">R$0 fixo</td></tr>
+        <tr><td>Melhor Envio</td><td>Frete multi-transportadora (gratuito até R$2k frete/mês)</td><td class="cost-zero">R$0</td></tr>
+        <tr><td><strong>Bling Básico</strong></td><td>NF-e automática (obrigatório legalmente)</td><td class="cost-low">R$49</td></tr>
+        <tr><td>Auth0 Free</td><td>Login social Google + Apple (7k MAU — cobre Ano 1)</td><td class="cost-zero">R$0</td></tr>
+        <tr><td>Brevo Starter</td><td>Email marketing até 25k contatos</td><td class="cost-zero">R$0–70</td></tr>
+        <tr><td>Anthropic API</td><td>Agentes com volume médio</td><td class="cost-low">R$100–150</td></tr>
+        <tr><td colspan="2"><strong>Total Fase 1 (mensal)</strong></td><td class="cost-low"><strong>R$228–348</strong></td></tr>
+        <tr style="background:#FFF8F0"><td><strong>Setup one-time (Mês 4)</strong></td><td>Customização Nuvemshop + Auth0 + rastreabilidade básica</td><td class="cost-med"><strong>R$6.500</strong></td></tr>
+        <tr style="background:#FFF8F0"><td><strong>Rastreabilidade completa (Mês 28–30)</strong></td><td>Supabase schema + API pública + página QR + storage PDFs</td><td class="cost-med"><strong>R$16.000–30.000</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Fase 2 · Rastreabilidade ativa (Meses 26–36) · R$468–618/mês</h3>
+  <div class="table-wrap">
+    <table class="stack-table">
+      <thead><tr><th>Ferramenta</th><th>Uso</th><th>Custo/mês</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Supabase Free</strong></td><td>Banco de dados + API pública de rastreabilidade (500MB, 2 projetos)</td><td class="cost-zero">R$0</td></tr>
+        <tr><td>Nuvemshop Turbo</td><td>Upgrade quando GMV &gt; R$3.500–5.000/mês (não R$8k — break-even real)</td><td class="cost-low">R$199</td></tr>
+        <tr><td>n8n Cloud / Make</td><td>Automações: alertas de estoque, certificações, reengajamento</td><td class="cost-low">R$0–50</td></tr>
+        <tr><td>Anthropic API</td><td>supply-chain, certification, loyalty, analytics ativos</td><td class="cost-med">R$150–200</td></tr>
+        <tr><td colspan="2"><strong>Total Fase 2 (mensal)</strong></td><td class="cost-med"><strong>R$468–618</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Fase 3 · Multi-vertical (Meses 37–60) · R$2.700–4.700/mês</h3>
+  <div class="callout">
+    <h4>Esta fase exige GMV consistente &gt; R$50k/mês — não aspiração</h4>
+    <p>O stack da Fase 3 habilita a plataforma multi-vertical (Wear + Beauty + Tech em base de dados unificada). Break-even do Klaviyo: lista com 3.000+ contatos com dado comportamental. Break-even do Segment CDP: segunda vertical operando. Break-even do headless Next.js: &gt;500 pedidos/mês + Core Web Vitals da Nuvemshop caindo.</p>
+  </div>
+  <div class="table-wrap">
+    <table class="stack-table">
+      <thead><tr><th>Ferramenta</th><th>Uso</th><th>Custo/mês</th><th>Trigger de ativação</th></tr></thead>
+      <tbody>
+        <tr><td>E-commerce headless (Next.js)</td><td>Frontend unificado multi-vertical, Vercel Pro</td><td class="cost-med">R$700–1.400</td><td class="note-text">&gt;500 pedidos/mês + 2 verticais</td></tr>
+        <tr><td>Segment Team</td><td>CDP — dados unificados de cliente</td><td class="cost-high">~R$600</td><td class="note-text">Segunda vertical lançada</td></tr>
+        <tr><td>Supabase Pro</td><td>Banco expandido + rastreabilidade completa</td><td class="cost-low">R$125</td><td class="note-text">&gt;1.000 SKUs ou &gt;50k consultas/mês</td></tr>
+        <tr><td>Klaviyo</td><td>CRM avançado com segmentação comportamental de LTV</td><td class="cost-med">R$300–800</td><td class="note-text">Lista &gt;3.000 contatos com dado de compra</td></tr>
+        <tr><td>Auth0 Essential</td><td>Identidade unificada multi-vertical</td><td class="cost-low">~R$120</td><td class="note-text">MAU &gt;7.000</td></tr>
+        <tr><td>n8n Cloud</td><td>Automações avançadas todos os times</td><td class="cost-low">R$150–300</td><td class="note-text">Fase 2 em operação</td></tr>
+        <tr><td>Anthropic API</td><td>Todos os 25 agentes em volume alto</td><td class="cost-high">R$400–800</td><td class="note-text">Fase 3 operacional</td></tr>
+        <tr><td>Sentry + Datadog</td><td>Monitoramento avançado</td><td class="cost-med">R$200–400</td><td class="note-text">Headless ativo</td></tr>
+        <tr><td colspan="2"><strong>Total Fase 3 (mensal)</strong></td><td class="cost-high"><strong>R$2.695–4.745</strong></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="div">
+  <h3>Quando cada agente ativa</h3>
+  <div class="table-wrap">
+    <table class="stack-table">
+      <thead><tr><th>Agente</th><th>O que faz</th><th>Fase de ativação</th><th>Pré-requisito</th></tr></thead>
+      <tbody>
+        <tr><td>content-creator</td><td>Rascunhos de artigos, posts, narrativa do fundador</td><td><span class="badge b-prep">Fase 0</span></td><td>Imediato</td></tr>
+        <tr><td>brand-voice-agent</td><td>Valida todo conteúdo antes de publicar</td><td><span class="badge b-prep">Fase 0</span></td><td>Imediato — filter final</td></tr>
+        <tr><td>seo-blog-agent</td><td>Palavras-chave, autoridade orgânica</td><td><span class="badge b-prep">Fase 0</span></td><td>Imediato</td></tr>
+        <tr><td>social-media-lead</td><td>Calendário editorial, briefings</td><td><span class="badge b-prep">Fase 0</span></td><td>Imediato</td></tr>
+        <tr><td>supply-chain-agent</td><td>Documenta auditorias, rastreia candidatos</td><td><span class="badge b-setup">Fase 1A</span></td><td>Primeiro fornecedor visitado</td></tr>
+        <tr><td>support-agent</td><td>Atendimento desde a primeira venda</td><td><span class="badge b-launch">Lançamento</span></td><td>Primeira venda realizada</td></tr>
+        <tr><td>certification-agent</td><td>Validade de certificações, alertas de renovação</td><td><span class="badge b-certif">Fase 2A</span></td><td>Primeiro fornecedor auditado</td></tr>
+        <tr><td>email-crm-agent</td><td>Fluxos de automação por comportamento</td><td><span class="badge b-ops">Pós-lançamento</span></td><td>Lista &gt;200 contatos com dado de compra</td></tr>
+        <tr><td>loyalty-agent</td><td>Retenção e fidelização</td><td><span class="badge b-ops">Pós-lançamento</span></td><td>30+ clientes com segunda compra documentada</td></tr>
+        <tr><td>paid-media-agent</td><td>Meta Ads / Google Ads</td><td><span class="badge b-dev">Ano 2+</span></td><td>LTV de cliente documentado com 6+ meses de dado</td></tr>
+        <tr><td>bi-analyst</td><td>Dashboards operacionais</td><td><span class="badge b-dev">Ano 2+</span></td><td>Mínimo 6 meses de pedidos</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="div">
+  <h3>Arquitetura de rastreabilidade</h3>
+  <div class="table-wrap" style="background:#0F0F0D; color:#E8E4DC; padding:24px; font-family:monospace; font-size:13px; line-height:1.8; margin:16px 0">
+    <pre style="color:#E8E4DC; white-space:pre-wrap">
+Supabase (PostgreSQL gerenciado — custo R$0 na Fase 0-2)
+  → produtos (SKU, código_origem, fornecedor, materiais, certificações)
+  → fornecedores (nome, localização, auditoria_data, certificações_vigentes)
+  → lotes (lote_id, data_producao, SKU, certificado_pdf_url, % material reciclado)
+
+API pública (Row Level Security — somente leitura)
+  → GET /origem/:codigo → dados do SKU para a página pública
+
+Página phyllos.com.br/origem/[codigo]
+  → Fornecedor + localização + data de auditoria presencial
+  → Certificações com link para PDF original (não apenas logo)
+  → % de material reciclado com fonte documentada
+  → Data do lote + instrução de cuidado e longevidade
+
+Zero estimativa. Zero alegação sem documento.
+    </pre>
+  </div>
+
+  <div class="risk">
+    <strong>Dado que a Phyllos recusa coletar:</strong> questões de sexualidade. Implementado na camada do Supabase: esses campos simplesmente não existem no schema de cliente. O que não existe não pode ser coletado, não pode vazar, não pode ser mal usado. Conformidade LGPD por design, não por política.
+  </div>
+</div>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelector(`[data-page="${id}"]`).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
