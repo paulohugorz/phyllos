@@ -3,295 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PHYLLOS wear — Materiais</title>
+<title>PHYLLOS wear — Materiais em pesquisa</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
+<body class="home-development">
 <div class="cursor" id="cursor"></div>
-<div class="overlay" id="overlay" onclick="closeCart()"></div>
 
-<!-- CART DRAWER -->
-<div class="cart-drawer" id="cartDrawer">
-  <div class="cart-header">
-    <div class="cart-header-left">
-      <span class="cart-phi">Φ</span>
-      <div class="cart-title">Seleção</div>
-    </div>
-    <button class="cart-close" onclick="closeCart()">✕</button>
-  </div>
-  <div class="cart-items"></div>
-  <div class="cart-footer">
-    <div class="cart-total">
-      <span class="cart-total-label">Total</span>
-      <span class="cart-total-value">R$ 0</span>
-    </div>
-    <div class="cart-note">Frete grátis · Embalagem certificada · Troca em 30 dias</div>
-    <button class="cart-checkout">Finalizar Pedido →</button>
-  </div>
-</div>
-
-<!-- NAV -->
 <nav id="mainNav">
-  <a href="index.html" class="nav-logo">
-    <span class="nav-phi">Φ</span>
-    <div class="nav-rule"></div>
-    <span class="nav-wordmark">Phyllos</span>
-    <span class="nav-sub">wear</span>
-  </a>
-  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links">
-    <li><a href="colecoes.html">Coleções</a></li>
-    <li><a href="essencial.html">Essencial</a></li>
-    <li><a href="presenca.html">Presença</a></li>
-    <li><a href="materiais.html">Materiais</a></li>
-    <li><a href="manifesto.html">Manifesto</a></li>
-  </ul>
-  <div class="nav-actions">
-    <button class="nav-icon" style="font-size:18px" onclick="toggleCart()">◻<span class="cart-count" id="cartCount">0</span></button>
-    <button class="nav-icon">♡</button>
-    <button class="nav-icon">⊙</button>
-  </div>
+  <a href="index.html" class="nav-logo"><span class="nav-phi">Φ</span><div class="nav-rule"></div><span class="nav-wordmark">Phyllos</span><span class="nav-sub">wear</span></a>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none"><span></span><span></span><span></span></button>
+  <ul class="nav-links"><li><a href="colecoes.html">Coleções</a></li><li><a href="essencial.html">Essencial</a></li><li><a href="business-plan.html">Plano</a></li><li><a href="materiais.html">Materiais</a></li><li><a href="manifesto.html">Manifesto</a></li></ul>
+  <div class="nav-actions nav-status"><span>Em desenvolvimento</span></div>
 </nav>
 
-<!-- PAGE HERO -->
 <div class="page-hero">
-  <div class="page-hero-label">Procedência</div>
-  <h1 class="page-hero-title">O que há <em>dentro</em><br>de cada peça.</h1>
-  <p class="page-hero-sub">Cada tecido escolhido tem uma razão técnica e uma razão ética. Aqui você encontra as duas — sem marketing, sem eufemismos.</p>
+  <div class="page-hero-label">Critérios em pesquisa</div>
+  <h1 class="page-hero-title">Materiais antes de virarem <em>claim</em></h1>
+  <p class="page-hero-sub">Esta página não afirma composições finais. Ela organiza os critérios que a PHYLLOS deve investigar antes de comunicar qualquer material, certificação, impacto ou desempenho.</p>
 </div>
 
-<!-- MARQUEE -->
 <div class="marquee">
   <div class="marquee-track">
-    <span class="marquee-item">Algodão orgânico GOTS</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Elastano reciclado GRS</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Lã merino RWS</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">DWR sem PFAS</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Poliamida reciclada</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Produção nacional rastreável</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Algodão orgânico GOTS</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Elastano reciclado GRS</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Lã merino RWS</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">DWR sem PFAS</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Poliamida reciclada</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Produção nacional rastreável</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Toque</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Elasticidade</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Opacidade</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Recuperação</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Procedência documentável</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Durabilidade testável</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Toque</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Elasticidade</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Opacidade</span><span class="marquee-sep">·</span>
+    <span class="marquee-item">Recuperação</span><span class="marquee-sep">·</span>
   </div>
 </div>
 
-<!-- MATERIALS GRID -->
-<section class="product-section">
-  <div class="product-header">
-    <div>
-      <div class="section-label">Tecidos</div>
-      <h2 class="section-title">Cada fibra tem <em>uma história</em></h2>
-    </div>
+<section class="concept-section">
+  <div class="concept-intro">
+    <div class="section-label">O que estamos avaliando</div>
+    <h2 class="section-title">Material bom é o que <em>aguenta a vida real</em></h2>
+    <p>Os materiais abaixo são rotas possíveis de pesquisa. Só devem virar narrativa pública quando houver fornecedor, ficha técnica, documentação e teste compatíveis com a promessa.</p>
   </div>
 
-  <div class="materials-grid">
+  <div class="research-list">
+    <div class="research-item"><h3>Malhas elásticas de base</h3><p>Para leggings, shorts e tops: investigar opacidade, recuperação elástica, toque contra pele, resistência ao atrito, estabilidade da cintura e comportamento depois de lavagens.</p></div>
+    <div class="research-item"><h3>Fibras naturais certificáveis</h3><p>Para camisetas e camadas de conforto: avaliar toque, respirabilidade, amassamento, secagem, origem documentável e disponibilidade de cadeia que possa ser auditada.</p></div>
+    <div class="research-item"><h3>Malhas de aparência corporativa</h3><p>Para calças, bodies e blazers maleáveis: estudar caída, estrutura, elasticidade, transparência, vincos e aparência depois de horas sentada.</p></div>
+    <div class="research-item"><h3>Camadas de clima variável</h3><p>Para jaquetas e coletes: avaliar peso, respirabilidade, proteção contra vento, resistência a garoa, ruído do tecido e conforto em ambientes internos.</p></div>
+    <div class="research-item"><h3>Componentes e aviamentos</h3><p>Zíperes, elásticos, forros, bojos, etiquetas e linhas precisam seguir o mesmo padrão de conforto, durabilidade e documentação.</p></div>
+    <div class="research-item"><h3>Embalagem e rastreio</h3><p>A embalagem e o código de origem entram como meta de desenvolvimento. Só viram claim quando a operação estiver desenhada e verificável.</p></div>
+  </div>
 
-    <div class="material-card">
-      <div class="material-icon">◎</div>
-      <div class="material-name">Algodão Orgânico</div>
-      <span class="material-tag">Certificado GOTS · Peças base</span>
-      <p class="material-desc">Cultivado sem agrotóxicos ou fertilizantes sintéticos. Certificação GOTS garante rastreabilidade desde a lavoura até o acabamento. Toque mais macio, durabilidade superior ao algodão convencional e impacto hídrico 91% menor.</p>
-      <div class="material-spec">
-        <div class="material-spec-item"><span>Certificação</span><span>GOTS 6.0</span></div>
-        <div class="material-spec-item"><span>Origem</span><span>Brasil — SP e MT</span></div>
-        <div class="material-spec-item"><span>Impacto hídrico</span><span>−91% vs. convencional</span></div>
-        <div class="material-spec-item"><span>Presente em</span><span>Camisetas, Tops base</span></div>
-      </div>
-    </div>
-
-    <div class="material-card">
-      <div class="material-icon">◑</div>
-      <div class="material-name">Elastano Reciclado</div>
-      <span class="material-tag">Certificado GRS · Compressão</span>
-      <p class="material-desc">Produzido a partir de resíduos pré-consumo da indústria têxtil. Mesmo desempenho de compressão e elasticidade do elastano virgem, com rastreabilidade certificada. Presente em todas as peças de compressão da linha Essencial Run.</p>
-      <div class="material-spec">
-        <div class="material-spec-item"><span>Certificação</span><span>GRS (Global Recycled Standard)</span></div>
-        <div class="material-spec-item"><span>Composição</span><span>78% elastano reciclado</span></div>
-        <div class="material-spec-item"><span>Elasticidade</span><span>Bidirecional 360°</span></div>
-        <div class="material-spec-item"><span>Presente em</span><span>Leggings, Shorts Bike</span></div>
-      </div>
-    </div>
-
-    <div class="material-card">
-      <div class="material-icon">◐</div>
-      <div class="material-name">Lã Merino</div>
-      <span class="material-tag">Certificado RWS · Acessórios</span>
-      <p class="material-desc">Lã extrafina de ovinos criados em pastagens certificadas pelo Responsible Wool Standard. Naturalmente antibacteriana, termorreguladora e biodegradável. Não esquenta em excesso nem amarga — regula conforme o esforço.</p>
-      <div class="material-spec">
-        <div class="material-spec-item"><span>Certificação</span><span>RWS (Responsible Wool Standard)</span></div>
-        <div class="material-spec-item"><span>Finura</span><span>17,5 µm (extrafina)</span></div>
-        <div class="material-spec-item"><span>Propriedade</span><span>Antibacteriana natural</span></div>
-        <div class="material-spec-item"><span>Presente em</span><span>Meias Trail e Compressão</span></div>
-      </div>
-    </div>
-
-    <div class="material-card">
-      <div class="material-icon">◈</div>
-      <div class="material-name">Shell Impermeável</div>
-      <span class="material-tag">DWR sem PFAS · Jaquetas</span>
-      <p class="material-desc">Tecido técnico de poliamida reciclada com tratamento DWR (Durable Water Repellent) de base ecológica — sem PFAS, os compostos fluorados associados a danos ambientais persistentes. Impermeabilidade de nível profissional sem o custo ambiental.</p>
-      <div class="material-spec">
-        <div class="material-spec-item"><span>Base</span><span>Poliamida reciclada</span></div>
-        <div class="material-spec-item"><span>Tratamento</span><span>DWR ecológico (0 PFAS)</span></div>
-        <div class="material-spec-item"><span>Impermeabilidade</span><span>10.000 mm coluna d'água</span></div>
-        <div class="material-spec-item"><span>Presente em</span><span>Jaqueta Trail, Corta-Vento</span></div>
-      </div>
-    </div>
-
-    <div class="material-card">
-      <div class="material-icon">◉</div>
-      <div class="material-name">Mesh Técnico</div>
-      <span class="material-tag">Poliamida reciclada · Performance</span>
-      <p class="material-desc">Malha aberta de poliamida reciclada com acabamento UPF 50+. Secagem 3× mais rápida que algodão. Zero retenção de odor graças à estrutura porosa que não retém bactérias. Levíssima — menos de 80g/m².</p>
-      <div class="material-spec">
-        <div class="material-spec-item"><span>Gramatura</span><span>78 g/m²</span></div>
-        <div class="material-spec-item"><span>Proteção solar</span><span>UPF 50+</span></div>
-        <div class="material-spec-item"><span>Secagem</span><span>3× mais rápida que algodão</span></div>
-        <div class="material-spec-item"><span>Presente em</span><span>Camisetas Trail, Regata Run</span></div>
-      </div>
-    </div>
-
-    <div class="material-card">
-      <div class="material-icon">◇</div>
-      <div class="material-name">Fleece Orgânico</div>
-      <span class="material-tag">Algodão orgânico · Moletom</span>
-      <p class="material-desc">Fleece escovado internamente produzido com algodão orgânico certificado. Aquecimento sem peso. Toque aveludado que mantém forma após centenas de lavagens. A escolha para quando o treino termina e o conforto começa.</p>
-      <div class="material-spec">
-        <div class="material-spec-item"><span>Base</span><span>Algodão orgânico GOTS</span></div>
-        <div class="material-spec-item"><span>Acabamento</span><span>Escovado interno</span></div>
-        <div class="material-spec-item"><span>Manutenção de forma</span><span>200+ lavagens testado</span></div>
-        <div class="material-spec-item"><span>Presente em</span><span>Moletom Essencial</span></div>
-      </div>
-    </div>
-
+  <div class="stage-note">
+    <span>Regra</span>
+    <p>Não usar “orgânico”, “reciclado”, “biodegradável”, “rastreável”, “testado” ou “certificado” como afirmação de produto antes de ter evidência. A comunicação atual deve dizer “em pesquisa”, “critério” ou “meta”.</p>
   </div>
 </section>
 
-<!-- PROCEDÊNCIA -->
-<section class="sustain">
-  <div>
-    <div class="sustain-label">Rastreabilidade</div>
-    <h2 class="sustain-title">
-      Sabemos de onde<br>
-      <em>vem cada fio.</em>
-    </h2>
-    <p class="sustain-body">
-      Toda matéria-prima da Phyllos tem cadeia documentada — do fornecedor de fibra ao acabamento final. Não é greenwashing: é documentação que qualquer peça pode comprovar com seu código de rastreio.
-    </p>
-    <div class="sustain-stats">
-      <div>
-        <div class="sustain-stat-num">100%</div>
-        <div class="sustain-stat-label">Das fibras com certificação ou rastreabilidade comprovada</div>
-      </div>
-      <div>
-        <div class="sustain-stat-num">0</div>
-        <div class="sustain-stat-label">Fornecedores sem inspeção presencial da equipe Phyllos</div>
-      </div>
-      <div>
-        <div class="sustain-stat-num">BR</div>
-        <div class="sustain-stat-label">Todo o processo de confecção — corte, costura, acabamento — nacional</div>
-      </div>
-      <div>
-        <div class="sustain-stat-num">3×</div>
-        <div class="sustain-stat-label">Durabilidade média vs. equivalente de fast fashion</div>
-      </div>
-    </div>
-  </div>
-  <div class="sustain-visual">
-    <div class="sustain-phi">Φ</div>
-    <div class="sustain-tag">
-      <div class="sustain-tag-main">Cadeia rastreável</div>
-      <div class="sustain-tag-sub">Da fibra à embalagem biodegradável</div>
-    </div>
+<section class="communication-section">
+  <div class="comm-left"><div class="section-label">Matriz de linguagem</div><h2 class="section-title">Como falar de material <em>agora</em></h2></div>
+  <div class="comm-right">
+    <div class="comm-row"><span>Permitido</span><p>“Estamos avaliando materiais por toque, durabilidade, recuperação elástica e procedência documentável.”</p></div>
+    <div class="comm-row"><span>Evitar</span><p>“A peça usa algodão orgânico certificado”, “rastreabilidade em cada peça” ou porcentagens de composição antes da validação.</p></div>
+    <div class="comm-row"><span>Depois</span><p>Quando houver documento, laudo ou ficha técnica, comunicar o claim com escopo: material, fornecedor, lote, teste e limite da afirmação.</p></div>
   </div>
 </section>
 
-<!-- CERTIFICATIONS -->
-<div class="pillars">
-  <div class="pillar">
-    <div class="pillar-number">GOTS</div>
-    <div class="pillar-title">Global Organic <em>Textile Standard</em></div>
-    <p class="pillar-body">O padrão mais rigoroso para têxteis orgânicos. Cobre todo o processo — da colheita ao produto final — incluindo critérios sociais para trabalhadores da cadeia. Presente em todas as peças de algodão da Phyllos.</p>
-  </div>
-  <div class="pillar">
-    <div class="pillar-number">GRS</div>
-    <div class="pillar-title">Global Recycled <em>Standard</em></div>
-    <p class="pillar-body">Certifica a proporção e a procedência de materiais reciclados em cada produto. Nosso elastano reciclado e nossa poliamida reciclada carregam certificação GRS com rastreabilidade de lote.</p>
-  </div>
-  <div class="pillar">
-    <div class="pillar-number">RWS</div>
-    <div class="pillar-title">Responsible Wool <em>Standard</em></div>
-    <p class="pillar-body">Garante bem-estar dos ovinos e gestão sustentável dos campos de pastagem. Nossa lã merino vem de fazendas auditadas anualmente com critérios de manejo e saúde animal verificados in loco.</p>
-  </div>
-</div>
-
-<!-- NEWSLETTER -->
-<section class="newsletter">
-  <div class="newsletter-left">
-    <span class="newsletter-phi">Φ</span>
-    <h2 class="newsletter-title">
-      Transparência<br>
-      também é <em>um<br>material.</em>
-    </h2>
-    <p class="newsletter-body">Relatórios de procedência, novos materiais em pesquisa e atualizações de certificação.</p>
-  </div>
-  <div class="newsletter-right">
-    <div class="newsletter-form">
-      <input class="newsletter-input" type="email" placeholder="seu@email.com">
-      <button class="newsletter-submit">Quero receber</button>
-    </div>
-    <p class="newsletter-note">Sem frequência excessiva · Conteúdo com curadoria · Cancele quando quiser</p>
-  </div>
+<section class="newsletter" id="dossier">
+  <div class="newsletter-left"><span class="newsletter-phi">Φ</span><h2 class="newsletter-title">Receba critérios<br>antes dos <em>claims.</em></h2><p class="newsletter-body">Acompanhe a evolução dos materiais, testes e decisões de fornecedores quando elas existirem.</p></div>
+  <div class="newsletter-right"><div class="newsletter-form"><input class="newsletter-input" type="email" placeholder="seu@email.com"><button class="newsletter-submit">Acompanhar construção</button></div><p class="newsletter-note">Sem claims finais · Sem greenwashing · Sem pressa artificial</p></div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
-    <div>
-      <span class="footer-brand-phi">Φ</span>
-      <span class="footer-brand-name">Phyllos</span>
-      <span class="footer-brand-sub">wear</span>
-      <p class="footer-tagline">"A simplicidade da Phyllos é uma escolha — não uma ausência."</p>
-    </div>
-    <div class="footer-col">
-      <h4>Coleções</h4>
-      <ul>
-        <li><a href="essencial.html">Essencial Run</a></li>
-        <li><a href="presenca.html">Studio Presence</a></li>
-        <li><a href="trail.html">Trail Essencial</a></li>
-        <li><a href="colecoes.html">Todas as coleções</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Marca</h4>
-      <ul>
-        <li><a href="manifesto.html">Manifesto</a></li>
-        <li><a href="materiais.html">Materiais</a></li>
-        <li><a href="materiais.html">Procedência</a></li>
-        <li><a href="manifesto.html">Nossa história</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Suporte</h4>
-      <ul>
-        <li><a href="#">Minha conta</a></li>
-        <li><a href="#">Trocas e devoluções</a></li>
-        <li><a href="#">Guia de tamanhos</a></li>
-        <li><a href="#">Contato</a></li>
-      </ul>
-    </div>
+    <div><span class="footer-brand-phi">Φ</span><span class="footer-brand-name">Phyllos</span><span class="footer-brand-sub">wear</span><p class="footer-tagline">"Antes de vender uma peça, precisamos saber exatamente o que ela sustenta."</p></div>
+    <div class="footer-col"><h4>Explorar</h4><ul><li><a href="index.html#dossier">Dossier</a></li><li><a href="colecoes.html">Territórios</a></li><li><a href="materiais.html">Materiais</a></li><li><a href="manifesto.html">Manifesto</a></li></ul></div>
+    <div class="footer-col"><h4>Hipóteses</h4><ul><li><a href="essencial.html">Essencial</a></li><li><a href="presenca.html">Presença</a></li><li><a href="trail.html">Natureza</a></li><li><a href="materiais.html">Critérios</a></li></ul></div>
+    <div class="footer-col"><h4>Status</h4><ul><li><a href="index.html#dossier">Em desenvolvimento</a></li><li><a href="index.html#dossier">Sem checkout</a></li><li><a href="manifesto.html">Sem prova, sem claim</a></li><li><a href="colecoes.html">Ver mapa</a></li></ul></div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026 Phyllos · Todos os direitos reservados</span>
-    <span>wear · beauty · tech</span>
-  </div>
+  <div class="footer-bottom"><span>© 2026 Phyllos · Em desenvolvimento</span><span>wear · beauty · tech</span></div>
 </footer>
 
 <script src="main.js"></script>

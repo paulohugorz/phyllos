@@ -5,7 +5,7 @@ if (cursor) {
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
   });
-  document.querySelectorAll('a, button, .product-card, .cat-card, .size, .material-card, .collection-feature').forEach(el => {
+  document.querySelectorAll('a, button, .product-card, .cat-card, .size, .material-card, .collection-feature, .concept-card, .research-item, .bp-flow a, .bp-director-grid article').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });

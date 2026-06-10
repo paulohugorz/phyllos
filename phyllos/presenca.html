@@ -3,328 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PHYLLOS wear — Studio Presence</title>
+<title>PHYLLOS wear — Presença em estudo</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
+<body class="home-development">
 <div class="cursor" id="cursor"></div>
-<div class="overlay" id="overlay" onclick="closeCart()"></div>
 
-<!-- CART DRAWER -->
-<div class="cart-drawer" id="cartDrawer">
-  <div class="cart-header">
-    <div class="cart-header-left">
-      <span class="cart-phi">Φ</span>
-      <div class="cart-title">Seleção</div>
-    </div>
-    <button class="cart-close" onclick="closeCart()">✕</button>
-  </div>
-  <div class="cart-items"></div>
-  <div class="cart-footer">
-    <div class="cart-total">
-      <span class="cart-total-label">Total</span>
-      <span class="cart-total-value">R$ 0</span>
-    </div>
-    <div class="cart-note">Frete grátis · Embalagem certificada · Troca em 30 dias</div>
-    <button class="cart-checkout">Finalizar Pedido →</button>
-  </div>
-</div>
-
-<!-- NAV -->
 <nav id="mainNav">
-  <a href="index.html" class="nav-logo">
-    <span class="nav-phi">Φ</span>
-    <div class="nav-rule"></div>
-    <span class="nav-wordmark">Phyllos</span>
-    <span class="nav-sub">wear</span>
-  </a>
-  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none">
-    <span></span><span></span><span></span>
-  </button>
-  <ul class="nav-links">
-    <li><a href="colecoes.html">Coleções</a></li>
-    <li><a href="essencial.html">Essencial</a></li>
-    <li><a href="presenca.html">Presença</a></li>
-    <li><a href="materiais.html">Materiais</a></li>
-    <li><a href="manifesto.html">Manifesto</a></li>
-  </ul>
-  <div class="nav-actions">
-    <button class="nav-icon" style="font-size:18px" onclick="toggleCart()">◻<span class="cart-count" id="cartCount">0</span></button>
-    <button class="nav-icon">♡</button>
-    <button class="nav-icon">⊙</button>
-  </div>
+  <a href="index.html" class="nav-logo"><span class="nav-phi">Φ</span><div class="nav-rule"></div><span class="nav-wordmark">Phyllos</span><span class="nav-sub">wear</span></a>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none"><span></span><span></span><span></span></button>
+  <ul class="nav-links"><li><a href="colecoes.html">Coleções</a></li><li><a href="essencial.html">Essencial</a></li><li><a href="business-plan.html">Plano</a></li><li><a href="materiais.html">Materiais</a></li><li><a href="manifesto.html">Manifesto</a></li></ul>
+  <div class="nav-actions nav-status"><span>Em desenvolvimento</span></div>
 </nav>
 
-<!-- COLLECTION HERO -->
 <section class="col-hero">
   <div class="col-hero-left">
-    <div class="col-hero-count">8 peças · SS26</div>
-    <div class="hero-season">Coleção</div>
-    <h1 class="hero-title">Studio<br><em>Presence</em></h1>
-    <p class="hero-body">Da sala de pilates à sala de reunião. Peças que carregam presença em qualquer ambiente — sem a necessidade de trocar de roupa. Técnico por dentro, atemporal por fora.</p>
-    <div class="hero-actions">
-      <a href="colecoes.html" class="btn-text">← Todas as coleções</a>
-    </div>
+    <div class="col-hero-count">Hipótese de produto</div>
+    <div class="hero-season">Do estúdio à reunião</div>
+    <h1 class="hero-title">Presença<br><em>em estudo</em></h1>
+    <p class="hero-body">Este território pesquisa roupas de malhar com leitura corporativa: peças elásticas, confortáveis e funcionais que sustentem postura profissional sem abandonar o corpo em movimento.</p>
+    <div class="hero-actions"><a href="colecoes.html" class="btn-text">← Territórios</a><a href="index.html#dossier" class="btn-primary">Acompanhar pesquisa</a></div>
   </div>
-  <div class="col-hero-right">
-    <div style="position:absolute;inset:0;background:linear-gradient(160deg,#1e221e,#252e25)"></div>
+  <div class="col-hero-right" style="background-image:linear-gradient(to top,rgba(15,15,13,.45),rgba(15,15,13,.05)),url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1400&q=82');background-size:cover;background-position:center;">
     <div class="col-hero-phi">Φ</div>
   </div>
 </section>
 
-<!-- FILTER BAR -->
-<div class="filter-bar">
-  <div class="filter-bar-left">
-    <button class="filter-btn active">Todos</button>
-    <button class="filter-btn">Calças</button>
-    <button class="filter-btn">Tops</button>
-    <button class="filter-btn">Jaquetas</button>
-    <button class="filter-btn">Vestidos</button>
+<section class="concept-section">
+  <div class="concept-intro">
+    <div class="section-label">Exemplos de peças em pesquisa</div>
+    <h2 class="section-title">Activewear que sabe <em>entrar na sala</em></h2>
+    <p>A pergunta aqui é simples e difícil: que roupa permite treino, mobilidade e conforto sem perder presença em elevador, coworking, reunião, almoço ou viagem de trabalho?</p>
   </div>
-  <span class="filter-count">8 peças</span>
-</div>
+  <div class="concept-grid">
+    <article class="concept-card"><div class="concept-visual" style="background-image:url('https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1000&q=80')"></div><div class="concept-copy"><span class="concept-label">Base corporativa</span><h3>Calça flare técnica</h3><p>Uma calça de malhar com cós confortável, elasticidade e caída mais adulta. Precisa funcionar sentada, andando e em reunião.</p></div></article>
+    <article class="concept-card"><div class="concept-visual" style="background-image:url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1000&q=80')"></div><div class="concept-copy"><span class="concept-label">Sobreposição</span><h3>Blazer maleável</h3><p>Não é alfaiataria rígida. É uma camada de presença para usar sobre top ou camiseta técnica depois do treino.</p></div></article>
+    <article class="concept-card"><div class="concept-visual" style="background-image:url('https://images.unsplash.com/photo-1507537297725-24a1c029d3ca?auto=format&fit=crop&w=1000&q=80')"></div><div class="concept-copy"><span class="concept-label">Centro do look</span><h3>Body estruturado</h3><p>Peça de malha com suporte e linhas limpas, pensada para não subir, não marcar excessivamente e compor com calça ou blazer.</p></div></article>
+    <article class="concept-card"><div class="concept-visual" style="background-image:url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1000&q=80')"></div><div class="concept-copy"><span class="concept-label">Transição</span><h3>Jaqueta limpa</h3><p>Camada leve para deslocamento, ar-condicionado e entrada em ambiente corporativo. Menos esportiva, mais silenciosa.</p></div></article>
+    <article class="concept-card"><div class="concept-visual" style="background-image:url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80')"></div><div class="concept-copy"><span class="concept-label">Movimento</span><h3>Saia active</h3><p>Uma hipótese para quem quer feminilidade sem abrir mão de mobilidade: short interno, comprimento urbano e tecido com recuperação.</p></div></article>
+    <article class="concept-card"><div class="concept-visual" style="background-image:url('https://images.unsplash.com/photo-1551836022-8b2858c9c69b?auto=format&fit=crop&w=1000&q=80')"></div><div class="concept-copy"><span class="concept-label">Rotina</span><h3>Wide leg elástica</h3><p>Calça ampla de malha técnica para viagem, longos períodos sentada e presença visual mais próxima do guarda-roupa de trabalho.</p></div></article>
+  </div>
+  <div class="stage-note"><span>Status</span><p>Presença não é promessa de dress code universal. É uma direção: desenvolver activewear com maturidade visual suficiente para contextos profissionais reais.</p></div>
+</section>
 
-<!-- PRODUCT GRID -->
-<section class="product-section">
-  <div class="product-grid" style="padding-top:1px">
+<section class="image-band">
+  <div style="background-image:url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1100&q=80')"></div>
+  <div style="background-image:url('https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&w=1100&q=80')"></div>
+  <div style="background-image:url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1100&q=80')"></div>
+</section>
 
-    <div class="product-card featured">
-      <div class="product-img" style="height:100%">
-        <div class="product-img-inner pb3" style="height:100%;aspect-ratio:unset">
-          <div class="product-img-label">Calça<br>Studio</div>
-        </div>
-        <div class="product-tag tag-new">Novo</div>
-        <button class="product-wish">♡</button>
-        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
-      </div>
-      <div class="product-info">
-        <div class="product-collection">wear · studio presence</div>
-        <div class="product-name">Calça Studio</div>
-        <div class="product-desc">Flare técnico · Cintura alta · Caimento fluido · Versatilidade diária</div>
-        <div class="product-bottom">
-          <div class="product-price">R$ 490</div>
-          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span><span class="size">GG</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <div class="product-img">
-        <div class="product-img-inner pb2"><div class="product-img-label">Jaqueta<br>Técnica</div></div>
-        <div class="product-tag tag-new">Novo</div>
-        <button class="product-wish">♡</button>
-        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
-      </div>
-      <div class="product-info">
-        <div class="product-collection">wear · studio presence</div>
-        <div class="product-name">Jaqueta Técnica</div>
-        <div class="product-desc">Shell reciclado · Impermeável · Leve · Estruturada</div>
-        <div class="product-bottom">
-          <div class="product-price">R$ 620</div>
-          <div class="sizes"><span class="size">P</span><span class="size">M</span><span class="size">G</span><span class="size">GG</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <div class="product-img">
-        <div class="product-img-inner pb5"><div class="product-img-label">Top<br>Studio</div></div>
-        <button class="product-wish">♡</button>
-        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
-      </div>
-      <div class="product-info">
-        <div class="product-collection">wear · studio presence</div>
-        <div class="product-name">Top Studio</div>
-        <div class="product-desc">Suporte médio · Decote sutil · Transição treino-escritório</div>
-        <div class="product-bottom">
-          <div class="product-price">R$ 320</div>
-          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <div class="product-img">
-        <div class="product-img-inner pb1"><div class="product-img-label">Blazer<br>Técnico</div></div>
-        <div class="product-tag tag-essential">Signature</div>
-        <button class="product-wish">♡</button>
-        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
-      </div>
-      <div class="product-info">
-        <div class="product-collection">wear · studio presence</div>
-        <div class="product-name">Blazer Técnico</div>
-        <div class="product-desc">Elastano estrutural · Shoulder pads sutis · Leve e respirável</div>
-        <div class="product-bottom">
-          <div class="product-price">R$ 890</div>
-          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <div class="product-img">
-        <div class="product-img-inner pb10"><div class="product-img-label">Calça<br>Wide Leg</div></div>
-        <div class="product-tag tag-new">Novo</div>
-        <button class="product-wish">♡</button>
-        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
-      </div>
-      <div class="product-info">
-        <div class="product-collection">wear · studio presence</div>
-        <div class="product-name">Calça Wide Leg</div>
-        <div class="product-desc">Tecido fluido técnico · Drape natural · Cós elástico discreto</div>
-        <div class="product-bottom">
-          <div class="product-price">R$ 580</div>
-          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <div class="product-img">
-        <div class="product-img-inner pb6"><div class="product-img-label">Body<br>Estruturado</div></div>
-        <button class="product-wish">♡</button>
-        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
-      </div>
-      <div class="product-info">
-        <div class="product-collection">wear · studio presence</div>
-        <div class="product-name">Body Estruturado</div>
-        <div class="product-desc">Compressão leve · Fechamento invisível · Antibacteriano</div>
-        <div class="product-bottom">
-          <div class="product-price">R$ 380</div>
-          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <div class="product-img">
-        <div class="product-img-inner pb4"><div class="product-img-label">Saia<br>Active</div></div>
-        <button class="product-wish">♡</button>
-        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
-      </div>
-      <div class="product-info">
-        <div class="product-collection">wear · studio presence</div>
-        <div class="product-name">Saia Active</div>
-        <div class="product-desc">Short interno · Tecido estruturado · Midi atemporal</div>
-        <div class="product-bottom">
-          <div class="product-price">R$ 440</div>
-          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="product-card">
-      <div class="product-img">
-        <div class="product-img-inner pb9"><div class="product-img-label">Trench<br>Técnico</div></div>
-        <div class="product-tag tag-essential">Signature</div>
-        <button class="product-wish">♡</button>
-        <div class="product-overlay"><button class="overlay-btn">Adicionar à Seleção</button></div>
-      </div>
-      <div class="product-info">
-        <div class="product-collection">wear · studio presence</div>
-        <div class="product-name">Trench Técnico</div>
-        <div class="product-desc">Shell impermeável · Corte clássico revisitado · Cinto incluso</div>
-        <div class="product-bottom">
-          <div class="product-price">R$ 980</div>
-          <div class="sizes"><span class="size">PP</span><span class="size">P</span><span class="size">M</span><span class="size">G</span></div>
-        </div>
-      </div>
-    </div>
-
+<section class="communication-section">
+  <div class="comm-left"><div class="section-label">Critérios</div><h2 class="section-title">O que precisa ser <em>validado</em></h2></div>
+  <div class="comm-right">
+    <div class="comm-row"><span>Visual</span><p>Se a peça ainda parece “roupa de academia tentando parecer social”, ela não passou.</p></div>
+    <div class="comm-row"><span>Conforto</span><p>Sentar, caminhar, dirigir, cruzar a cidade, entrar em reunião e permanecer confortável por horas.</p></div>
+    <div class="comm-row"><span>Transição</span><p>A roupa deve aceitar sobreposição, bolsa, tênis limpo e ambientes profissionais sem precisar de desculpa.</p></div>
   </div>
 </section>
 
-<!-- PILARES -->
-<div class="pillars">
-  <div class="pillar">
-    <div class="pillar-number">01</div>
-    <div class="pillar-title">Presença <em>sem esforço</em></div>
-    <p class="pillar-body">Peças que funcionam do pilates ao boardroom. Silhuetas cuidadosamente calibradas para projetar autoridade sem rigidez — confortáveis o suficiente para um treino, elegantes para uma reunião.</p>
-  </div>
-  <div class="pillar">
-    <div class="pillar-number">02</div>
-    <div class="pillar-title">Técnico <em>por dentro</em></div>
-    <p class="pillar-body">A estética é atemporal, mas a engenharia é avançada. Tecidos técnicos com tratamento antibacteriano, termorregulação e elasticidade bidirecional. Você não sente o esforço — só o resultado.</p>
-  </div>
-  <div class="pillar">
-    <div class="pillar-number">03</div>
-    <div class="pillar-title">Atemporal <em>por design</em></div>
-    <p class="pillar-body">A Studio Presence não segue temporadas. As cores, as silhuetas e os materiais foram escolhidos para durar — na peça e no armário. Investimento, não consumo.</p>
-  </div>
-</div>
-
-<!-- NEWSLETTER -->
-<section class="newsletter">
-  <div class="newsletter-left">
-    <span class="newsletter-phi">Φ</span>
-    <h2 class="newsletter-title">
-      Presença que<br>
-      <em>não precisa<br>se explicar.</em>
-    </h2>
-    <p class="newsletter-body">Lançamentos exclusivos e bastidores da Studio Presence.</p>
-  </div>
-  <div class="newsletter-right">
-    <div class="newsletter-form">
-      <input class="newsletter-input" type="email" placeholder="seu@email.com">
-      <button class="newsletter-submit">Quero receber</button>
-    </div>
-    <p class="newsletter-note">Sem frequência excessiva · Conteúdo com curadoria · Cancele quando quiser</p>
-  </div>
+<section class="newsletter" id="dossier">
+  <div class="newsletter-left"><span class="newsletter-phi">Φ</span><h2 class="newsletter-title">Receba a evolução<br>da <em>Presença.</em></h2><p class="newsletter-body">Bastidores de linguagem visual, modelagem e critérios de uso corporativo.</p></div>
+  <div class="newsletter-right"><div class="newsletter-form"><input class="newsletter-input" type="email" placeholder="seu@email.com"><button class="newsletter-submit">Acompanhar construção</button></div><p class="newsletter-note">Sem produto à venda · Sem claims finais</p></div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
-    <div>
-      <span class="footer-brand-phi">Φ</span>
-      <span class="footer-brand-name">Phyllos</span>
-      <span class="footer-brand-sub">wear</span>
-      <p class="footer-tagline">"A simplicidade da Phyllos é uma escolha — não uma ausência."</p>
-    </div>
-    <div class="footer-col">
-      <h4>Coleções</h4>
-      <ul>
-        <li><a href="essencial.html">Essencial Run</a></li>
-        <li><a href="presenca.html">Studio Presence</a></li>
-        <li><a href="trail.html">Trail Essencial</a></li>
-        <li><a href="colecoes.html">Todas as coleções</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Marca</h4>
-      <ul>
-        <li><a href="manifesto.html">Manifesto</a></li>
-        <li><a href="materiais.html">Materiais</a></li>
-        <li><a href="materiais.html">Procedência</a></li>
-        <li><a href="manifesto.html">Nossa história</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Suporte</h4>
-      <ul>
-        <li><a href="#">Minha conta</a></li>
-        <li><a href="#">Trocas e devoluções</a></li>
-        <li><a href="#">Guia de tamanhos</a></li>
-        <li><a href="#">Contato</a></li>
-      </ul>
-    </div>
+    <div><span class="footer-brand-phi">Φ</span><span class="footer-brand-name">Phyllos</span><span class="footer-brand-sub">wear</span><p class="footer-tagline">"Antes de vender uma peça, precisamos saber exatamente o que ela sustenta."</p></div>
+    <div class="footer-col"><h4>Explorar</h4><ul><li><a href="index.html#dossier">Dossier</a></li><li><a href="colecoes.html">Territórios</a></li><li><a href="materiais.html">Materiais</a></li><li><a href="manifesto.html">Manifesto</a></li></ul></div>
+    <div class="footer-col"><h4>Hipóteses</h4><ul><li><a href="essencial.html">Essencial</a></li><li><a href="presenca.html">Presença</a></li><li><a href="trail.html">Natureza</a></li><li><a href="materiais.html">Critérios</a></li></ul></div>
+    <div class="footer-col"><h4>Status</h4><ul><li><a href="index.html#dossier">Em desenvolvimento</a></li><li><a href="index.html#dossier">Sem checkout</a></li><li><a href="manifesto.html">Sem prova, sem claim</a></li><li><a href="colecoes.html">Ver mapa</a></li></ul></div>
   </div>
-  <div class="footer-bottom">
-    <span>© 2026 Phyllos · Todos os direitos reservados</span>
-    <span>wear · beauty · tech</span>
-  </div>
+  <div class="footer-bottom"><span>© 2026 Phyllos · Em desenvolvimento</span><span>wear · beauty · tech</span></div>
 </footer>
 
 <script src="main.js"></script>
-<script>
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
-</script>
 </body>
 </html>
