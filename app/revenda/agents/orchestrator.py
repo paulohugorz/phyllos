@@ -13,6 +13,7 @@ from app.revenda.agents.calendar import AgentCalendar
 from app.revenda.agents.beauty.expert import AgentBeautyExpert
 from app.revenda.agents.growth import AgentGrowth
 from app.revenda.agents.dashboard import AgentDashboard
+from app.revenda.agents.onboarding import AgentOnboarding
 from app.revenda.models import RevendedoraProfile, Conversa, Mensagem
 
 
@@ -72,7 +73,7 @@ REGRAS DE TOM (inegociáveis):
 • Nunca deixe uma oportunidade de venda escapar — percebeu chance? Sugira com delicadeza
 • Linguagem de parceira próxima que entende do negócio dela
 • Emojis: 1 a 2 por mensagem, com propósito — nunca decorativos demais
-• Frases curtas e escaneáveis — ela está no celular
+• Frases curtas e escanáveis — ela está no celular
 • Nunca seja robótica, nunca seja fria — cada mensagem deve parecer humana
 • Não mencione "agentes" nem detalhes técnicos internos
 • Se ela errou algo ou o dado está incompleto, corrija com gentileza e pergunte"""
@@ -134,9 +135,7 @@ class AgentOrchestrator:
         ctx_str = ""
         if context.get("seller_name"):
             ctx_str = f"Revendedora: {context['seller_name']}, cidade: {context.get('city', '?')}"
-
         routing_message = f"{ctx_str}\n\nMensagem: {message}" if ctx_str else message
-
         response = self.client.messages.create(
             model="claude-haiku-4-5-20251001",
             max_tokens=512,
@@ -155,17 +154,14 @@ class AgentOrchestrator:
             for r in results
             if r.content and r.success
         )
-
         if not agent_outputs:
             agent_outputs = "Nenhuma informação adicional dos agentes."
-
         messages = history + [
             {
                 "role": "user",
                 "content": f"Mensagem da revendedora: {message}\n\nInformações dos agentes:\n{agent_outputs}",
             }
         ]
-
         response = self.client.messages.create(
             model="claude-haiku-4-5-20251001",
             max_tokens=1024,
@@ -174,44 +170,62 @@ class AgentOrchestrator:
         )
         return response.content[0].text
 
+    def get_onboarding_status(self, user_id: str) -> dict:
+        profile = self._get_or_create_profile(user_id)
+        return {
+            "onboarding_step": profile.onboarding_step,
+            "onboarding_complete": profile.onboarding_step == 99,
+            "seller_name": profile.seller_name,
+        }
+
     def process(self, user_id: str, message: str, conversa_id: int | None = None) -> dict:
         profile = self._get_or_create_profile(user_id)
         conversa = self._get_or_create_conversa(profile.id, conversa_id)
 
         memory_agent = AgentMemory(db=self.db)
         context = memory_agent.get_context(user_id)
-
         history = self._recent_history(conversa.id)
-        routing = self._route(message, context)
-        agents_to_call = routing.get("agents", [])
-        client_name = routing.get("client_name")
 
-        payload = {
-            "user_id": user_id,
-            "message": message,
-            "client_name": client_name,
-        }
-
+        payload = {"user_id": user_id, "message": message, "client_name": None}
         results: list[AgentResult] = []
+        agents_used = []
 
-        # Always run memory silently
-        if "agent_memory" not in agents_to_call:
-            mem_result = memory_agent.process(payload, context)
-            if mem_result.data:
-                results.append(mem_result)
+        # ── Onboarding mode ──────────────────────────────────────────────────
+        if profile.onboarding_step != 99:
+            onboarding = AgentOnboarding(db=self.db)
+            result = onboarding.process(payload, context)
+            results.append(result)
+            agents_used = ["agent_onboarding"]
 
-        for agent_name in agents_to_call:
-            AgentClass = AGENT_REGISTRY.get(agent_name)
-            if not AgentClass:
-                continue
-            agent = AgentClass(db=self.db)
-            try:
-                result = agent.process(payload, context)
-                results.append(result)
-            except Exception as e:
-                results.append(AgentResult(agent=agent_name, content="", success=False, error=str(e)))
+            final_message = result.content or "Como posso te ajudar?"
+            onboarding_complete = result.data.get("onboarding_complete", False)
 
-        final_message = self._synthesize(message, results, history)
+        # ── Normal mode ──────────────────────────────────────────────────────
+        else:
+            routing = self._route(message, context)
+            agents_to_call = routing.get("agents", [])
+            agents_used = agents_to_call
+            payload["client_name"] = routing.get("client_name")
+
+            # Always run memory silently
+            if "agent_memory" not in agents_to_call:
+                mem_result = memory_agent.process(payload, context)
+                if mem_result.data:
+                    results.append(mem_result)
+
+            for agent_name in agents_to_call:
+                AgentClass = AGENT_REGISTRY.get(agent_name)
+                if not AgentClass:
+                    continue
+                agent = AgentClass(db=self.db)
+                try:
+                    result = agent.process(payload, context)
+                    results.append(result)
+                except Exception as e:
+                    results.append(AgentResult(agent=agent_name, content="", success=False, error=str(e)))
+
+            final_message = self._synthesize(message, results, history)
+            onboarding_complete = True
 
         # Persist conversation
         user_msg = Mensagem(conversa_id=conversa.id, role="user", content=message)
@@ -219,7 +233,7 @@ class AgentOrchestrator:
             conversa_id=conversa.id,
             role="assistant",
             content=final_message,
-            agents_used=agents_to_call,
+            agents_used=agents_used,
         )
         self.db.add(user_msg)
         self.db.add(assistant_msg)
@@ -227,9 +241,14 @@ class AgentOrchestrator:
 
         all_actions = [a for r in results for a in r.actions]
 
+        # Refresh profile to get latest onboarding_step
+        self.db.refresh(profile)
+
         return {
             "message": final_message,
-            "agents_used": agents_to_call,
+            "agents_used": agents_used,
             "actions": all_actions,
             "conversa_id": conversa.id,
+            "onboarding_step": profile.onboarding_step,
+            "onboarding_complete": profile.onboarding_step == 99,
         }

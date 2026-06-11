@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile, File, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
@@ -9,6 +9,7 @@ from app.revenda.agents.memory import AgentMemory
 from app.revenda.agents.inventory import AgentInventory
 from app.revenda.agents.crm import AgentCRM
 from app.revenda.agents.dashboard import AgentDashboard
+from app.revenda.agents.onboarding import AgentOnboarding
 from app.revenda.models import (
     RevendedoraProfile, Cliente, Produto, Venda, AgendaItem, Conversa, Mensagem
 )
@@ -31,6 +32,38 @@ def chat(req: ChatRequest, db: Session = Depends(get_db)):
         conversa_id=req.conversa_id,
     )
     return ChatResponse(**result)
+
+
+@router.get("/onboarding-status/{user_id}")
+def onboarding_status(user_id: str, db: Session = Depends(get_db)):
+    orchestrator = AgentOrchestrator(db=db)
+    return orchestrator.get_onboarding_status(user_id)
+
+
+@router.post("/upload-stock")
+async def upload_stock(
+    user_id: str = Form(...),
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
+    allowed = {"image/jpeg", "image/png", "image/webp", "image/gif"}
+    if file.content_type not in allowed:
+        raise HTTPException(status_code=400, detail="Formato de imagem não suportado")
+
+    contents = await file.read()
+    if len(contents) > 5 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="Imagem muito grande (máx 5MB)")
+
+    agent = AgentOnboarding(db=db)
+    result = agent.analyze_stock_photo(user_id, contents, file.content_type)
+
+    added = result.get("added", [])
+    if added:
+        msg = f"Analisei sua foto e encontrei {len(added)} produto(s):\n" + "\n".join(f"• {p}" for p in added)
+    else:
+        msg = "Não consegui identificar produtos cosméticos na foto. Pode me mandar a lista por texto?"
+
+    return {"message": msg, "products": result.get("products", []), "added": added}
 
 
 @router.get("/dashboard/{user_id}")
