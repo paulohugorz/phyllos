@@ -71,10 +71,9 @@ class AgentOnboarding(BaseAgent):
         if not profile.seller_name: return 1
         if not profile.city:        return 2
         if not profile.brands:      return 3
-        # Check if has any stock
         count = self.db.query(Produto).filter(Produto.seller_id == profile.id).count()
         if count == 0:              return 4
-        return 5  # goal is optional, ask once
+        return 5
 
     def _extract_profile(self, message: str) -> dict:
         client = get_claude_client()
@@ -114,17 +113,17 @@ class AgentOnboarding(BaseAgent):
             brands = ", ".join(profile.brands or []) or "suas marcas"
             count = self.db.query(Produto).filter(Produto.seller_id == profile.id).count()
             return (
-                f"Perfeito, {name}! Tudo anotado 🎉\n\n"
-                f"📍 {profile.city or 'Cidade'}\n"
-                f"🛍️ {brands}\n"
-                f"📦 {count} produto(s) no estoque\n"
-                f"🎯 Meta: R${profile.monthly_goal:.0f}/mês" if profile.monthly_goal else
-                f"Perfeito, {name}! Tudo anotado 🎉\n\n"
-                f"📍 {profile.city or 'Cidade'}\n"
-                f"🛍️ {brands}\n"
-                f"📦 {count} produto(s) no estoque\n\n"
+                f"Perfeito, {name}! Tudo anotado \U0001f389\n\n"
+                f"\U0001f4cd {profile.city or 'Cidade'}\n"
+                f"\U0001f6cd️ {brands}\n"
+                f"\U0001f4e6 {count} produto(s) no estoque\n"
+                f"\U0001f3af Meta: R${profile.monthly_goal:.0f}/mês" if profile.monthly_goal else
+                f"Perfeito, {name}! Tudo anotado \U0001f389\n\n"
+                f"\U0001f4cd {profile.city or 'Cidade'}\n"
+                f"\U0001f6cd️ {brands}\n"
+                f"\U0001f4e6 {count} produto(s) no estoque\n\n"
                 "Agora é só me mandar mensagem quando quiser registrar uma venda, "
-                "pedir um post ou checar seu estoque. Pode começar! 🚀"
+                "pedir um post ou checar seu estoque. Pode começar! \U0001f680"
             )
 
         field_name, field_desc = STEP_FIELDS[next_step]
@@ -207,11 +206,9 @@ class AgentOnboarding(BaseAgent):
         if not profile:
             return AgentResult(agent=self.NAME, content="", success=False)
 
-        # Extract any profile data from the message
         extracted = self._extract_profile(message)
         updated_fields = self._apply_extracted(profile, extracted)
 
-        # Handle stock text entry at step 4
         stock_mentioned = any(w in message.lower() for w in [
             "tenho", "estoque", "produto", "unidade", "caixa", "peça",
             "natura", "avon", "boticário", "boticario", "kaiak", "malbec",
@@ -227,12 +224,10 @@ class AgentOnboarding(BaseAgent):
 
         next_step = self._missing_step(profile)
 
-        # Advance onboarding step
         if updated_fields:
             profile.onboarding_step = max(profile.onboarding_step, min(next_step, 5))
             self.db.commit()
 
-        # Complete onboarding if all core fields are filled
         is_complete = (
             bool(profile.seller_name)
             and bool(profile.brands)
@@ -244,7 +239,6 @@ class AgentOnboarding(BaseAgent):
         self.db.commit()
         self.db.refresh(profile)
 
-        # Generate next onboarding message
         final_step = self._missing_step(profile)
         response_text = self._next_question(profile, final_step if not is_complete else 99)
 

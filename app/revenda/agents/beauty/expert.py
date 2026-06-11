@@ -31,7 +31,6 @@ Ajude a revendedora a recomendar produtos, criar argumentos de venda e responder
     def process(self, payload: dict, context: dict) -> AgentResult:
         message = payload.get("message", "").lower()
 
-        # Route to sub-specialist if brand/category detected
         for keyword, AgentClass in BRAND_MAP.items():
             if keyword in message:
                 agent = AgentClass(db=self.db)

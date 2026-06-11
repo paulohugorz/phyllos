@@ -190,7 +190,7 @@ class AgentOrchestrator:
         results: list[AgentResult] = []
         agents_used = []
 
-        # ── Onboarding mode ──────────────────────────────────────────────────
+        # ── Onboarding mode ────────────────────────────────────────────────────────────────────
         if profile.onboarding_step != 99:
             onboarding = AgentOnboarding(db=self.db)
             result = onboarding.process(payload, context)
@@ -200,14 +200,13 @@ class AgentOrchestrator:
             final_message = result.content or "Como posso te ajudar?"
             onboarding_complete = result.data.get("onboarding_complete", False)
 
-        # ── Normal mode ──────────────────────────────────────────────────────
+        # ── Normal mode ──────────────────────────────────────────────────────────────────────
         else:
             routing = self._route(message, context)
             agents_to_call = routing.get("agents", [])
             agents_used = agents_to_call
             payload["client_name"] = routing.get("client_name")
 
-            # Always run memory silently
             if "agent_memory" not in agents_to_call:
                 mem_result = memory_agent.process(payload, context)
                 if mem_result.data:
@@ -227,7 +226,6 @@ class AgentOrchestrator:
             final_message = self._synthesize(message, results, history)
             onboarding_complete = True
 
-        # Persist conversation
         user_msg = Mensagem(conversa_id=conversa.id, role="user", content=message)
         assistant_msg = Mensagem(
             conversa_id=conversa.id,
@@ -240,8 +238,6 @@ class AgentOrchestrator:
         self.db.commit()
 
         all_actions = [a for r in results for a in r.actions]
-
-        # Refresh profile to get latest onboarding_step
         self.db.refresh(profile)
 
         return {
