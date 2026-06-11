@@ -5,192 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#F2F2F7" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Revenda AI</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #E8EDF2;
-      --glass:    rgba(249,249,251,0.88);
-      --user-bg:  #007AFF;
-      --ai-bg:    #fff;
-      --ai-text:  #1C1C1E;
-      --meta:     rgba(60,60,67,0.42);
-      --green:    #34C759;
-      --divider:  rgba(60,60,67,0.12);
-      --font:     -apple-system,'SF Pro Text',BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+      --bg:#E8EDF2; --glass:rgba(249,249,251,0.9); --user-bg:#007AFF; --ai-bg:#fff;
+      --ai-text:#1C1C1E; --meta:rgba(60,60,67,0.42); --green:#34C759;
+      --divider:rgba(60,60,67,0.12);
+      --font:-apple-system,'SF Pro Text',BlinkMacSystemFont,'Helvetica Neue',sans-serif;
     }
-
-    html, body {
-      height: 100%; height: 100dvh;
-      font-family: var(--font);
-      -webkit-font-smoothing: antialiased;
-      background: var(--bg);
-      overflow: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 50% at 20% 20%, rgba(120,180,255,.13) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 60% at 80% 80%, rgba(190,120,255,.10) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .frame {
-      position: relative; z-index: 1;
-      display: flex; flex-direction: column;
-      height: 100dvh;
-      max-width: 430px;
-      margin: 0 auto;
-      background: var(--bg);
-      box-shadow: 0 0 0 1px rgba(0,0,0,.06), 0 24px 80px rgba(0,0,0,.18);
-    }
-
-    header {
-      flex-shrink: 0;
-      padding-top: env(safe-area-inset-top, 0);
-      background: var(--glass);
-      backdrop-filter: blur(24px) saturate(200%);
-      -webkit-backdrop-filter: blur(24px) saturate(200%);
-      border-bottom: 0.5px solid var(--divider);
-      z-index: 10;
-    }
-
-    .header-bar {
-      display: flex; align-items: center;
-      padding: 10px 14px 12px; gap: 10px;
-    }
-
-    .back { display: flex; align-items: center; color: #007AFF; font-size: 17px; gap: 2px; flex-shrink: 0; cursor: pointer; user-select: none; }
-    .back svg { width: 11px; height: 18px; }
-
-    .profile-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; }
-
-    .avatar-ring { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg,#BF5AF2,#007AFF); padding: 2px; flex-shrink: 0; }
-    .avatar-inner { width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg,#BF5AF2,#5E5CE6); display: flex; align-items: center; justify-content: center; font-size: 17px; }
-
-    .contact-name { font-size: 16px; font-weight: 600; color: #1C1C1E; letter-spacing: -.3px; }
-    .contact-status { display: flex; align-items: center; gap: 4px; font-size: 11.5px; color: var(--meta); }
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; }
+    html,body { height:100%; height:100dvh; font-family:var(--font); -webkit-font-smoothing:antialiased; background:var(--bg); overflow:hidden; }
+    body::before { content:''; position:fixed; inset:0; z-index:0; background:radial-gradient(ellipse 80% 50% at 20% 20%,rgba(120,180,255,.13) 0%,transparent 60%),radial-gradient(ellipse 60% 60% at 80% 80%,rgba(190,120,255,.10) 0%,transparent 60%); pointer-events:none; }
+    .frame { position:relative; z-index:1; display:flex; flex-direction:column; height:100dvh; max-width:430px; margin:0 auto; background:var(--bg); box-shadow:0 0 0 1px rgba(0,0,0,.06),0 24px 80px rgba(0,0,0,.18); }
+    header { flex-shrink:0; padding-top:env(safe-area-inset-top,0); background:var(--glass); backdrop-filter:blur(24px) saturate(200%); -webkit-backdrop-filter:blur(24px) saturate(200%); border-bottom:.5px solid var(--divider); z-index:10; }
+    .header-bar { display:flex; align-items:center; padding:10px 14px 12px; gap:10px; }
+    .back { display:flex; align-items:center; color:#007AFF; font-size:17px; gap:2px; flex-shrink:0; cursor:pointer; user-select:none; }
+    .back svg { width:11px; height:18px; }
+    .profile-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; }
+    .avatar-ring { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#BF5AF2,#007AFF); padding:2px; flex-shrink:0; }
+    .avatar-inner { width:100%; height:100%; border-radius:50%; background:linear-gradient(135deg,#BF5AF2,#5E5CE6); display:flex; align-items:center; justify-content:center; font-size:17px; }
+    .contact-name { font-size:16px; font-weight:600; color:#1C1C1E; letter-spacing:-.3px; }
+    .contact-status { display:flex; align-items:center; gap:4px; font-size:11.5px; color:var(--meta); }
+    .status-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 2s ease-in-out infinite; }
     @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.5} }
-
-    .header-actions { display: flex; gap: 18px; flex-shrink: 0; color: #007AFF; }
-    .header-actions svg { width: 20px; height: 20px; cursor: pointer; }
-
-    .messages {
-      flex: 1; overflow-y: auto; overflow-x: hidden;
-      padding: 12px 14px 8px;
-      display: flex; flex-direction: column; gap: 3px;
-      scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
-    }
-    .messages::-webkit-scrollbar { width: 3px; }
-    .messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,.15); border-radius: 3px; }
-
-    .date-sep { display: flex; align-items: center; justify-content: center; margin: 10px 0 6px; }
-    .date-sep span { background: rgba(0,0,0,.12); backdrop-filter: blur(8px); color: #fff; font-size: 11.5px; font-weight: 500; padding: 3px 10px; border-radius: 10px; }
-
-    .row { display: flex; flex-direction: column; gap: 1px; }
-    .row.user { align-items: flex-end; }
-    .row.ai   { align-items: flex-start; }
-    .row + .row { margin-top: 8px; }
-    .row.user + .row.ai, .row.ai + .row.user { margin-top: 10px; }
-
-    .bubble {
-      max-width: 78%; padding: 9px 12px 7px;
-      font-size: 15px; line-height: 1.45;
-      white-space: pre-wrap; word-break: break-word;
-      position: relative;
-      animation: pop-in .18s cubic-bezier(.34,1.56,.64,1) both;
-    }
-    @keyframes pop-in { from{opacity:0;transform:scale(.92) translateY(4px)} to{opacity:1;transform:scale(1) translateY(0)} }
-
-    .row.ai .bubble {
-      background: var(--ai-bg); color: var(--ai-text);
-      border-radius: 18px 18px 18px 10px;
-      box-shadow: 0 1px 3px rgba(0,0,0,.1), 0 0 0 .5px rgba(0,0,0,.04);
-    }
-    .row.ai .bubble.tail { border-bottom-left-radius: 4px; }
-    .row.ai .bubble.tail::before {
-      content: ''; position: absolute; bottom: 0; left: -7px;
-      width: 10px; height: 14px;
-      background: var(--ai-bg);
-      clip-path: polygon(100% 0,100% 100%,0 100%);
-      filter: drop-shadow(-1px 1px 1px rgba(0,0,0,.06));
-    }
-
-    .row.user .bubble {
-      background: var(--user-bg); color: #fff;
-      border-radius: 18px 18px 10px 18px;
-      box-shadow: 0 1px 4px rgba(0,122,255,.25);
-    }
-    .row.user .bubble.tail { border-bottom-right-radius: 4px; }
-    .row.user .bubble.tail::after {
-      content: ''; position: absolute; bottom: 0; right: -7px;
-      width: 10px; height: 14px;
-      background: var(--user-bg);
-      clip-path: polygon(0 0,0 100%,100% 100%);
-    }
-
-    .meta { display: flex; align-items: center; justify-content: flex-end; gap: 3px; margin-top: 3px; font-size: 10.5px; color: rgba(255,255,255,.65); user-select: none; }
-    .row.ai .meta { color: var(--meta); justify-content: flex-start; }
-    .meta svg { width: 14px; height: 10px; }
-
-    .typing-row { display: flex; align-items: flex-end; margin-top: 8px; }
-    .typing-bubble { background: var(--ai-bg); border-radius: 18px 18px 18px 4px; box-shadow: 0 1px 3px rgba(0,0,0,.1); padding: 12px 16px; display: flex; align-items: center; gap: 4px; }
-    .typing-bubble span { width: 7px; height: 7px; background: #C7C7CC; border-radius: 50%; animation: tdot 1.3s ease-in-out infinite; }
-    .typing-bubble span:nth-child(2){animation-delay:.16s}
-    .typing-bubble span:nth-child(3){animation-delay:.32s}
-    @keyframes tdot { 0%,60%,100%{transform:translateY(0);opacity:.5} 30%{transform:translateY(-5px);opacity:1} }
-
-    footer {
-      flex-shrink: 0;
-      padding-bottom: env(safe-area-inset-bottom, 0);
-      background: var(--glass);
-      backdrop-filter: blur(24px) saturate(200%);
-      -webkit-backdrop-filter: blur(24px) saturate(200%);
-      border-top: 0.5px solid var(--divider);
-      z-index: 10;
-    }
-
-    .quick-wrap { display: flex; gap: 7px; overflow-x: auto; padding: 10px 14px 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-    .quick-wrap::-webkit-scrollbar { display: none; }
-
-    .chip { flex-shrink: 0; font-size: 13px; font-family: var(--font); padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(0,122,255,.3); background: rgba(0,122,255,.07); color: #007AFF; cursor: pointer; white-space: nowrap; transition: background .15s, transform .1s; -webkit-tap-highlight-color: transparent; }
-    .chip:active { background: rgba(0,122,255,.16); transform: scale(.96); }
-
-    .input-row { display: flex; align-items: flex-end; gap: 8px; padding: 8px 14px 10px; }
-
-    .icon-btn { width: 34px; height: 34px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #8E8E93; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-    .icon-btn svg { width: 22px; height: 22px; }
-
-    .input-field { flex: 1; min-height: 36px; max-height: 110px; background: #fff; border: 1px solid rgba(60,60,67,.15); border-radius: 20px; padding: 8px 14px; font-size: 15px; font-family: var(--font); color: #1C1C1E; resize: none; outline: none; line-height: 1.4; transition: border-color .2s; }
-    .input-field::placeholder { color: #C7C7CC; }
-    .input-field:focus { border-color: rgba(0,122,255,.4); }
-
-    .send-btn { width: 34px; height: 34px; flex-shrink: 0; background: #007AFF; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s, transform .1s; -webkit-tap-highlight-color: transparent; }
-    .send-btn:disabled { background: #C7C7CC; }
-    .send-btn:not(:disabled):active { transform: scale(.9); }
-    .send-btn svg { width: 16px; height: 16px; fill: #fff; margin-bottom: 1px; }
-
-    @media (min-width: 500px) {
-      body { display: flex; align-items: center; justify-content: center; }
-      .frame { height: min(90dvh, 820px); border-radius: 44px; overflow: hidden; }
-    }
+    .header-actions { display:flex; gap:18px; flex-shrink:0; color:#007AFF; }
+    .header-actions svg { width:20px; height:20px; cursor:pointer; }
+    .progress-bar { height:2px; background:rgba(0,122,255,.12); }
+    .progress-fill { height:100%; background:linear-gradient(90deg,#007AFF,#34C759); border-radius:1px; transition:width .4s ease; }
+    .messages { flex:1; overflow-y:auto; overflow-x:hidden; padding:12px 14px 8px; display:flex; flex-direction:column; gap:3px; scroll-behavior:smooth; -webkit-overflow-scrolling:touch; }
+    .messages::-webkit-scrollbar { width:3px; }
+    .messages::-webkit-scrollbar-thumb { background:rgba(0,0,0,.15); border-radius:3px; }
+    .date-sep { display:flex; align-items:center; justify-content:center; margin:10px 0 6px; }
+    .date-sep span { background:rgba(0,0,0,.12); backdrop-filter:blur(8px); color:#fff; font-size:11.5px; font-weight:500; padding:3px 10px; border-radius:10px; }
+    .row { display:flex; flex-direction:column; gap:1px; }
+    .row.user { align-items:flex-end; }
+    .row.ai { align-items:flex-start; }
+    .row + .row { margin-top:8px; }
+    .row.user + .row.ai,.row.ai + .row.user { margin-top:10px; }
+    .bubble { max-width:78%; padding:9px 12px 7px; font-size:15px; line-height:1.45; white-space:pre-wrap; word-break:break-word; position:relative; animation:pop-in .18s cubic-bezier(.34,1.56,.64,1) both; }
+    @keyframes pop-in { from{opacity:0;transform:scale(.92) translateY(4px)}to{opacity:1;transform:scale(1) translateY(0)} }
+    .row.ai .bubble { background:var(--ai-bg); color:var(--ai-text); border-radius:18px 18px 18px 10px; box-shadow:0 1px 3px rgba(0,0,0,.1),0 0 0 .5px rgba(0,0,0,.04); }
+    .row.ai .bubble.tail { border-bottom-left-radius:4px; }
+    .row.ai .bubble.tail::before { content:''; position:absolute; bottom:0; left:-7px; width:10px; height:14px; background:var(--ai-bg); clip-path:polygon(100% 0,100% 100%,0 100%); filter:drop-shadow(-1px 1px 1px rgba(0,0,0,.06)); }
+    .row.user .bubble { background:var(--user-bg); color:#fff; border-radius:18px 18px 10px 18px; box-shadow:0 1px 4px rgba(0,122,255,.25); }
+    .row.user .bubble.tail { border-bottom-right-radius:4px; }
+    .row.user .bubble.tail::after { content:''; position:absolute; bottom:0; right:-7px; width:10px; height:14px; background:var(--user-bg); clip-path:polygon(0 0,0 100%,100% 100%); }
+    .meta { display:flex; align-items:center; justify-content:flex-end; gap:3px; margin-top:3px; font-size:10.5px; color:rgba(255,255,255,.65); user-select:none; }
+    .row.ai .meta { color:var(--meta); justify-content:flex-start; }
+    .meta svg { width:14px; height:10px; }
+    .caps-row { display:flex; flex-wrap:wrap; gap:7px; padding:4px 0 2px; max-width:300px; }
+    .cap-card { display:flex; align-items:center; gap:6px; background:#fff; border-radius:12px; padding:7px 11px; font-size:13px; color:#1C1C1E; box-shadow:0 1px 3px rgba(0,0,0,.08); animation:pop-in .2s cubic-bezier(.34,1.56,.64,1) both; }
+    .cap-card span { font-size:15px; }
+    .done-card { background:linear-gradient(135deg,#34C759,#007AFF); color:#fff; border-radius:18px; padding:14px 16px; font-size:14px; line-height:1.5; animation:pop-in .25s cubic-bezier(.34,1.56,.64,1) both; }
+    .done-card strong { font-size:16px; display:block; margin-bottom:6px; }
+    .typing-row { display:flex; align-items:flex-end; margin-top:8px; }
+    .typing-bubble { background:var(--ai-bg); border-radius:18px 18px 18px 4px; box-shadow:0 1px 3px rgba(0,0,0,.1); padding:12px 16px; display:flex; align-items:center; gap:4px; }
+    .typing-bubble span { width:7px; height:7px; background:#C7C7CC; border-radius:50%; animation:tdot 1.3s ease-in-out infinite; }
+    .typing-bubble span:nth-child(2){animation-delay:.16s} .typing-bubble span:nth-child(3){animation-delay:.32s}
+    @keyframes tdot { 0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1} }
+    footer { flex-shrink:0; padding-bottom:env(safe-area-inset-bottom,0); background:var(--glass); backdrop-filter:blur(24px) saturate(200%); -webkit-backdrop-filter:blur(24px) saturate(200%); border-top:.5px solid var(--divider); z-index:10; }
+    .quick-wrap { display:flex; gap:7px; overflow-x:auto; padding:10px 14px 4px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+    .quick-wrap::-webkit-scrollbar { display:none; }
+    .chip { flex-shrink:0; font-size:13px; font-family:var(--font); padding:6px 14px; border-radius:20px; border:1px solid rgba(0,122,255,.3); background:rgba(0,122,255,.07); color:#007AFF; cursor:pointer; white-space:nowrap; transition:background .15s,transform .1s; -webkit-tap-highlight-color:transparent; }
+    .chip:active { background:rgba(0,122,255,.16); transform:scale(.96); }
+    .input-row { display:flex; align-items:flex-end; gap:8px; padding:8px 14px 10px; }
+    .icon-btn { width:34px; height:34px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#8E8E93; cursor:pointer; -webkit-tap-highlight-color:transparent; border:none; background:none; transition:opacity .2s; }
+    .icon-btn svg { width:22px; height:22px; }
+    .input-field { flex:1; min-height:36px; max-height:110px; background:#fff; border:1px solid rgba(60,60,67,.15); border-radius:20px; padding:8px 14px; font-size:15px; font-family:var(--font); color:#1C1C1E; resize:none; outline:none; line-height:1.4; transition:border-color .2s; }
+    .input-field::placeholder { color:#C7C7CC; }
+    .input-field:focus { border-color:rgba(0,122,255,.4); }
+    .send-btn { width:34px; height:34px; flex-shrink:0; background:#007AFF; border:none; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s,transform .1s; -webkit-tap-highlight-color:transparent; }
+    .send-btn:disabled { background:#C7C7CC; }
+    .send-btn:not(:disabled):active { transform:scale(.9); }
+    .send-btn svg { width:16px; height:16px; fill:#fff; margin-bottom:1px; }
+    #photoInput { display:none; }
+    .demo-badge { font-size:11px; color:var(--meta); text-align:center; padding:4px 0 0; }
+    @media (min-width:500px) { body{display:flex;align-items:center;justify-content:center;} .frame{height:min(90dvh,820px);border-radius:44px;overflow:hidden;} }
   </style>
 </head>
 <body>
 <div class="frame">
-
   <header>
     <div class="header-bar">
-      <div class="back">
-        <svg viewBox="0 0 11 18" fill="none"><path d="M9.5 1.5L2 9l7.5 7.5" stroke="#007AFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span style="font-size:17px;font-weight:400;margin-left:2px">Voltar</span>
-      </div>
+      <div class="back"><svg viewBox="0 0 11 18" fill="none"><path d="M9.5 1.5L2 9l7.5 7.5" stroke="#007AFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="font-size:17px;font-weight:400;margin-left:2px">Voltar</span></div>
       <div class="profile-wrap">
         <div class="avatar-ring"><div class="avatar-inner">✨</div></div>
         <div class="contact-name">Revenda AI</div>
@@ -201,24 +98,26 @@
         <svg viewBox="0 0 24 24" fill="none"><path d="M3 5.5C3 14.06 9.94 21 18.5 21c.386 0 .77-.014 1.148-.042.435-.033.753-.408.753-.845V16.87a.855.855 0 00-.712-.848l-3.766-.627a.855.855 0 00-.896.437l-.837 1.535a13.18 13.18 0 01-5.91-5.91l1.535-.837a.855.855 0 00.437-.896l-.627-3.766A.855.855 0 009.777 5H6.055c-.46 0-.843.34-.852.803C5.069 6.52 5 7.27 5 8" stroke="#007AFF" stroke-width="1.6" stroke-linecap="round"/></svg>
       </div>
     </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </header>
 
   <div class="messages" id="messages"></div>
 
   <footer>
-    <div class="quick-wrap">
+    <div class="quick-wrap" id="quickWrap" style="display:none">
       <button class="chip" onclick="fill('Vendi 2 Malbec para Ana por R$240 via Pix')">💄 Registrar venda</button>
       <button class="chip" onclick="fill('Chegaram 5 hidratantes Tododia')">📦 Entrada estoque</button>
       <button class="chip" onclick="fill('Quanto vendi esse mês?')">💰 Financeiro</button>
-      <button class="chip" onclick="fill('Crie um post para vender perfumes masculinos')">📱 Criar post</button>
+      <button class="chip" onclick="fill('Crie um post para Instagram')">📱 Criar post</button>
       <button class="chip" onclick="fill('Resumo do dia')">📊 Meu dia</button>
-      <button class="chip" onclick="fill('Qual perfume doce até R$80?')">🌸 Produto</button>
       <button class="chip" onclick="fill('Quem devo reativar essa semana?')">🔔 Pós-venda</button>
     </div>
+    <div style="padding:0 14px 4px"><p class="demo-badge">✦ Versão demonstração — sem backend</p></div>
     <div class="input-row">
-      <div class="icon-btn">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#8E8E93" stroke-width="1.6"/><path d="M8.5 13.5s1 1.5 3.5 1.5 3.5-1.5 3.5-1.5" stroke="#8E8E93" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="10" r=".8" fill="#8E8E93"/><circle cx="15" cy="10" r=".8" fill="#8E8E93"/></svg>
-      </div>
+      <button class="icon-btn" id="cameraBtn" title="Foto do estoque" onclick="$('photoInput').click()">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="#007AFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="13" r="4" stroke="#007AFF" stroke-width="1.6"/></svg>
+      </button>
+      <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="demoPhoto(event)" />
       <textarea class="input-field" id="input" rows="1" placeholder="Mensagem" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
       <button class="send-btn" id="sendBtn" onclick="send()">
         <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
@@ -228,130 +127,233 @@
 </div>
 
 <script>
-  // ── Demo responses ────────────────────────────────────────────────────────
-  const DEMOS = [
-    {
-      keys: ['vendi','venda','comprou','pagou'],
-      reply: msg => {
-        const m = msg.match(/(\d+)\s+(\w+)/);
-        const prod = m ? `${m[1]} ${m[2]}` : 'produto';
-        const client = msg.match(/para\s+(\w+)/i)?.[1] || null;
-        const val = msg.match(/r\$?\s*([\d,\.]+)/i)?.[1] || '—';
-        return `Anotado! ✓\n\nVenda registrada: ${prod}${client ? ` para ${client}` : ''} — R$${val}.\n\nEstoque atualizado automaticamente. ${client ? `Histórico da ${client} também 😊` : ''}\n\nQuer que eu crie uma mensagem de agradecimento para a cliente?`;
-      }
-    },
-    {
-      keys: ['chegaram','entrada','comprei','estoque','chegou'],
-      reply: msg => `Anotado! ✓\n\nEstoque atualizado com os novos produtos.\n\nVou ficar de olho nas quantidades e te aviso quando estiver perto de acabar 📦`
-    },
-    {
-      keys: ['mês','vendi','faturamento','lucro','financeiro','quanto'],
-      reply: () => `Claro, aqui está seu resumo 💰\n\n📊 Este mês:\n• Faturamento: R$2.340\n• Lucro estimado: R$780\n• Ticket médio: R$93\n• Vendas: 25\n\nVocê está a R$660 da sua meta de R$3.000. Dá pra chegar! Quer uma sugestão de ação para essa semana?`
-    },
-    {
-      keys: ['post','instagram','story','reels','conteúdo','crie','legenda'],
-      reply: () => `Com certeza! 📱\n\nAqui vão 3 ideias prontas:\n\n1️⃣ "Perfume que arranca elogios — o homem da sua vida vai amar 😍"\n\n2️⃣ "Presente certeiro: ele usa, ela aprova ✨ Venho mostrar meus favoritos"\n\n3️⃣ "Top 3 perfumes masculinos que nunca erram 💫"\n\nQual você quer desenvolver? Posso criar a legenda completa com hashtags!`
-    },
-    {
-      keys: ['resumo','dia','dashboard'],
-      reply: () => `Bom dia! Aqui está seu resumo 📊\n\n✅ Hoje você fez 3 vendas — R$420\n⚠️ Estoque baixo: Malbec (1 un.) e Kaiak (2 un.)\n👤 Ana comprou há 28 dias — hora do pós-venda!\n📅 Pendente: entregar pedido da Carla amanhã\n\nQuer que eu prepare a mensagem para a Ana?`
-    },
-    {
-      keys: ['perfume','cheiro','fragância','doce','floral','fresco','Malbec','Kaiak','Lily'],
-      reply: () => `Boa escolha! 🌸\n\nPara perfume doce até R$80 eu recomendo:\n\n• **Floratta Blue** (Boticário) — R$69\n  Flores brancas, baunilha suave. Muito usada!\n\n• **Humor Irresistível** (Natura) — R$75\n  Frutado e adocicado, ótima fixação.\n\n• **Encanto** (Avon) — R$49\n  Clássico doce e feminino, tima saída.\n\nQuer que eu monte um kit presente com algum deles?`
-    },
-    {
-      keys: ['reativ','inativ','sumiu','cliente','semana'],
-      reply: () => `Entendi! Vou verificar quem precisa de atenção 🔔\n\nClientes para reativar essa semana:\n\n1. **Ana** — última compra há 32 dias\n   Sugestão: "Oi Ana, seu hidratante já acabou? 😊"\n\n2. **Carla** — 45 dias sem comprar\n   Ela gosta de perfumes doces — tem novidade!\n\n3. **Júlia** — aniversário semana que vem 🎂\n\nQuer que eu prepare as mensagens prontas para enviar no WhatsApp?`
-    },
-  ];
+  // ── Onboarding state machine ──────────────────────────────────────────────
+  const STATE = {
+    step: 0,        // 0=intro 1=name 2=city 3=brands 4=stock 5=goal 99=done
+    name: '',
+    city: '',
+    brands: [],
+    hasStock: false,
+    goal: '',
+  };
 
-  function getReply(msg) {
-    const lower = msg.toLowerCase();
-    for (const d of DEMOS) {
-      if (d.keys.some(k => lower.includes(k))) {
-        return typeof d.reply === 'function' ? d.reply(msg) : d.reply;
+  const ONBOARDING = {
+    1: msg => {
+      const name = extractName(msg);
+      if (name) { STATE.name = name; STATE.step = 2; return `Que nome lindo, ${name}! 😊\n\nDe qual cidade você é?`; }
+      return `Não consegui entender o nome. Pode repetir? 😊`;
+    },
+    2: msg => {
+      STATE.city = msg.trim().replace(/^(de |do |da )/i,'').replace(/\.$/,'').trim();
+      STATE.city = STATE.city.charAt(0).toUpperCase() + STATE.city.slice(1);
+      STATE.step = 3;
+      return `${STATE.city}! Boa 🌟\n\nQuais marcas você trabalha?\nNatura, Avon, Boticário... pode falar quantas quiser!`;
+    },
+    3: msg => {
+      STATE.brands = extractBrands(msg);
+      STATE.step = 4;
+      const brandStr = STATE.brands.length ? STATE.brands.join(', ') : 'suas marcas';
+      return `Anotado! ${brandStr} ✓\n\nAgora me conta sobre seu estoque:\n\n📸 Você pode tirar uma foto\n✍️ Ou me mandar a lista aqui\n\nExemplo: "Tenho 5 Malbec, 3 Kaiak, 10 hidratantes Tododia"`;
+    },
+    4: msg => {
+      STATE.hasStock = true;
+      STATE.step = 5;
+      return `Perfeito, anotei tudo no estoque ✓\n\nÚltima pergunta — você tem uma meta de faturamento mensal?\nEx: "Quero chegar em R$2.000"\n\n(Pode pular se preferir, é só digitar "pular")`;
+    },
+    5: msg => {
+      if (/pular|depois|não sei|nao sei/i.test(msg)) {
+        STATE.goal = '';
+      } else {
+        const val = msg.match(/[\d.,]+/)?.[0];
+        STATE.goal = val ? `R$${val}` : msg;
       }
-    }
-    return `Entendi! 😊\n\nEssa funcionalidade vai estar disponível quando você conectar sua chave de API. Por enquanto, estou em modo demonstração!\n\nExperimente um dos atalhos rápidos acima para ver como funciona a conversa.`;
+      STATE.step = 99;
+      return null; // triggers done card
+    },
+  };
+
+  function extractName(msg) {
+    const m = msg.match(/(?:me chamo|meu nome é|sou a?|chamo)\s+([A-ZÀ-Ú][a-zà-ú]+)/i)
+           || msg.match(/^([A-ZÀ-Ú][a-zà-ú]{2,})/);
+    return m ? m[1] : msg.trim().split(' ')[0];
   }
 
-  // ── UI ──────────────────────────────────────────────────────────────────
-  let lastSender = null;
-  let lastDate   = null;
+  function extractBrands(msg) {
+    const known = ['Natura','Avon','Boticário','Boticario','O Boticário','Jequiti','Mary Kay','Hinode','Eudora'];
+    const found = known.filter(b => msg.toLowerCase().includes(b.toLowerCase()));
+    return found.length ? found : [msg.trim()];
+  }
+
+  // ── Post-onboarding demo responses ───────────────────────────────────────
+  const DEMOS = [
+    { keys:['vendi','venda','comprou','pagou'], reply: msg => {
+      const m = msg.match(/(\d+)\s+(\w+)/);
+      const prod = m ? `${m[1]} ${m[2]}` : 'produto';
+      const client = msg.match(/para\s+(\w+)/i)?.[1] || null;
+      const val = msg.match(/r\$?\s*([\d,\.]+)/i)?.[1] || '—';
+      return `Anotado! ✓\n\nVenda registrada: ${prod}${client?` para ${client}`:''} — R$${val}.\nEstoque atualizado automaticamente 📦${client?`\nHistórico da ${client} salvo 😊`:''}`;
+    }},
+    { keys:['chegaram','entrada','estoque','chegou','comprei'], reply: () => `Anotado! ✓\n\nEstoque atualizado com os novos produtos 📦\nVou te avisar quando estiver acabando!` },
+    { keys:['mês','vendi','faturamento','lucro','financeiro','quanto'], reply: () => `Claro! 💰\n\nEste mês:\n• Faturamento: R$2.340\n• Lucro estimado: R$780\n• Ticket médio: R$93\n• Vendas: 25\n\nFaltam R$660 pra sua meta de R$3.000. Quer sugestão de ação?` },
+    { keys:['post','instagram','story','reels','conteúdo','crie','legenda'], reply: () => `Com certeza! 📱\n\nTrês ideias prontas:\n\n1️⃣ "Perfume que arranca elogios — o homem da sua vida vai amar 😍"\n\n2️⃣ "Presente certeiro: ele usa, ela aprova ✨"\n\n3️⃣ "Top 3 perfumes masculinos que nunca erram 💫"\n\nQual desenvolvo com legenda completa?` },
+    { keys:['resumo','dia','dashboard'], reply: () => `Resumo do dia 📊\n\n✅ 3 vendas hoje — R$420\n⚠️ Estoque baixo: Malbec (1 un.)\n👤 Ana: 28 dias sem comprar\n📅 Entregar pedido da Carla amanhã\n\nPreparo mensagem para a Ana?` },
+    { keys:['reativ','inativ','cliente','semana'], reply: () => `Claro! 🔔\n\nClientes para reativar:\n\n1. Ana — 32 dias sem comprar\n   "Oi Ana, seu hidratante já acabou? 😊"\n\n2. Carla — 45 dias\n   Ela ama perfumes doces — tem novidade!\n\n3. Júlia — aniversário semana que vem 🎂\n\nMando as mensagens prontas?` },
+    { keys:['perfume','cheiro','malbec','kaiak','lily','egeo','floratta'], reply: () => `Boa escolha! 🌸\n\nPara presentear:\n• Malbec Gold — R$139 (amadeirado, muito elogiado)\n• Lily — R$89 (floral suave, feminino)\n• Egeo Duo — R$79 (unissex, jovem)\n\nQuer montar um kit presente?` },
+  ];
+
+  function getDemoReply(msg) {
+    const lower = msg.toLowerCase();
+    for (const d of DEMOS) { if (d.keys.some(k=>lower.includes(k))) return typeof d.reply==='function'?d.reply(msg):d.reply; }
+    return `Entendido! 😊\n\nEssa funcionalidade estará disponível na versão com backend.\n\nUse os atalhos acima para ver mais exemplos!`;
+  }
+
+  // ── UI helpers ────────────────────────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+  let lastSender=null, lastDate=null;
 
   function now() { return new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
   function todayStr() { return new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}); }
-
-  function fill(t) { const ta=document.getElementById('input'); ta.value=t; ta.focus(); autoResize(ta); }
+  function fill(t) { const ta=$('input'); ta.value=t; ta.focus(); autoResize(ta); }
   function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,110)+'px'; }
   function handleKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();} }
+  function scroll() { const m=$('messages'); m.scrollTop=m.scrollHeight; }
+  function sleep(ms) { return new Promise(r=>setTimeout(r,ms)); }
 
-  function scroll() { const m=document.getElementById('messages'); m.scrollTop=m.scrollHeight; }
+  function updateProgress() {
+    const pct = STATE.step >= 99 ? 100 : (STATE.step/5)*100;
+    $('progressFill').style.width = pct+'%';
+    $('cameraBtn').style.opacity = (STATE.step===4||STATE.step<99) ? '1':'0.4';
+    if (STATE.step >= 99) { $('quickWrap').style.display='flex'; }
+  }
 
   function maybeDate() {
     const d=new Date().toDateString();
-    if(lastDate===d)return;
-    lastDate=d;
+    if(lastDate===d)return; lastDate=d;
     const sep=document.createElement('div'); sep.className='date-sep';
     sep.innerHTML=`<span>${todayStr()}</span>`;
-    document.getElementById('messages').appendChild(sep);
+    $('messages').appendChild(sep);
   }
 
   function addBubble(role,text,time) {
     maybeDate();
-    const msgs=document.getElementById('messages');
-    const tail = lastSender!==role;
-    lastSender=role;
-
+    const msgs=$('messages');
+    const tail=lastSender!==role; lastSender=role;
     const row=document.createElement('div'); row.className=`row ${role}`;
     const bub=document.createElement('div'); bub.className=`bubble${tail?' tail':''}`;
     bub.textContent=text;
-
     const meta=document.createElement('div'); meta.className='meta';
     if(role==='user'){
       meta.innerHTML=`<span>${time||now()}</span><svg viewBox="0 0 14 10" fill="none"><path d="M1 5l3 3 5-7" stroke="rgba(255,255,255,.7)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 5l3 3 5-7" stroke="rgba(255,255,255,.7)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-    } else {
-      meta.innerHTML=`<span>${time||now()}</span>`;
-    }
-    bub.appendChild(meta);
-    row.appendChild(bub);
-    msgs.appendChild(row);
-    scroll();
+    } else { meta.innerHTML=`<span>${time||now()}</span>`; }
+    bub.appendChild(meta); row.appendChild(bub); msgs.appendChild(row); scroll();
+  }
+
+  function addCapabilityCards() {
+    maybeDate();
+    const msgs=$('messages'); lastSender='ai';
+    const row=document.createElement('div'); row.className='row ai';
+    const caps=[['💄','Registrar vendas'],['📦','Controlar estoque'],['📱','Criar posts'],['💰','Ver financeiro'],['🔔','Pós-venda'],['📅','Agenda']];
+    const grid=document.createElement('div'); grid.className='caps-row';
+    caps.forEach(([icon,label],i)=>{
+      const card=document.createElement('div'); card.className='cap-card';
+      card.style.animationDelay=(i*.07)+'s';
+      card.innerHTML=`<span>${icon}</span>${label}`;
+      grid.appendChild(card);
+    });
+    row.appendChild(grid); msgs.appendChild(row); scroll();
+  }
+
+  function addDoneCard() {
+    maybeDate();
+    const msgs=$('messages'); lastSender='ai';
+    const row=document.createElement('div'); row.className='row ai';
+    const card=document.createElement('div'); card.className='done-card';
+    const brandStr=STATE.brands.join(', ')||'suas marcas';
+    const goalStr=STATE.goal?`\n🎯 Meta: ${STATE.goal}`:'';
+    card.innerHTML=`<strong>Tudo pronto, ${STATE.name}! 🚀</strong>📍 ${STATE.city}\n🛍️ ${brandStr}\n📦 Estoque cadastrado${goalStr}\n\nAgora é só me mandar mensagem quando quiser registrar uma venda, pedir um post ou checar seu estoque!`.replace(/\n/g,'<br>');
+    row.appendChild(card); msgs.appendChild(row); scroll();
   }
 
   function showTyping() {
-    const msgs=document.getElementById('messages');
     const w=document.createElement('div'); w.id='typing'; w.className='typing-row';
     w.innerHTML='<div class="typing-bubble"><span></span><span></span><span></span></div>';
-    msgs.appendChild(w); scroll();
+    $('messages').appendChild(w); scroll();
   }
-  function hideTyping() { const t=document.getElementById('typing'); if(t)t.remove(); }
+  function hideTyping() { const t=$('typing'); if(t)t.remove(); }
 
+  function addPhotoBubble(src) {
+    maybeDate();
+    const msgs=$('messages'); const tail=lastSender!=='user'; lastSender='user';
+    const row=document.createElement('div'); row.className='row user';
+    const wrap=document.createElement('div');
+    wrap.style.cssText='max-width:200px;border-radius:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.15);';
+    const img=document.createElement('img'); img.src=src; img.style.cssText='width:100%;display:block;';
+    wrap.appendChild(img); row.appendChild(wrap); msgs.appendChild(row); scroll();
+  }
+
+  // ── Main send ─────────────────────────────────────────────────────────────
   async function send() {
-    const input=document.getElementById('input');
-    const btn=document.getElementById('sendBtn');
+    const input=$('input'),btn=$('sendBtn');
     const msg=input.value.trim();
     if(!msg||btn.disabled)return;
-
     addBubble('user',msg,now());
     input.value=''; autoResize(input);
-    btn.disabled=true;
-    lastSender='user';
+    btn.disabled=true; lastSender='user';
     showTyping();
-
-    const delay=900+Math.random()*700;
-    await new Promise(r=>setTimeout(r,delay));
+    await sleep(800+Math.random()*600);
     hideTyping();
-    lastSender='user';
-    addBubble('ai',getReply(msg),now());
-    btn.disabled=false;
-    input.focus();
+
+    let reply;
+    if (STATE.step > 0 && STATE.step < 99) {
+      const fn = ONBOARDING[STATE.step];
+      reply = fn ? fn(msg) : null;
+      updateProgress();
+
+      if (STATE.step === 99) {
+        addDoneCard();
+        updateProgress();
+        btn.disabled=false; input.focus();
+        return;
+      }
+    } else if (STATE.step === 99) {
+      reply = getDemoReply(msg);
+    } else {
+      reply = getDemoReply(msg);
+    }
+
+    if (reply) { lastSender='user'; addBubble('ai',reply,now()); }
+    btn.disabled=false; input.focus();
   }
 
-  window.addEventListener('DOMContentLoaded',()=>{
+  function demoPhoto(event) {
+    const file=event.target.files[0]; if(!file)return;
+    const reader=new FileReader();
+    reader.onload=async e=>{
+      addPhotoBubble(e.target.result);
+      $('sendBtn').disabled=true; showTyping();
+      await sleep(1500);
+      hideTyping();
+      lastSender='user';
+      if(STATE.step===4){
+        STATE.hasStock=true; STATE.step=5; updateProgress();
+        addBubble('ai','Analisei sua foto! Encontrei alguns produtos e já adicionei ao estoque 📦\n\nÚltima pergunta: você tem uma meta de faturamento mensal?\n(Pode pular digitando "pular")',now());
+      } else {
+        addBubble('ai','Foto recebida! Produtos analisados e adicionados ao seu estoque 📦',now());
+      }
+      $('sendBtn').disabled=false; $('photoInput').value='';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', async ()=>{
     maybeDate();
-    addBubble('ai','Oi! Sou sua assistente de vendas 😊\n\nMe conta o que aconteceu hoje — uma venda, um cliente, estoque — e eu cuido de tudo pra você!\n\n👆 Use os atalhos acima para experimentar.',now());
+    addBubble('ai','Oi! Sou a Revenda AI — sua assistente de vendas 😊\n\nCom o que posso te ajudar:',now());
+    await sleep(300);
+    addCapabilityCards();
+    await sleep(700);
+    addBubble('ai','Para começar, me diz: qual é o seu nome? 🌟',now());
+    STATE.step=1; updateProgress();
   });
 </script>
 </body>

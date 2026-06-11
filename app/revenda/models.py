@@ -19,6 +19,7 @@ class RevendedoraProfile(Base):
     tone = Column(String, default="simpático e popular")
     monthly_goal = Column(Float)
     extra_data = Column(JSON, default=dict)
+    onboarding_step = Column(Integer, default=0)  # 0=novo 1-5=em andamento 99=completo
     criado_em = Column(DateTime(timezone=True), server_default=func.now())
     atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
 
