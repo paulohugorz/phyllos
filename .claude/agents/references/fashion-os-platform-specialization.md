@@ -236,14 +236,16 @@ Objetivo: gerar fotografias que respeitem:
 - folgas de vestibilidade;
 - caimento real.
 
-Decisao vigente: o SVG local do Fashion OS e apenas rascunho tecnico/fallback offline. Imagem realista exige banco de termos de moda + prompt compiler + motor visual dedicado. Seguir `docs/decisoes/adr-001-motor-imagem-realista-fashion-os.md`, `data/fashion-taxonomy/schema.md` e `data/fashion-taxonomy/seed_terms.csv`.
+Decisao vigente: o SVG local do Fashion OS e apenas rascunho tecnico/fallback offline. Imagem realista exige banco de termos de moda + prompt compiler + motor visual dedicado + QA visual em camadas. Seguir `docs/decisoes/adr-001-motor-imagem-realista-fashion-os.md`, `data/fashion-taxonomy/schema.md`, `data/fashion-taxonomy/seed_terms.csv` e [image-quality-verification-layers.md](image-quality-verification-layers.md).
 
 Camadas obrigatorias:
 
 1. Taxonomia de moda: tipos de peca, silhuetas, golas, mangas, bolsos, acabamentos, tecidos, texturas, modelagem e fit.
-2. Prompt Compiler Fashion: converte ficha tecnica e termos curados em prompt positivo, prompt tecnico e prompt negativo.
-3. Gerador visual: ComfyUI ou equivalente com workflow controlavel para foto/croqui realista.
-4. QA de realismo: valida tecido, caimento, construcao, corpo, pose e coerencia PHYLLOS.
+2. Contrato de alinhamento: define pose, enquadramento, eixo corporal, eixo da peca, partes visiveis, detalhes proibidos e negativos de desalinhamento.
+3. Prompt Compiler Fashion: converte ficha tecnica e termos curados em prompt positivo, prompt tecnico, prompt negativo e pacote de QA.
+4. Gerador visual: ComfyUI ou equivalente com workflow controlavel para foto/croqui realista.
+5. QA de realismo em camadas: valida entrada, composicao, anatomia, alinhamento da roupa, fit/modelagem, tecido, construcao, fidelidade e coerencia PHYLLOS.
+6. Ciclo de correcao: imagem reprovada deve gerar ajuste objetivo de prompt, pose, referencia, mascara, seed ou variante tecnica antes de nova tentativa.
 
 Tipos de imagem:
 
@@ -258,13 +260,40 @@ Tipos de imagem:
 
 ## 9. Pattern Engine
 
-Transforma medidas + tecido + design + mobilidade em:
+Transforma `corpo 3D + tecido + design + mobilidade + construcao` em molde 2D parametrizado, validavel e graduavel.
+
+O Pattern Engine deve seguir a referencia profunda em [patternmaking-geometric-algorithmic-principles.md](patternmaking-geometric-algorithmic-principles.md), alem da sintese construtiva em [patternmaking-construction-techniques-marlene-mukai.md](patternmaking-construction-techniques-marlene-mukai.md).
+
+Tese operacional:
+
+- uma roupa e uma superficie flexivel que sai de um plano, envolve um volume e volta a ser plano quando aberta;
+- pences, recortes, costuras, pregas, folgas, vies e elasticidade sao mecanismos para correlacionar volume 3D com molde 2D;
+- toda linha de molde deve explicar qual volume, movimento, tecido ou operacao construtiva ela resolve;
+- nenhum molde deve ser tratado como desenho solto: ele precisa de medidas finais, linha de fio, paineis, pontos de controle, margens, piques, validacao e regra de graduacao.
+
+Entradas minimas:
+
+- medidas corporais e linhas de referencia;
+- tecido, elasticidade, recuperacao, caimento, encolhimento e estabilidade;
+- briefing de design, silhueta, grau de ajuste e componentes;
+- movimentos obrigatorios;
+- maquinario, costuras, margem e tolerancias de producao.
+
+Saidas obrigatorias:
 
 - molde parametrizado;
+- base escolhida;
+- medidas finais por regiao;
+- folgas positivas, folgas negativas ou reducoes elasticas;
+- mapa de volume 3D para solucao 2D;
+- pences, recortes, pregas, franzidos, elastico, vies ou paineis usados;
 - margem de costura;
 - piques;
 - linha de fio;
-- plano de corte.
+- plano de corte;
+- sequencia de montagem;
+- checklist de prova funcional;
+- regra inicial de graduacao.
 
 ## 10. Kit PHYLLOS
 
@@ -310,3 +339,5 @@ Apos aprovacao da imagem, o sistema deve gerar:
 4. Toda imagem gerada deve respeitar corpo, tecido, folga, elasticidade e caimento plausivel.
 5. Toda ficha tecnica deve mirar o Kit PHYLLOS completo, ainda que a fase atual entregue apenas parte dele.
 6. Toda decisao de roadmap deve respeitar a sequencia: imagem + ficha tecnica, Pattern Engine, PDF A4, biblioteca de tecidos, biblioteca de bases, prototipagem 3D, personalizacao completa e Atelier Digital Autonomo.
+7. Toda tarefa de modelagem deve explicar como o volume 3D foi traduzido para o plano 2D e qual mecanismo resolve cada volume critico: pence, recorte, folga, elastico, vies, prega, franzido, painel ou costura.
+8. Nenhuma imagem pode virar referencia de produto sem passar pelas camadas de QA visual em [image-quality-verification-layers.md](image-quality-verification-layers.md). Falha critica de anatomia, alinhamento da roupa, fit/modelagem ou fidelidade reprova a imagem.

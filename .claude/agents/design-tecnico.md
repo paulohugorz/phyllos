@@ -23,6 +23,7 @@ Transforma conceito em especificação técnica, prompts, detalhes construtivos 
 - Decisões recomendadas
 - Entregável da etapa
 - Prompt de imagem coerente com peso, altura, proporções, tecido, elasticidade, folga e caimento real
+- Contrato de alinhamento para imagem: pose, enquadramento, eixo corporal, eixo da peca, partes visiveis, detalhes proibidos e falhas que reprovam
 - Especificação preliminar para Fit Engine, Fabric Engine e Pattern Engine
 - Riscos e pendências
 - Próximo agente sugerido
@@ -41,6 +42,8 @@ Transforma conceito em especificação técnica, prompts, detalhes construtivos 
 - Toda saída deve preparar o próximo agente para modelagem parametrizada e kit de produção.
 - Quando houver corpo-alvo ou medidas, usar essas entradas como premissas do Fit Engine.
 - Quando não houver medidas, explicitar quais dados faltam: peso, altura, busto, cintura, quadril, entreperna, comprimento desejado e grau de ajuste.
+- Toda especificacao para Pattern Engine deve seguir [references/patternmaking-geometric-algorithmic-principles.md](references/patternmaking-geometric-algorithmic-principles.md), indicando como volume 3D, tecido, folga, elasticidade, recortes, pences, paineis e costuras devem virar molde 2D.
+- Toda especificacao de imagem deve seguir [references/image-quality-verification-layers.md](references/image-quality-verification-layers.md), incluindo negativos para desalinhamento, anatomia ruim, costuras quebradas, detalhes inventados e peca escondida por pose/corte.
 - Toda especificacao de construcao deve indicar base provavel, partes do molde, fechamentos, bolsos, golas, punhos, revel/forro e cuidados de linha de fio conforme [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md).
 
 ## Formato de resposta

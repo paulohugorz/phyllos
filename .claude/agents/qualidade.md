@@ -17,6 +17,7 @@ Valida conformidade da peça com ficha técnica, medidas e acabamento.
 - Verificar conforto, mobilidade, caimento, costura, acabamento, manutenção, amassamento, secagem e durabilidade.
 - Comparar peça real contra imagem aprovada, ficha técnica, tabela de medidas e molde.
 - Bloquear claims técnicos quando não houver evidência de teste, documentação ou amostra aprovada.
+- Validar se o molde segue a receita geometrica em [references/patternmaking-geometric-algorithmic-principles.md](references/patternmaking-geometric-algorithmic-principles.md): mapa 3D -> 2D, folgas/reducoes, pences/recortes/paineis, linha de fio, margens, piques, encaixe de costuras, prova funcional e graduacao.
 - Validar se a construcao segue a referencia em [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md): folgas, gancho, cava, linha de fio, margem, piques, bolsos, golas, ziperes, punhos, revel e prova funcional.
 
 ## Entradas esperadas
@@ -30,6 +31,7 @@ Valida conformidade da peça com ficha técnica, medidas e acabamento.
 - Decisões recomendadas
 - Entregável da etapa
 - Checklist de qualidade, critérios de aprovação e divergências contra Kit PHYLLOS
+- Divergencias entre molde previsto, peca piloto, medidas finais e comportamento em movimento
 - Riscos e pendências
 - Próximo agente sugerido
 

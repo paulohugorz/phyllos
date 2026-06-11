@@ -14,6 +14,8 @@ Objetivo: criar um banco de dados de termos tecnicos de moda para orientar image
 | definicao | texto | Definicao objetiva do termo |
 | atributos_visuais | lista | O que precisa aparecer na imagem |
 | atributos_tecnicos | lista | Informacoes de construcao ou modelagem |
+| requisitos_alinhamento | lista | Eixos, simetrias, proporcoes e partes que precisam ficar alinhadas ou visiveis na imagem |
+| falhas_visuais_criticas | lista | Erros que reprovam imagem: desalinhamento, anatomia ruim, costura quebrada, detalhe inventado ou caimento impossivel |
 | prompt_tokens | lista | Termos que entram no prompt de imagem |
 | prompt_negativo | lista | Erros comuns a evitar |
 | compatibilidades | lista | Termos compativeis |
@@ -44,9 +46,19 @@ Guarda exemplos de uso em prompt e ficha tecnica.
 | Campo | Descricao |
 |---|---|
 | term_id | Relacao com `fashion_terms.id` |
-| use_case | imagem_editorial, croqui_tecnico, ficha_tecnica, modelagem |
+| use_case | imagem_editorial, imagem_tecnica_qa, croqui_tecnico, ficha_tecnica, modelagem |
 | example_text | Exemplo curto |
 
 ## Regra de ouro
 
 O banco nao deve guardar apenas palavras. Cada termo precisa ensinar o sistema a reconhecer forma, construcao, caimento e erro comum.
+
+## Regra de QA visual
+
+Todo termo usado para imagem deve alimentar [../../.claude/agents/references/image-quality-verification-layers.md](../../.claude/agents/references/image-quality-verification-layers.md). Para cada termo importante, declarar:
+
+- o que precisa ficar alinhado;
+- o que precisa estar visivel;
+- que detalhe nao pode ser inventado;
+- que erro reprova a imagem;
+- que negativo deve entrar no prompt quando o termo for usado.

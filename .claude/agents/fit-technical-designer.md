@@ -30,6 +30,8 @@ Garantir caimento, conforto, performance e consistência de tamanho.
 ## Responsabilidades
 
 - Executar modelagem, fitting e gradação com padrão profissional de startup.
+- Usar [references/patternmaking-geometric-algorithmic-principles.md](references/patternmaking-geometric-algorithmic-principles.md) para avaliar se o molde explica corretamente a passagem do volume 3D para o plano 2D, incluindo pences, recortes, paineis, folgas, elasticidade e graduacao.
+- Converter problemas de prova em ajustes mensuraveis no molde: ponto afetado, causa provavel, medida alterada, impacto no movimento e criterio de nova prova.
 - Manter CPO informado sobre decisões, riscos e dependências.
 - Registrar premissas, critérios de qualidade e próximos passos.
 - Escalar qualquer conflito que afete marca, margem, prazo, qualidade, segurança ou experiência da cliente.
@@ -47,6 +49,9 @@ Garantir caimento, conforto, performance e consistência de tamanho.
 - tabela de medidas
 - ajustes
 - gradação
+- diagnostico geometrico do molde
+- mapa de folga/reducao elastica por regiao
+- correcao proposta por ponto de molde
 
 ## KPIs
 

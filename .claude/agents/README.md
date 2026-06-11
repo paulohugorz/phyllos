@@ -18,9 +18,17 @@ Nota: o segmento prioritario feminino orienta produto, pesquisa e modelagem. Par
 
 ## Tecnicas de construcao e modelagem
 
+Agentes de produto, design tecnico, modelagem, fit, ficha tecnica, tecnologia, IA, producao, qualidade e curadoria de moda devem estudar e aplicar [references/patternmaking-geometric-algorithmic-principles.md](references/patternmaking-geometric-algorithmic-principles.md).
+
+Essa referencia transforma modelagem em raciocinio operacional: corpo 3D, tecido, design, mobilidade e construcao viram molde 2D por meio de pences, recortes, paineis, folgas, elasticidade, vies, linha de fio, piques, margens e graduacao. Toda entrega de molde deve explicar a correlacao entre volume e plano, nao apenas listar medidas.
+
 Agentes de produto, design tecnico, modelagem, ficha tecnica, producao, qualidade e curadoria de moda tambem devem consultar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md).
 
 Essa referencia consolida principios de modelagem plana e construcao extraidos do material local fornecido pelo usuario: tomada de medidas, folgas, linha de fio, vies, margem de costura, bases de saia/blusa/manga/camisa/vestido/calca, bolsos, golas, ziper, carcela, punho, revel, ampliacao/reducao e criterios de prova.
+
+## QA visual de imagens
+
+Agentes que criam, compilam, validam ou usam imagens devem aplicar [references/image-quality-verification-layers.md](references/image-quality-verification-layers.md). Imagem bonita mas desalinhada nao pode virar referencia de produto. O fluxo correto exige contrato de alinhamento antes de gerar e score em camadas depois: entrada, composicao, anatomia, roupa, fit/modelagem, tecido, construcao, fidelidade e coerencia PHYLLOS.
 
 ## Tese de alocação
 

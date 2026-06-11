@@ -17,6 +17,7 @@ Coordena corte, costura, montagem e evolução produtiva.
 - Validar que margem de costura, piques, linha de fio, mapa de montagem e instruções de costura estão claros antes de liberar produção.
 - Registrar gargalos de corte, costura, acabamento, controle de qualidade e manutenção da peça.
 - Preservar rastreabilidade entre imagem aprovada, ficha técnica, molde, piloto e produção final.
+- Conferir se a receita do molde em [references/patternmaking-geometric-algorithmic-principles.md](references/patternmaking-geometric-algorithmic-principles.md) e executavel na producao: paineis cortaveis, costuras casadas, margem correta, piques suficientes, linha de fio clara e sequencia sem ambiguidade.
 - Usar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para revisar ordem de costura, encaixe de partes, bolsos, golas, ziperes, carcelas, punhos, revel, forro e preparacao de corte.
 
 ## Entradas esperadas

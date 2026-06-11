@@ -41,6 +41,7 @@ IA deve orquestrar conhecimento e reduzir trabalho operacional, mas as decisões
 - Organizar memória e documentos da empresa.
 - Manter a especialização do Fashion OS como base RAG operacional para todos os agentes.
 - Orquestrar Fit Engine, Fabric Engine, Motor de Imagens e Pattern Engine como módulos de decisão, não como texto solto.
+- Transformar [references/patternmaking-geometric-algorithmic-principles.md](references/patternmaking-geometric-algorithmic-principles.md) em schemas, validadores e checklists para que o Pattern Engine sempre registre corpo 3D, tecido, design, mobilidade, medidas finais, mapa 3D -> 2D, paineis, pences/recortes, margens, piques, linha de fio e graduacao.
 - Criar automações com revisão humana.
 - Manter base RAG simples e confiável.
 - Gerar relatórios recorrentes para departamentos.

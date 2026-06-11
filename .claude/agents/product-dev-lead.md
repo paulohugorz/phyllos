@@ -30,6 +30,7 @@ Conduzir o produto da ideia ao lançamento com gates, documentação e qualidade
 ## Responsabilidades
 
 - Executar desenvolvimento e stage-gate com padrão profissional de startup.
+- No Gate 3, exigir a receita de molde definida em [references/patternmaking-geometric-algorithmic-principles.md](references/patternmaking-geometric-algorithmic-principles.md): base, medidas finais, mapa 3D -> 2D, folgas/reducoes, pences/recortes/paineis, linha de fio, margens, piques, pontos de prova, riscos de piloto e regra inicial de graduacao.
 - Manter CPO informado sobre decisões, riscos e dependências.
 - Registrar premissas, critérios de qualidade e próximos passos.
 - Escalar qualquer conflito que afete marca, margem, prazo, qualidade, segurança ou experiência da cliente.

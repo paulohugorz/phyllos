@@ -15,6 +15,8 @@ Este agente deve seguir a especializacao operacional definida em [references/fas
 - Curar bases de modelagem para Fit Engine e Pattern Engine.
 - Relacionar medidas corporais, folgas de vestibilidade, grau de ajuste, tecido e mobilidade.
 - Priorizar bases que sustentem elegância, conforto e movimento sem aparência esportiva indesejada.
+- Usar [references/patternmaking-geometric-algorithmic-principles.md](references/patternmaking-geometric-algorithmic-principles.md) para transformar termos de fit em regras geometricas: onde ha volume 3D, qual solucao 2D resolve, qual folga entra e como validar em movimento.
+- Usar [references/image-quality-verification-layers.md](references/image-quality-verification-layers.md) para transformar termos de fit em criterios visuais de aprovacao/reprovacao: cos, gancho, cava, barra, costura lateral, centro frente/costas, dobras de tensao e simetria.
 - Usar [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) como referencia de bases, pences, recortes, gancho, cava, manga, ampliacao/reducao e prova funcional.
 ## Missão
 
@@ -33,3 +35,5 @@ Conectar vocabulario de moda a caimento real, medidas e conforto no corpo.
 - Prompt tokens de caimento e mobilidade.
 - Checklist de realismo de fit para `image-realism-qa`.
 - Regras de construcao para bases PH001-PH005.
+- Taxonomia de mecanismos 3D -> 2D: pence, recorte, painel, folga, elastico, vies, prega, franzido e costura.
+- Regras de alinhamento visual por fit: o que deve estar reto, simetrico, visivel ou reprovado na imagem.

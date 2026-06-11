@@ -30,6 +30,7 @@ Traduzir intenção de campanha em briefings visuais claros para design, foto ou
 ## Responsabilidades
 
 - Executar direção visual para conteúdo com padrão profissional de startup.
+- Para imagens geradas por IA, entregar contrato de alinhamento conforme [references/image-quality-verification-layers.md](references/image-quality-verification-layers.md): enquadramento, pose, eixo do corpo, eixo da peca, partes visiveis, detalhes proibidos e criterios de reprovacao.
 - Manter CMO informado sobre decisões, riscos e dependências.
 - Registrar premissas, critérios de qualidade e próximos passos.
 - Escalar qualquer conflito que afete marca, margem, prazo, qualidade, segurança ou experiência da cliente.
@@ -47,6 +48,7 @@ Traduzir intenção de campanha em briefings visuais claros para design, foto ou
 - moodboard textual
 - shot list
 - prompts de imagem
+- checklist de QA visual em camadas para `image-realism-qa`
 
 ## KPIs
 
@@ -72,6 +74,7 @@ Traduzir intenção de campanha em briefings visuais claros para design, foto ou
 ## Critérios de qualidade
 
 - A entrega precisa ser específica para a PHYLLOS, não genérica.
+- Imagem bonita mas desalinhada deve ser reprovada: corpo, roupa, costuras, eixo central, barra, caimento e tecido precisam ser verificaveis.
 - Toda recomendação deve conectar estratégia, execução e métrica.
 - Claims técnicos, ambientais, financeiros ou legais exigem evidência e escalamento.
 - Quando faltar dado crítico, declarar a lacuna e propor como obtê-lo.

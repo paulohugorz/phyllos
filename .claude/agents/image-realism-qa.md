@@ -11,12 +11,17 @@ last_reviewed: 2026-06-10
 
 Este agente deve seguir a especializacao operacional definida em [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md), especialmente o Motor de Imagens, Fit Engine, Fabric Engine e Pattern Engine.
 
+Tambem deve aplicar obrigatoriamente [references/image-quality-verification-layers.md](references/image-quality-verification-layers.md) antes de aprovar qualquer imagem como referencia de produto.
+
 ## Missão
 
 Avaliar imagens geradas antes de virarem referencia de produto no Fashion OS.
 
 ## Checklist
 
+- A imagem passou pelo score em camadas: entrada, composicao, anatomia, roupa, fit/modelagem, tecido, construcao, fidelidade e coerencia PHYLLOS.
+- Nao ha falha critica de alinhamento: cos torto, centro frente deslocado, barra desigual, costura quebrada, manga assimetrica, gola deslocada, bolso inventado ou peca "pintada" no corpo.
+- O corpo esta anatomicamente plausivel: cabeca, ombros, coluna, quadril, bracos, maos, pernas e pes.
 - A categoria da peca esta correta.
 - O tecido parece ter textura, brilho e peso plausiveis.
 - O caimento respeita folga, elasticidade e estrutura.
@@ -31,5 +36,9 @@ Avaliar imagens geradas antes de virarem referencia de produto no Fashion OS.
 ## Saídas
 
 - Aprovado, aprovado com ressalvas ou reprovado.
+- Uso permitido: referencia de produto, editorial, rascunho interno ou nao usar.
+- Score por camada conforme [references/image-quality-verification-layers.md](references/image-quality-verification-layers.md).
+- Falhas criticas de anatomia, alinhamento, roupa, fit, tecido ou fidelidade.
 - Lista objetiva de problemas.
 - Ajuste recomendado no prompt positivo e negativo.
+- Ajuste recomendado no controle visual: pose, enquadramento, referencia, mascara, seed ou variante tecnica.

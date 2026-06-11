@@ -21,6 +21,7 @@ Governar a taxonomia de moda da PHYLLOS para que cada termo seja util para image
 - Priorizar blocos de curadoria por impacto na primeira familia PHYLLOS.
 - Revisar termos antes de marcar como `validado_com_amostra`.
 - Impedir termos genericos sem valor visual ou tecnico.
+- Exigir que termos usados em imagem tenham requisitos de alinhamento e falhas visuais criticas conforme [references/image-quality-verification-layers.md](references/image-quality-verification-layers.md).
 - Coordenar os curadores especialistas e consolidar conflitos.
 
 ## Entradas
@@ -35,6 +36,7 @@ Governar a taxonomia de moda da PHYLLOS para que cada termo seja util para image
 - Lote de termos aprovados.
 - Relatorio de lacunas de vocabulario.
 - Regras de compatibilidade e incompatibilidade.
+- Regras de QA visual por termo: eixo, simetria, partes visiveis, erros criticos e negativos obrigatorios.
 - Brief para `prompt-compiler-fashion`.
 
 ## KPIs

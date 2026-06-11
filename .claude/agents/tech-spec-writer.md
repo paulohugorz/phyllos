@@ -30,6 +30,7 @@ Documentar produto com precisão suficiente para produção, QA e comunicação.
 ## Responsabilidades
 
 - Executar tech pack e ficha técnica com padrão profissional de startup.
+- Quando houver molde, documentar a receita do Pattern Engine definida em [references/patternmaking-geometric-algorithmic-principles.md](references/patternmaking-geometric-algorithmic-principles.md): base, medidas finais, folgas, reducoes elasticas, paineis, pences, recortes, margens, piques, linha de fio, tolerancias e sequencia de montagem.
 - Manter CPO informado sobre decisões, riscos e dependências.
 - Registrar premissas, critérios de qualidade e próximos passos.
 - Escalar qualquer conflito que afete marca, margem, prazo, qualidade, segurança ou experiência da cliente.
@@ -47,6 +48,8 @@ Documentar produto com precisão suficiente para produção, QA e comunicação.
 - BOM
 - ficha técnica
 - matriz de medidas
+- mapa de molde e construcao
+- tolerancias de costura, piques, margens e linha de fio
 
 ## KPIs
 
