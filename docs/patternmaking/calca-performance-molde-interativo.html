@@ -563,6 +563,11 @@
     </aside>
 
     <section class="workspace">
+      <div class="toolbar">
+        <button class="print-btn" onclick="window.print()">Imprimir molde</button>
+        <span class="toolbar-hint">Para escala real, imprimir em 100% (não "ajustar à página") · Ctrl+P</span>
+      </div>
+      <p class="print-note">Escala: verificar a régua abaixo — deve medir exatamente 10 cm na impressão. Se não, ajustar a escala de impressão manualmente.</p>
       <div class="board">
         <div class="board-head">
           <div>
@@ -957,7 +962,7 @@
       return String(value || "")
         .toLowerCase()
         .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[̀-ͯ]/g, "")
         .replace(/[^a-z0-9\s-]/g, " ")
         .replace(/\s+/g, " ")
         .trim();
@@ -1495,6 +1500,53 @@
       ).join("");
     }
 
+    function drawCalibrationRuler() {
+      let baseX = 60, baseY = 680;
+      try {
+        const b = svg.getBBox();
+        if (b && b.width > 10) { baseX = b.x + 20; baseY = b.y + b.height + 22; }
+      } catch (_) {}
+
+      const g = make("g", { class: "calibration-ruler" });
+      const w = 10 * cm;
+      const h = 10;
+
+      g.appendChild(make("rect", { x: baseX, y: baseY, width: 5 * cm, height: h, fill: "#171411" }));
+      g.appendChild(make("rect", { x: baseX + 5 * cm, y: baseY, width: 5 * cm, height: h, fill: "#fffdf8", stroke: "#171411", "stroke-width": 0.8 }));
+
+      for (let i = 0; i <= 10; i++) {
+        const tx = baseX + i * cm;
+        const major = i % 5 === 0;
+        g.appendChild(make("line", {
+          x1: tx, y1: baseY, x2: tx, y2: baseY + (major ? h : 5),
+          stroke: i < 5 ? "#fffdf8" : "#171411", "stroke-width": 0.8
+        }));
+      }
+
+      addText(g, baseX, baseY + h + 10, "0", "svg-small");
+      addText(g, baseX + 5 * cm - 4, baseY + h + 10, "5", "svg-small");
+      addText(g, baseX + w + 6, baseY + h / 2 + 3, "10 cm — verificar escala de impressão", "svg-small");
+
+      svg.appendChild(g);
+    }
+
+    function updateSvgDimensions() {
+      try {
+        const b = svg.getBBox();
+        if (!b || b.width < 10) return;
+        const pad = 24;
+        const vx = (b.x - pad).toFixed(1);
+        const vy = (b.y - pad).toFixed(1);
+        const vw = (b.width + 2 * pad).toFixed(1);
+        const vh = (b.height + 2 * pad).toFixed(1);
+        svg.setAttribute("viewBox", `${vx} ${vy} ${vw} ${vh}`);
+        // 1 unit = 2 mm (cm=5 significa 1cm=5 unidades, logo 1 unidade=2mm)
+        svg.setAttribute("width", `${Math.round(vw * 2)}mm`);
+        svg.setAttribute("height", `${Math.round(vh * 2)}mm`);
+        scaleLabel.textContent = `Escala: 1 cm = ${cm} u · impressão: 1 u = 2 mm`;
+      } catch (_) {}
+    }
+
     function render() {
       const base = currentBase();
       drawGrid();
@@ -1508,6 +1560,8 @@
       if (base.draft === "dress") result = drawDress(base);
       if (base.draft === "skirt") result = drawSkirt(base);
       renderTables(result, base);
+      drawCalibrationRuler();
+      updateSvgDimensions();
     }
 
     function renderFamilyChips() {
