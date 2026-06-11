@@ -1,0 +1,204 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "$metadata": {
+    "name": "Fashion OS Design System",
+    "version": "1.0.0",
+    "date": "2026-06-11",
+    "owner": "Design Lead, PHYLLOS",
+    "description": "Apple-grade design tokens para a UI do Fashion OS. Compatível com Style Dictionary e Figma Tokens.",
+    "reference": "apple.com, HIG 2024, macOS Sonoma"
+  },
+
+  "color": {
+    "background": {
+      "canvas":    { "$value": "#F5F5F7",              "$type": "color", "$description": "Fundo de página. Nunca usar branco puro como canvas." },
+      "surface":   { "$value": "#FFFFFF",              "$type": "color", "$description": "Cards, modais, painéis." },
+      "elevated":  { "$value": "#FFFFFF",              "$type": "color", "$description": "Dropdowns, popovers — camada acima de surface." },
+      "secondary": { "$value": "#F2F2F2",              "$type": "color", "$description": "Sidebars, linhas alternadas, painel direito." },
+      "tertiary":  { "$value": "#E8E8ED",              "$type": "color", "$description": "Grupos aninhados dentro de seções." },
+      "glass":     { "$value": "rgba(255,255,255,0.72)", "$type": "color", "$description": "Navbar frosted glass. Requer backdrop-filter." }
+    },
+    "text": {
+      "primary":     { "$value": "#1D1D1F", "$type": "color", "$description": "Preto Apple. Suave em Retina." },
+      "secondary":   { "$value": "#6E6E73", "$type": "color", "$description": "Labels, captions, metadados." },
+      "tertiary":    { "$value": "#AEAEB2", "$type": "color", "$description": "Placeholders, desabilitado." },
+      "quaternary":  { "$value": "#C7C7CC", "$type": "color", "$description": "Barely visible — separadores textuais." },
+      "inverse":     { "$value": "#FFFFFF", "$type": "color", "$description": "Texto sobre fundos escuros ou botão primário." },
+      "link":        { "$value": "#0071E3", "$type": "color", "$description": "Links. Mesmo valor do accent primary." }
+    },
+    "accent": {
+      "primary":  { "$value": "#0071E3", "$type": "color", "$description": "Apple Blue canônico. Ações primárias, links, progress." },
+      "hover":    { "$value": "#0077ED", "$type": "color", "$description": "Blue levemente mais claro para hover state." },
+      "pressed":  { "$value": "#006EDB", "$type": "color", "$description": "Blue mais escuro para pressed state." },
+      "subtle":   { "$value": "#E8F0FD", "$type": "color", "$description": "Background de chips selecionados, badges accent." }
+    },
+    "semantic": {
+      "success":         { "$value": "#34C759", "$type": "color" },
+      "success-subtle":  { "$value": "#E8F8EC", "$type": "color" },
+      "warning":         { "$value": "#FF9F0A", "$type": "color" },
+      "warning-subtle":  { "$value": "#FFF5E0", "$type": "color" },
+      "danger":          { "$value": "#FF3B30", "$type": "color" },
+      "danger-subtle":   { "$value": "#FFEBE9", "$type": "color" },
+      "info":            { "$value": "#5AC8FA", "$type": "color" },
+      "info-subtle":     { "$value": "#E5F6FE", "$type": "color" }
+    },
+    "border": {
+      "opaque":      { "$value": "#D2D2D7",            "$type": "color", "$description": "Linhas de tabela, separadores de seção." },
+      "subtle":      { "$value": "rgba(0,0,0,0.08)",   "$type": "color", "$description": "Borda de cards e inputs — respira com o fundo." },
+      "focus":       { "$value": "#0071E3",            "$type": "color", "$description": "Ring de acessibilidade Tab." },
+      "input":       { "$value": "#C7C7CC",            "$type": "color" },
+      "input-hover": { "$value": "#AEAEB2",            "$type": "color" }
+    },
+    "fill": {
+      "primary":   { "$value": "rgba(120,120,128,0.20)", "$type": "color" },
+      "secondary": { "$value": "rgba(120,120,128,0.16)", "$type": "color" },
+      "tertiary":  { "$value": "rgba(120,120,128,0.12)", "$type": "color" },
+      "quaternary":{ "$value": "rgba(120,120,128,0.08)", "$type": "color" }
+    }
+  },
+
+  "typography": {
+    "fontStack": {
+      "sans": {
+        "$value": "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif",
+        "$type": "fontFamily",
+        "$description": "SF Pro nativo em Apple, Inter como fallback de paridade máxima."
+      },
+      "mono": {
+        "$value": "'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', ui-monospace, monospace",
+        "$type": "fontFamily"
+      }
+    },
+    "size": {
+      "hero":      { "$value": "80px", "$type": "dimension", "$description": "Above the fold, landing hero." },
+      "title1":    { "$value": "48px", "$type": "dimension", "$description": "H1 de página interna." },
+      "title2":    { "$value": "32px", "$type": "dimension", "$description": "H2, card heading." },
+      "title3":    { "$value": "24px", "$type": "dimension", "$description": "H3, subtítulo de painel." },
+      "headline":  { "$value": "19px", "$type": "dimension", "$description": "Section label, eyebrow." },
+      "body":      { "$value": "17px", "$type": "dimension", "$description": "Corpo principal. SF canônico = 17pt." },
+      "callout":   { "$value": "15px", "$type": "dimension", "$description": "Body secundário, card compact." },
+      "subhead":   { "$value": "13px", "$type": "dimension", "$description": "Caption longa, label de campo." },
+      "footnote":  { "$value": "12px", "$type": "dimension", "$description": "Metadados, timestamps, legal." },
+      "caption1":  { "$value": "11px", "$type": "dimension", "$description": "Badges, chips." },
+      "caption2":  { "$value": "10px", "$type": "dimension", "$description": "Barely visible. Usar com cautela." }
+    },
+    "weight": {
+      "thin":     { "$value": 300, "$type": "fontWeight", "$description": "Apenas em hero 80px+." },
+      "regular":  { "$value": 400, "$type": "fontWeight", "$description": "Corpo, captions." },
+      "medium":   { "$value": 500, "$type": "fontWeight", "$description": "Labels UI, botões secundários." },
+      "semibold": { "$value": 600, "$type": "fontWeight", "$description": "Títulos de seção, botões primários." },
+      "bold":     { "$value": 700, "$type": "fontWeight", "$description": "Hero highlights, números de destaque." }
+    },
+    "lineHeight": {
+      "tight":   { "$value": 1.07, "$type": "number", "$description": "Hero, display." },
+      "snug":    { "$value": 1.20, "$type": "number", "$description": "Títulos de seção." },
+      "normal":  { "$value": 1.35, "$type": "number", "$description": "Headlines, callouts." },
+      "relaxed": { "$value": 1.47, "$type": "number", "$description": "Body. Valor iOS canônico 17pt." },
+      "loose":   { "$value": 1.60, "$type": "number", "$description": "Texto de ajuda, tooltips." }
+    },
+    "letterSpacing": {
+      "tighter": { "$value": "-0.025em", "$type": "dimension", "$description": "Hero, display 48px+." },
+      "tight":   { "$value": "-0.015em", "$type": "dimension", "$description": "Título 24–32px." },
+      "normal":  { "$value": "0em",      "$type": "dimension", "$description": "Body, callout." },
+      "wide":    { "$value": "0.035em",  "$type": "dimension", "$description": "Eyebrow allcaps, labels." },
+      "wider":   { "$value": "0.070em",  "$type": "dimension", "$description": "Badges, chips allcaps." }
+    }
+  },
+
+  "spacing": {
+    "1":  { "$value": "4px",  "$type": "dimension" },
+    "2":  { "$value": "8px",  "$type": "dimension" },
+    "3":  { "$value": "12px", "$type": "dimension" },
+    "4":  { "$value": "16px", "$type": "dimension" },
+    "5":  { "$value": "20px", "$type": "dimension" },
+    "6":  { "$value": "24px", "$type": "dimension" },
+    "8":  { "$value": "32px", "$type": "dimension" },
+    "10": { "$value": "40px", "$type": "dimension" },
+    "12": { "$value": "48px", "$type": "dimension" },
+    "16": { "$value": "64px", "$type": "dimension" },
+    "20": { "$value": "80px", "$type": "dimension" },
+    "24": { "$value": "96px", "$type": "dimension" },
+    "32": { "$value": "128px","$type": "dimension" },
+    "40": { "$value": "160px","$type": "dimension" },
+    "48": { "$value": "192px","$type": "dimension" }
+  },
+
+  "borderRadius": {
+    "none": { "$value": "0px",    "$type": "dimension" },
+    "xs":   { "$value": "4px",    "$type": "dimension", "$description": "Checkboxes, small tags." },
+    "sm":   { "$value": "6px",    "$type": "dimension", "$description": "Inputs compactos, tooltips." },
+    "md":   { "$value": "10px",   "$type": "dimension", "$description": "Cards internos, dropdowns. Raio canônico iOS." },
+    "lg":   { "$value": "14px",   "$type": "dimension", "$description": "Cards principais, sheets." },
+    "xl":   { "$value": "18px",   "$type": "dimension", "$description": "Modais, large cards." },
+    "2xl":  { "$value": "22px",   "$type": "dimension", "$description": "Painéis laterais." },
+    "3xl":  { "$value": "28px",   "$type": "dimension", "$description": "Hero cards, overlays." },
+    "full": { "$value": "9999px", "$type": "dimension", "$description": "Botões pill, badges, chips, avatares." }
+  },
+
+  "shadow": {
+    "inset": { "$value": "inset 0 1px 2px rgba(0,0,0,0.06)", "$type": "shadow", "$description": "Inputs com fundo rebaixado." },
+    "z1": {
+      "$value": "0 1px 2px rgba(0,0,0,0.04), 0 2px 4px rgba(0,0,0,0.03), 0 4px 8px rgba(0,0,0,0.02)",
+      "$type": "shadow",
+      "$description": "Cards padrão. Nível 1."
+    },
+    "z2": {
+      "$value": "0 2px 4px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.05)",
+      "$type": "shadow",
+      "$description": "Dropdowns, popovers. Nível 2."
+    },
+    "z3": {
+      "$value": "0 4px 8px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.10), 0 24px 64px rgba(0,0,0,0.08)",
+      "$type": "shadow",
+      "$description": "Modais, drawers. Nível 3."
+    },
+    "focus": {
+      "$value": "0 0 0 3px rgba(0,113,227,0.30)",
+      "$type": "shadow",
+      "$description": "Ring de acessibilidade Tab."
+    },
+    "focus-danger": {
+      "$value": "0 0 0 3px rgba(255,59,48,0.30)",
+      "$type": "shadow",
+      "$description": "Ring para botão danger."
+    }
+  },
+
+  "motion": {
+    "easing": {
+      "spring":   { "$value": "cubic-bezier(0.34, 1.56, 0.64, 1.00)",  "$type": "cubicBezier", "$description": "Hover, foco — imita mola." },
+      "out":      { "$value": "cubic-bezier(0.00, 0.00, 0.20, 1.00)",  "$type": "cubicBezier", "$description": "Entrada de elemento." },
+      "in":       { "$value": "cubic-bezier(0.40, 0.00, 1.00, 1.00)",  "$type": "cubicBezier", "$description": "Saída de elemento." },
+      "in-out":   { "$value": "cubic-bezier(0.42, 0.00, 0.58, 1.00)",  "$type": "cubicBezier", "$description": "Elementos em trânsito." },
+      "bounce":   { "$value": "cubic-bezier(0.175, 0.885, 0.320, 1.275)", "$type": "cubicBezier", "$description": "Micro-interações playful." }
+    },
+    "duration": {
+      "micro":  { "$value": "80ms",  "$type": "duration", "$description": "Hover, foco, ripple." },
+      "short":  { "$value": "150ms", "$type": "duration", "$description": "Botão, chip, toggle." },
+      "medium": { "$value": "250ms", "$type": "duration", "$description": "Expansão de card, tooltip." },
+      "long":   { "$value": "400ms", "$type": "duration", "$description": "Modal, slide de painel." },
+      "xlong":  { "$value": "600ms", "$type": "duration", "$description": "Hero animations, page transitions." }
+    }
+  },
+
+  "layout": {
+    "gridColumns":   { "$value": 12,       "$type": "number" },
+    "gridGutter":    { "$value": "24px",   "$type": "dimension" },
+    "gridMargin":    { "$value": "32px",   "$type": "dimension" },
+    "maxWidth":      { "$value": "1440px", "$type": "dimension" },
+    "navbarHeight":  { "$value": "52px",   "$type": "dimension", "$description": "Altura canônica macOS." },
+    "panelLeftWidth":{ "$value": "420px",  "$type": "dimension", "$description": "Painel de controles do Fashion OS." },
+    "panelGap":      { "$value": "16px",   "$type": "dimension" }
+  },
+
+  "zIndex": {
+    "base":     { "$value": 0   },
+    "raised":   { "$value": 10  },
+    "dropdown": { "$value": 100 },
+    "sticky":   { "$value": 200 },
+    "overlay":  { "$value": 300 },
+    "modal":    { "$value": 400 },
+    "toast":    { "$value": 500 },
+    "tooltip":  { "$value": 600 }
+  }
+}

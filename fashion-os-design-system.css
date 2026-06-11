@@ -1,0 +1,1135 @@
+/*
+ * ============================================================
+ * FASHION OS — DESIGN SYSTEM: APPLE-GRADE SPEC
+ * Version: 1.0.0  |  Date: 2026-06-11
+ * Owner: Design Lead, PHYLLOS
+ * ============================================================
+ *
+ * DECISÕES DE PROJETO
+ * -------------------
+ * Esta especificação substitui a estética luxury escura (cream/obsidian/gold,
+ * Cormorant+Jost) por uma linguagem visual no nível de qualidade do apple.com
+ * e macOS Sonoma: superfícies claras, tipografia SF Pro, vidro fosco, sombras
+ * suaves e motion preciso.
+ *
+ * A identidade PHYLLOS não some — ela é refinada. O azul de acento (#0071E3)
+ * é o Apple Blue canônico. A voz de produto permanece "performance consciente",
+ * mas a interface para de gritar luxo e começa a comunicar clareza e confiança.
+ *
+ * ESTRUTURA DO ARQUIVO
+ * --------------------
+ * 1.  Color Tokens (light mode)
+ * 2.  Color Tokens (dark mode override via prefers-color-scheme)
+ * 3.  Typography Tokens
+ * 4.  Spacing Scale
+ * 5.  Border Radius Tokens
+ * 6.  Shadow Tokens
+ * 7.  Motion Tokens
+ * 8.  Layout Tokens
+ * 9.  Component Tokens (Navbar, Card, Input, Button, Badge, Spinner)
+ * 10. Base reset + utility classes
+ * ============================================================
+ */
+
+
+/* ============================================================
+   1. COLOR TOKENS — LIGHT MODE
+   Referência: apple.com, HIG 2024, macOS Sonoma
+   ============================================================ */
+
+:root {
+
+  /* --- Backgrounds --- */
+  /* Canvas: cor de fundo de página. SF usa #F5F5F7, não branco puro. */
+  --color-bg-canvas:        #F5F5F7;
+  /* Surface: cards, painéis, modais. Branco puro sobre canvas cinza cria hierarquia. */
+  --color-bg-surface:       #FFFFFF;
+  /* Surface elevada: dropdowns, tooltips, popovers — camada acima da surface. */
+  --color-bg-elevated:      #FFFFFF;
+  /* Surface secundária: linhas alternadas, sidebars, painéis de controle. */
+  --color-bg-secondary:     #F2F2F2;
+  /* Surface terciária: grupos dentro de seções secundárias. */
+  --color-bg-tertiary:      #E8E8ED;
+  /* Vidro fosco: navbar e painéis flutuantes — veja seção de componentes. */
+  --color-bg-glass:         rgba(255, 255, 255, 0.72);
+
+  /* --- Text --- */
+  /* Primário: preto Apple, não #000. Mantém suavidade em telas Retina. */
+  --color-text-primary:     #1D1D1F;
+  /* Secundário: legendas, labels de campo, metadados. */
+  --color-text-secondary:   #6E6E73;
+  /* Terciário: placeholders, texto desabilitado. */
+  --color-text-tertiary:    #AEAEB2;
+  /* Quaternário: barely visible, separadores textuais. */
+  --color-text-quaternary:  #C7C7CC;
+  /* Invertido: texto sobre fundos escuros ou sobre o botão primário. */
+  --color-text-inverse:     #FFFFFF;
+  /* Link: usa o mesmo azul de acento com underline opcional. */
+  --color-text-link:        #0071E3;
+
+  /* --- Accent / Brand --- */
+  /* Apple Blue canônico — ações primárias, links, progress, seleção. */
+  --color-accent-primary:   #0071E3;
+  /* Blue hover: 12% mais escuro que o primário, sem mudar tom. */
+  --color-accent-hover:     #0077ED;
+  /* Blue pressed: 20% mais escuro. */
+  --color-accent-pressed:   #006EDB;
+  /* Blue muted: fundo de badges, chips de filtro selecionados. */
+  --color-accent-subtle:    #E8F0FD;
+
+  /* --- Semantic Colors --- */
+  /* Sucesso: verde sistema Apple. Nunca usar verde de marca personalizado. */
+  --color-success:          #34C759;
+  --color-success-subtle:   #E8F8EC;
+  /* Atenção: amarelo/âmbar sistema. */
+  --color-warning:          #FF9F0A;
+  --color-warning-subtle:   #FFF5E0;
+  /* Erro / Destrutivo: vermelho sistema Apple. */
+  --color-danger:           #FF3B30;
+  --color-danger-subtle:    #FFEBE9;
+  /* Info: azul alternativo para banners informativos. */
+  --color-info:             #5AC8FA;
+  --color-info-subtle:      #E5F6FE;
+
+  /* --- Borders & Separators --- */
+  /* Separador opaco: linhas de tabela, divisores de seção. */
+  --color-border-opaque:    #D2D2D7;
+  /* Separador translúcido: bordas de cards, inputs — tem respiro. */
+  --color-border-subtle:    rgba(0, 0, 0, 0.08);
+  /* Foco: ring de acessibilidade ao fazer Tab. */
+  --color-border-focus:     #0071E3;
+  /* Borda de input: estado normal. */
+  --color-border-input:     #C7C7CC;
+  /* Borda de input hover. */
+  --color-border-input-hover: #AEAEB2;
+
+  /* --- Fill Colors (overlays interativos) --- */
+  /* Preenche elementos sobre qualquer superfície — botões ghost, seleções. */
+  --color-fill-primary:     rgba(120, 120, 128, 0.20);
+  --color-fill-secondary:   rgba(120, 120, 128, 0.16);
+  --color-fill-tertiary:    rgba(120, 120, 128, 0.12);
+  --color-fill-quaternary:  rgba(120, 120, 128, 0.08);
+
+  /* --- Overlay --- */
+  /* Scrim de modal — escurece o fundo sem perder contexto. */
+  --color-overlay:          rgba(0, 0, 0, 0.40);
+  --color-overlay-light:    rgba(0, 0, 0, 0.12);
+}
+
+
+/* ============================================================
+   2. COLOR TOKENS — DARK MODE OVERRIDE
+   Lógica: inverter hierarquia de backgrounds, manter azul de acento,
+   ajustar text para branco suave (não #FFF puro).
+   ============================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Backgrounds */
+    --color-bg-canvas:        #000000;
+    --color-bg-surface:       #1C1C1E;
+    --color-bg-elevated:      #2C2C2E;
+    --color-bg-secondary:     #2C2C2E;
+    --color-bg-tertiary:      #3A3A3C;
+    --color-bg-glass:         rgba(28, 28, 30, 0.80);
+
+    /* Text */
+    --color-text-primary:     #F5F5F7;
+    --color-text-secondary:   #98989D;
+    --color-text-tertiary:    #636366;
+    --color-text-quaternary:  #48484A;
+    --color-text-inverse:     #1D1D1F;
+    --color-text-link:        #409CFF;
+
+    /* Accent */
+    --color-accent-primary:   #409CFF;
+    --color-accent-hover:     #5AADFF;
+    --color-accent-pressed:   #3390FF;
+    --color-accent-subtle:    #0A2540;
+
+    /* Semantic */
+    --color-success:          #30D158;
+    --color-success-subtle:   #0A2E15;
+    --color-warning:          #FFD60A;
+    --color-warning-subtle:   #2E2200;
+    --color-danger:           #FF453A;
+    --color-danger-subtle:    #2E0A09;
+    --color-info:             #64D2FF;
+    --color-info-subtle:      #001E2E;
+
+    /* Borders */
+    --color-border-opaque:    #38383A;
+    --color-border-subtle:    rgba(255, 255, 255, 0.10);
+    --color-border-focus:     #409CFF;
+    --color-border-input:     #48484A;
+    --color-border-input-hover: #636366;
+
+    /* Fill */
+    --color-fill-primary:     rgba(120, 120, 128, 0.36);
+    --color-fill-secondary:   rgba(120, 120, 128, 0.28);
+    --color-fill-tertiary:    rgba(120, 120, 128, 0.20);
+    --color-fill-quaternary:  rgba(120, 120, 128, 0.12);
+
+    /* Overlay */
+    --color-overlay:          rgba(0, 0, 0, 0.60);
+    --color-overlay-light:    rgba(0, 0, 0, 0.28);
+  }
+}
+
+
+/* ============================================================
+   3. TYPOGRAPHY TOKENS
+   Font stack Apple: SF Pro em sistemas Apple, Inter como fallback de
+   máxima paridade no Windows/Android. Nunca usar Cormorant nesta camada.
+   ============================================================ */
+
+:root {
+
+  /* --- Font Stacks --- */
+  /*
+   * SF Pro não é distribuída via Google Fonts. Em sistemas Apple ela é
+   * carregada automaticamente via -apple-system. Inter é o substituto
+   * de paridade mais próximo para Windows/Android.
+   * Fallback chain: SF Pro → Inter (self-hosted ou Google Fonts) → sans-serif.
+   *
+   * AÇÃO NECESSÁRIA: adicionar no <head>:
+   * <link rel="preconnect" href="https://fonts.googleapis.com">
+   * <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+   */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+               "SF Pro Text", "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono",
+               ui-monospace, monospace;
+
+  /* --- Type Scale ---
+   * Base: 17px (SF usa 17pt como tamanho de corpo canônico em iOS/macOS).
+   * Escala: razão 1.25 (Major Third), arredondada para valores inteiros.
+   * Todos os valores em rem (base: 1rem = 16px no browser padrão).
+   *
+   * Mapeamento:
+   * --text-hero    → 80px  → hero title de landing, above the fold
+   * --text-title1  → 48px  → section heading, H1 de página interna
+   * --text-title2  → 32px  → H2, títulos de card largo
+   * --text-title3  → 24px  → H3, subtítulos de painel
+   * --text-headline → 19px → label de seção, eyebrow text
+   * --text-body    → 17px  → corpo de texto padrão
+   * --text-callout → 15px  → texto de card compacto, body secundário
+   * --text-subhead → 13px  → caption longa, descrição de campo
+   * --text-footnote → 12px → metadados, timestamps, legal
+   * --text-caption1 → 11px → badges, chips de filtro
+   * --text-caption2 → 10px → barely visible — usar com cautela
+   */
+  --text-hero:      5.000rem;   /* 80px */
+  --text-title1:    3.000rem;   /* 48px */
+  --text-title2:    2.000rem;   /* 32px */
+  --text-title3:    1.500rem;   /* 24px */
+  --text-headline:  1.1875rem;  /* 19px */
+  --text-body:      1.0625rem;  /* 17px */
+  --text-callout:   0.9375rem;  /* 15px */
+  --text-subhead:   0.8125rem;  /* 13px */
+  --text-footnote:  0.7500rem;  /* 12px */
+  --text-caption1:  0.6875rem;  /* 11px */
+  --text-caption2:  0.6250rem;  /* 10px */
+
+  /* --- Font Weights ---
+   * Apple usa pesos específicos: não misturar bold com semibold aleatoriamente.
+   * Thin/Light: apenas em hero gigante (60px+).
+   * Regular: corpo, captions.
+   * Medium: labels UI, botões secundários.
+   * Semibold: títulos de seção, botões primários.
+   * Bold: hero highlights, números de destaque.
+   */
+  --font-weight-thin:      300;
+  --font-weight-regular:   400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+
+  /* --- Line Heights ---
+   * Apple não usa line-height fixo — usa valores relativos ao tamanho.
+   * Títulos grandes ficam mais apertados (1.07–1.1).
+   * Corpo precisa de respiro (1.47 é o valor iOS canônico para body 17pt).
+   */
+  --leading-tight:    1.07;   /* hero, display */
+  --leading-snug:     1.20;   /* títulos de seção */
+  --leading-normal:   1.35;   /* headlines, callouts */
+  --leading-relaxed:  1.47;   /* body text */
+  --leading-loose:    1.60;   /* texto de ajuda, tooltips */
+
+  /* --- Letter Spacing ---
+   * Apple usa tracking negativo em títulos grandes para aparência mais densa.
+   * Corpo usa tracking neutro. Allcaps usa tracking positivo.
+   */
+  --tracking-tighter:  -0.025em;   /* hero, display 48px+ */
+  --tracking-tight:    -0.015em;   /* título 24–32px */
+  --tracking-normal:    0em;        /* body, callout */
+  --tracking-wide:      0.035em;    /* eyebrow allcaps, labels */
+  --tracking-wider:     0.070em;    /* badges, chips allcaps */
+}
+
+
+/* ============================================================
+   4. SPACING SCALE
+   Base: 8px. Cada step é múltiplo de 4 a partir de 4px.
+   Apple.com usa grid de 8 internamente; HIG usa múltiplos de 8/4.
+   ============================================================ */
+
+:root {
+  --space-1:    0.25rem;  /*  4px */
+  --space-2:    0.50rem;  /*  8px */
+  --space-3:    0.75rem;  /* 12px */
+  --space-4:    1.00rem;  /* 16px */
+  --space-5:    1.25rem;  /* 20px */
+  --space-6:    1.50rem;  /* 24px */
+  --space-8:    2.00rem;  /* 32px */
+  --space-10:   2.50rem;  /* 40px */
+  --space-12:   3.00rem;  /* 48px */
+  --space-16:   4.00rem;  /* 64px */
+  --space-20:   5.00rem;  /* 80px */
+  --space-24:   6.00rem;  /* 96px */
+  --space-32:   8.00rem;  /* 128px */
+  --space-40:  10.00rem;  /* 160px */
+  --space-48:  12.00rem;  /* 192px */
+}
+
+
+/* ============================================================
+   5. BORDER RADIUS TOKENS
+   Apple usa raios específicos por "nível de elevação" do componente.
+   Regra geral: quanto menor o componente, menor o raio.
+   Exceção: botões pill e chips sempre usam --radius-full.
+   ============================================================ */
+
+:root {
+  --radius-none:    0px;
+  --radius-xs:      4px;   /* checkboxes, small tags */
+  --radius-sm:      6px;   /* inputs compactos, tooltips */
+  --radius-md:      10px;  /* cards internos, dropdowns — raio canônico iOS */
+  --radius-lg:      14px;  /* cards principais, sheets */
+  --radius-xl:      18px;  /* modais, large cards */
+  --radius-2xl:     22px;  /* painéis laterais */
+  --radius-3xl:     28px;  /* overlays de tela cheia, hero cards */
+  --radius-full:    9999px; /* botões pill, badges, chips, avatares */
+}
+
+
+/* ============================================================
+   6. SHADOW TOKENS
+   Apple não usa box-shadow de cor preta/cinza escuro.
+   Usa sombras com matiz sutilmente azulada/cinza-fria.
+   Três níveis semânticos: z1 (cards), z2 (dropdowns), z3 (modais).
+   ============================================================ */
+
+:root {
+  /* Nível 0: inset, para inputs com fundo rebaixado */
+  --shadow-inset:   inset 0 1px 2px rgba(0, 0, 0, 0.06);
+
+  /* Nível 1: cards padrão — sutil, quase imperceptível */
+  --shadow-z1:
+    0 1px 2px   rgba(0, 0, 0, 0.04),
+    0 2px 4px   rgba(0, 0, 0, 0.03),
+    0 4px 8px   rgba(0, 0, 0, 0.02);
+
+  /* Nível 2: dropdowns, date pickers, popovers */
+  --shadow-z2:
+    0 2px 4px   rgba(0, 0, 0, 0.06),
+    0 4px 12px  rgba(0, 0, 0, 0.08),
+    0 8px 24px  rgba(0, 0, 0, 0.05);
+
+  /* Nível 3: modais, drawers, command palette */
+  --shadow-z3:
+    0 4px 8px   rgba(0, 0, 0, 0.06),
+    0 12px 32px rgba(0, 0, 0, 0.10),
+    0 24px 64px rgba(0, 0, 0, 0.08);
+
+  /* Sombra de foco: ring de acessibilidade */
+  --shadow-focus:
+    0 0 0 3px rgba(0, 113, 227, 0.30);
+
+  /* Sombra de foco destrutiva (em botão danger) */
+  --shadow-focus-danger:
+    0 0 0 3px rgba(255, 59, 48, 0.30);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --shadow-z1:
+      0 1px 2px   rgba(0, 0, 0, 0.20),
+      0 2px 4px   rgba(0, 0, 0, 0.16);
+    --shadow-z2:
+      0 2px 4px   rgba(0, 0, 0, 0.24),
+      0 8px 20px  rgba(0, 0, 0, 0.30);
+    --shadow-z3:
+      0 4px 8px   rgba(0, 0, 0, 0.30),
+      0 16px 40px rgba(0, 0, 0, 0.40);
+  }
+}
+
+
+/* ============================================================
+   7. MOTION TOKENS
+   Apple prioriza movimentos físicos (spring) e usa tempos muito curtos
+   para feedback imediato. Regra: nada de transition linear.
+   cubic-bezier de referência do HIG: ease-out para entrada,
+   ease-in para saída, ease-in-out para elementos que se movem por tela.
+   ============================================================ */
+
+:root {
+  /* --- Curvas ---
+   * --ease-spring:   imita spring — usada em hover e foco
+   * --ease-out:      entrada de elemento, expansão de card
+   * --ease-in:       saída de elemento, colapso de card
+   * --ease-in-out:   elementos em trânsito (slider thumb, progress bar)
+   * --ease-bounce:   micro-interações playful (badge count, success state)
+   */
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1.00);
+  --ease-out:      cubic-bezier(0.00, 0.00, 0.20, 1.00);
+  --ease-in:       cubic-bezier(0.40, 0.00, 1.00, 1.00);
+  --ease-in-out:   cubic-bezier(0.42, 0.00, 0.58, 1.00);
+  --ease-bounce:   cubic-bezier(0.175, 0.885, 0.320, 1.275);
+
+  /* --- Durações ---
+   * Micro:    hover, foco, ripple — resposta imediata, invisível se mais lento
+   * Short:    estado de botão, chip, toggle — perceptível mas rápido
+   * Medium:   expansão de card, entrada de tooltip
+   * Long:     entrada de modal, slide de painel lateral
+   * XLong:    hero animations, transições de página
+   */
+  --duration-micro:   80ms;
+  --duration-short:  150ms;
+  --duration-medium: 250ms;
+  --duration-long:   400ms;
+  --duration-xlong:  600ms;
+
+  /* --- Combinações prontas para uso direto --- */
+  --transition-hover:  all var(--duration-short) var(--ease-out);
+  --transition-focus:  box-shadow var(--duration-micro) var(--ease-out),
+                       border-color var(--duration-micro) var(--ease-out);
+  --transition-expand: all var(--duration-medium) var(--ease-out);
+  --transition-enter:  opacity var(--duration-medium) var(--ease-out),
+                       transform var(--duration-medium) var(--ease-out);
+  --transition-exit:   opacity var(--duration-short) var(--ease-in),
+                       transform var(--duration-short) var(--ease-in);
+  --transition-spring: transform var(--duration-medium) var(--ease-spring);
+}
+
+
+/* ============================================================
+   8. LAYOUT TOKENS
+   Fashion OS é two-panel. Painel esquerdo: controles/inputs.
+   Painel direito: preview/output (canvas de imagem IA).
+   ============================================================ */
+
+:root {
+  /* --- Grid --- */
+  --grid-columns:        12;
+  --grid-gutter:         var(--space-6);     /* 24px entre colunas */
+  --grid-margin:         var(--space-8);     /* 32px margin lateral */
+  --grid-max-width:      1440px;             /* max-width da área de conteúdo */
+
+  /* --- Two-Panel Layout --- */
+  --panel-left-width:    420px;              /* controles, inputs, ficha */
+  --panel-right-min:     600px;              /* preview/output mínimo */
+  --panel-gap:           var(--space-4);     /* 16px entre painéis */
+
+  /* --- Navbar --- */
+  --navbar-height:       52px;               /* altura canônica macOS */
+  --navbar-blur:         20px;               /* backdrop-filter blur */
+  --navbar-saturate:     180%;               /* backdrop-filter saturate */
+
+  /* --- Z-Index Stack --- */
+  --z-base:         0;
+  --z-raised:       10;    /* cards com hover state */
+  --z-dropdown:     100;   /* dropdowns, datepickers */
+  --z-sticky:       200;   /* navbar, headers sticky */
+  --z-overlay:      300;   /* scrim de modal */
+  --z-modal:        400;   /* modais, sheets */
+  --z-toast:        500;   /* notificações, toasts */
+  --z-tooltip:      600;   /* tooltips — sempre acima de tudo */
+}
+
+
+/* ============================================================
+   9. COMPONENT TOKENS
+   Cada componente tem seus tokens derivados dos globais.
+   Isso permite override pontual sem quebrar o sistema.
+   ============================================================ */
+
+:root {
+
+  /* ---- 9.1 NAVBAR (Frosted Glass) ----
+   * Exatamente como a barra de menus do macOS Sonoma.
+   * backdrop-filter cria o efeito de vidro fosco.
+   * background com alpha baixo permite ver o conteúdo por baixo.
+   * border-bottom usa separador sutilmente visível.
+   * ATENÇÃO: backdrop-filter não funciona sem isolate no elemento pai.
+   * Adicionar isolation: isolate; ao wrapper.
+   */
+  --navbar-bg:              var(--color-bg-glass);
+  --navbar-border:          var(--color-border-subtle);
+  --navbar-backdrop:        blur(var(--navbar-blur)) saturate(var(--navbar-saturate));
+  --navbar-text:            var(--color-text-primary);
+  --navbar-text-secondary:  var(--color-text-secondary);
+  --navbar-logo-size:       22px;
+  --navbar-item-gap:        var(--space-6);
+  --navbar-padding-x:       var(--space-8);
+
+  /* ---- 9.2 CARD ----
+   * Cards têm background branco sobre canvas cinza.
+   * Raio lg (14px) é o canônico para cards de aplicação macOS.
+   * Hover eleva sombra de z1 para z2 e faz translateY(-2px).
+   */
+  --card-bg:                var(--color-bg-surface);
+  --card-border:            var(--color-border-subtle);
+  --card-border-width:      1px;
+  --card-radius:            var(--radius-lg);
+  --card-shadow:            var(--shadow-z1);
+  --card-shadow-hover:      var(--shadow-z2);
+  --card-padding:           var(--space-6);
+  --card-padding-sm:        var(--space-4);
+  --card-padding-lg:        var(--space-8);
+  --card-hover-transform:   translateY(-2px);
+
+  /* ---- 9.3 INPUT ----
+   * Inputs Apple usam fundo ligeiramente cinza (fill quaternary),
+   * sem borda visível por padrão, e borda colored no focus.
+   * Height: 44px (toque mínimo Apple HIG = 44pt).
+   */
+  --input-bg:               var(--color-fill-quaternary);
+  --input-bg-hover:         var(--color-fill-tertiary);
+  --input-bg-focus:         var(--color-bg-surface);
+  --input-border:           transparent;
+  --input-border-hover:     var(--color-border-input-hover);
+  --input-border-focus:     var(--color-border-focus);
+  --input-border-width:     1.5px;
+  --input-radius:           var(--radius-md);
+  --input-height:           44px;
+  --input-height-sm:        36px;
+  --input-height-lg:        52px;
+  --input-padding-x:        var(--space-4);
+  --input-font-size:        var(--text-body);
+  --input-font-weight:      var(--font-weight-regular);
+  --input-text:             var(--color-text-primary);
+  --input-placeholder:      var(--color-text-tertiary);
+  --input-shadow-focus:     var(--shadow-focus);
+
+  /* ---- 9.4 BUTTON ----
+   * Três variantes: primary (azul sólido), secondary (translúcido),
+   * ghost (borda sutil), danger (vermelho sólido).
+   * Todos os botões têm radius-full (pill shape) — assinatura Apple moderna.
+   * Height mínimo: 44px (HIG touch target).
+   *
+   * NOTA: botões Apple usam semibold, não bold.
+   * Padding horizontal generoso cria a proporção pill correta.
+   */
+  --btn-radius:             var(--radius-full);
+  --btn-font-size:          var(--text-callout);
+  --btn-font-weight:        var(--font-weight-semibold);
+  --btn-height:             44px;
+  --btn-height-sm:          32px;
+  --btn-height-lg:          52px;
+  --btn-padding-x:          var(--space-6);
+  --btn-padding-x-sm:       var(--space-4);
+  --btn-padding-x-lg:       var(--space-8);
+  --btn-gap:                var(--space-2);
+
+  /* Primary */
+  --btn-primary-bg:         var(--color-accent-primary);
+  --btn-primary-bg-hover:   var(--color-accent-hover);
+  --btn-primary-bg-pressed: var(--color-accent-pressed);
+  --btn-primary-text:       var(--color-text-inverse);
+  --btn-primary-shadow:     0 1px 3px rgba(0, 113, 227, 0.30);
+
+  /* Secondary */
+  --btn-secondary-bg:       var(--color-fill-quaternary);
+  --btn-secondary-bg-hover: var(--color-fill-tertiary);
+  --btn-secondary-text:     var(--color-text-primary);
+
+  /* Ghost */
+  --btn-ghost-bg:           transparent;
+  --btn-ghost-bg-hover:     var(--color-fill-quaternary);
+  --btn-ghost-text:         var(--color-accent-primary);
+  --btn-ghost-border:       var(--color-border-opaque);
+
+  /* Danger */
+  --btn-danger-bg:          var(--color-danger);
+  --btn-danger-bg-hover:    #E0322A;
+  --btn-danger-text:        var(--color-text-inverse);
+
+  /* ---- 9.5 BADGE ----
+   * Badges indicam status, categoria, contagem.
+   * Radius-full. Font: caption1 ou caption2. Allcaps com tracking wide.
+   */
+  --badge-radius:           var(--radius-full);
+  --badge-font-size:        var(--text-caption1);
+  --badge-font-weight:      var(--font-weight-semibold);
+  --badge-letter-spacing:   var(--tracking-wide);
+  --badge-padding-x:        var(--space-2);
+  --badge-padding-y:        2px;
+  --badge-height:           20px;
+
+  /* Badge colors — status semântico */
+  --badge-default-bg:       var(--color-fill-secondary);
+  --badge-default-text:     var(--color-text-secondary);
+  --badge-accent-bg:        var(--color-accent-subtle);
+  --badge-accent-text:      var(--color-accent-primary);
+  --badge-success-bg:       var(--color-success-subtle);
+  --badge-success-text:     var(--color-success);
+  --badge-warning-bg:       var(--color-warning-subtle);
+  --badge-warning-text:     var(--color-warning);
+  --badge-danger-bg:        var(--color-danger-subtle);
+  --badge-danger-text:      var(--color-danger);
+
+  /* ---- 9.6 SPINNER (Loading) ----
+   * Apple usa spinner com traço animado (stroke-dashoffset).
+   * Tamanhos: sm 16px, md 24px, lg 40px.
+   * Cor: accent primário sobre fundo claro; branco sobre fundo escuro.
+   */
+  --spinner-size-sm:        16px;
+  --spinner-size-md:        24px;
+  --spinner-size-lg:        40px;
+  --spinner-stroke-width:   2px;      /* sm */
+  --spinner-stroke-md:      2.5px;    /* md */
+  --spinner-stroke-lg:      3px;      /* lg */
+  --spinner-color:          var(--color-accent-primary);
+  --spinner-color-inverse:  var(--color-text-inverse);
+  --spinner-duration:        800ms;
+  --spinner-ease:           linear;
+
+  /* ---- 9.7 PROGRESS BAR ----
+   * Altura fina (4px) com raio full. Cor: accent. Track: fill tertiary.
+   */
+  --progress-height:        4px;
+  --progress-radius:        var(--radius-full);
+  --progress-track-bg:      var(--color-fill-tertiary);
+  --progress-fill-bg:       var(--color-accent-primary);
+  --progress-transition:    width var(--duration-medium) var(--ease-in-out);
+
+  /* ---- 9.8 TOOLTIP ----
+   * Pequeno, dark, corners sm. Aparece após delay de 400ms.
+   */
+  --tooltip-bg:             rgba(50, 50, 52, 0.94);
+  --tooltip-text:           #FFFFFF;
+  --tooltip-font-size:      var(--text-subhead);
+  --tooltip-radius:         var(--radius-sm);
+  --tooltip-padding:        var(--space-2) var(--space-3);
+  --tooltip-delay:          400ms;
+  --tooltip-shadow:         var(--shadow-z2);
+
+  /* ---- 9.9 SELECT / DROPDOWN ----
+   * Mesmo estilo do input. Lista de opções usa surface elevated
+   * com shadow z2 e radius md.
+   */
+  --select-menu-bg:         var(--color-bg-elevated);
+  --select-menu-shadow:     var(--shadow-z2);
+  --select-menu-radius:     var(--radius-md);
+  --select-option-height:   40px;
+  --select-option-hover:    var(--color-fill-quaternary);
+  --select-option-selected: var(--color-accent-subtle);
+  --select-option-text-selected: var(--color-accent-primary);
+
+  /* ---- 9.10 PANEL / SIDEBAR ----
+   * Painel esquerdo do Fashion OS: background surface, border-right sutil.
+   * Painel direito: canvas ligeiramente mais escuro (secondary) para
+   * contrastar com o output gerado (geralmente branco/claro).
+   */
+  --panel-left-bg:          var(--color-bg-surface);
+  --panel-left-border:      var(--color-border-subtle);
+  --panel-right-bg:         var(--color-bg-secondary);
+  --panel-padding:          var(--space-8);
+  --panel-padding-sm:       var(--space-6);
+}
+
+
+/* ============================================================
+   10. BASE RESET + UTILITY CLASSES
+   Aplicar tokens na camada base — estabelece o "look" sem precisar
+   de nenhuma classe adicional nos elementos nativos.
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Renderização de fonte mais fina, como macOS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:   var(--font-sans);
+  font-size:     var(--text-body);
+  font-weight:   var(--font-weight-regular);
+  line-height:   var(--leading-relaxed);
+  letter-spacing: var(--tracking-normal);
+  color:         var(--color-text-primary);
+  background-color: var(--color-bg-canvas);
+}
+
+/* --- Navbar Frosted Glass --- */
+.navbar {
+  position:     fixed;
+  top: 0; left: 0; right: 0;
+  height:       var(--navbar-height);
+  z-index:      var(--z-sticky);
+  padding-inline: var(--navbar-padding-x);
+
+  display:      flex;
+  align-items:  center;
+  gap:          var(--navbar-item-gap);
+
+  background:   var(--navbar-bg);
+  border-bottom: 1px solid var(--navbar-border);
+  backdrop-filter: var(--navbar-backdrop);
+  -webkit-backdrop-filter: var(--navbar-backdrop);
+  isolation:    isolate; /* obrigatório para backdrop-filter funcionar */
+}
+
+/* --- Card --- */
+.card {
+  background:   var(--card-bg);
+  border:       var(--card-border-width) solid var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow:   var(--card-shadow);
+  padding:      var(--card-padding);
+  transition:   var(--transition-hover);
+}
+.card:hover {
+  box-shadow:   var(--card-shadow-hover);
+  transform:    var(--card-hover-transform);
+}
+.card--sm  { padding: var(--card-padding-sm); }
+.card--lg  { padding: var(--card-padding-lg); }
+.card--flat { box-shadow: none; border-color: var(--color-border-opaque); }
+
+/* --- Input --- */
+.input {
+  display:      block;
+  width:        100%;
+  height:       var(--input-height);
+  padding-inline: var(--input-padding-x);
+
+  font-family:  var(--font-sans);
+  font-size:    var(--input-font-size);
+  font-weight:  var(--input-font-weight);
+  color:        var(--input-text);
+
+  background:   var(--input-bg);
+  border:       var(--input-border-width) solid var(--input-border);
+  border-radius: var(--input-radius);
+  outline:      none;
+
+  transition:   var(--transition-focus);
+  appearance:   none;
+}
+.input::placeholder { color: var(--input-placeholder); }
+.input:hover  { background: var(--input-bg-hover); border-color: var(--input-border-hover); }
+.input:focus  {
+  background:   var(--input-bg-focus);
+  border-color: var(--input-border-focus);
+  box-shadow:   var(--input-shadow-focus);
+}
+.input--sm { height: var(--input-height-sm); font-size: var(--text-subhead); }
+.input--lg { height: var(--input-height-lg); font-size: var(--text-headline); }
+
+/* Textarea */
+.textarea {
+  composes: input;
+  height: auto;
+  min-height: 88px;
+  padding-block: var(--space-3);
+  resize: vertical;
+  line-height: var(--leading-relaxed);
+}
+
+/* --- Button --- */
+.btn {
+  display:      inline-flex;
+  align-items:  center;
+  justify-content: center;
+  gap:          var(--btn-gap);
+
+  height:       var(--btn-height);
+  padding-inline: var(--btn-padding-x);
+
+  font-family:  var(--font-sans);
+  font-size:    var(--btn-font-size);
+  font-weight:  var(--btn-font-weight);
+  white-space:  nowrap;
+  cursor:       pointer;
+
+  border:       none;
+  border-radius: var(--btn-radius);
+  outline:      none;
+  text-decoration: none;
+
+  transition:   var(--transition-hover);
+  user-select:  none;
+  -webkit-user-select: none;
+}
+.btn:focus-visible { box-shadow: var(--shadow-focus); }
+.btn:active        { transform: scale(0.97); }
+
+.btn--primary {
+  background:  var(--btn-primary-bg);
+  color:       var(--btn-primary-text);
+  box-shadow:  var(--btn-primary-shadow);
+}
+.btn--primary:hover   { background: var(--btn-primary-bg-hover); }
+.btn--primary:active  { background: var(--btn-primary-bg-pressed); }
+
+.btn--secondary {
+  background:  var(--btn-secondary-bg);
+  color:       var(--btn-secondary-text);
+}
+.btn--secondary:hover { background: var(--btn-secondary-bg-hover); }
+
+.btn--ghost {
+  background:  var(--btn-ghost-bg);
+  color:       var(--btn-ghost-text);
+  border:      1px solid var(--btn-ghost-border);
+}
+.btn--ghost:hover { background: var(--btn-ghost-bg-hover); }
+
+.btn--danger {
+  background:  var(--btn-danger-bg);
+  color:       var(--btn-danger-text);
+}
+.btn--danger:hover   { background: var(--btn-danger-bg-hover); }
+.btn--danger:focus-visible { box-shadow: var(--shadow-focus-danger); }
+
+.btn--sm { height: var(--btn-height-sm); padding-inline: var(--btn-padding-x-sm); font-size: var(--text-subhead); }
+.btn--lg { height: var(--btn-height-lg); padding-inline: var(--btn-padding-x-lg); font-size: var(--text-body); }
+.btn--icon { width: var(--btn-height); padding-inline: 0; }
+.btn--icon.btn--sm { width: var(--btn-height-sm); }
+.btn:disabled { opacity: 0.38; cursor: not-allowed; pointer-events: none; }
+
+/* --- Badge --- */
+.badge {
+  display:      inline-flex;
+  align-items:  center;
+  height:       var(--badge-height);
+  padding-inline: var(--badge-padding-x);
+  padding-block: var(--badge-padding-y);
+
+  font-family:  var(--font-sans);
+  font-size:    var(--badge-font-size);
+  font-weight:  var(--badge-font-weight);
+  letter-spacing: var(--badge-letter-spacing);
+  text-transform: uppercase;
+
+  border-radius: var(--badge-radius);
+  white-space:  nowrap;
+}
+.badge--default { background: var(--badge-default-bg); color: var(--badge-default-text); }
+.badge--accent  { background: var(--badge-accent-bg);  color: var(--badge-accent-text); }
+.badge--success { background: var(--badge-success-bg); color: var(--badge-success-text); }
+.badge--warning { background: var(--badge-warning-bg); color: var(--badge-warning-text); }
+.badge--danger  { background: var(--badge-danger-bg);  color: var(--badge-danger-text); }
+
+/* --- Spinner ---
+ * SVG animado inline. Exemplo de markup:
+ * <svg class="spinner spinner--md" viewBox="0 0 24 24">
+ *   <circle class="spinner__track" cx="12" cy="12" r="10"/>
+ *   <circle class="spinner__fill"  cx="12" cy="12" r="10"/>
+ * </svg>
+ */
+@keyframes spinner-rotate {
+  to { transform: rotate(360deg); }
+}
+@keyframes spinner-dash {
+  0%   { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+  50%  { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+  100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
+}
+
+.spinner {
+  animation: spinner-rotate var(--spinner-duration) var(--spinner-ease) infinite;
+  flex-shrink: 0;
+}
+.spinner--sm { width: var(--spinner-size-sm); height: var(--spinner-size-sm); }
+.spinner--md { width: var(--spinner-size-md); height: var(--spinner-size-md); }
+.spinner--lg { width: var(--spinner-size-lg); height: var(--spinner-size-lg); }
+
+.spinner__track {
+  fill:           none;
+  stroke:         var(--color-fill-primary);
+  stroke-width:   var(--spinner-stroke-width);
+}
+.spinner__fill {
+  fill:           none;
+  stroke:         var(--spinner-color);
+  stroke-width:   var(--spinner-stroke-width);
+  stroke-linecap: round;
+  animation: spinner-dash calc(var(--spinner-duration) * 0.75) var(--ease-in-out) infinite;
+  transform-origin: center;
+}
+.spinner--inverse .spinner__fill { stroke: var(--spinner-color-inverse); }
+.spinner--md .spinner__track,
+.spinner--md .spinner__fill { stroke-width: var(--spinner-stroke-md); }
+.spinner--lg .spinner__track,
+.spinner--lg .spinner__fill { stroke-width: var(--spinner-stroke-lg); }
+
+/* --- Progress Bar --- */
+.progress {
+  width:        100%;
+  height:       var(--progress-height);
+  background:   var(--progress-track-bg);
+  border-radius: var(--progress-radius);
+  overflow:     hidden;
+}
+.progress__fill {
+  height:       100%;
+  background:   var(--progress-fill-bg);
+  border-radius: var(--progress-radius);
+  transition:   var(--progress-transition);
+}
+
+/* --- Tooltip --- */
+.tooltip {
+  position:     relative;
+  display:      inline-flex;
+}
+.tooltip__content {
+  position:     absolute;
+  bottom:       calc(100% + var(--space-2));
+  left:         50%;
+  transform:    translateX(-50%) translateY(4px);
+  z-index:      var(--z-tooltip);
+
+  padding:      var(--tooltip-padding);
+  font-size:    var(--tooltip-font-size);
+  color:        var(--tooltip-text);
+  background:   var(--tooltip-bg);
+  border-radius: var(--tooltip-radius);
+  box-shadow:   var(--tooltip-shadow);
+  white-space:  nowrap;
+  pointer-events: none;
+
+  opacity:      0;
+  transition:   opacity var(--duration-short) var(--ease-out),
+                transform var(--duration-short) var(--ease-out);
+}
+.tooltip:hover .tooltip__content,
+.tooltip:focus-within .tooltip__content {
+  opacity:      1;
+  transform:    translateX(-50%) translateY(0);
+  transition-delay: var(--tooltip-delay);
+}
+
+/* --- Two-Panel Layout --- */
+.app-layout {
+  display:      grid;
+  grid-template-columns: var(--panel-left-width) 1fr;
+  grid-template-rows: var(--navbar-height) 1fr;
+  gap:          var(--panel-gap);
+  height:       100dvh;
+  overflow:     hidden;
+}
+.app-navbar   { grid-column: 1 / -1; }
+.app-panel-left {
+  background:   var(--panel-left-bg);
+  border-right: 1px solid var(--panel-left-border);
+  padding:      var(--panel-padding);
+  overflow-y:   auto;
+  /* Scrollbar fina, estilo macOS */
+  scrollbar-width:       thin;
+  scrollbar-color:       var(--color-fill-primary) transparent;
+}
+.app-panel-right {
+  background:   var(--panel-right-bg);
+  padding:      var(--panel-padding);
+  overflow-y:   auto;
+  display:      flex;
+  flex-direction: column;
+}
+
+/* --- Typography Utilities --- */
+.text-hero {
+  font-size:     var(--text-hero);
+  font-weight:   var(--font-weight-bold);
+  line-height:   var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+}
+.text-title1 {
+  font-size:     var(--text-title1);
+  font-weight:   var(--font-weight-bold);
+  line-height:   var(--leading-tight);
+  letter-spacing: var(--tracking-tighter);
+}
+.text-title2 {
+  font-size:     var(--text-title2);
+  font-weight:   var(--font-weight-semibold);
+  line-height:   var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+.text-title3 {
+  font-size:     var(--text-title3);
+  font-weight:   var(--font-weight-semibold);
+  line-height:   var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+.text-headline {
+  font-size:     var(--text-headline);
+  font-weight:   var(--font-weight-semibold);
+  line-height:   var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+}
+.text-body {
+  font-size:     var(--text-body);
+  font-weight:   var(--font-weight-regular);
+  line-height:   var(--leading-relaxed);
+  letter-spacing: var(--tracking-normal);
+}
+.text-callout {
+  font-size:     var(--text-callout);
+  font-weight:   var(--font-weight-regular);
+  line-height:   var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+}
+.text-subhead {
+  font-size:     var(--text-subhead);
+  font-weight:   var(--font-weight-medium);
+  line-height:   var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+}
+.text-footnote {
+  font-size:     var(--text-footnote);
+  font-weight:   var(--font-weight-regular);
+  line-height:   var(--leading-relaxed);
+  letter-spacing: var(--tracking-normal);
+  color:         var(--color-text-secondary);
+}
+.text-caption {
+  font-size:     var(--text-caption1);
+  font-weight:   var(--font-weight-regular);
+  line-height:   var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+  color:         var(--color-text-tertiary);
+}
+.eyebrow {
+  font-size:     var(--text-caption1);
+  font-weight:   var(--font-weight-semibold);
+  line-height:   var(--leading-normal);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color:         var(--color-text-secondary);
+}
+
+/* --- Color Utilities --- */
+.text-primary   { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-tertiary  { color: var(--color-text-tertiary); }
+.text-accent    { color: var(--color-accent-primary); }
+.text-success   { color: var(--color-success); }
+.text-warning   { color: var(--color-warning); }
+.text-danger    { color: var(--color-danger); }
+
+/* --- Entry Animation ---
+ * Usar em elementos que entram na tela (cards de resultado, outputs de IA).
+ * Adicionar classe .animate-enter via JS após inserção no DOM.
+ */
+@keyframes enter-up {
+  from {
+    opacity:   0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity:   1;
+    transform: translateY(0);
+  }
+}
+@keyframes enter-scale {
+  from {
+    opacity:   0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity:   1;
+    transform: scale(1);
+  }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-enter    {
+  animation: enter-up var(--duration-medium) var(--ease-out) both;
+}
+.animate-enter-scale {
+  animation: enter-scale var(--duration-medium) var(--ease-spring) both;
+}
+.animate-fade     {
+  animation: fade-in var(--duration-medium) var(--ease-out) both;
+}
+/* Stagger: aplicar via style="--delay: Xms" */
+.animate-stagger  { animation-delay: var(--delay, 0ms); }
+
+/* --- Focus Ring Global ---
+ * Remove outline padrão do browser e substitui pelo ring Apple.
+ */
+:focus-visible {
+  outline:      none;
+  box-shadow:   var(--shadow-focus);
+}
+
+/* --- Responsive Breakpoints ---
+ * Apple usa 1440, 1024, 768, 375 como pontos canônicos.
+ * Two-panel colapsa para single-panel abaixo de 1024px.
+ */
+@media (max-width: 1024px) {
+  .app-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows:    var(--navbar-height) auto 1fr;
+    overflow: auto;
+  }
+  .app-panel-left  { border-right: none; border-bottom: 1px solid var(--panel-left-border); }
+  .app-panel-right { min-height: 60dvh; }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --panel-padding:    var(--space-4);
+    --navbar-padding-x: var(--space-4);
+  }
+  .text-hero   { font-size: 3.5rem; }
+  .text-title1 { font-size: 2.5rem; }
+  .text-title2 { font-size: 1.75rem; }
+}
+
+/*
+ * ============================================================
+ * DESIGN SYSTEM SPEC — FIM
+ * ============================================================
+ *
+ * DEPENDÊNCIAS EXTERNAS NECESSÁRIAS
+ * ----------------------------------
+ * 1. Font Inter (fallback SF Pro):
+ *    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..700;1,14..32,300..700&display=swap" rel="stylesheet">
+ *
+ * 2. Para usar SF Pro em macOS/iOS nativamente:
+ *    font-family: -apple-system, BlinkMacSystemFont, ...
+ *    (já incluso no --font-sans stack acima — sem ação adicional)
+ *
+ * 3. backdrop-filter suporte:
+ *    Chrome 76+, Safari 9+, Firefox 103+ (com flag removida)
+ *    Adicionar @supports fallback se precisar de IE/Firefox antigo:
+ *    @supports not (backdrop-filter: blur(1px)) {
+ *      .navbar { background: rgba(245, 245, 247, 0.98); }
+ *    }
+ *
+ * TOKENS JSON — uso em Figma Tokens / Style Dictionary
+ * ------------------------------------------------------
+ * Ver fashion-os-design-tokens.json no mesmo diretório.
+ *
+ * ============================================================
+ */
