@@ -272,6 +272,7 @@
 
     .svg-wrap {
       flex: 1;
+      min-height: 0;
       overflow: auto;
       padding: 16px;
       background: var(--bg);
@@ -302,19 +303,23 @@
 
     /* Tables */
     .tables-wrap {
-      padding: 14px 16px;
+      padding: 10px 16px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       background: var(--surface);
       border-top: 1px solid var(--border);
       flex-shrink: 0;
+      max-height: 148px;
+      overflow-y: auto;
     }
-    .table-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); margin-bottom: 6px; }
-    table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    th, td { padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+    .tables-wrap::-webkit-scrollbar { height: 4px; width: 4px; }
+    .tables-wrap::-webkit-scrollbar-thumb { background: var(--tertiary); border-radius: 2px; }
+    .table-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    th, td { padding: 4px 8px; border-bottom: 1px solid var(--border); text-align: left; }
     tr:last-child td { border-bottom: none; }
-    th { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); background: var(--bg); }
+    th { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); background: var(--bg); }
     td:last-child, th:last-child { text-align: right; }
 
     /* Empty state */
