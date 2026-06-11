@@ -416,13 +416,13 @@
 
     async function loadFashionTerms() {
       if (_fashionTerms) return _fashionTerms;
-      try { const r = await fetch('./js/fashion-terms.json',{cache:'force-cache'}); _fashionTerms = await r.json(); } catch(_){ _fashionTerms = []; }
+      try { const r = await fetch('./js/fashion-terms.json'); _fashionTerms = await r.json(); } catch(_){ _fashionTerms = []; }
       return _fashionTerms;
     }
 
     async function loadVisualRefs() {
       if (_visualRefs) return _visualRefs;
-      try { const r = await fetch('./js/visual-references.json',{cache:'force-cache'}); _visualRefs = await r.json(); } catch(_){ _visualRefs = []; }
+      try { const r = await fetch('./js/visual-references.json'); _visualRefs = await r.json(); } catch(_){ _visualRefs = []; }
       return _visualRefs;
     }
 
@@ -445,26 +445,29 @@
 
     // Retorna referências visuais APENAS da categoria da peça detectada
     function matchRefs(txt, garment, refs) {
-      const q = normalize(txt);
-      return refs
-        .map(r => {
-          const hay = normalize([r.categoria, r.contexto_uso, r.titulo, r.pecas_chave, r.prompt_tokens].join(' '));
-          // Se detectamos a peça, exige que a referência mencione essa categoria
-          const catOk = garment
-            ? hay.includes(normalize(garment.en)) || hay.includes(normalize(garment.slug)) || hay.includes(normalize(garment.pt?.[0]||''))
-            : true;
-          if (!catOk) return { ...r, _score: -1 };
-          const score = q.split(' ').filter(w => w.length > 3 && hay.includes(w)).length + (Number(r.prioridade)||0);
-          return { ...r, _score: score };
-        })
-        .filter(r => r._score > 0)
-        .sort((a,b) => b._score - a._score);
+      // Filtro primário: campo categoria deve bater exatamente com o slug da peça
+      const filtered = garment
+        ? refs.filter(r => r.categoria === garment.slug)
+        : refs;
+
+      // Se não há refs para a categoria, devolve vazio (nunca mostra refs erradas)
+      if (!filtered.length) return [];
+
+      // Ordena: primeiro com imagem, depois por prioridade
+      return filtered
+        .sort((a, b) => {
+          const ai = a.image_url ? 1 : 0;
+          const bi = b.image_url ? 1 : 0;
+          if (bi !== ai) return bi - ai;
+          return (Number(b.prioridade)||0) - (Number(a.prioridade)||0);
+        });
     }
 
     // Compila prompt positivo e negativo a partir da taxonomia + referências
     function buildPrompt(userTxt, garment, terms, refs) {
       const pos = new Set(['fashion editorial photography', 'full body', 'soft studio lighting',
-        'minimalist white background', 'photorealistic', 'high quality', 'natural pose',
+        'realistic styled environment', 'clean contemporary studio or lifestyle setting',
+        'photorealistic', 'high quality', 'natural pose',
         'premium fabric texture', 'clean garment construction', 'real person wearing clothes']);
       const neg = new Set(['blurry', 'low quality', 'watermark', 'text overlay', 'logo',
         'disfigured', 'deformed hands', 'extra limbs', 'cartoon', 'illustration',
@@ -553,7 +556,7 @@
       const { pos, neg } = buildPrompt(txt, garment, terms, refs);
       loadingLabel.textContent = 'Gerando imagem';
 
-      // ── 3. Envia para Stable Horde — modelo AbsoluteReality (fila curta) ─
+      // ── 3. Envia para Stable Horde — modelo Deliberate ───────────────────
       try {
         const sub = await fetch('https://stablehorde.net/api/v2/generate/async', {
           method: 'POST',
@@ -570,8 +573,8 @@
               karras: true
             },
             r2: false,
-            slow_workers: false,
-            models: ['AbsoluteReality']
+            slow_workers: true,
+            models: ['Deliberate']
           })
         });
 
