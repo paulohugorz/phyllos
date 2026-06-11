@@ -592,6 +592,7 @@
     </section>
   </div>
 
+  <script src="../js/catalogo-moldes.js"></script>
   <script>
     const cm = 5;
     const svg = document.querySelector("#draft");
@@ -943,6 +944,11 @@
         ]
       }
     ];
+
+    // Mescla o catálogo expandido (200 tipos) com as bases existentes
+    if (typeof catalogoMoldes !== "undefined") {
+      patternBases.push(...catalogoMoldes);
+    }
 
     let currentFamily = "todos";
     let selectedId = "calca-alfaiataria-reta";
