@@ -1,9 +1,13 @@
-# Estrategia Motor de Moldes via Linguagem — PHYLLOS v1
+# Estrategia PHYLLOS Create / Motor de Moldes — v1
 
-**Versao:** 1.0  
-**Data:** 2026-06-11  
-**Responsavel:** Strategy Agent — PHYLLOS  
-**Status:** Aprovado para revisao do founder
+**Versao:** 1.0
+**Data:** 2026-06-11
+**Responsavel:** Strategy Agent — PHYLLOS
+**Status:** Referencia estrategica vigente para MVP, revisada pela auditoria CTO/Product/Engenharia
+
+> Esta estrategia e a fonte de referencia para o pivô do MVP em 2026-06-11. Agentes e documentos operacionais devem usar tambem `.claude/agents/references/motor-moldes-strategic-premises.md` e `docs/planejamento/risk-scope-review-mvp.md`.
+>
+> Revisao critica da auditoria: V1 nao deve depender de linguagem natural nem comecar por calca. O MVP deve comecar por parametros estruturados, Playbook, Engine, Validator, Library e uma base simples: saia reta. Linguagem natural entra depois, quando a engine geometrica estiver confiavel.
 
 ---
 
@@ -19,13 +23,13 @@ A resposta é sim. O problema é modelagem.
 
 ## 1. Tese do Produto
 
-### O que é o motor de moldes via linguagem
+### O que é o motor de moldes
 
-O motor e um sistema que transforma descricoes em linguagem natural — ou um conjunto de medidas estruturadas — em moldes tecnicos 2D prontos para corte, com exportacao em DXF e SVG.
+O motor e um sistema que transforma parametros estruturados, medidas corporais e regras de modelagem em moldes tecnicos 2D prontos para corte, com SVG, PDF A4 e, em fase posterior, exportacao DXF.
 
-O usuario descreve a peca: tipo, silhueta, medidas, tecido, detalhes funcionais. O motor responde com coordenadas calculadas, curvas parametricas, margens de costura, piques, sequencia operacional e regras de graduacao. Nenhum software de desenho e obrigatorio.
+Na V1, o usuario escolhe uma base e informa parametros: medidas do corpo, tecido, elasticidade, comprimento, folgas e detalhes essenciais. O motor responde com coordenadas calculadas, curvas parametricas, margens de costura, piques, sequencia operacional e PDF imprimivel. Nenhum software de desenho e obrigatorio.
 
-O prototipo em `/docs/patternmaking/calca-performance-alfaiataria-molde-v0.md` demonstra que o conceito funciona: uma calca de alfaiataria performance, cintura alta, crepe com elastano, bolso faca e elastico embutido foi completamente descrita em coordenadas calculadas a partir de medidas corporais e folgas de vestibilidade — sem que nenhum modelista precisasse sentar na mesa.
+O prototipo em `/docs/patternmaking/calca-performance-alfaiataria-molde-v0.md` demonstra que a logica parametrica e possivel. Porem, a primeira base operacional deve ser mais simples que uma calca: **saia reta**, por ter menos curvas, menos dependencias e menor risco geometrico.
 
 ### Por que isso e uma categoria nova
 
@@ -37,7 +41,7 @@ Nao e gerador de imagem: geradores de imagem produzem pixels de roupas. O motor 
 
 Nao e apenas um calculador de medidas: o motor conhece a logica de volume 3D para solucao 2D — como a diferenca de quadril e cintura se distribui entre lateral, pence e formato de gancho; como o gluteo exige extensao de gancho assimetrica; como tecido elastico reduz a folga necessaria. Essa logica era patrimonio implicito de modelistas experientes. O motor a torna explicita, parametrica e replicavel.
 
-A categoria correta e: **patternmaking engine**. Um motor de inferencia especializado em geometria de vestuario operado por linguagem.
+A categoria correta e: **Parametric Pattern Engine**. Um motor especializado em geometria de vestuario, operado primeiro por parametros estruturados e, depois, por linguagem natural.
 
 ### O problema que resolve — ICP preciso
 
@@ -99,7 +103,7 @@ Esse numero e pequeno em valor absoluto e correto como premissa de pre-seed. A t
 
 ### Narrativa de pitch em 3 frases
 
-Criar uma roupa exige um molde. Fazer um molde exige um modelista — ou anos aprendendo software especializado. O motor de moldes PHYLLOS resolve isso: voce descreve a peca, informa as medidas, e recebe as coordenadas, curvas e instrucoes prontas para cortar.
+Criar uma roupa exige um molde. Fazer um molde exige um modelista — ou anos aprendendo software especializado. O motor de moldes PHYLLOS resolve isso por etapas: voce escolhe uma base, informa medidas e parametros, e recebe coordenadas, curvas, PDF e instrucoes prontas para validar no corte.
 
 ### Diferenciacao vs. concorrentes diretos
 
@@ -111,7 +115,7 @@ Criar uma roupa exige um molde. Fazer um molde exige um modelista — ou anos ap
 | Valentina | Open source, modelagem geometrica | Interface tecnica; requer conhecimento de modelagem; sem linguagem natural | Valentina e uma mesa de desenho digital; o motor e um coautor |
 | Grafis | CAD europeu tradicional | Assinatura; interface anos 90; sem API; nao e SaaS | Motor e API-first, integravel, moderno por arquitetura |
 
-O espaco vazio e este: nenhuma solucao existente aceita linguagem natural como input primario e devolve moldes cortaveis como output. O motor PHYLLOS existe nesse espaco.
+O espaco vazio e este: uma ferramenta acessivel, parametrica e orientada por conhecimento de modelagem, capaz de devolver moldes cortaveis sem exigir que o usuario opere CAD industrial. Linguagem natural pode virar diferencial depois, mas nao e o fundamento da V1.
 
 ---
 
@@ -119,27 +123,30 @@ O espaco vazio e este: nenhuma solucao existente aceita linguagem natural como i
 
 ### Fase 1 — MVP do Motor (0–3 meses: julho a setembro de 2026)
 
-Objetivo: provar que o loop funciona para uma peca base, com usuario real, produzindo arquivo cortavel.
+Objetivo: provar que Playbook + Engine + Validator geram uma peca simples, com usuario real, produzindo arquivo imprimivel e validavel fisicamente.
 
 Entregas:
 - API FastAPI com endpoint `/molde` aceitando JSON estruturado de medidas e parametros de design
-- Logica de calculo parametrico para calca base (frente, costas, cos, bolso faca) — expandindo o prototipo v0
+- `playbook.db` ou estrutura equivalente com regras, folgas, proporcoes e compatibilidades
+- `dependency_graph` para propagacao de medidas
+- Logica de calculo parametrico para saia reta
+- `PatternValidator` inicial para limites, comprimentos e auto-intersecoes obvias
 - Exportacao em SVG com coordenadas, curvas e piques marcados
-- Exportacao em DXF basico (Fase 1.5, em horas de faixa de Fase 2 se necessario)
-- Interface minima de entrada: formulario web ou input de texto estruturado
+- PDF A4 com tesselation, margens, overlap e marcas de montagem
+- Interface minima de entrada: formulario web estruturado
 - Validacao com 5 a 10 usuarios reais fazendo o ciclo completo: input → molde → corte → prova
 
 Criterio de saida da fase: ao menos 3 usuarios terem cortado e costurado uma peca usando molde gerado pelo motor, com feedback documentado.
 
-Tecnologia existente: FastAPI ja configurado, SQLite, Pydantic, Jinja2. O prototipo em `/docs/patternmaking/calca-performance-alfaiataria-molde-v0.md` fornece todas as coordenadas e logica de calculo para a primeira peca.
+Tecnologia existente: FastAPI ja configurado, SQLite, Pydantic, Jinja2. O catalogo de moldes e as referencias de modelagem fornecem base para iniciar pela saia reta e evoluir para blusa/camiseta antes da calca.
 
 ### Fase 2 — Gradacao, Multiplas Pecas e Feedback de Fitting (3–9 meses: outubro 2026 a marco de 2027)
 
 Objetivo: tornar o motor util para um wardrobe completo e para iteracao rapida.
 
 Entregas:
-- Gradacao automatica por grade de tamanhos (P, M, G, GG) com regras parametricas derivadas do v0
-- Pecas novas: blusa base, blazer estruturado, saia reta — cada uma com sua logica de calculo
+- Gradacao automatica por grade de tamanhos (P, M, G, GG) preparada na arquitetura e exposta quando houver confiabilidade
+- Pecas novas: blusa basica, camiseta, vestido simples e, depois, calca reta — cada uma com sua logica de calculo
 - Mecanismo de feedback de fitting: usuario registra o que nao funcionou na prova (repuxo no gancho, folga no ombro, barra assimetrica) e o motor propoe ajuste numerico
 - Historico de versoes por peca — molde v0, v1, v2 com diff de parametros
 - Exportacao DXF consolidada
@@ -191,15 +198,15 @@ Criterio de saida da fase: ARR de USD 400.000 base, 3 marcas usando a API B2B, d
 
 ### Tese para captacao — Pre-Seed
 
-**Ticket alvo:** USD 300.000 a USD 500.000  
-**Dilution target:** 8% a 12%  
-**Instrumento:** SAFE com valuation cap de USD 3,5 a USD 5 milhoes  
+**Ticket alvo:** USD 300.000 a USD 500.000
+**Dilution target:** 8% a 12%
+**Instrumento:** SAFE com valuation cap de USD 3,5 a USD 5 milhoes
 **Uso dos recursos:**
 - 50%: desenvolvimento tecnico do motor (engenharia de software + logica de patternmaking)
 - 30%: aquisicao dos primeiros 200 usuarios pagantes (conteudo, comunidade, parcerias com escolas)
 - 20%: operacao, infraestrutura e juridico (IP, termos de servico)
 
-**Por que agora:** o motor de moldes via linguagem natural so se tornou tecnicamente viavel com LLMs e APIs de raciocínio parametrico a custo acessivel. A janela de criacao de categoria e agora. Dois anos atras era impraticavel. Dois anos a frente havera incumbentes tentando copiar.
+**Por que agora:** o motor de moldes parametrico se tornou mais viavel pela combinacao de software acessivel, SVG/PDF no browser, LLMs como camada posterior de traducao e demanda crescente de criadores independentes por autonomia tecnica. A janela de criacao de categoria e agora, mas a defesa nasce da engine e do playbook, nao de uma interface conversacional isolada.
 
 ### Comparaveis de referencia
 
@@ -210,7 +217,7 @@ Criterio de saida da fase: ARR de USD 400.000 base, 3 marcas usando a API B2B, d
 | True Fit | Recomendacao de tamanho no varejo | Serie C | USD 55 milhoes |
 | Sizely | Medidas corporais por foto | Seed | USD 3,5 milhoes |
 
-A PHYLLOS nao compete com nenhum deles diretamente. O espaco vazio — motor de geracao de moldes por linguagem, acessivel, SaaS, API-first — nao tem ocupante claro. Esse e o argumento de categoria.
+A PHYLLOS nao compete com nenhum deles diretamente. O espaco vazio — motor parametrico de moldes, acessivel, SaaS, API-first e sustentado por playbook de modelagem — nao tem ocupante claro. Esse e o argumento de categoria.
 
 **Risco de timing:** o risco principal nao e competicao direta hoje. E que uma das grandes (Lectra, Optitex, CLO) lanca um produto similar com distribuicao ja estabelecida. A defesa e velocidade de adocao, profundidade tecnica da logica de vestuario e comunidade de usuarios que geram moldes proprios — uma rede que um incumbent nao copia facilmente.
 
@@ -229,6 +236,9 @@ Esta secao existe para ser comunicada claramente a co-fundadores, time e investi
 | MRP, ordem de producao, estoque | Gestao de producao e um problema diferente, com ICP diferente. Misturar aumenta complexidade sem aumentar valor para o ICP primario atual. | Produto separado, nao extensao do motor de moldes |
 | Interface visual completa (Next.js/Streamlit) | Interface minima e suficiente para validar o motor. Investir em UI antes de provar a logica e gastar dinheiro no lugar errado. | Fase 2, quando usuarios pagantes pedirem experiencia mais polida |
 | Agentes Claude especializados (22 agentes do Fashion OS original) | Arquitetura interessante mas prematura. Um motor bem construido nao precisa de 22 agentes para funcionar — precisa de logica solida e uma API clara. | Refatorar em Fase 2 se a complexidade do motor justificar orquestracao |
+| Linguagem natural como input primario | Pode interpretar errado alteracoes geometricas ambiguas. | Depois da Engine, Validator e Playbook estarem confiaveis |
+| Preview em tempo real | Alto custo de engenharia antes de provar a logica. | Depois do SVG estatico e PDF A4 funcionarem |
+| Calca como primeira base | Gancho, quadril, joelho e equilibrio frente/costas tornam a peca complexa demais para V1. | Depois de saia reta, blusa/camiseta e vestido simples |
 
 **Mensagem para investidores sobre o pivô:** o escopo anterior demonstrou capacidade tecnica e visao de plataforma. O pivô nao descarta esse trabalho — ele usa a camada tecnica existente (FastAPI, SQLite, Pydantic, prototipo de molde) e elimina tudo que nao serve ao problema central. Isso e disciplina, nao reversao.
 
@@ -236,11 +246,11 @@ Esta secao existe para ser comunicada claramente a co-fundadores, time e investi
 
 ## 7. Proximos 30 dias — 5 acoes concretas e priorizadas
 
-### Acao 1 — Transformar o prototipo v0 em API funcional (semanas 1 e 2)
+### Acao 1 — Transformar a primeira base simples em API funcional (semanas 1 e 2)
 
-O molde da calca ja existe em coordenadas calculadas. A acao e transformar essa logica em um endpoint `/molde/calca` que aceita um JSON com medidas corporais e parametros de design e devolve as coordenadas calculadas + SVG gerado.
+A primeira entrega deve ser saia reta. A acao e transformar regras de medida, folga, tecido e comprimento em um endpoint `/molde` que aceita JSON estruturado e devolve parametros calculados + SVG gerado.
 
-Criterio de conclusao: endpoint respondendo corretamente para tres variantes de medidas (P, M, G).
+Criterio de conclusao: endpoint respondendo corretamente para tres variantes de medidas, com golden patterns e validacao geometrica basica.
 
 Responsavel sugerido: engenharia (pode ser o founder se full-stack).
 
@@ -252,7 +262,7 @@ Criterio de conclusao: 5 usuarios comprometidos com o ciclo completo — receber
 
 ### Acao 3 — Definir a versao minima do formulario de entrada (semana 2)
 
-Mapear quais campos sao obrigatorios para gerar um molde valido vs. quais podem ter defaults inteligentes. O objetivo e reduzir o formulario ao minimo sem comprometer a precisao geometrica. O v0 mostra que as medidas essenciais sao: cintura, quadril, coxa, gancho, entreperna e comprimento lateral. Tipo de tecido (elastico ou nao elastico) e o segundo parametro mais critico.
+Mapear quais campos sao obrigatorios para gerar um molde valido vs. quais podem ter defaults inteligentes. O objetivo e reduzir o formulario ao minimo sem comprometer a precisao geometrica. Para a primeira base, separar medida corporal, folga e medida final do molde. Para saia reta, as medidas essenciais sao cintura, quadril, altura do quadril e comprimento. Tipo de tecido, elasticidade e gramatura entram como parametros criticos para folga e caimento.
 
 Criterio de conclusao: formulario de entrada definido, documentado e validado com ao menos um modelista real antes de codar a interface.
 
@@ -260,11 +270,11 @@ Criterio de conclusao: formulario de entrada definido, documentado e validado co
 
 O prototipo v0 usa formulas implicitas. Para o motor escalar para novas pecas, a logica precisa estar explicitada como especificacao — formulas, condicoes, casos de borda, referencias a normas de modelagem quando existirem.
 
-Criterio de conclusao: documento de especificacao tecnica do motor para calca base, revisado por pelo menos um modelista.
+Criterio de conclusao: documento de especificacao tecnica do motor para saia reta, revisado por pelo menos um modelista.
 
 ### Acao 5 — Definir o arco de captacao dos proximos 90 dias (semana 3)
 
-Com o MVP em andamento, preparar o one-pager de investidor com: problema, solucao, tese de mercado, prototipo funcional (link ao endpoint), time e ask. Nao esperar o produto perfeito. Um endpoint funcionando com tres usuarios reais que cortaram a calca ja e demo suficiente para conversa de pre-seed.
+Com o MVP em andamento, preparar o one-pager de investidor com: problema, solucao, tese de mercado, prototipo funcional (link ao endpoint), time e ask. Nao esperar o produto perfeito. Um endpoint funcionando com usuarios reais que imprimiram, cortaram ou validaram fisicamente uma base simples ja e demo suficiente para conversa de pre-seed.
 
 Criterio de conclusao: one-pager revisado pelo founder, lista de 10 investidores-alvo mapeada (angels em fashion tech, fundos de pre-seed focados em ferramentas criativas ou manufatura).
 

@@ -1,4 +1,6 @@
 # Análise Financeira e de Recursos — Fashion OS Fase 2
+
+> **Nota vigente em 2026-06-11:** atualizar qualquer leitura financeira deste documento pela premissa do Motor de Moldes. O risco principal agora e precisao tecnica + validacao de beta users, nao custo de interface web. Receita SaaS ampla so deve ser tratada como hipotese posterior a prova do patternmaking engine.
 **PHYLLOS / CFO / Junho 2026**
 
 ## Leitura Executiva

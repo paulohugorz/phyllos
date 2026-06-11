@@ -1,6 +1,8 @@
 # Fashion OS v2 — Especificação de Produto: Interface Web
 **PRD-001 | v1.0 | 2026-06-10 | Product Director PHYLLOS**
 
+> **Nota vigente em 2026-06-11:** este PRD fica congelado como escopo historico de interface web. O PRD operacional vigente deve partir do Parametric Pattern Engine: parametros estruturados + medidas + tecido -> molde 2D parametrizado -> SVG/PDF A4 -> prova fisica. Nao usar as user stories abaixo como prioridade sem revisar contra `motor-moldes-strategic-premises.md` e `risk-scope-review-mvp.md`.
+
 ## Leitura Executiva
 
 O Fashion OS v1 opera via terminal e resolve o problema de armazenamento estruturado. O gargalo atual é que a fundadora precisa lembrar comandos, ler Markdown bruto e não tem visualização do estado do pipeline. A Fase 2 resolve isso com interface visual mínima — não um ERP, mas uma tela de trabalho que espelha como a fundadora já pensa: por coleção, por peça, por etapa.

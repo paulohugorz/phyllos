@@ -1,4 +1,6 @@
 # Plano de Comunicação e Lançamento — Fashion OS v1
+
+> **Nota vigente em 2026-06-11:** comunicacao publica deve tratar o Motor de Moldes como produto tecnico em validacao, nao como Fashion OS completo. Evitar prometer IA autonoma, CAD completo, imagem realista ou plataforma SaaS ampla antes de prova fisica com beta users.
 **CMO PHYLLOS | Junho 2026**
 
 ## Leitura Executiva

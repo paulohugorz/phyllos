@@ -1,6 +1,8 @@
 # Plano Estratégico de Produto — Fashion OS Web
 **PHYLLOS | CEO | Junho 2026**
 
+> **Nota vigente em 2026-06-11:** este plano registra a hipotese anterior de interface web do Fashion OS. A prioridade executiva atual e o **Parametric Pattern Engine**: Playbook, endpoint de molde, saia reta parametrica, SVG estatico, PDF A4, PatternValidator, validacao fisica e beta users. A interface completa e a linguagem natural passam a ser fases posteriores, nao MVP imediato.
+
 ## 1. Tese de produto
 
 **Por que construir agora:** A Fase 1 entregou um sistema funcional de pipeline criativo. O problema é que só funciona para quem opera via terminal. A Fase 2 converte potencial interno em capacidade operacional real. Sem ela, o Fashion OS é uma prova de conceito, não uma plataforma de negócio.

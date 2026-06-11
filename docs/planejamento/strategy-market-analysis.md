@@ -1,4 +1,6 @@
 # Análise Estratégica — Fashion OS como Produto de Mercado
+
+> **Nota vigente em 2026-06-11:** a analise de mercado deve ser lida pelo novo recorte: Motor de Moldes / patternmaking engine. Fashion OS amplo continua como horizonte, mas o produto de mercado a validar agora e mais estreito, tecnico e mensuravel.
 **PHYLLOS / Strategy / Junho 2026 — Confidencial**
 
 ## Leitura Executiva

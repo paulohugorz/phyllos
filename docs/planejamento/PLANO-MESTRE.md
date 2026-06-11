@@ -1,6 +1,8 @@
 # PLANO MESTRE — Fashion OS Fase 2
 **PHYLLOS | Revisão: 2026-06-10 | Owner: Founder / CEO**
 
+> **Nota vigente em 2026-06-11:** este plano fica preservado como historico da fase "interface web do Fashion OS". A direcao estrategica atual mudou: o MVP imediato e o **Parametric Pattern Engine**, conforme `docs/planejamento/estrategia-motor-moldes-v1.md`, `docs/planejamento/risk-scope-review-mvp.md`, `docs/roadmap-fashion-os.md` e `.claude/agents/references/motor-moldes-strategic-premises.md`. Usar este documento apenas como referencia secundaria; nao iniciar novas sprints de interface completa antes de validar Playbook, Engine, SVG/PDF A4 e prova fisica.
+
 ---
 
 ## 1. Sumário Executivo

@@ -1,4 +1,6 @@
 # Architecture Decision Record — Fashion OS Interface Web (Fase 2)
+
+> **Nota vigente em 2026-06-11:** a decisao tecnica prioritaria mudou para o Parametric Pattern Engine. Arquitetura de interface completa continua util como referencia, mas a primeira entrega tecnica deve ser Playbook, API de molde, calculo parametrico de saia reta, PatternValidator, SVG estatico, PDF A4 e validacao fisica.
 **Data:** 2026-06-10 | **CTO, PHYLLOS** | **Status:** Aprovado para execução
 
 ## 1. Decisão de Stack: Next.js 14 (App Router) + Tailwind CSS
