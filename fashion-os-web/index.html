@@ -301,26 +301,12 @@
     .svg-measure { font: 600 8.5px -apple-system,BlinkMacSystemFont,system-ui,sans-serif; fill: #0071E3; }
     .point { fill: #FF3B30; }
 
-    /* Tables */
-    .tables-wrap {
-      padding: 10px 16px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      flex-shrink: 0;
-      max-height: 148px;
-      overflow-y: auto;
-    }
-    .tables-wrap::-webkit-scrollbar { height: 4px; width: 4px; }
-    .tables-wrap::-webkit-scrollbar-thumb { background: var(--tertiary); border-radius: 2px; }
-    .table-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); margin-bottom: 4px; }
-    table { width: 100%; border-collapse: collapse; font-size: 11px; }
-    th, td { padding: 4px 8px; border-bottom: 1px solid var(--border); text-align: left; }
-    tr:last-child td { border-bottom: none; }
-    th { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); background: var(--bg); }
-    td:last-child, th:last-child { text-align: right; }
+    /* Sidebar table */
+    .sidebar-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 4px; }
+    .sidebar-table th, .sidebar-table td { padding: 4px 6px; border-bottom: 1px solid var(--border); text-align: left; }
+    .sidebar-table tr:last-child td { border-bottom: none; }
+    .sidebar-table th { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); background: var(--bg); }
+    .sidebar-table td:last-child, .sidebar-table th:last-child { text-align: right; }
 
     /* Empty state */
     .empty-state {
@@ -378,6 +364,12 @@
         <div class="controls" id="controls"></div>
       </div>
 
+      <!-- Tabela técnica na sidebar -->
+      <div id="table-section" style="display:none">
+        <div class="section-label">Tabela técnica</div>
+        <table class="sidebar-table"><thead><tr><th>Cota</th><th>Valor</th></tr></thead><tbody id="measureTable"></tbody></table>
+      </div>
+
       <!-- Leitura -->
       <div id="legend-section" style="display:none">
         <div class="section-label">Leitura</div>
@@ -424,16 +416,6 @@
       <div class="svg-wrap">
         <div class="svg-canvas">
           <svg id="draft" viewBox="0 0 1120 740" role="img" aria-label="Molde técnico"></svg>
-        </div>
-      </div>
-      <div class="tables-wrap">
-        <div>
-          <p class="table-label">Tabela técnica</p>
-          <table><thead><tr><th>Cota</th><th>Valor</th></tr></thead><tbody id="measureTable"></tbody></table>
-        </div>
-        <div>
-          <p class="table-label">Pontos</p>
-          <table><thead><tr><th>Item</th><th>x</th><th>y</th></tr></thead><tbody id="pointsTable"></tbody></table>
         </div>
       </div>
     </div>
@@ -912,10 +894,6 @@
   function renderTables(result) {
     document.getElementById('measureTable').innerHTML=
       [...result.rows,['Partes',currentBase.pieces]].map(([k,v])=>`<tr><td>${k}</td><td>${typeof v==='number'?fmt(v):v}</td></tr>`).join('');
-    document.getElementById('pointsTable').innerHTML=
-      result.pointSets.flatMap(([prefix,piece])=>
-        Object.entries(piece.points).map(([name,p])=>`<tr><td>${prefix}-${name}</td><td>${p.rawX.toFixed(1)}</td><td>${p.rawY.toFixed(1)}</td></tr>`)
-      ).join('');
   }
 
   // ── UI ─────────────────────────────────────────────────────────────────────
@@ -984,6 +962,7 @@
     // Show sections
     document.getElementById('view-section').style.display='';
     document.getElementById('controls-section').style.display='';
+    document.getElementById('table-section').style.display='';
     document.getElementById('legend-section').style.display='';
 
     // Board head
@@ -1002,6 +981,7 @@
     document.getElementById('meta-card').classList.remove('visible');
     document.getElementById('view-section').style.display='none';
     document.getElementById('controls-section').style.display='none';
+    document.getElementById('table-section').style.display='none';
     document.getElementById('legend-section').style.display='none';
     document.getElementById('empty-state').style.display='';
     document.getElementById('board').style.display='none';
