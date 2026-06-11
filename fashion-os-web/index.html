@@ -44,6 +44,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
+    /* ── Nav ── */
     nav {
       position: sticky;
       top: 0;
@@ -65,12 +66,14 @@
       border-radius: var(--radius-pill);
     }
 
+    /* ── Layout ── */
     .layout {
       display: grid;
       grid-template-columns: var(--sidebar-w) 1fr;
       height: calc(100vh - var(--nav-h));
     }
 
+    /* ── Sidebar ── */
     aside {
       background: var(--surface);
       border-right: 1px solid var(--border);
@@ -95,6 +98,7 @@
       gap: 8px;
     }
 
+    /* ── Input area ── */
     .input-wrap {
       position: relative;
       margin-bottom: 14px;
@@ -121,6 +125,7 @@
     textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,113,227,0.1); }
     textarea::placeholder { color: var(--tertiary); }
 
+    /* ── Buttons ── */
     .btn {
       font-family: var(--font);
       font-size: 14px;
@@ -152,6 +157,7 @@
     }
     .btn-ghost:hover { background: var(--blue-bg); }
 
+    /* ── Meta card ── */
     .meta-card {
       background: var(--blue-bg);
       border: 1px solid rgba(0,113,227,0.15);
@@ -181,12 +187,14 @@
       font-size: 10px; font-weight: 600;
     }
 
+    /* ── Section headings ── */
     .section-label {
       font-size: 11px; font-weight: 600;
       text-transform: uppercase; letter-spacing: 0.06em;
       color: var(--secondary); margin: 16px 0 8px;
     }
 
+    /* ── View mode chips ── */
     .mode-chips { display: flex; gap: 5px; margin-bottom: 14px; flex-wrap: wrap; }
     .mode-chip {
       background: rgba(0,0,0,0.05); color: var(--secondary);
@@ -197,6 +205,7 @@
     .mode-chip:hover { background: rgba(0,0,0,0.08); }
     .mode-chip[aria-pressed="true"] { background: var(--blue); color: #fff; }
 
+    /* ── Controls ── */
     .controls { display: grid; gap: 10px; }
     .control-row {
       display: grid;
@@ -219,6 +228,7 @@
       accent-color: var(--blue); height: 3px;
     }
 
+    /* ── Legend ── */
     .legend { display: grid; gap: 6px; }
     .legend-row { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--secondary); }
     .swatch { width: 22px; height: 0; flex: 0 0 auto; }
@@ -227,6 +237,7 @@
     .sw-measure { border-top: 2px solid var(--blue); }
     .sw-grain   { border-top: 2px solid var(--green); }
 
+    /* ── Workspace / Board ── */
     .workspace {
       display: flex;
       flex-direction: column;
@@ -261,6 +272,7 @@
 
     .svg-wrap {
       flex: 1;
+      min-height: 0;
       overflow: auto;
       padding: 16px;
       background: var(--bg);
@@ -276,6 +288,7 @@
 
     svg { display: block; width: 100%; height: auto; }
 
+    /* SVG classes */
     .piece     { fill: rgba(0,113,227,0.05); stroke: #1D1D1F; stroke-width: 1.8; }
     .piece-alt { fill: rgba(52,199,89,0.05); stroke: #1D1D1F; stroke-width: 1.8; }
     .seam      { fill: none; stroke: rgba(0,0,0,0.28); stroke-width: 1.1; }
@@ -288,22 +301,28 @@
     .svg-measure { font: 600 8.5px -apple-system,BlinkMacSystemFont,system-ui,sans-serif; fill: #0071E3; }
     .point { fill: #FF3B30; }
 
+    /* Tables */
     .tables-wrap {
-      padding: 14px 16px;
+      padding: 10px 16px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       background: var(--surface);
       border-top: 1px solid var(--border);
       flex-shrink: 0;
+      max-height: 148px;
+      overflow-y: auto;
     }
-    .table-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); margin-bottom: 6px; }
-    table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    th, td { padding: 6px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+    .tables-wrap::-webkit-scrollbar { height: 4px; width: 4px; }
+    .tables-wrap::-webkit-scrollbar-thumb { background: var(--tertiary); border-radius: 2px; }
+    .table-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); margin-bottom: 4px; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    th, td { padding: 4px 8px; border-bottom: 1px solid var(--border); text-align: left; }
     tr:last-child td { border-bottom: none; }
-    th { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); background: var(--bg); }
+    th { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--secondary); background: var(--bg); }
     td:last-child, th:last-child { text-align: right; }
 
+    /* Empty state */
     .empty-state {
       flex: 1; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -333,6 +352,7 @@
 
 <div class="layout">
 
+  <!-- ── Sidebar ── -->
   <aside>
     <div class="sidebar-scroll">
 
@@ -340,21 +360,25 @@
         <textarea id="description" placeholder="Descreva o que imagina. Silhueta, tecido, cor, caimento."></textarea>
       </div>
 
+      <!-- Meta da peça detectada -->
       <div class="meta-card" id="meta-card">
         <div class="meta-sku" id="meta-sku"></div>
         <div class="meta-rows" id="meta-rows"></div>
       </div>
 
+      <!-- Visualização (aparece após detecção) -->
       <div id="view-section" style="display:none">
         <div class="section-label">Visualização</div>
         <div class="mode-chips" id="modeChips"></div>
       </div>
 
+      <!-- Medidas (aparece após detecção) -->
       <div id="controls-section" style="display:none">
         <div class="section-label">Medidas</div>
         <div class="controls" id="controls"></div>
       </div>
 
+      <!-- Leitura -->
       <div id="legend-section" style="display:none">
         <div class="section-label">Leitura</div>
         <div class="legend">
@@ -373,8 +397,10 @@
     </div>
   </aside>
 
+  <!-- ── Workspace ── -->
   <div class="workspace">
 
+    <!-- Empty state -->
     <div class="empty-state" id="empty-state">
       <div class="empty-icon">
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
@@ -386,6 +412,7 @@
       <p class="empty-sub">Descreva a peça ao lado e toque em Criar molde.</p>
     </div>
 
+    <!-- Board (aparece após detecção) -->
     <div class="board" id="board" style="display:none">
       <div class="board-head">
         <div>
@@ -415,9 +442,11 @@
 </div>
 
 <script>
+  // ── Constantes ────────────────────────────────────────────────────────────
   const cm = 5;
   const ns = "http://www.w3.org/2000/svg";
 
+  // ── Mapeamento peça → base de molde ──────────────────────────────────────
   const GARMENT_MAP = [
     { pt:['vestido','dress','jumpsuit','macacão','macacao'], en:'Vestido', baseId:'vestido-envelope' },
     { pt:['calça','calca','pants','trousers','legging','leggings','shorts','bermuda','jogger'], en:'Calça', baseId:'calca-alfaiataria-reta' },
@@ -445,6 +474,7 @@
     return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim();
   }
 
+  // ── Bases de molde ────────────────────────────────────────────────────────
   const mk = (key,label,min,max,step=.5) => ({key,label,min,max,step});
 
   const patternBases = [
@@ -453,6 +483,7 @@
       title:'Calça performance reta', badge:'PH001',
       summary:'Base com frente limpa, cintura alta, bolso faca e gancho confortável.',
       pieces:'Frente, costas, cós frente, cós costas, saco e espelho de bolso.',
+      mukai:['Base: cintura, quadril, gancho, entreperna, joelho e barra.','Gancho com profundidade; prova sentada obrigatória.','Bolso faca com espelho, saco e pesponto.'],
       defaults:{ waistFront:18.5,waistBack:19.5,hipFront:25.5,hipBack:27.5,thighFront:30.5,thighBack:33.5,kneeFront:23.5,kneeBack:24.5,hemFront:23.5,hemBack:24.5,hipDepth:20,crotchFrontDepth:27.5,crotchBackDepth:29,crotchFrontExt:4.5,crotchBackExt:8.5,kneeDepth:52,inseam:76,sideLength:106,waistbandFinished:4 },
       modeSet:[['all','Tudo'],['front','Frente'],['back','Costas']],
       controls:[mk('waistFront','Cintura frente meia',14,24),mk('waistBack','Cintura costas meia',15,26),mk('hipFront','Quadril frente meia',21,32),mk('hipBack','Quadril costas meia',23,35),mk('thighFront','Coxa frente meia',24,38),mk('thighBack','Coxa costas meia',27,42),mk('inseam','Entreperna',68,86),mk('sideLength','Altura lateral',96,116)]
@@ -462,6 +493,7 @@
       title:'Saia reta base', badge:'Base',
       summary:'Saia reta com cintura, quadril, comprimento, pences e fenda opcional.',
       pieces:'Frente, costas, cós ou revel, fenda traseira opcional.',
+      mukai:['Saia reta é base para cintura, quadril e comprimento.','Lápis reduz barra e exige abertura para mobilidade.'],
       defaults:{ waistFront:18,waistBack:19,hipFront:26,hipBack:28,hemFront:25,hemBack:26,hipDepth:20,length:74,dartFront:2,dartBack:3 },
       modeSet:[['all','Tudo'],['front','Frente'],['back','Costas']],
       controls:[mk('waistFront','Cintura frente meia',13,24),mk('waistBack','Cintura costas meia',13,26),mk('hipFront','Quadril frente meia',20,34),mk('hipBack','Quadril costas meia',20,36),mk('hemFront','Barra frente meia',18,36),mk('hemBack','Barra costas meia',18,38),mk('hipDepth','Linha do quadril',16,25),mk('length','Comprimento',44,96)]
@@ -471,6 +503,7 @@
       title:'Camisa com colarinho', badge:'PH003',
       summary:'Corpo com vista, pala, colarinho, manga longa, carcela e punho.',
       pieces:'Frente, costas, pala, manga, punho, gola, pé de gola e vista.',
+      mukai:['Combina corpo, vista/carcela, punho, manga, gola e pé de gola.','Punho/carcela exigem pregas na manga.'],
       defaults:{ bustFront:27,bustBack:28,waistFront:24,waistBack:25,hemFront:28,hemBack:29,shoulder:13,neckWidth:7.5,neckDepth:8,armholeDepth:22,waistDepth:42,bodyLength:68,sleeveLength:60,sleeveBicep:20,sleeveHem:11,placketWidth:3 },
       modeSet:[['all','Tudo'],['front','Painel'],['extras','Partes']],
       controls:[mk('bustFront','Busto frente meia',22,34),mk('bustBack','Busto costas meia',22,36),mk('waistFront','Cintura frente meia',18,32),mk('shoulder','Ombro',9,17),mk('bodyLength','Comprimento corpo',56,82),mk('sleeveLength','Manga',45,68)]
@@ -480,6 +513,7 @@
       title:'Vestido envelope midi', badge:'Wrap',
       summary:'Transpasse, decote V, cintura marcada e saia midi.',
       pieces:'Frentes transpassadas, costas, saia, faixa, revel.',
+      mukai:['Deriva da base por abertura, transpasse e decote.','Transpasse deve prever sobreposição e amarração.'],
       defaults:{ bustFront:27,bustBack:28,waistFront:19,waistBack:20,hipFront:27,hipBack:28,hemFront:44,hemBack:46,shoulder:12.5,neckWidth:7.5,neckDepth:22,armholeDepth:22,waistDepth:40,bodyLength:112,overlap:12,sleeveLength:18 },
       modeSet:[['all','Tudo'],['front','Frente'],['back','Costas']],
       controls:[mk('bustFront','Busto frente meia',22,34),mk('bustBack','Busto costas meia',22,36),mk('waistFront','Cintura frente meia',15,28),mk('hipFront','Quadril frente meia',22,36),mk('bodyLength','Comprimento total',88,128),mk('neckDepth','Decote V',12,32)]
@@ -489,6 +523,7 @@
       title:'Top estruturado', badge:'Corpete',
       summary:'Top curto com pences/recortes, decote limpo e barra estabilizada.',
       pieces:'Frente, costas, revel de decote/cava.',
+      mukai:['Deriva da blusa por recorte, pence e estabilidade.','Barra curta exige estrutura para não subir.'],
       defaults:{ bustFront:24,bustBack:25,waistFront:18,waistBack:19,hemFront:19,hemBack:20,shoulder:10,neckWidth:8,neckDepth:10,armholeDepth:18,waistDepth:34,bodyLength:42,sleeveLength:0,sleeveBicep:0,sleeveHem:0,placketWidth:0 },
       modeSet:[['all','Tudo'],['front','Painel'],['extras','Partes']],
       controls:[mk('bustFront','Busto frente meia',19,31),mk('bustBack','Busto costas meia',19,33),mk('waistFront','Cintura frente meia',13,26),mk('bodyLength','Comprimento',32,55),mk('neckDepth','Decote',5,18)]
@@ -498,17 +533,20 @@
       title:'Blazer base', badge:'Estrutura',
       summary:'Base estruturada com ombro, revel, lapela e manga de alfaiataria.',
       pieces:'Frente, costas, lateral, manga, revel, gola/lapela, forro.',
+      mukai:['Exige folga maior, estrutura de ombro e manga específica.','Declara entretela, forro, revel e ordem de montagem.'],
       defaults:{ bustFront:30,bustBack:31,waistFront:27,waistBack:28,hemFront:32,hemBack:33,shoulder:14.5,neckWidth:8,neckDepth:9,armholeDepth:24,waistDepth:42,bodyLength:72,sleeveLength:61,sleeveBicep:22,sleeveHem:13,placketWidth:4 },
       modeSet:[['all','Tudo'],['front','Painel'],['extras','Partes']],
       controls:[mk('bustFront','Tórax frente meia',24,40),mk('bustBack','Tórax costas meia',24,42),mk('shoulder','Ombro',11,18),mk('bodyLength','Comprimento corpo',58,86),mk('sleeveLength','Manga',48,70)]
     }
   ];
 
+  // ── Estado global ─────────────────────────────────────────────────────────
   let currentBase = null;
   let state = {};
   let mode = 'all';
   const svg = document.getElementById('draft');
 
+  // ── SVG helpers ───────────────────────────────────────────────────────────
   const make = (tag, attrs={}, text='') => {
     const el = document.createElementNS(ns, tag);
     Object.entries(attrs).forEach(([k,v]) => el.setAttribute(k,v));
@@ -554,8 +592,10 @@
   }
 
   function rawPoint(ox,oy,cx,x,y) { return {x:ox+x,y:oy+y,rawX:(x-cx)/cm,rawY:y/cm}; }
+
   function fmt(v) { return `${Number(v).toLocaleString('pt-BR',{minimumFractionDigits:v%1?1:0,maximumFractionDigits:1})} cm`; }
 
+  // ── Grid ─────────────────────────────────────────────────────────────────
   function drawGrid() {
     svg.innerHTML='';
     svg.appendChild(make('rect',{x:16,y:16,width:1088,height:708,fill:'#FFFFFF',stroke:'rgba(0,0,0,0.08)',rx:'10'}));
@@ -563,6 +603,7 @@
     for (let x=80;x<=1060;x+=50) svg.appendChild(make('line',{x1:x,y1:40,x2:x,y2:700,class:'guide-line',opacity:'.18'}));
   }
 
+  // ── Pants ─────────────────────────────────────────────────────────────────
   function pathFromPants(p,back=false) {
     const side=`M ${p.waist.x} ${p.waist.y} C ${p.waist.x+9} ${p.hip.y*.45}, ${p.hip.x} ${p.hip.y-18}, ${p.hip.x} ${p.hip.y}`;
     const hipThigh=`C ${p.hip.x+4} ${p.hip.y+18}, ${p.thighOuter.x} ${p.thighOuter.y-10}, ${p.thighOuter.x} ${p.thighOuter.y}`;
@@ -639,6 +680,7 @@
     };
   }
 
+  // ── Bodice (shirt/top/jacket) ─────────────────────────────────────────────
   function bodiceLocal(kind,draftType) {
     const isBack=kind==='back', cx=72;
     const bust=isBack?state.bustBack:state.bustFront;
@@ -741,6 +783,7 @@
     svg.appendChild(g);
   }
 
+  // ── Dress ─────────────────────────────────────────────────────────────────
   function dressLocal(kind) {
     const isBack=kind==='back', cx=72;
     const bust=isBack?state.bustBack:state.bustFront;
@@ -784,7 +827,7 @@
     addDim(g,p.cfHem.x,p.hem.y+18,p.hem.x,p.hem.y+18,`barra ${fmt(kind==='back'?state.hemBack:state.hemFront)}`,p.cfHem.x+52,p.hem.y+34);
     if (kind==='front'&&base.id.includes('envelope')) {
       g.appendChild(make('line',{x1:p.neck.x,y1:p.neck.y+8,x2:p.waist.x+state.overlap*cm,y2:p.waist.y,class:'fold'}));
-      addText(g,p.waist.x+12,p.waist.y-14,`transpasse ${fmt(state.overlap)}`,'svg-small');
+      addText(g,p.waist.x+12,p.waist.y-14,`transpasse ${fmt(state.overlap)}`,  'svg-small');
     }
     addPoints(g,p); svg.appendChild(g);
     return {kind,label,ox,oy,points:p};
@@ -799,6 +842,7 @@
     };
   }
 
+  // ── Skirt ─────────────────────────────────────────────────────────────────
   function skirtLocal(kind) {
     const isBack=kind==='back', cx=72;
     const waist=isBack?state.waistBack:state.waistFront;
@@ -851,6 +895,7 @@
     };
   }
 
+  // ── Render ─────────────────────────────────────────────────────────────────
   function render() {
     if (!currentBase) return;
     drawGrid();
@@ -873,6 +918,7 @@
       ).join('');
   }
 
+  // ── UI ─────────────────────────────────────────────────────────────────────
   function criar() {
     const txt=document.getElementById('description').value.trim();
     if (!txt) { document.getElementById('description').focus(); return; }
@@ -887,11 +933,13 @@
     const ts=Date.now().toString().slice(-4);
     const sku='PH'+new Date().getFullYear().toString().slice(-2)+ts;
 
+    // Base de molde
     const baseId=garment?garment.baseId:'calca-alfaiataria-reta';
     currentBase=patternBases.find(b=>b.id===baseId)||patternBases[0];
     state={...currentBase.defaults};
     mode='all';
 
+    // Meta card
     document.getElementById('meta-sku').textContent=sku;
     document.getElementById('meta-rows').innerHTML=[
       ['Tipo', garment?garment.en:'—'],
@@ -902,6 +950,7 @@
     ].map(([k,v])=>`<div class="meta-row"><span class="meta-key">${k}</span><span class="meta-val">${v}</span></div>`).join('');
     document.getElementById('meta-card').classList.add('visible');
 
+    // View mode chips
     const chipsEl=document.getElementById('modeChips');
     chipsEl.innerHTML=currentBase.modeSet.map(([key,label])=>
       `<button class="mode-chip" type="button" data-mode="${key}" aria-pressed="${key==='all'}">${label}</button>`
@@ -915,6 +964,7 @@
       });
     });
 
+    // Measurement controls
     const ctrlEl=document.getElementById('controls');
     ctrlEl.innerHTML=currentBase.controls.map(({key,label,min,max,step})=>`
       <div class="control-row" data-key="${key}">
@@ -931,11 +981,16 @@
       num.addEventListener('input',()=>sync(num));
     });
 
+    // Show sections
     document.getElementById('view-section').style.display='';
     document.getElementById('controls-section').style.display='';
     document.getElementById('legend-section').style.display='';
+
+    // Board head
     document.getElementById('board-title').textContent=currentBase.title;
     document.getElementById('board-sub').textContent=currentBase.summary;
+
+    // Switch views
     document.getElementById('empty-state').style.display='none';
     document.getElementById('board').style.display='flex';
 
