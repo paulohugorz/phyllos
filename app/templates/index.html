@@ -4,189 +4,299 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fashion OS</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --obsidian: #0F0F0D;
-      --cream:    #F5F2EB;
-      --gold:     #B89A6A;
-      --muted:    #9E9B95;
-      --border:   rgba(15,15,13,0.12);
-      --border-md: rgba(15,15,13,0.22);
+      --bg:          #F5F5F7;
+      --surface:     #FFFFFF;
+      --text:        #1D1D1F;
+      --secondary:   #6E6E73;
+      --tertiary:    #AEAEB2;
+      --blue:        #0071E3;
+      --blue-hover:  #0077ED;
+      --blue-active: #006EDB;
+      --border:      rgba(0,0,0,0.08);
+      --border-med:  rgba(0,0,0,0.14);
+      --shadow-sm:   0 2px 8px rgba(0,0,0,0.06);
+      --shadow-md:   0 4px 20px rgba(0,0,0,0.08);
+      --shadow-lg:   0 8px 40px rgba(0,0,0,0.12);
+      --radius-sm:   8px;
+      --radius-md:   12px;
+      --radius-lg:   18px;
+      --radius-pill: 980px;
+      --nav-h:       52px;
+      --font:        -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
-      background: var(--cream);
-      color: var(--obsidian);
-      font-family: 'Jost', system-ui, sans-serif;
-      font-weight: 300;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.47059;
+      letter-spacing: -0.022em;
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    header {
+    /* ── Navigation bar ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      background: rgba(245,245,247,0.8);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
       border-bottom: 1px solid var(--border);
-      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .nav-badge {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--secondary);
+      background: rgba(110,110,115,0.1);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ── Main layout ── */
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      height: calc(100vh - var(--nav-h));
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 20px;
+      column-gap: 16px;
+    }
+
+    /* ── Panel cards ── */
+    .panel {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .panel-header {
+      padding: 18px 22px 14px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .logo {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 18px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-    .version {
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
 
-    main {
-      display: flex;
-      height: calc(100vh - 49px);
-    }
-
-    .panel {
-      width: 50%;
-      display: flex;
-      flex-direction: column;
-    }
-    .panel-left { border-right: 1px solid var(--border); }
-
-    .panel-header {
-      padding: 20px 32px 16px;
-      border-bottom: 1px solid var(--border);
-    }
     .panel-label {
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text);
     }
 
+    .panel-meta {
+      font-size: 12px;
+      color: var(--tertiary);
+      font-weight: 400;
+    }
+
+    /* ── Textarea ── */
     textarea {
       flex: 1;
       resize: none;
       border: none;
       outline: none;
       background: transparent;
-      padding: 24px 32px;
-      font-family: 'Jost', system-ui, sans-serif;
-      font-size: 13px;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--obsidian);
+      padding: 20px 22px;
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.6;
+      letter-spacing: -0.016em;
+      color: var(--text);
+      caret-color: var(--blue);
     }
-    textarea::placeholder { color: rgba(158,155,149,0.55); }
 
+    textarea::placeholder {
+      color: var(--tertiary);
+      font-weight: 400;
+    }
+
+    /* ── Panel footer / actions ── */
     .panel-footer {
-      padding: 16px 32px;
+      padding: 14px 22px;
       border-top: 1px solid var(--border);
       display: flex;
+      align-items: center;
       gap: 10px;
       position: relative;
-      overflow: hidden;
+      background: rgba(245,245,247,0.5);
     }
+
     .btn {
-      padding: 10px 20px;
-      font-family: 'Jost', system-ui, sans-serif;
-      font-size: 12px;
+      font-family: var(--font);
+      font-size: 15px;
       font-weight: 400;
-      letter-spacing: 0.06em;
+      letter-spacing: -0.016em;
       cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.18s;
+      border: none;
+      outline: none;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
     }
+
     .btn-primary {
       flex: 1;
-      background: var(--obsidian);
-      color: var(--cream);
-      border: 1px solid var(--obsidian);
+      background: var(--blue);
+      color: #fff;
+      padding: 9px 20px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 1px 3px rgba(0,113,227,0.3);
     }
-    .btn-primary:hover { background: #2a2a26; }
-    .btn-primary:disabled { opacity: 0.4; cursor: default; }
+    .btn-primary:hover  { background: var(--blue-hover); }
+    .btn-primary:active { background: var(--blue-active); transform: scale(0.98); }
+    .btn-primary:disabled {
+      background: var(--tertiary);
+      box-shadow: none;
+      cursor: default;
+      transform: none;
+    }
+
     .btn-ghost {
       background: transparent;
-      color: var(--muted);
-      border: 1px solid rgba(158,155,149,0.5);
+      color: var(--blue);
+      padding: 9px 16px;
+      border-radius: var(--radius-pill);
     }
-    .btn-ghost:hover { border-color: var(--obsidian); color: var(--obsidian); }
+    .btn-ghost:hover  { background: rgba(0,113,227,0.06); }
+    .btn-ghost:active { background: rgba(0,113,227,0.12); transform: scale(0.98); }
 
+    /* ── Loading bar ── */
     .loading-bar {
       display: none;
-      height: 1px;
-      width: 40%;
-      background: var(--gold);
-      animation: sweep 0.9s ease-in-out infinite;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s ease-in-out infinite;
       position: absolute;
-      bottom: 0; left: 0;
+      bottom: 0; left: 0; right: 0;
     }
     .loading-bar.visible { display: block; }
-    @keyframes sweep { 0%{left:-40%} 100%{left:100%} }
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
 
-    /* Right: empty */
+    /* ── Right panel: empty state ── */
     .empty-state {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      opacity: 0.35;
+      gap: 12px;
+      padding: 40px;
+      text-align: center;
     }
-    .empty-icon {
-      width: 52px; height: 52px;
-      border: 1px solid var(--border-md);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .empty-label { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
 
-    /* Right: result */
+    .empty-icon {
+      width: 56px;
+      height: 56px;
+      background: rgba(0,113,227,0.08);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.022em;
+    }
+
+    .empty-subtitle {
+      font-size: 13px;
+      color: var(--secondary);
+      max-width: 220px;
+      line-height: 1.5;
+    }
+
+    /* ── Right panel: result ── */
     .result-panel {
       display: none;
       flex: 1;
       flex-direction: column;
       overflow-y: auto;
-      padding: 24px 32px;
-      gap: 20px;
+      padding: 20px 22px;
+      gap: 16px;
     }
     .result-panel.visible { display: flex; }
 
-    .result-sku {
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
+    /* Scrollbar styling */
+    .result-panel::-webkit-scrollbar { width: 6px; }
+    .result-panel::-webkit-scrollbar-track { background: transparent; }
+    .result-panel::-webkit-scrollbar-thumb { background: var(--tertiary); border-radius: 3px; }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
+    .result-sku {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--blue);
+      text-transform: uppercase;
+      background: rgba(0,113,227,0.08);
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ── Image slot ── */
     .img-slot {
       width: 100%;
-      min-height: 260px;
-      flex: 1;
+      aspect-ratio: 2/3;
+      border-radius: var(--radius-md);
+      background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 2px;
-      background: rgba(232,228,220,0.4);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       position: relative;
       overflow: hidden;
     }
-    .img-slot span {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      opacity: 0.5;
-    }
+
     .img-slot img {
       position: absolute;
       inset: 0;
@@ -194,151 +304,271 @@
       height: 100%;
       object-fit: cover;
       display: none;
+      border-radius: inherit;
     }
+
     .img-empty {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
+      gap: 8px;
     }
-    .img-slot .img-loading {
+
+    .img-empty-label {
+      font-size: 12px;
+      color: var(--tertiary);
+      letter-spacing: 0;
+    }
+
+    .img-loading {
       display: none;
       position: absolute;
       inset: 0;
-      background: rgba(245,242,235,0.85);
+      background: rgba(245,245,247,0.9);
+      backdrop-filter: blur(6px);
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      border-radius: inherit;
     }
-    .img-slot .img-loading.visible { display: flex; }
-    .img-spinner {
-      width: 20px; height: 20px;
-      border: 1.5px solid rgba(15,15,13,0.15);
-      border-top-color: var(--gold);
+    .img-loading.visible { display: flex; }
+
+    /* Apple-style activity indicator */
+    .spinner {
+      width: 28px;
+      height: 28px;
+      position: relative;
+    }
+    .spinner-ring {
+      width: 100%;
+      height: 100%;
+      border: 2.5px solid rgba(0,113,227,0.15);
+      border-top-color: var(--blue);
       border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      animation: spin 0.75s cubic-bezier(0.4,0,0.2,1) infinite;
     }
-    .img-loading-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .meta-table { width: 100%; border-collapse: collapse; }
-    .meta-table tr { border-bottom: 1px solid var(--border); }
-    .meta-table tr:last-child { border-bottom: none; }
-    .meta-table td { padding: 9px 0; font-size: 12px; }
-    .meta-table td:first-child { color: var(--muted); }
-    .meta-table td:last-child { text-align: right; }
-
-    .status-badge {
-      display: inline-block;
-      padding: 2px 10px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      color: var(--muted);
+    .img-loading-label {
+      font-size: 13px;
+      color: var(--secondary);
+      letter-spacing: -0.01em;
     }
 
-    ::selection { background: rgba(184,154,106,0.15); }
+    /* ── Meta table ── */
+    .meta-card {
+      background: var(--bg);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
 
-    #fashion-os-references { display: none; flex-direction: column; gap: 8px; }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .meta-row:last-child { border-bottom: none; }
+    .meta-key { color: var(--secondary); }
+    .meta-val { font-weight: 500; color: var(--text); }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      background: rgba(110,110,115,0.1);
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--secondary);
+    }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--tertiary);
+    }
+
+    /* ── References ── */
+    #fashion-os-references {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+    }
     #fashion-os-references.visible { display: flex; }
-    .refs-label {
-      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--muted); padding-bottom: 4px;
+
+    .refs-header {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
     }
+
     .fashion-ref-card {
-      display: flex; gap: 10px; align-items: flex-start;
-      padding: 8px 0; border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px;
+      background: var(--bg);
+      border-radius: var(--radius-md);
     }
-    .fashion-ref-card:last-child { border-bottom: none; }
+
     .fashion-ref-thumb {
-      width: 36px; height: 36px; border-radius: 2px;
-      background: rgba(232,228,220,0.6); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--muted); flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      background: rgba(0,113,227,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--blue);
+      flex-shrink: 0;
     }
-    .fashion-ref-card strong { font-size: 11px; font-weight: 400; display: block; }
-    .fashion-ref-card p { font-size: 10px; color: var(--muted); margin: 2px 0; }
-    .fashion-ref-card small { font-size: 10px; color: var(--muted); opacity: 0.7; }
+
+    .fashion-ref-body strong {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .fashion-ref-body p {
+      font-size: 12px;
+      color: var(--secondary);
+      line-height: 1.4;
+    }
+
+    /* ── Right panel footer ── */
+    .result-footer {
+      padding: 12px 22px;
+      border-top: 1px solid var(--border);
+      background: rgba(245,245,247,0.5);
+    }
+
+    .result-footer-text {
+      font-size: 12px;
+      color: var(--tertiary);
+      letter-spacing: -0.008em;
+    }
+
+    /* ── Text selection ── */
+    ::selection { background: rgba(0,113,227,0.15); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow-y: auto;
+        padding: 16px;
+        gap: 16px;
+      }
+      .panel { min-height: 320px; }
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <span class="logo">Fashion OS</span>
-    <span class="version">v1</span>
-  </header>
+  <nav>
+    <span class="nav-logo">Fashion OS</span>
+    <span class="nav-badge">Edição 1</span>
+  </nav>
 
   <main>
 
-    <section class="panel panel-left">
+    <!-- Left: Input panel -->
+    <div class="panel">
       <div class="panel-header">
-        <span class="panel-label">Descrição da peça</span>
+        <span class="panel-label">Sua ideia</span>
+        <span class="panel-meta">Descreva em detalhes</span>
       </div>
 
       <textarea
         id="description"
-        placeholder="Descreva a peça — silhueta, tecido, caimento, cor, referências..."
+        placeholder="Descreva o que imagina. Silhueta, tecido, cor, caimento."
       ></textarea>
 
       <div class="panel-footer">
-        <button class="btn btn-primary" id="btn-gerar" onclick="gerar()">Gerar peça</button>
-        <button class="btn btn-ghost" onclick="limpar()">Limpar</button>
+        <button class="btn btn-primary" id="btn-gerar" onclick="gerar()">Criar</button>
+        <button class="btn btn-ghost" onclick="limpar()">Recomeçar</button>
         <div class="loading-bar" id="loading-bar"></div>
       </div>
-    </section>
+    </div>
 
-    <section class="panel">
+    <!-- Right: Result panel -->
+    <div class="panel">
       <div class="panel-header">
-        <span class="panel-label">Peça formada</span>
+        <span class="panel-label">Resultado</span>
       </div>
 
+      <!-- Empty state -->
       <div class="empty-state" id="empty-state">
         <div class="empty-icon">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <path d="M7 3H4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-3M7 3a2 2 0 0 0 4 0M7 3a2 2 0 0 1 4 0" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round"/>
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3" stroke="#0071E3" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M9 4a2 2 0 0 0 4 0M9 4a2 2 0 0 1 4 0" stroke="#0071E3" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
         </div>
-        <span class="empty-label">A peça aparecerá aqui</span>
+        <p class="empty-title">Pronto para criar.</p>
+        <p class="empty-subtitle">Descreva a peça à esquerda e toque em Criar.</p>
       </div>
 
+      <!-- Result content -->
       <div class="result-panel" id="result-panel">
-        <span class="result-sku" id="result-sku"></span>
 
+        <div class="result-header">
+          <span class="result-sku" id="result-sku"></span>
+        </div>
+
+        <!-- Image -->
         <div class="img-slot" id="img-slot">
-          <img id="generated-img" alt="Peça gerada" />
+          <img id="generated-img" alt="Peça criada" />
+
           <div class="img-loading" id="img-loading">
-            <div class="img-spinner"></div>
-            <span class="img-loading-label">Gerando</span>
+            <div class="spinner"><div class="spinner-ring"></div></div>
+            <span class="img-loading-label" id="img-loading-label">Criando</span>
           </div>
+
           <div class="img-empty" id="img-empty">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="opacity:.35">
-              <rect x="3" y="5" width="22" height="18" rx="2" stroke="#9E9B95" stroke-width="1.2"/>
-              <circle cx="9.5" cy="11" r="2" stroke="#9E9B95" stroke-width="1.2"/>
-              <path d="M3 19l5-5 4 4 4-4 6 6" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="opacity:.3">
+              <rect x="4" y="6" width="24" height="20" rx="3" stroke="#6E6E73" stroke-width="1.5"/>
+              <circle cx="11" cy="13" r="2.5" stroke="#6E6E73" stroke-width="1.5"/>
+              <path d="M4 22l6-6 5 5 4-4 7 7" stroke="#6E6E73" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
+            <span class="img-empty-label">Imagem da peça</span>
           </div>
         </div>
 
-        <table class="meta-table" id="meta-table"></table>
+        <!-- Metadata -->
+        <div class="meta-card" id="meta-card"></div>
 
+        <!-- References -->
         <div id="fashion-os-references">
-          <p class="refs-label">Referências do catálogo</p>
+          <p class="refs-header">Inspirações</p>
         </div>
+
       </div>
 
-      <div class="panel-footer">
-        <span style="font-size:11px;color:var(--muted);letter-spacing:0.04em;">Powered by Stable Horde — geração gratuita, sem cadastro.</span>
+      <div class="result-footer">
+        <span class="result-footer-text">Geração gratuita. Sem cadastro.</span>
       </div>
-    </section>
+    </div>
 
   </main>
 
   <script>
 
-    // ── Mapeamento de peças PT → EN + tokens de prompt ────────────────────────
     const GARMENT_MAP = [
       { pt: ['vestido','dress'],        en: 'dress',      slug: 'vestido',           base: 'dress, full body, fashion editorial, woman' },
       { pt: ['saia'],                   en: 'skirt',      slug: 'saia',              base: 'skirt, full body, fashion editorial, woman' },
@@ -354,7 +584,6 @@
       { pt: ['macacão','macacao','jumpsuit'], en: 'jumpsuit', slug: 'vestido',       base: 'jumpsuit, full body, fashion editorial, woman' },
     ];
 
-    // Detecta o tipo de peça no texto
     function detectGarment(txt) {
       const q = normalize(txt);
       for (const g of GARMENT_MAP) {
@@ -363,7 +592,6 @@
       return null;
     }
 
-    // Extrai cor e tecido do texto
     function extractMeta(txt) {
       const corMatch = txt.match(/pret[ao]|branc[ao]|cinz[ao]|azul|verde|vermelh[ao]|beg[eê]|crem[ae]|marrom|caramelo|dourad[ao]|off.white|nude|terrac[oô]|areia|lavanda/i);
       const tecMatch = txt.match(/linho|seda|algodão|lã|jersey|crepe|tweed|veludo|cetim|tencel|viscose|denim|malha|modal|lyocell|neoprene|couro/i);
@@ -392,19 +620,24 @@
       const { cor, tec } = extractMeta(txt);
 
       document.getElementById('result-sku').textContent = sku;
-      document.getElementById('meta-table').innerHTML = `
-        <tr><td>Categoria</td><td>${garment ? garment.en.charAt(0).toUpperCase()+garment.en.slice(1) : '—'}</td></tr>
-        <tr><td>Cor</td><td>${cor}</td></tr>
-        <tr><td>Tecido</td><td>${tec}</td></tr>
-        <tr><td>Status</td><td><span class="status-badge">Rascunho</span></td></tr>
-      `;
+
+      const metaCard = document.getElementById('meta-card');
+      const rows = [
+        ['Categoria', garment ? garment.en.charAt(0).toUpperCase()+garment.en.slice(1) : '—'],
+        ['Cor', cor],
+        ['Tecido', tec],
+        ['Status', `<span class="status-pill"><span class="status-dot"></span>Exploração</span>`],
+      ];
+      metaCard.innerHTML = rows.map(([k,v]) =>
+        `<div class="meta-row"><span class="meta-key">${k}</span><span class="meta-val">${v}</span></div>`
+      ).join('');
+
       document.getElementById('empty-state').style.display = 'none';
       document.getElementById('result-panel').classList.add('visible');
       document.getElementById('fashion-os-references').classList.remove('visible');
       gerarImagem(txt, garment);
     }
 
-    // ── Cache de dados ────────────────────────────────────────────────────────
     let _fashionTerms = null;
     let _visualRefs   = null;
 
@@ -426,14 +659,12 @@
       return _visualRefs;
     }
 
-    // Retorna termos técnicos que combinam com o texto E com a categoria da peça
     function matchTerms(txt, garment, terms) {
       const q = normalize(txt);
       const catFilter = garment ? normalize(garment.en) : null;
       return terms.filter(t => {
         const hay = normalize([t.termo_pt, t.termo_en, t.subcategoria, t.categoria, t.definicao, t.atributos_visuais].join(' '));
         const wordMatch = q.split(' ').some(w => w.length > 3 && hay.includes(w));
-        // Se detectamos a peça, o termo precisa estar na mesma subcategoria OU ser de tecido/acabamento (universal)
         if (catFilter && garment) {
           const isUniversal = ['tecido','acabamento','costura','fechamento'].includes(t.categoria);
           const isSameCat   = hay.includes(normalize(garment.en)) || hay.includes(normalize(garment.pt?.[0]||''));
@@ -443,27 +674,17 @@
       });
     }
 
-    // Retorna referências visuais APENAS da categoria da peça detectada
     function matchRefs(txt, garment, refs) {
-      // Filtro primário: campo categoria deve bater exatamente com o slug da peça
-      const filtered = garment
-        ? refs.filter(r => r.categoria === garment.slug)
-        : refs;
-
-      // Se não há refs para a categoria, devolve vazio (nunca mostra refs erradas)
+      const filtered = garment ? refs.filter(r => r.categoria === garment.slug) : refs;
       if (!filtered.length) return [];
-
-      // Ordena: primeiro com imagem, depois por prioridade
-      return filtered
-        .sort((a, b) => {
-          const ai = a.image_url ? 1 : 0;
-          const bi = b.image_url ? 1 : 0;
-          if (bi !== ai) return bi - ai;
-          return (Number(b.prioridade)||0) - (Number(a.prioridade)||0);
-        });
+      return filtered.sort((a, b) => {
+        const ai = a.image_url ? 1 : 0;
+        const bi = b.image_url ? 1 : 0;
+        if (bi !== ai) return bi - ai;
+        return (Number(b.prioridade)||0) - (Number(a.prioridade)||0);
+      });
     }
 
-    // Compila prompt positivo e negativo a partir da taxonomia + referências
     function buildPrompt(userTxt, garment, terms, refs) {
       const pos = new Set(['fashion editorial photography', 'full body', 'soft studio lighting',
         'realistic styled environment', 'clean contemporary studio or lifestyle setting',
@@ -473,47 +694,39 @@
         'disfigured', 'deformed hands', 'extra limbs', 'cartoon', 'illustration',
         'painting', 'render', 'plastic skin', 'overexposed', 'bad anatomy']);
 
-      // Base da peça
       if (garment) garment.base.split(',').map(s=>s.trim()).forEach(s=>pos.add(s));
-
-      // Tokens da taxonomia
       terms.forEach(t => {
         t.prompt_tokens.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>pos.add(s));
         t.prompt_negativo.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>neg.add(s));
       });
-
-      // Tokens das referências visuais
       refs.slice(0,4).forEach(r => {
         String(r.prompt_tokens||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>pos.add(s));
         String(r.prompt_negativo||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>neg.add(s));
       });
 
-      return {
-        pos: userTxt + ', ' + [...pos].join(', '),
-        neg: [...neg].join(', ')
-      };
+      return { pos: userTxt + ', ' + [...pos].join(', '), neg: [...neg].join(', ') };
     }
 
-    // Renderiza o painel de referências — só mostra imagens da categoria certa
     function renderRefs(refs) {
       const panel = document.getElementById('fashion-os-references');
-      panel.innerHTML = '<p class="refs-label">Referências da categoria</p>';
+      panel.innerHTML = '<p class="refs-header">Inspirações</p>';
 
       const withImg = refs.filter(r => r.image_url);
       const noImg   = refs.filter(r => !r.image_url).slice(0, 3);
 
       if (withImg.length) {
         const grid = document.createElement('div');
-        grid.style.cssText = 'display:grid;grid-template-columns:repeat('+Math.min(withImg.length,3)+',1fr);gap:6px;margin-bottom:10px;';
+        const cols = Math.min(withImg.length, 3);
+        grid.style.cssText = `display:grid;grid-template-columns:repeat(${cols},1fr);gap:8px;`;
         withImg.slice(0,3).forEach(r => {
           const cell = document.createElement('div');
-          cell.style.cssText = 'position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:2px;border:1px solid var(--border);background:rgba(232,228,220,.4)';
+          cell.style.cssText = 'position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:10px;border:1px solid rgba(0,0,0,0.08);background:#F5F5F7;';
           cell.innerHTML = `<img src="${r.image_url}" alt="${r.titulo}"
             style="width:100%;height:100%;object-fit:cover"
             onerror="this.parentElement.style.display='none'">
-            <span style="position:absolute;bottom:0;left:0;right:0;padding:4px 6px;
-              font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
-              background:rgba(245,242,235,.88)">${r.categoria||''}</span>`;
+            <span style="position:absolute;bottom:0;left:0;right:0;padding:6px 8px;
+              font-size:10px;font-weight:500;letter-spacing:.02em;text-transform:uppercase;color:#6E6E73;
+              background:rgba(245,245,247,0.9);backdrop-filter:blur(4px)">${r.categoria||''}</span>`;
           grid.appendChild(cell);
         });
         panel.appendChild(grid);
@@ -523,9 +736,8 @@
         const card = document.createElement('div');
         card.className = 'fashion-ref-card';
         card.innerHTML = `<div class="fashion-ref-thumb">${(r.categoria||'ref').slice(0,4)}</div>
-          <div><strong>${r.titulo}</strong>
-          <p>${r.contexto_uso||''}</p>
-          <small>${(r.styling_notes||'').slice(0,80)}</small></div>`;
+          <div class="fashion-ref-body"><strong>${r.titulo}</strong>
+          <p>${r.contexto_uso||''}</p></div>`;
         panel.appendChild(card);
       });
 
@@ -535,7 +747,7 @@
     async function gerarImagem(txt, garment) {
       const img          = document.getElementById('generated-img');
       const loading      = document.getElementById('img-loading');
-      const loadingLabel = loading.querySelector('.img-loading-label');
+      const loadingLabel = document.getElementById('img-loading-label');
       const empty        = document.getElementById('img-empty');
 
       img.style.display = 'none';
@@ -543,7 +755,6 @@
       loading.classList.add('visible');
       loadingLabel.textContent = 'Buscando referências';
 
-      // ── 1. Carrega taxonomia e referências filtradas pela categoria ──────
       let terms = [], refs = [];
       try {
         [terms, refs] = await Promise.all([loadFashionTerms(), loadVisualRefs()]);
@@ -552,11 +763,9 @@
         if (refs.length) renderRefs(refs);
       } catch(_) {}
 
-      // ── 2. Compila prompt enriquecido ────────────────────────────────────
       const { pos, neg } = buildPrompt(txt, garment, terms, refs);
-      loadingLabel.textContent = 'Gerando imagem';
+      loadingLabel.textContent = 'Criando';
 
-      // ── 3. Envia para Stable Horde — modelo Deliberate ───────────────────
       try {
         const sub = await fetch('https://stablehorde.net/api/v2/generate/async', {
           method: 'POST',
@@ -606,12 +815,12 @@
       document.getElementById('img-loading').classList.remove('visible');
       const empty = document.getElementById('img-empty');
       empty.innerHTML = `
-        <div style="text-align:center;padding:16px;display:flex;flex-direction:column;gap:8px;align-items:center;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="opacity:.3">
-            <rect x="3" y="5" width="18" height="14" rx="2" stroke="#9E9B95" stroke-width="1.2"/>
-            <path d="M12 10v4M12 16h.01" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round"/>
+        <div style="text-align:center;display:flex;flex-direction:column;gap:8px;align-items:center;">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="opacity:.35">
+            <rect x="3" y="5" width="22" height="18" rx="3" stroke="#6E6E73" stroke-width="1.5"/>
+            <path d="M14 11v5M14 18h.01" stroke="#6E6E73" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
-          <span style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">${msg}</span>
+          <span style="font-size:13px;color:#6E6E73;letter-spacing:-0.01em;">${msg}</span>
         </div>`;
       empty.style.display = 'flex';
     }
@@ -625,8 +834,19 @@
       img.style.display = 'none';
       img.src = '';
       document.getElementById('img-empty').style.display = 'flex';
+      document.getElementById('img-empty').innerHTML = `
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="opacity:.3">
+          <rect x="4" y="6" width="24" height="20" rx="3" stroke="#6E6E73" stroke-width="1.5"/>
+          <circle cx="11" cy="13" r="2.5" stroke="#6E6E73" stroke-width="1.5"/>
+          <path d="M4 22l6-6 5 5 4-4 7 7" stroke="#6E6E73" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="img-empty-label">Imagem da peça</span>`;
       document.getElementById('img-loading').classList.remove('visible');
     }
+
+    document.getElementById('description').addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') gerar();
+    });
   </script>
 
   <script src="./js/fashion-os-catalog.js"></script>
