@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revenda AI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      width: 100%;
+      max-width: 680px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .avatar {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, #d946ef, #8b5cf6);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px; flex-shrink: 0;
+    }
+
+    header h1 { font-size: 17px; font-weight: 700; color: #111; }
+    header p  { font-size: 12px; color: #6b7280; margin-top: 1px; }
+
+    .chat-area {
+      flex: 1;
+      width: 100%;
+      max-width: 680px;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .bubble {
+      max-width: 82%;
+      padding: 10px 14px;
+      border-radius: 18px;
+      font-size: 14.5px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .bubble.user {
+      align-self: flex-end;
+      background: #8b5cf6;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .bubble.assistant {
+      align-self: flex-start;
+      background: #fff;
+      color: #111;
+      border-bottom-left-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+    }
+
+    .bubble.typing {
+      background: #fff;
+      align-self: flex-start;
+      box-shadow: 0 1px 4px rgba(0,0,0,.08);
+      padding: 12px 18px;
+    }
+
+    .dots span {
+      display: inline-block;
+      width: 7px; height: 7px;
+      background: #d1d5db;
+      border-radius: 50%;
+      margin: 0 2px;
+      animation: blink 1.2s infinite;
+    }
+    .dots span:nth-child(2) { animation-delay: .2s; }
+    .dots span:nth-child(3) { animation-delay: .4s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: .3; transform: scale(.85); }
+      40% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .agents-badge {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-top: 4px;
+      padding-left: 4px;
+    }
+
+    footer {
+      width: 100%;
+      max-width: 680px;
+      padding: 12px 16px;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    textarea {
+      flex: 1;
+      resize: none;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 22px;
+      padding: 10px 16px;
+      font-size: 14.5px;
+      font-family: inherit;
+      outline: none;
+      max-height: 120px;
+      min-height: 44px;
+      line-height: 1.4;
+      color: #111;
+      transition: border-color .2s;
+    }
+    textarea:focus { border-color: #8b5cf6; }
+
+    button#send {
+      width: 44px; height: 44px;
+      background: #8b5cf6;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: background .2s;
+    }
+    button#send:disabled { background: #d1d5db; cursor: default; }
+    button#send svg { width: 18px; height: 18px; fill: #fff; }
+
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .quick-btn {
+      font-size: 12.5px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1.5px solid #e5e7eb;
+      background: #fff;
+      color: #374151;
+      cursor: pointer;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .quick-btn:hover { border-color: #8b5cf6; color: #8b5cf6; }
+
+    .user-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 12.5px;
+      color: #6b7280;
+    }
+    .user-row input {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 4px 8px;
+      font-size: 12.5px;
+      width: 120px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="avatar">✨</div>
+  <div>
+    <h1>Revenda AI</h1>
+    <p>Sua assistente de vendas</p>
+  </div>
+</header>
+
+<div class="chat-area" id="chat"></div>
+
+<footer>
+  <div class="user-row">
+    ID da revendedora:
+    <input id="userId" type="text" value="revendedora_1" placeholder="user_id" />
+  </div>
+  <div class="quick-actions">
+    <button class="quick-btn" onclick="fill('Vendi 2 Malbec para Ana por R$240 via Pix')">💄 Registrar venda</button>
+    <button class="quick-btn" onclick="fill('Chegaram 5 hidratantes Tododia')">📦 Entrada estoque</button>
+    <button class="quick-btn" onclick="fill('Quanto vendi esse mês?')">💰 Financeiro</button>
+    <button class="quick-btn" onclick="fill('Crie um post para vender perfumes masculinos')">📱 Criar conteúdo</button>
+    <button class="quick-btn" onclick="fill('Resumo do dia')">📊 Dashboard</button>
+    <button class="quick-btn" onclick="fill('Qual perfume doce você recomenda até R$80?')">🌸 Rec. produto</button>
+  </div>
+  <div class="input-row">
+    <textarea
+      id="input"
+      rows="1"
+      placeholder="Diga o que aconteceu no seu dia..."
+      onkeydown="handleKey(event)"
+      oninput="autoResize(this)"
+    ></textarea>
+    <button id="send" onclick="sendMessage()">
+      <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+  let conversaId = null;
+
+  function userId() {
+    return document.getElementById('userId').value.trim() || 'revendedora_1';
+  }
+
+  function fill(text) {
+    const ta = document.getElementById('input');
+    ta.value = text;
+    ta.focus();
+    autoResize(ta);
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  }
+
+  function handleKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function addBubble(role, text, agents) {
+    const chat = document.getElementById('chat');
+    const wrap = document.createElement('div');
+
+    const bubble = document.createElement('div');
+    bubble.className = `bubble ${role}`;
+    bubble.textContent = text;
+    wrap.appendChild(bubble);
+
+    if (agents && agents.length) {
+      const badge = document.createElement('div');
+      badge.className = 'agents-badge';
+      badge.textContent = agents.join(' · ');
+      wrap.appendChild(badge);
+    }
+
+    chat.appendChild(wrap);
+    chat.scrollTop = chat.scrollHeight;
+    return wrap;
+  }
+
+  function addTyping() {
+    const chat = document.getElementById('chat');
+    const wrap = document.createElement('div');
+    wrap.id = 'typing';
+    wrap.innerHTML = '<div class="bubble typing"><div class="dots"><span></span><span></span><span></span></div></div>';
+    chat.appendChild(wrap);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('typing');
+    if (t) t.remove();
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('input');
+    const btn = document.getElementById('send');
+    const message = input.value.trim();
+    if (!message) return;
+
+    addBubble('user', message);
+    input.value = '';
+    autoResize(input);
+    btn.disabled = true;
+    addTyping();
+
+    try {
+      const res = await fetch('/revenda/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: userId(),
+          message,
+          conversa_id: conversaId,
+        }),
+      });
+
+      const data = await res.json();
+      removeTyping();
+
+      if (data.conversa_id) conversaId = data.conversa_id;
+      addBubble('assistant', data.message, data.agents_used);
+    } catch (err) {
+      removeTyping();
+      addBubble('assistant', 'Ops, algo deu errado. Tente novamente.');
+    } finally {
+      btn.disabled = false;
+      input.focus();
+    }
+  }
+
+  // Welcome message
+  window.addEventListener('DOMContentLoaded', () => {
+    addBubble(
+      'assistant',
+      'Oi! Sou sua assistente de vendas 😊\n\nMe conta o que aconteceu hoje — venda, cliente, estoque, ou qualquer coisa que precisar. Eu organizo tudo para você!',
+    );
+  });
+</script>
+
+</body>
+</html>
