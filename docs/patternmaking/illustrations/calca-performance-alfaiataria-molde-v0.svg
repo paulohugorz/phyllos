@@ -1,0 +1,190 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1150" viewBox="0 0 1600 1150">
+  <defs>
+    <style>
+      .bg{fill:#fbfaf7}.sheet{fill:#fffdf8;stroke:#d8d1c4;stroke-width:2}
+      .piece{fill:#f5f2eb;stroke:#111;stroke-width:2.5}.line{stroke:#111;stroke-width:1.5;fill:none}
+      .guide{stroke:#8f887e;stroke-width:1.2;stroke-dasharray:7 7}.dim{stroke:#b89a6a;stroke-width:1.6;fill:none;marker-start:url(#arr);marker-end:url(#arr)}
+      .dimline{stroke:#b89a6a;stroke-width:1.2}.mark{stroke:#111;stroke-width:1.2}.notch{stroke:#b89a6a;stroke-width:3}
+      .grain{stroke:#111;stroke-width:1.8;marker-end:url(#arrow)}.label{font:700 18px Arial,sans-serif;letter-spacing:.07em;fill:#111}
+      .sub{font:400 14px Arial,sans-serif;fill:#6f6a61}.txt{font:400 13px Arial,sans-serif;fill:#111}.tiny{font:400 11px Arial,sans-serif;fill:#6f6a61}
+      .measure{font:700 12px Arial,sans-serif;fill:#8a6a32}.box{fill:#fffaf0;stroke:#d8d1c4;stroke-width:1.2}
+    </style>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 L2.2,4 Z" fill="#b89a6a"/>
+    </marker>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#111"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" width="1600" height="1150"/>
+  <rect class="sheet" x="36" y="32" width="1528" height="1086" rx="4"/>
+
+  <text class="label" x="70" y="78">PHYLLOS - desenho tecnico de molde - calca performance alfaiataria v0</text>
+  <text class="sub" x="70" y="104">Escala visual: 1 cm = 6 px no desenho principal. Cotas sem margem de costura, exceto quadro de margens.</text>
+
+  <!-- measurement table -->
+  <g transform="translate(1110 72)">
+    <rect class="box" x="0" y="0" width="390" height="310"/>
+    <text class="label" x="18" y="32">Tabela de cotas</text>
+    <text class="txt" x="18" y="64">CF: centro frente / CC: centro costas</text>
+    <text class="txt" x="18" y="90">Escala: medida em cm multiplicada por 6 px</text>
+    <text class="measure" x="18" y="126">Altura lateral: 106 cm</text>
+    <text class="measure" x="18" y="150">Entreperna: 76 cm</text>
+    <text class="measure" x="18" y="174">Linha quadril: 20 cm abaixo da cintura</text>
+    <text class="measure" x="18" y="198">Gancho frente: prof. 27,5 cm / extensao 4,5 cm</text>
+    <text class="measure" x="18" y="222">Gancho costas: prof. 29 cm / extensao 8,5 cm</text>
+    <text class="measure" x="18" y="246">Joelho: 52 cm abaixo da cintura</text>
+    <text class="measure" x="18" y="270">Bainha: 4 cm adicionados no molde de corte</text>
+  </g>
+
+  <!-- FRONT TECHNICAL PATTERN -->
+  <g id="front" transform="translate(150 170)">
+    <text class="label" x="88" y="-34">Frente - meia perna</text>
+    <text class="sub" x="88" y="-12">Base sem margem. Cortar 2 espelhadas.</text>
+
+    <!-- scaled points from markdown; visualized from center-front/inner axis -->
+    <path class="piece" d="M111 0 L170 120 L183 165 L141 312 L141 456 L18 456 L27 312 L27 165 L0 165 L18 120 Z"/>
+    <!-- crotch and inseam shaping -->
+    <path class="line" d="M0 165 C28 178,63 181,88 164 C107 151,112 126,111 0"/>
+    <path class="guide" d="M18 120 L170 120"/>
+    <path class="guide" d="M27 165 L183 165"/>
+    <path class="guide" d="M27 312 L141 312"/>
+    <path class="guide" d="M18 456 L141 456"/>
+
+    <!-- grainline -->
+    <line class="grain" x1="86" y1="44" x2="86" y2="420"/>
+    <text class="tiny" x="96" y="245" transform="rotate(90 96 245)">linha de fio paralela ao eixo da perna</text>
+
+    <!-- pocket and waist -->
+    <path class="line" d="M112 14 L155 86"/>
+    <path class="line" d="M122 20 C100 50,93 82,105 112"/>
+    <line class="notch" x1="112" y1="14" x2="120" y2="9"/>
+    <line class="notch" x1="155" y1="86" x2="166" y2="84"/>
+    <text class="tiny" x="168" y="62">bolso faca: boca 14 cm</text>
+
+    <!-- vertical dimensions -->
+    <line class="dimline" x1="-52" y1="0" x2="-20" y2="0"/><line class="dimline" x1="-52" y1="456" x2="-20" y2="456"/>
+    <line class="dim" x1="-42" y1="0" x2="-42" y2="456"/>
+    <text class="measure" x="-118" y="232" transform="rotate(-90 -118 232)">entreperna 76 cm</text>
+
+    <line class="dimline" x1="214" y1="0" x2="244" y2="0"/><line class="dimline" x1="214" y1="636" x2="244" y2="636"/>
+    <line class="dim" x1="234" y1="0" x2="234" y2="636"/>
+    <text class="measure" x="248" y="330" transform="rotate(90 248 330)">altura lateral 106 cm</text>
+
+    <!-- horizontal dimensions -->
+    <line class="dimline" x1="0" y1="-22" x2="0" y2="-6"/><line class="dimline" x1="111" y1="-22" x2="111" y2="-6"/>
+    <line class="dim" x1="0" y1="-16" x2="111" y2="-16"/>
+    <text class="measure" x="16" y="-26">cintura frente 18,5 cm</text>
+
+    <line class="dim" x1="0" y1="147" x2="27" y2="147"/>
+    <text class="measure" x="-18" y="140">ext. gancho 4,5 cm</text>
+
+    <line class="dim" x1="27" y1="186" x2="183" y2="186"/>
+    <text class="measure" x="64" y="204">coxa frente 30,5 cm</text>
+
+    <line class="dim" x1="27" y1="294" x2="141" y2="294"/>
+    <text class="measure" x="56" y="287">joelho 23,5 cm</text>
+
+    <line class="dim" x1="18" y1="478" x2="141" y2="478"/>
+    <text class="measure" x="50" y="498">barra 23,5 cm</text>
+
+    <!-- labels for construction lines -->
+    <text class="tiny" x="-86" y="124">linha do quadril: 20 cm</text>
+    <text class="tiny" x="-82" y="169">linha do gancho: 27,5 cm</text>
+    <text class="tiny" x="-70" y="316">linha do joelho: 52 cm</text>
+    <text class="tiny" x="-52" y="459">linha da barra</text>
+  </g>
+
+  <!-- BACK TECHNICAL PATTERN -->
+  <g id="back" transform="translate(550 170)">
+    <text class="label" x="92" y="-34">Costas - meia perna</text>
+    <text class="sub" x="92" y="-12">Base sem margem. Cortar 2 espelhadas.</text>
+
+    <path class="piece" d="M117 -9 L185 120 L201 174 L147 312 L147 456 L18 456 L24 312 L51 174 L0 174 L15 120 Z"/>
+    <path class="line" d="M0 174 C38 202,80 206,110 181 C137 158,128 88,117 -9"/>
+    <path class="guide" d="M15 120 L185 120"/>
+    <path class="guide" d="M51 174 L201 174"/>
+    <path class="guide" d="M24 312 L147 312"/>
+    <path class="guide" d="M18 456 L147 456"/>
+
+    <!-- back rise extension and dart -->
+    <path class="line" d="M108 8 L96 78 L120 78 Z"/>
+    <text class="tiny" x="126" y="62">pence costas: absorve cintura/quadril</text>
+    <rect x="72" y="-2" width="110" height="26" fill="none" stroke="#b89a6a" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text class="tiny" x="70" y="-16">area do cos costas com elastico</text>
+
+    <!-- grainline -->
+    <line class="grain" x1="92" y1="44" x2="92" y2="420"/>
+    <text class="tiny" x="102" y="245" transform="rotate(90 102 245)">linha de fio paralela ao eixo da perna</text>
+
+    <!-- vertical dimensions -->
+    <line class="dimline" x1="-52" y1="0" x2="-20" y2="0"/><line class="dimline" x1="-52" y1="456" x2="-20" y2="456"/>
+    <line class="dim" x1="-42" y1="0" x2="-42" y2="456"/>
+    <text class="measure" x="-118" y="232" transform="rotate(-90 -118 232)">entreperna 76 cm</text>
+
+    <line class="dimline" x1="232" y1="-9" x2="262" y2="-9"/><line class="dimline" x1="232" y1="636" x2="262" y2="636"/>
+    <line class="dim" x1="252" y1="-9" x2="252" y2="636"/>
+    <text class="measure" x="266" y="330" transform="rotate(90 266 330)">altura lateral 106 cm</text>
+
+    <!-- horizontal dimensions -->
+    <line class="dimline" x1="0" y1="-36" x2="0" y2="-18"/><line class="dimline" x1="117" y1="-36" x2="117" y2="-18"/>
+    <line class="dim" x1="0" y1="-28" x2="117" y2="-28"/>
+    <text class="measure" x="12" y="-44">cintura costas 19,5 cm</text>
+
+    <line class="dim" x1="0" y1="154" x2="51" y2="154"/>
+    <text class="measure" x="-12" y="146">ext. gancho 8,5 cm</text>
+
+    <line class="dim" x1="51" y1="196" x2="201" y2="196"/>
+    <text class="measure" x="86" y="214">coxa costas 33,5 cm</text>
+
+    <line class="dim" x1="24" y1="294" x2="147" y2="294"/>
+    <text class="measure" x="58" y="287">joelho 24,5 cm</text>
+
+    <line class="dim" x1="18" y1="478" x2="147" y2="478"/>
+    <text class="measure" x="54" y="498">barra 24,5 cm</text>
+
+    <text class="tiny" x="-86" y="124">linha do quadril: 20 cm</text>
+    <text class="tiny" x="-82" y="178">linha do gancho: 29 cm</text>
+    <text class="tiny" x="-70" y="316">linha do joelho: 52 cm</text>
+    <text class="tiny" x="-52" y="459">linha da barra</text>
+  </g>
+
+  <!-- COMPONENTS AND EXPLANATION -->
+  <g transform="translate(1010 430)">
+    <rect class="box" x="0" y="0" width="490" height="520"/>
+    <text class="label" x="20" y="36">Componentes e margens</text>
+
+    <text class="txt" x="20" y="74">Cos frente limpo: 38 cm total x 4 cm pronto</text>
+    <rect class="piece" x="20" y="90" width="228" height="28"/>
+    <line class="dim" x1="20" y1="132" x2="248" y2="132"/>
+    <text class="measure" x="82" y="150">38 cm total</text>
+
+    <text class="txt" x="20" y="190">Cos costas: 43 cm expandido x 4 cm pronto</text>
+    <rect class="piece" x="20" y="206" width="258" height="38"/>
+    <rect x="34" y="216" width="230" height="18" fill="none" stroke="#b89a6a" stroke-width="1.4" stroke-dasharray="5 4"/>
+    <text class="tiny" x="292" y="230">canal interno para elastico</text>
+    <line class="dim" x1="20" y1="258" x2="278" y2="258"/>
+    <text class="measure" x="92" y="276">43 cm expandido</text>
+
+    <text class="txt" x="20" y="318">Bolso faca: boca 14 cm; preso no cos e lateral</text>
+    <path class="piece" d="M20 340 L150 340 L164 430 L58 430 C35 398,26 370,20 340 Z"/>
+    <path class="line" d="M36 350 L106 420"/>
+    <line class="dim" x1="36" y1="334" x2="106" y2="334"/>
+    <text class="measure" x="50" y="326">14 cm</text>
+
+    <text class="txt" x="230" y="340">Margens do molde de corte</text>
+    <text class="tiny" x="230" y="366">Laterais: 1,5 cm</text>
+    <text class="tiny" x="230" y="388">Entreperna: 1,2 cm</text>
+    <text class="tiny" x="230" y="410">Gancho: 1,2 cm</text>
+    <text class="tiny" x="230" y="432">Cintura para cos: 1 cm</text>
+    <text class="tiny" x="230" y="454">Bainha: 4 cm</text>
+
+    <text class="txt" x="20" y="488">Leitura das cotas</text>
+    <text class="tiny" x="20" y="512">Altura = eixo vertical y. Largura = eixo horizontal x.</text>
+    <text class="tiny" x="20" y="534">As cotas da frente/costas sao meias medidas da peca.</text>
+  </g>
+
+  <!-- FOOTNOTE -->
+  <text class="sub" x="70" y="1082">Nota: desenho tecnico ainda nao e molde 1:1. A proxima versao deve gerar arquivo em escala real com grade A4, curvas revisadas e conferencia de costuras casadas.</text>
+</svg>
