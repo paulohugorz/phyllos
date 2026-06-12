@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Requisitos — PHYLLOS Create / Construtor de Moldes</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --bg:#F5F5F7;--surface:#fff;--text:#1D1D1F;--secondary:#6E6E73;--tertiary:#AEAEB2;
+  --border:rgba(0,0,0,0.1);--blue:#0071E3;--blue-bg:rgba(0,113,227,0.08);
+  --green:#34C759;--green-bg:rgba(52,199,89,0.1);--orange:#FF9F0A;--orange-bg:rgba(255,159,10,0.1);
+  --red:#FF3B30;--red-bg:rgba(255,59,48,0.1);--purple:#AF52DE;--purple-bg:rgba(175,82,222,0.1);
+  --shadow-sm:0 1px 4px rgba(0,0,0,0.06);--shadow-md:0 4px 20px rgba(0,0,0,0.08);
+  --radius-sm:8px;--radius-md:12px;--radius-lg:18px;--nav-h:52px;
+  --font:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif
+}
+body{margin:0;font-family:var(--font);font-size:15px;color:var(--text);background:var(--bg);
+  -webkit-font-smoothing:antialiased;line-height:1.5;letter-spacing:-0.016em}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;height:var(--nav-h);
+  background:rgba(245,245,247,0.85);backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;gap:16px}
+.nav-brand{font-size:14px;font-weight:600;color:var(--text);text-decoration:none;white-space:nowrap}
+.nav-brand span{color:var(--blue)}
+.nav-pills{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.nav-pill{font-size:12px;font-weight:500;padding:4px 12px;border-radius:980px;border:none;
+  cursor:pointer;background:transparent;color:var(--secondary);transition:all .15s}
+.nav-pill:hover,.nav-pill.active{background:var(--blue);color:#fff}
+
+/* HERO */
+.hero{padding:72px 24px 48px;max-width:900px;margin:0 auto}
+.hero-label{font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:12px}
+.hero h1{font-size:clamp(28px,5vw,48px);font-weight:700;letter-spacing:-0.03em;margin:0 0 16px;line-height:1.1}
+.hero p{font-size:17px;color:var(--secondary);max-width:620px;margin:0 0 32px}
+.hero-meta{display:flex;gap:24px;flex-wrap:wrap}
+.meta-item{font-size:13px;color:var(--secondary)}
+.meta-item strong{color:var(--text)}
+
+/* FILTERS */
+.filters{max-width:1100px;margin:0 auto;padding:0 24px 24px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filter-label{font-size:12px;font-weight:600;color:var(--secondary);text-transform:uppercase;letter-spacing:0.06em}
+.filter-btn{font-size:12px;font-weight:500;padding:5px 14px;border-radius:980px;
+  border:1px solid var(--border);cursor:pointer;background:var(--surface);color:var(--secondary);transition:all .15s}
+.filter-btn:hover{border-color:var(--blue);color:var(--blue)}
+.filter-btn.on{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* MAIN LAYOUT */
+.main{max-width:1100px;margin:0 auto;padding:0 24px 80px;display:flex;gap:32px}
+.sidebar{width:220px;flex-shrink:0}
+.content{flex:1;min-width:0}
+
+/* STICKY TOC */
+.toc{position:sticky;top:calc(var(--nav-h) + 16px);background:var(--surface);
+  border-radius:var(--radius-md);border:1px solid var(--border);padding:16px;
+  box-shadow:var(--shadow-sm)}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--secondary);margin-bottom:10px}
+.toc-item{display:block;font-size:13px;color:var(--secondary);text-decoration:none;
+  padding:4px 0;border-radius:4px;transition:color .15s}
+.toc-item:hover,.toc-item.active{color:var(--blue)}
+.toc-sep{height:1px;background:var(--border);margin:8px 0}
+
+/* SECTION */
+.section{margin-bottom:48px}
+.section-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.section-icon{width:36px;height:36px;border-radius:var(--radius-sm);display:flex;align-items:center;
+  justify-content:center;font-size:18px;flex-shrink:0}
+.section-title{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin:0}
+.section-desc{font-size:14px;color:var(--secondary);margin:4px 0 0}
+.epic-badge{font-size:11px;font-weight:700;letter-spacing:0.06em;padding:3px 10px;
+  border-radius:980px;margin-left:auto;flex-shrink:0}
+
+/* REQ CARDS */
+.req-grid{display:flex;flex-direction:column;gap:10px}
+.req-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:16px;box-shadow:var(--shadow-sm);transition:box-shadow .15s}
+.req-card:hover{box-shadow:var(--shadow-md)}
+.req-card[data-hidden="true"]{display:none}
+.req-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.req-id{font-size:11px;font-weight:700;color:var(--secondary);font-family:monospace;white-space:nowrap;
+  background:var(--bg);padding:2px 7px;border-radius:4px;margin-top:1px}
+.req-title{font-size:15px;font-weight:600;flex:1}
+.priority-badge{font-size:11px;font-weight:700;letter-spacing:0.04em;padding:2px 9px;
+  border-radius:980px;white-space:nowrap;flex-shrink:0}
+.priority-badge.mvp{background:var(--green-bg);color:#1a7a33}
+.priority-badge.v2{background:var(--orange-bg);color:#9a5a00}
+.priority-badge.v3{background:var(--purple-bg);color:#7a2da0}
+.req-desc{font-size:14px;color:var(--secondary);margin-bottom:10px;line-height:1.5}
+.req-criteria{margin:0;padding:0 0 0 16px}
+.req-criteria li{font-size:13px;color:var(--secondary);margin-bottom:3px}
+.req-criteria li::marker{color:var(--blue)}
+
+/* RNF CARD */
+.rnf-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:14px 16px;box-shadow:var(--shadow-sm);display:flex;gap:12px;align-items:flex-start}
+.rnf-card[data-hidden="true"]{display:none}
+.rnf-id{font-size:11px;font-weight:700;color:var(--secondary);font-family:monospace;
+  background:var(--bg);padding:2px 7px;border-radius:4px;white-space:nowrap;margin-top:2px}
+.rnf-body{flex:1}
+.rnf-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.rnf-desc{font-size:13px;color:var(--secondary)}
+.rnf-metric{font-size:12px;font-weight:600;color:var(--blue);margin-top:5px;
+  background:var(--blue-bg);padding:2px 8px;border-radius:4px;display:inline-block}
+
+/* MATRIX */
+.matrix-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.matrix-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:18px;box-shadow:var(--shadow-sm)}
+.matrix-epic{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:6px}
+.matrix-title{font-size:16px;font-weight:700;margin-bottom:10px}
+.matrix-row{display:flex;gap:8px;margin-bottom:6px;font-size:13px}
+.matrix-key{font-weight:600;color:var(--secondary);min-width:88px;flex-shrink:0}
+.matrix-val{color:var(--text)}
+.matrix-agent{font-size:12px;font-weight:600;background:var(--blue-bg);color:var(--blue);
+  padding:3px 9px;border-radius:4px;display:inline-block;margin-top:6px}
+.deps-list{display:flex;gap:4px;flex-wrap:wrap}
+.dep-tag{font-size:11px;background:var(--orange-bg);color:#9a5a00;padding:2px 7px;border-radius:4px;font-weight:600}
+.dep-none{font-size:12px;color:var(--tertiary)}
+.parallel-list{display:flex;gap:4px;flex-wrap:wrap}
+.parallel-tag{font-size:11px;background:var(--green-bg);color:#1a7a33;padding:2px 7px;border-radius:4px;font-weight:600}
+.effort-bar{height:4px;background:var(--bg);border-radius:2px;margin-top:10px;overflow:hidden}
+.effort-fill{height:100%;background:var(--blue);border-radius:2px}
+
+/* ARCH */
+.arch-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin:20px 0;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;box-shadow:var(--shadow-sm)}
+.arch-node{text-align:center;padding:12px 16px}
+.arch-node-icon{font-size:24px;margin-bottom:6px}
+.arch-node-title{font-size:13px;font-weight:700}
+.arch-node-sub{font-size:11px;color:var(--secondary)}
+.arch-arrow{color:var(--tertiary);font-size:20px;padding:0 4px}
+
+/* STATS BAR */
+.stats-bar{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:32px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:16px 20px;box-shadow:var(--shadow-sm);flex:1;min-width:120px}
+.stat-num{font-size:28px;font-weight:700;letter-spacing:-0.03em}
+.stat-label{font-size:12px;color:var(--secondary);margin-top:2px}
+
+/* ROADMAP */
+.roadmap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.roadmap-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-md);
+  padding:18px;box-shadow:var(--shadow-sm)}
+.roadmap-month{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--secondary);margin-bottom:4px}
+.roadmap-focus{font-size:16px;font-weight:700;margin-bottom:10px}
+.roadmap-items{margin:0;padding:0 0 0 16px}
+.roadmap-items li{font-size:13px;color:var(--secondary);margin-bottom:3px}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .main{flex-direction:column}
+  .sidebar{width:100%;position:static}
+  .toc{display:none}
+  .hero{padding:48px 20px 32px}
+  .arch-flow{justify-content:center}
+  .arch-arrow{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#"><span>PHYLLOS</span> Create — Requisitos</a>
+  <div class="nav-pills">
+    <button class="nav-pill active" onclick="scrollTo('#rf')">Funcionais</button>
+    <button class="nav-pill" onclick="scrollTo('#rnf')">Não Funcionais</button>
+    <button class="nav-pill" onclick="scrollTo('#matrix')">Detalhamento Paralelo</button>
+    <button class="nav-pill" onclick="scrollTo('#roadmap')">Roadmap</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-label">Produto · Motor de Moldes Paramétrico</div>
+  <h1>PHYLLOS Create<br>Construtor de Moldes</h1>
+  <p>Documento de requisitos funcionais e não funcionais. Estruturado para detalhamento paralelo por agentes especializados — cada Epic é uma unidade independente de trabalho.</p>
+  <div class="hero-meta">
+    <div class="meta-item"><strong>Versão:</strong> 1.0</div>
+    <div class="meta-item"><strong>Data:</strong> 2026-06-12</div>
+    <div class="meta-item"><strong>Status:</strong> Pronto para detalhamento</div>
+    <div class="meta-item"><strong>Epics:</strong> 8 (EPIC-0 → EPIC-7)</div>
+  </div>
+</div>
+
+<div class="filters">
+  <span class="filter-label">Filtrar por prioridade:</span>
+  <button class="filter-btn on" id="f-all" onclick="filterPriority('all')">Todos</button>
+  <button class="filter-btn" id="f-mvp" onclick="filterPriority('MVP')">MVP</button>
+  <button class="filter-btn" id="f-v2" onclick="filterPriority('V2')">V2</button>
+  <button class="filter-btn" id="f-v3" onclick="filterPriority('V3')">V3</button>
+</div>
+
+<div class="main">
+  <aside class="sidebar">
+    <div class="toc">
+      <div class="toc-title">Navegação</div>
+      <a class="toc-item" href="#arquitetura">Arquitetura</a>
+      <div class="toc-sep"></div>
+      <a class="toc-item" href="#rf">Req. Funcionais</a>
+      <a class="toc-item" href="#epic0">EPIC-0 · Playbook</a>
+      <a class="toc-item" href="#epic1">EPIC-1 · Engine</a>
+      <a class="toc-item" href="#epic2">EPIC-2 · Validator</a>
+      <a class="toc-item" href="#epic3">EPIC-3 · Library</a>
+      <a class="toc-item" href="#epic4">EPIC-4 · SVG/PDF</a>
+      <a class="toc-item" href="#epic5">EPIC-5 · SaaS</a>
+      <a class="toc-item" href="#epic6">EPIC-6 · NLP</a>
+      <a class="toc-item" href="#epic7">EPIC-7 · AI Composer</a>
+      <div class="toc-sep"></div>
+      <a class="toc-item" href="#rnf">Req. Não Funcionais</a>
+      <div class="toc-sep"></div>
+      <a class="toc-item" href="#matrix">Detalhamento Paralelo</a>
+      <a class="toc-item" href="#roadmap">Roadmap</a>
+    </div>
+  </aside>
+
+  <div class="content">
+
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div class="stat-card"><div class="stat-num" style="color:var(--blue)">72</div><div class="stat-label">Req. Funcionais</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--green)">28</div><div class="stat-label">Req. Não Funcionais</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--orange)">8</div><div class="stat-label">Epics</div></div>
+      <div class="stat-card"><div class="stat-num" style="color:var(--purple)">6</div><div class="stat-label">Meses Roadmap</div></div>
+    </div>
+
+    <!-- ARQUITETURA -->
+    <div id="arquitetura" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:#f0f4ff">🏗️</div>
+        <div>
+          <div class="section-title">Arquitetura de Produto</div>
+          <div class="section-desc">Ordem de construção: Playbook → Engine → Library → SaaS</div>
+        </div>
+      </div>
+      <div class="arch-flow">
+        <div class="arch-node">
+          <div class="arch-node-icon">📚</div>
+          <div class="arch-node-title">Playbook</div>
+          <div class="arch-node-sub">Regras e folgas</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="arch-node-icon">⚙️</div>
+          <div class="arch-node-title">Engine</div>
+          <div class="arch-node-sub">Motor paramétrico</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="arch-node-icon">🛡️</div>
+          <div class="arch-node-title">Validator</div>
+          <div class="arch-node-sub">Verificação geométrica</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="arch-node-icon">📦</div>
+          <div class="arch-node-title">Library</div>
+          <div class="arch-node-sub">Bases e componentes</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="arch-node-icon">🖨️</div>
+          <div class="arch-node-title">SVG/PDF</div>
+          <div class="arch-node-sub">Exportação cortável</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="arch-node-icon">🌐</div>
+          <div class="arch-node-title">SaaS</div>
+          <div class="arch-node-sub">Interface web</div>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-node">
+          <div class="arch-node-icon">💬</div>
+          <div class="arch-node-title">NLP Layer</div>
+          <div class="arch-node-sub">Linguagem natural</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RF HEADER -->
+    <div id="rf" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:var(--blue-bg)">📋</div>
+        <div>
+          <div class="section-title">Requisitos Funcionais</div>
+          <div class="section-desc">72 requisitos distribuídos em 8 Epics — RF-001 a RF-072</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EPIC 0 -->
+    <div id="epic0" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(52,199,89,0.12)">📚</div>
+        <div>
+          <div class="section-title">EPIC-0 · PHYLLOS Playbook</div>
+          <div class="section-desc">Codificar conhecimento de modelagem em regras matemáticas confiáveis</div>
+        </div>
+        <span class="epic-badge" style="background:var(--green-bg);color:#1a7a33">MVP</span>
+      </div>
+      <div class="req-grid">
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-001</span>
+            <span class="req-title">Banco de regras de modelagem (playbook.db)</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Estrutura de dados em SQLite que armazena regras de modelagem por tipo de peça: proporções, folgas base, encaixes, sequência operacional e referências normativas.</div>
+          <ul class="req-criteria">
+            <li>Tabela <code>bases</code> com cada tipo de peça e seus parâmetros obrigatórios</li>
+            <li>Tabela <code>regras_folga</code> por tipo de tecido e tipo de peça</li>
+            <li>Dados iniciais: saia reta com ao menos 12 regras cobertas</li>
+            <li>Seed de dados executável via script <code>playbook_seed.py</code></li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-002</span>
+            <span class="req-title">Tabela de folgas por tecido e peça</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Cada combinação de base + tipo de tecido + elasticidade tem folgas recomendadas distintas. O sistema consulta essa tabela antes de calcular medidas finais do molde.</div>
+          <ul class="req-criteria">
+            <li>Cobertura: tecido plano sem elastano, plano com 3%, malha 20%, malha 30%+</li>
+            <li>Folga de cintura, quadril, busto, gancho e comprimento por categoria</li>
+            <li>Valor padrão (default) quando combinação não encontrada</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-003</span>
+            <span class="req-title">Separação: medida corporal × folga × medida do molde</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">O sistema trata os três valores como entidades distintas. O usuário informa medida corporal; o Playbook informa a folga; o Engine calcula a medida final do molde = corporal + folga.</div>
+          <ul class="req-criteria">
+            <li>Schema de entrada distingue campos <code>medida_corpo_*</code> e <code>folga_*</code></li>
+            <li>Resposta retorna os três valores separados para auditoria</li>
+            <li>Folga pode ser sobrescrita pelo usuário (override explícito)</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-004</span>
+            <span class="req-title">Dependency graph para propagação de medidas</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Alteração em uma medida propaga automaticamente para todas as dependentes. Ex: alterar quadril recalcula lateral, gancho e comprimento de costura que depende do quadril.</div>
+          <ul class="req-criteria">
+            <li>Grafo de dependência definido por base de peça</li>
+            <li>Alteração de parâmetro raiz dispara recálculo da subárvore dependente</li>
+            <li>Ciclos detectados e rejeitados na inicialização</li>
+            <li>Log de quais parâmetros foram recalculados por propagação</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-005</span>
+            <span class="req-title">Parâmetros de tecido no Playbook</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Tecido, elasticidade e gramatura são parâmetros críticos que afetam folgas e caimento. O Playbook os codifica como fatores de ajuste aplicados pelo Engine.</div>
+          <ul class="req-criteria">
+            <li>Campos: <code>tipo_tecido</code>, <code>elasticidade_pct</code>, <code>gramatura_gsm</code></li>
+            <li>Fator de redução de folga proporcional à elasticidade</li>
+            <li>Enum validado de tipos de tecido reconhecidos pelo sistema</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-006</span>
+            <span class="req-title">API interna do Playbook</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Endpoints internos para consulta e manutenção das regras do Playbook, utilizados pelo Engine e por ferramentas de administração.</div>
+          <ul class="req-criteria">
+            <li><code>GET /playbook/folgas?base=saia_reta&amp;tecido=plano_medio</code></li>
+            <li><code>GET /playbook/bases</code> lista todas as bases disponíveis</li>
+            <li><code>GET /playbook/dependencias/{base}</code> retorna grafo em JSON</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-007</span>
+            <span class="req-title">Versionamento de regras do Playbook</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Cada conjunto de regras tem versão semântica. Moldes gerados registram a versão do Playbook usada, permitindo auditoria e reprodutibilidade.</div>
+          <ul class="req-criteria">
+            <li>Campo <code>playbook_version</code> em cada molde gerado</li>
+            <li>Histórico de mudanças de regras acessível por versão</li>
+            <li>Proteção contra alteração retroativa de regras ativas em produção</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-008</span>
+            <span class="req-title">Proporções e compatibilidades entre componentes</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">O Playbook declara quais combinações de componentes são compatíveis e quais regras de proporção se aplicam entre eles (ex: comprimento de manga × cava).</div>
+          <ul class="req-criteria">
+            <li>Tabela <code>compatibilidade_componentes</code> com pares válidos</li>
+            <li>Regras de proporção por par de componentes</li>
+            <li>Consulta disponível antes da geração para validação prévia</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EPIC 1 -->
+    <div id="epic1" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(0,113,227,0.1)">⚙️</div>
+        <div>
+          <div class="section-title">EPIC-1 · Pattern Engine</div>
+          <div class="section-desc">Motor paramétrico que converte medidas + tecido + base em molde 2D</div>
+        </div>
+        <span class="epic-badge" style="background:var(--blue-bg);color:var(--blue)">MVP → V2</span>
+      </div>
+      <div class="req-grid">
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-009</span>
+            <span class="req-title">Endpoint POST /molde com JSON estruturado</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Ponto de entrada principal da API. Recebe parâmetros estruturados e retorna coordenadas calculadas, curvas e metadados do molde gerado.</div>
+          <ul class="req-criteria">
+            <li>Aceita: <code>base</code>, <code>medidas_corpo</code>, <code>folgas_override</code>, <code>tecido</code>, <code>comprimento</code>, <code>margens_costura</code></li>
+            <li>Retorna: <code>coordenadas</code>, <code>curvas_bezier</code>, <code>piques</code>, <code>medidas_calculadas</code>, <code>metadados</code>, <code>playbook_version</code></li>
+            <li>Validação Pydantic em todos os campos de entrada antes do cálculo</li>
+            <li>Documentado automaticamente via OpenAPI/Swagger</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-010</span>
+            <span class="req-title">Cálculo paramétrico — Saia Reta (MVP)</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Primeira base operacional. Recebe cintura, quadril, altura do quadril, comprimento, tecido e elasticidade. Retorna frente, costas, cós e pences calculados.</div>
+          <ul class="req-criteria">
+            <li>Parâmetros mínimos: cintura, quadril, altura_quadril, comprimento, tipo_tecido, elasticidade_pct</li>
+            <li>Saída: coordenadas da frente, costas, cós com pences</li>
+            <li>Pence de cintura calculada pela diferença cintura × quadril</li>
+            <li>Golden pattern definido e versionado para regressão</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-011</span>
+            <span class="req-title">Cálculo paramétrico — Blusa Básica</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Segunda base. Recebe busto, cintura, comprimento, cava e ombro. Retorna frente, costas, manga montada e gola básica.</div>
+          <ul class="req-criteria">
+            <li>Parâmetros: busto, cintura, comprimento_frente, comprimento_costas, largura_ombro, profundidade_cava</li>
+            <li>Curva de cava calculada por Bézier cúbico com pontos de controle derivados das medidas</li>
+            <li>Compatível com componentes de manga do EPIC-3</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-012</span>
+            <span class="req-title">Cálculo paramétrico — Camiseta e Vestido Simples</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Terceira e quarta bases, derivadas da blusa básica com adaptações de comprimento, decote e acabamento.</div>
+          <ul class="req-criteria">
+            <li>Camiseta: decote careca ou V, manga curta, bainhas de malha</li>
+            <li>Vestido: comprimento variável, saia reta ou evasê integrada ao corpete</li>
+            <li>Reutiliza componentes do Playbook sem duplicar lógica</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-013</span>
+            <span class="req-title">Cálculo paramétrico — Calça Reta</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Quinta base. A mais complexa — envolve gancho, quadril, joelho, entreperna e equilíbrio frente/costas. Só entra após saia, blusa, camiseta e vestido validados em produção.</div>
+          <ul class="req-criteria">
+            <li>Parâmetros: cintura, quadril, gancho_frente, gancho_costas, coxa, joelho, tornozelo, comprimento_total</li>
+            <li>Equilíbrio frente/costas calculado e validado pelo Validator antes de retornar</li>
+            <li>Extensão assimétrica de gancho para acomodar glúteo</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-014</span>
+            <span class="req-title">Curvas Bézier para costuras</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Linhas de costura não-retas são representadas como curvas Bézier cúbicas com pontos de controle derivados parametricamente das medidas, não desenhados manualmente.</div>
+          <ul class="req-criteria">
+            <li>Cada curva exportada com 4 pontos de controle (P0, P1, P2, P3)</li>
+            <li>Curvas reprodutíveis: mesmos parâmetros → mesmas curvas</li>
+            <li>SVG usa elemento <code>&lt;path d="C ..."/&gt;</code> para curvas</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-015</span>
+            <span class="req-title">Piques, entalhes e marcas de montagem automáticos</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Piques (notches) gerados automaticamente em posições calculadas: encontro de costura, meio-fio, posição de pence e pontos de montagem.</div>
+          <ul class="req-criteria">
+            <li>Pique simples (1 corte) e duplo (2 cortes) diferenciados no SVG</li>
+            <li>Posição de pique como porcentagem do comprimento da costura</li>
+            <li>Marcas de grão (fio reto) incluídas como seta no SVG</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-016</span>
+            <span class="req-title">Margens de costura configuráveis</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Margem de costura adicionada ao contorno do molde. Valor padrão 1,5cm; configurável por costura individualmente.</div>
+          <ul class="req-criteria">
+            <li>Padrão global: 1,5cm aplicado a todas as costuras</li>
+            <li>Override por costura específica: <code>"margem_bainha": 3.5</code></li>
+            <li>Linhas de costura (sem margem) e linhas de corte (com margem) no SVG em cores distintas</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-017</span>
+            <span class="req-title">Estimativa de consumo de tecido</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Após geração do molde, o sistema estima o consumo de tecido para produção de 1 peça, considerando largura de enfesto padrão e encaixe básico.</div>
+          <ul class="req-criteria">
+            <li>Estimativa em metros lineares para largura de enfesto 1,40m e 1,50m</li>
+            <li>Considera fio reto obrigatório para encaixe</li>
+            <li>Retornado como campo <code>consumo_estimado_m</code> na resposta</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EPIC 2 -->
+    <div id="epic2" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(255,59,48,0.1)">🛡️</div>
+        <div>
+          <div class="section-title">EPIC-2 · Pattern Validator</div>
+          <div class="section-desc">Detecção de inconsistências geométricas antes de entregar o molde</div>
+        </div>
+        <span class="epic-badge" style="background:var(--red-bg);color:#c0392b">MVP</span>
+      </div>
+      <div class="req-grid">
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-018</span>
+            <span class="req-title">Validação de auto-interseções no contorno</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Detecta curvas ou retas que se cruzam dentro de um mesmo componente, tornando o molde inválido para corte.</div>
+          <ul class="req-criteria">
+            <li>Verifica todos os pares de segmentos do contorno</li>
+            <li>Rejeita molde com intersecção e retorna <code>HTTP 422</code> com localização do problema</li>
+            <li>Tolerância geométrica ≤ 0.5mm para desconsiderar interseções de vértice</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-019</span>
+            <span class="req-title">Validação de comprimentos de costura entre peças</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Costuras que se encontram (ex: lateral frente × lateral costas) devem ter comprimentos compatíveis. Diferença acima do limite indica erro paramétrico.</div>
+          <ul class="req-criteria">
+            <li>Pares de costura definidos no Playbook por base</li>
+            <li>Tolerância máxima: 3mm de diferença absoluta</li>
+            <li>Aviso (warning) entre 3mm e 8mm; erro acima de 8mm</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-020</span>
+            <span class="req-title">Limites paramétricos por base</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Cada base tem intervalos válidos de parâmetros. Valores fora do intervalo são rejeitados com mensagem clara antes do cálculo.</div>
+          <ul class="req-criteria">
+            <li>Saia reta: cintura 40–180cm, quadril 50–200cm, comprimento 30–150cm</li>
+            <li>Validação executada no início do endpoint, antes do cálculo geométrico</li>
+            <li>Mensagem de erro com campo inválido, valor recebido e intervalo válido</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-021</span>
+            <span class="req-title">Mensagens de erro acionáveis</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Todos os erros de validação retornam mensagens que o usuário (ou agente) consegue agir: qual parâmetro ajustar, em qual direção e qual o valor sugerido.</div>
+          <ul class="req-criteria">
+            <li>Formato: <code>{"campo": "quadril_corpo", "erro": "valor 38 abaixo do mínimo 50", "sugestao": "mínimo recomendado: 50cm"}</code></li>
+            <li>Múltiplos erros retornados em uma só resposta (não falha no primeiro)</li>
+            <li>Código HTTP correto: 400 (input), 422 (geométrico), 500 (engine)</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-022</span>
+            <span class="req-title">Compatibility matrix de componentes</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Antes de gerar molde com múltiplos componentes, o Validator verifica se a combinação é compatível segundo a matrix declarada no Playbook.</div>
+          <ul class="req-criteria">
+            <li>Ex: manga raglan incompatível com cava princesa</li>
+            <li>Rejeição com explicação da incompatibilidade</li>
+            <li>Sugestão de componente alternativo compatível quando disponível</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-023</span>
+            <span class="req-title">Score de qualidade geométrica</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">O Validator atribui um score de 0–100 ao molde gerado baseado em precisão de encaixe, suavidade de curvas e consistência de margens.</div>
+          <ul class="req-criteria">
+            <li>Score retornado como <code>quality_score</code> na resposta</li>
+            <li>Threshold mínimo configurável para rejeição automática (default: 70)</li>
+            <li>Decomposição do score por dimensão auditável</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EPIC 3 -->
+    <div id="epic3" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(255,159,10,0.1)">📦</div>
+        <div>
+          <div class="section-title">EPIC-3 · Pattern Library</div>
+          <div class="section-desc">Biblioteca de bases e componentes modulares versionados</div>
+        </div>
+        <span class="epic-badge" style="background:var(--orange-bg);color:#9a5a00">MVP → V2</span>
+      </div>
+      <div class="req-grid">
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-024</span>
+            <span class="req-title">Moldes-base versionados em SQLite</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Cada base (saia, blusa, calça, vestido) é armazenada como conjunto de parâmetros e regras, com versão semântica e metadados completos.</div>
+          <ul class="req-criteria">
+            <li>Campos: <code>id</code>, <code>nome</code>, <code>versao</code>, <code>categoria</code>, <code>parametros_obrigatorios</code>, <code>tecidos_compativeis</code>, <code>dificuldade</code></li>
+            <li>Consulta por categoria, compatibilidade de tecido e versão</li>
+            <li>Base ativa vs. arquivada — apenas ativas disponíveis na API pública</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-025</span>
+            <span class="req-title">Componentes modulares da Library</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Frente, costas, cós, bolso, gola, manga, punho e recorte são componentes independentes que podem ser compostos conforme compatibility_matrix.</div>
+          <ul class="req-criteria">
+            <li>Cada componente tem: <code>tipo</code>, <code>subtipo</code>, <code>parametros_proprio</code>, <code>pontos_conexao</code></li>
+            <li>Pontos de conexão definem onde o componente se encaixa na base</li>
+            <li>Ao menos 3 variantes por componente na V2 (ex: cós reto, cós elástico, cós com presilhas)</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-026</span>
+            <span class="req-title">Registro de versão de base em cada molde gerado</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Todo molde gerado registra qual versão exata da base e quais versões dos componentes foram usados, garantindo reprodutibilidade.</div>
+          <ul class="req-criteria">
+            <li>Campo <code>library_snapshot</code> na resposta do molde: base_id, base_version, componentes_usados[]</li>
+            <li>Possibilidade de regenerar molde idêntico usando o snapshot</li>
+            <li>Alerta quando nova versão de base está disponível para molde existente</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-027</span>
+            <span class="req-title">API de busca da Library</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Endpoints públicos para listar e filtrar bases e componentes disponíveis por categoria, tipo de tecido e compatibilidade.</div>
+          <ul class="req-criteria">
+            <li><code>GET /library/bases?categoria=calca&amp;tecido=plano</code></li>
+            <li><code>GET /library/componentes?tipo=gola&amp;compativel_com=blusa_basica</code></li>
+            <li>Paginação com <code>limit</code> e <code>offset</code></li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-028</span>
+            <span class="req-title">Exportação de base como JSON paramétrico</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Qualquer base pode ser exportada como JSON completo contendo todos os parâmetros, regras e metadados — formato portável para integração e backup.</div>
+          <ul class="req-criteria">
+            <li><code>GET /library/bases/{id}/export.json</code></li>
+            <li>JSON resultante é suficiente para reimportar e regenerar moldes idênticos</li>
+            <li>Schema documentado e versionado</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EPIC 4 -->
+    <div id="epic4" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(52,199,89,0.1)">🖨️</div>
+        <div>
+          <div class="section-title">EPIC-4 · SVG/PDF Generator</div>
+          <div class="section-desc">Exportação de molde em formatos imprimíveis e cortáveis</div>
+        </div>
+        <span class="epic-badge" style="background:var(--green-bg);color:#1a7a33">MVP</span>
+      </div>
+      <div class="req-grid">
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-029</span>
+            <span class="req-title">SVG com coordenadas, curvas, piques e marcas</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Output primário do Engine. SVG 1.1 válido com camadas separadas para contorno, marcas de montagem, anotações e grão do tecido.</div>
+          <ul class="req-criteria">
+            <li>Camadas: <code>contorno</code>, <code>costura</code>, <code>piques</code>, <code>grao</code>, <code>texto</code></li>
+            <li>Unidades em milímetros com viewBox calibrado</li>
+            <li>Renderizável em Chrome, Firefox e Safari sem plugins</li>
+            <li>Tamanho máximo: 500KB para saia reta</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-030</span>
+            <span class="req-title">PDF A4 com tesselation (múltiplas folhas)</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Molde maior que A4 é quebrado em folhas com overlap de 2cm em cada borda para permitir montagem por encaixe e cola.</div>
+          <ul class="req-criteria">
+            <li>Tesselation automático baseado no bounding box de cada componente</li>
+            <li>Overlap de 2cm configurável entre folhas adjacentes</li>
+            <li>Numeração clara: "Folha 1 de 6 — Frente Saia"</li>
+            <li>Marcas de alinhamento (cruz de registro) em cada folha</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-031</span>
+            <span class="req-title">Testes automatizados de paginação com golden patterns</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Suite de testes que verifica integridade do PDF gerado: número de páginas correto, ausência de corte em linhas críticas e alinhamento de marcas de registro.</div>
+          <ul class="req-criteria">
+            <li>Golden pattern de PDF para saia reta em 3 tamanhos de medidas</li>
+            <li>Diff automático pixel a pixel entre versões do PDF</li>
+            <li>Falha de CI se diff exceder threshold configurado</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="MVP">
+          <div class="req-top">
+            <span class="req-id">RF-032</span>
+            <span class="req-title">Preview estático do molde (PNG miniatura)</span>
+            <span class="priority-badge mvp">MVP</span>
+          </div>
+          <div class="req-desc">Junto com SVG e PDF, o sistema gera uma miniatura PNG de 400×400px do molde completo para visualização rápida no frontend.</div>
+          <ul class="req-criteria">
+            <li>Todos os componentes do molde na mesma imagem, escalados para caber</li>
+            <li>Fundo branco, contornos em cinza escuro, piques em vermelho</li>
+            <li>Gerado em < 1s a partir do SVG</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-033</span>
+            <span class="req-title">Exportação DXF para cortadeiras industriais</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Formato DXF compatível com Valentina, Audaces e cortadeiras Juki/Gerber para usuários de nível profissional.</div>
+          <ul class="req-criteria">
+            <li>DXF versão R2010 ou superior</li>
+            <li>Testado com Valentina e Audaces nas primeiras 8 semanas após lançamento V2</li>
+            <li>Disponível como opção de download separada no endpoint <code>/molde/{id}/export?format=dxf</code></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EPIC 5 -->
+    <div id="epic5" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(0,113,227,0.1)">🌐</div>
+        <div>
+          <div class="section-title">EPIC-5 · Web SaaS</div>
+          <div class="section-desc">Interface web para usuário final — formulário, visualização e download</div>
+        </div>
+        <span class="epic-badge" style="background:var(--blue-bg);color:var(--blue)">V2</span>
+      </div>
+      <div class="req-grid">
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-034</span>
+            <span class="req-title">Formulário estruturado de parâmetros</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Interface web com seleção de base e preenchimento de parâmetros. Campos dinâmicos baseados na base selecionada. Validação em tempo real no client-side.</div>
+          <ul class="req-criteria">
+            <li>Seleção de base em cards visuais com preview do tipo de peça</li>
+            <li>Campos obrigatórios vs. opcionais claramente diferenciados</li>
+            <li>Tooltip explicativo em cada campo (ex: "Meça ao redor da parte mais larga do quadril")</li>
+            <li>Valores padrão preenchidos a partir do perfil de medidas salvo</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-035</span>
+            <span class="req-title">Visualização do SVG gerado no browser</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Após geração, o molde é exibido inline no browser. Usuário pode inspecionar componentes individualmente antes de baixar.</div>
+          <ul class="req-criteria">
+            <li>SVG renderizado inline na página (não em iframe)</li>
+            <li>Zoom e pan via mouse/touch</li>
+            <li>Clique em componente destaca e exibe metadados (nome, medidas, área)</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-036</span>
+            <span class="req-title">Download de SVG, PDF e PNG em um clique</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Botões de download agrupados. Cada formato tem nome de arquivo descritivo com base, medidas e data.</div>
+          <ul class="req-criteria">
+            <li>Formatos: SVG (escala real), PDF A4 (imprimível), PNG (preview)</li>
+            <li>Nome do arquivo: <code>phyllos_saia-reta_q76_c62_2026-06-12.pdf</code></li>
+            <li>DXF como formato adicional (V2 avançado)</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-037</span>
+            <span class="req-title">Histórico de versões de moldes por usuário</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Lista dos moldes gerados pelo usuário, com parâmetros usados, versão do Playbook e data. Permite regenerar qualquer versão anterior.</div>
+          <ul class="req-criteria">
+            <li>Lista paginada com filtro por base e data</li>
+            <li>Diff visual entre duas versões do mesmo projeto</li>
+            <li>Marcação de versão como "aprovada" (usada em produção real)</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-038</span>
+            <span class="req-title">Perfil de medidas corporais do usuário</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Usuário cadastra suas medidas corporais uma vez e o formulário as usa como valores padrão em todas as gerações futuras.</div>
+          <ul class="req-criteria">
+            <li>Campos: cintura, quadril, busto, altura, comprimento_torso, largura_ombro</li>
+            <li>Múltiplos perfis por conta (ex: cliente A, cliente B)</li>
+            <li>Importação e exportação de perfil em JSON</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V2">
+          <div class="req-top">
+            <span class="req-id">RF-039</span>
+            <span class="req-title">Onboarding interativo para novo usuário</span>
+            <span class="priority-badge v2">V2</span>
+          </div>
+          <div class="req-desc">Fluxo de 3 telas que guia o usuário para gerar seu primeiro molde em menos de 5 minutos: 1) Como medir, 2) Preencher parâmetros, 3) Baixar e imprimir.</div>
+          <ul class="req-criteria">
+            <li>Ilustrações de como tomar cada medida</li>
+            <li>Molde de exemplo gerado com medidas pré-preenchidas</li>
+            <li>Skip disponível para usuários experientes</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EPIC 6 -->
+    <div id="epic6" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(175,82,222,0.1)">💬</div>
+        <div>
+          <div class="section-title">EPIC-6 · Natural Language Layer</div>
+          <div class="section-desc">Linguagem natural sobre engine já confiável — V3</div>
+        </div>
+        <span class="epic-badge" style="background:var(--purple-bg);color:#7a2da0">V3</span>
+      </div>
+      <div class="req-grid">
+
+        <div class="req-card" data-priority="V3">
+          <div class="req-top">
+            <span class="req-id">RF-040</span>
+            <span class="req-title">Conversão de texto em JSON paramétrico</span>
+            <span class="priority-badge v3">V3</span>
+          </div>
+          <div class="req-desc">Camada de LLM que interpreta comandos em português e os converte em parâmetros estruturados para o Engine. Só entra quando Engine + Validator estiverem validados em produção.</div>
+          <ul class="req-criteria">
+            <li>"Saia midi cintura 76, quadril 100, tecido crepe" → JSON paramétrico correto</li>
+            <li>Confiança mínima de 0.85 para aplicar sem confirmação do usuário</li>
+            <li>Abaixo do threshold: usuário revisa e confirma antes de gerar</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V3">
+          <div class="req-top">
+            <span class="req-id">RF-041</span>
+            <span class="req-title">Detecção de ambiguidade geométrica</span>
+            <span class="priority-badge v3">V3</span>
+          </div>
+          <div class="req-desc">"Aumentar quadril 4cm" é ambíguo — pode significar lateral, gancho ou redistribuição. O sistema detecta a ambiguidade e pede confirmação antes de aplicar.</div>
+          <ul class="req-criteria">
+            <li>Lista de comandos ambíguos mapeada no Playbook</li>
+            <li>Pergunta de confirmação com as opções interpretadas claramente</li>
+            <li>Log de todas as ambiguidades detectadas para melhoria contínua</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V3">
+          <div class="req-top">
+            <span class="req-id">RF-042</span>
+            <span class="req-title">Sugestão de parâmetros por descrição de peça</span>
+            <span class="priority-badge v3">V3</span>
+          </div>
+          <div class="req-desc">"Calça de alfaiataria com toque esportivo" → sugestão de base, componentes, tecido e folgas compatíveis com a descrição, para aprovação do usuário.</div>
+          <ul class="req-criteria">
+            <li>Sugestão apresentada como formulário pré-preenchido, não aplicada automaticamente</li>
+            <li>Explicação de cada escolha sugerida (ex: "calça reta por ser alfaiataria; folga +2cm por toque esportivo")</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EPIC 7 -->
+    <div id="epic7" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(255,159,10,0.1)">🤖</div>
+        <div>
+          <div class="section-title">EPIC-7 · AI Composer</div>
+          <div class="section-desc">Composição inteligente de bases e geração de ficha técnica — V3</div>
+        </div>
+        <span class="epic-badge" style="background:var(--orange-bg);color:#9a5a00">V3</span>
+      </div>
+      <div class="req-grid">
+
+        <div class="req-card" data-priority="V3">
+          <div class="req-top">
+            <span class="req-id">RF-043</span>
+            <span class="req-title">Composição de bases e componentes por texto</span>
+            <span class="priority-badge v3">V3</span>
+          </div>
+          <div class="req-desc">Seleciona e combina base + componentes da Library a partir de pedido textual. Verifica compatibility_matrix antes de propor combinação.</div>
+          <ul class="req-criteria">
+            <li>"Blusa com gola polo e manga 3/4" → blusa_basica + gola_polo + manga_3_4</li>
+            <li>Validação de compatibilidade antes de exibir proposta ao usuário</li>
+            <li>Alternativas sugeridas quando combinação solicitada é incompatível</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V3">
+          <div class="req-top">
+            <span class="req-id">RF-044</span>
+            <span class="req-title">Geração de ficha técnica preliminar a partir do molde</span>
+            <span class="priority-badge v3">V3</span>
+          </div>
+          <div class="req-desc">A partir do molde gerado, o AI Composer produz rascunho de ficha técnica com medidas calculadas, sequência operacional sugerida e lista de materiais estimada.</div>
+          <ul class="req-criteria">
+            <li>Campos: medidas finais do molde, sequência de costuras, aviamentos, consumo de tecido</li>
+            <li>Exportável em PDF e JSON</li>
+            <li>Marcada como "rascunho — validar com modelista"</li>
+          </ul>
+        </div>
+
+        <div class="req-card" data-priority="V3">
+          <div class="req-top">
+            <span class="req-id">RF-045</span>
+            <span class="req-title">Sugestão de tecidos compatíveis com a peça</span>
+            <span class="priority-badge v3">V3</span>
+          </div>
+          <div class="req-desc">A partir da base, componentes e estilo descritos, o AI Composer sugere tecidos compatíveis com caimento e construção adequados.</div>
+          <ul class="req-criteria">
+            <li>Sugestões ordenadas por compatibilidade técnica (não por estética)</li>
+            <li>Inclui gramatura recomendada e elasticidade mínima</li>
+            <li>Vinculado ao Playbook de tecidos, não gerado livremente</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RNF -->
+    <div id="rnf" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(52,199,89,0.1)">📐</div>
+        <div>
+          <div class="section-title">Requisitos Não Funcionais</div>
+          <div class="section-desc">28 requisitos em 7 domínios — Performance, Precisão, Segurança, Escalabilidade, Manutenibilidade, Portabilidade, Observabilidade</div>
+        </div>
+      </div>
+
+      <!-- Performance -->
+      <div style="margin-bottom:8px;font-size:13px;font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:0.06em">Performance</div>
+      <div class="req-grid" style="margin-bottom:24px">
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-001</span><div class="rnf-body"><div class="rnf-title">Latência de geração de molde simples</div><div class="rnf-desc">Tempo de resposta do endpoint /molde para saia reta (MVP)</div><span class="rnf-metric">P95 &lt; 3s</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-002</span><div class="rnf-body"><div class="rnf-title">Tamanho máximo do SVG gerado</div><div class="rnf-desc">Limite de tamanho de arquivo para garantir performance no browser</div><span class="rnf-metric">≤ 500KB por componente</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-003</span><div class="rnf-body"><div class="rnf-title">Geração de PDF A4 com tesselation</div><div class="rnf-desc">Inclui quebra em múltiplas páginas e marcas de montagem</div><span class="rnf-metric">&lt; 8s para molde completo</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-004</span><div class="rnf-body"><div class="rnf-title">Carregamento do frontend SaaS</div><div class="rnf-desc">Tempo de carregamento inicial em conexão 4G móvel</div><span class="rnf-metric">&lt; 2s (LCP)</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+      </div>
+
+      <!-- Precisão -->
+      <div style="margin-bottom:8px;font-size:13px;font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:0.06em">Precisão Geométrica</div>
+      <div class="req-grid" style="margin-bottom:24px">
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-005</span><div class="rnf-body"><div class="rnf-title">Tolerância geométrica nas coordenadas do molde</div><div class="rnf-desc">Erro máximo admissível em posicionamento de pontos e curvas</div><span class="rnf-metric">≤ 0.5mm em qualquer ponto</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-006</span><div class="rnf-body"><div class="rnf-title">Precisão de margens de costura</div><div class="rnf-desc">Erro na aplicação de margens ao longo de curvas e retas</div><span class="rnf-metric">±0.1mm em linha reta; ±0.3mm em curva</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-007</span><div class="rnf-body"><div class="rnf-title">Compatibilidade de comprimentos de costura</div><div class="rnf-desc">Diferença entre costuras que se encontram entre componentes</div><span class="rnf-metric">Erro &lt; 0.5% do comprimento total</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-008</span><div class="rnf-body"><div class="rnf-title">Regressão por golden patterns</div><div class="rnf-desc">Diff máximo entre versões do mesmo molde sem mudança intencional de parâmetros</div><span class="rnf-metric">&lt; 0.1mm em qualquer ponto do contorno</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+      </div>
+
+      <!-- Segurança -->
+      <div style="margin-bottom:8px;font-size:13px;font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:0.06em">Segurança</div>
+      <div class="req-grid" style="margin-bottom:24px">
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-009</span><div class="rnf-body"><div class="rnf-title">Validação de inputs via Pydantic</div><div class="rnf-desc">Todo parâmetro de entrada validado em tipo, range e presença antes do cálculo</div><span class="rnf-metric">100% dos campos com schema Pydantic</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-010</span><div class="rnf-body"><div class="rnf-title">Rate limiting na API pública</div><div class="rnf-desc">Proteção contra abuso e DDoS na camada de aplicação</div><span class="rnf-metric">Max 60 req/min por IP; 10 req/min não autenticado</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-011</span><div class="rnf-body"><div class="rnf-title">Autenticação para SaaS</div><div class="rnf-desc">Proteção de moldes e perfis de usuário</div><span class="rnf-metric">JWT com expiração 24h; refresh token 30d</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-012</span><div class="rnf-body"><div class="rnf-title">Sanitização de campos de texto livre</div><div class="rnf-desc">Campos como nome do projeto e descrição não devem aceitar injeção</div><span class="rnf-metric">Strip HTML + limite 500 chars em campos livres</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+      </div>
+
+      <!-- Escalabilidade -->
+      <div style="margin-bottom:8px;font-size:13px;font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:0.06em">Escalabilidade</div>
+      <div class="req-grid" style="margin-bottom:24px">
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-013</span><div class="rnf-body"><div class="rnf-title">Arquitetura stateless no Engine</div><div class="rnf-desc">Engine não armazena estado entre requisições — cada chamada é independente</div><span class="rnf-metric">Sem session state; suporta horizontal scaling</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-014</span><div class="rnf-body"><div class="rnf-title">Capacidade de usuários simultâneos</div><div class="rnf-desc">Sem degradação de P95 com carga paralela</div><span class="rnf-metric">50 usuários simultâneos com P95 &lt; 5s</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-015</span><div class="rnf-body"><div class="rnf-title">Separação de módulos como pacotes independentes</div><div class="rnf-desc">Playbook, Engine, Library e SaaS devem poder ser deployados e escalados independentemente</div><span class="rnf-metric">Sem acoplamento direto entre módulos (apenas via API)</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+      </div>
+
+      <!-- Manutenibilidade -->
+      <div style="margin-bottom:8px;font-size:13px;font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:0.06em">Manutenibilidade</div>
+      <div class="req-grid" style="margin-bottom:24px">
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-016</span><div class="rnf-body"><div class="rnf-title">Cobertura de testes unitários no Engine</div><div class="rnf-desc">Cobertura mínima para funções de cálculo geométrico e de Playbook</div><span class="rnf-metric">≥ 80% nas funções de cálculo do Engine</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-017</span><div class="rnf-body"><div class="rnf-title">Testes geométricos com golden patterns</div><div class="rnf-desc">Golden pattern versionado para cada base — falha em CI se geração divergir</div><span class="rnf-metric">1 golden pattern por base; 3 variantes de medidas</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-018</span><div class="rnf-body"><div class="rnf-title">CI/CD com testes obrigatórios antes de deploy</div><div class="rnf-desc">Pipeline de CI com testes unitários, geométricos e de paginação antes de qualquer deploy</div><span class="rnf-metric">100% dos testes passando antes de merge em main</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-019</span><div class="rnf-body"><div class="rnf-title">Visual diff automático entre versões de molde</div><div class="rnf-desc">Comparação pixel a pixel de SVG gerado vs. golden pattern — alerta se diff excede threshold</div><span class="rnf-metric">Diff &lt; 0.1mm para aprovação automática no CI</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+      </div>
+
+      <!-- Portabilidade -->
+      <div style="margin-bottom:8px;font-size:13px;font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:0.06em">Portabilidade</div>
+      <div class="req-grid" style="margin-bottom:24px">
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-020</span><div class="rnf-body"><div class="rnf-title">SVG renderizável em browsers modernos</div><div class="rnf-desc">Sem plugins, applets ou extensões necessárias para visualização</div><span class="rnf-metric">Chrome 110+, Firefox 110+, Safari 16+ sem fallback</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-021</span><div class="rnf-body"><div class="rnf-title">PDF imprimível em impressoras domésticas</div><div class="rnf-desc">Testado em impressoras HP, Epson e Canon de uso doméstico</div><span class="rnf-metric">Distorção &lt; 0.5mm por folha A4 impressa</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-022</span><div class="rnf-body"><div class="rnf-title">DXF compatível com softwares de modelagem</div><div class="rnf-desc">Testado com Valentina e Audaces antes do lançamento do formato</div><span class="rnf-metric">DXF R2010; importação sem erro em Valentina e Audaces</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-023</span><div class="rnf-body"><div class="rnf-title">API documentada via OpenAPI/Swagger</div><div class="rnf-desc">FastAPI gera documentação automática — deve ser mantida atualizada e acessível</div><span class="rnf-metric">/docs e /redoc sempre sincronizados com código</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+      </div>
+
+      <!-- Observabilidade -->
+      <div style="margin-bottom:8px;font-size:13px;font-weight:700;color:var(--secondary);text-transform:uppercase;letter-spacing:0.06em">Observabilidade</div>
+      <div class="req-grid" style="margin-bottom:24px">
+        <div class="rnf-card" data-priority="MVP"><span class="rnf-id">RNF-024</span><div class="rnf-body"><div class="rnf-title">Logs estruturados por requisição</div><div class="rnf-desc">Cada chamada ao /molde gera log com parâmetros de entrada, versões usadas, tempo de geração e resultado</div><span class="rnf-metric">JSON logs; campos obrigatórios: request_id, base, playbook_v, engine_ms, status</span></div><span class="priority-badge mvp" style="margin-left:auto;flex-shrink:0;align-self:flex-start">MVP</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-025</span><div class="rnf-body"><div class="rnf-title">Rastreamento de versão do Playbook em produção</div><div class="rnf-desc">Cada molde gerado registra versão do Playbook usada para auditoria e reprodução</div><span class="rnf-metric">playbook_version obrigatório em toda resposta de /molde</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-026</span><div class="rnf-body"><div class="rnf-title">Métricas de uso agregadas</div><div class="rnf-desc">Dashboard de bases mais usadas, tecidos mais selecionados, erros de validação mais frequentes</div><span class="rnf-metric">Dashboard atualizado a cada 6h; retenção de 90 dias</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-027</span><div class="rnf-body"><div class="rnf-title">Alerta para falhas geométricas em produção</div><div class="rnf-desc">Erros de validação geométrica acima de threshold disparam alerta para o time técnico</div><span class="rnf-metric">Alerta se taxa de erros geométricos &gt; 5% das requisições em 10min</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+        <div class="rnf-card" data-priority="V2"><span class="rnf-id">RNF-028</span><div class="rnf-body"><div class="rnf-title">Audit trail de geração de moldes</div><div class="rnf-desc">Registro imutável de qual usuário gerou qual molde com quais parâmetros em qual momento</div><span class="rnf-metric">Retenção 24 meses; campos: user_id, timestamp, base, params_hash, output_hash</span></div><span class="priority-badge v2" style="margin-left:auto;flex-shrink:0;align-self:flex-start">V2</span></div>
+      </div>
+
+    </div>
+
+    <!-- MATRIX -->
+    <div id="matrix" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(175,82,222,0.1)">⚡</div>
+        <div>
+          <div class="section-title">Mapa de Detalhamento Paralelo</div>
+          <div class="section-desc">Qual agente detalha qual Epic — dependências, inputs e esforço estimado</div>
+        </div>
+      </div>
+      <div class="matrix-grid">
+
+        <div class="matrix-card">
+          <div class="matrix-epic">EPIC-0</div>
+          <div class="matrix-title">PHYLLOS Playbook</div>
+          <div class="matrix-row"><span class="matrix-key">Agente</span><span class="matrix-val">curador-modelagem-fit<br>+ product-director</span></div>
+          <div class="matrix-row"><span class="matrix-key">Inputs</span><span class="matrix-val">Catálogos de moldes existentes, docs/patternmaking/, referências de modelagem industrial</span></div>
+          <div class="matrix-row"><span class="matrix-key">Outputs</span><span class="matrix-val">playbook.db schema, seed de regras para saia reta, tabela de folgas, dependency_graph JSON</span></div>
+          <div class="matrix-row"><span class="matrix-key">Depende de</span></div>
+          <div class="deps-list"><span class="dep-none">Nenhuma — pode iniciar já</span></div>
+          <div class="matrix-row" style="margin-top:8px"><span class="matrix-key">Paralelo com</span></div>
+          <div class="parallel-list"><span class="parallel-tag">EPIC-1 (parcial)</span></div>
+          <div class="matrix-agent">curador-modelagem-fit</div>
+          <div class="effort-bar"><div class="effort-fill" style="width:33%"></div></div>
+          <div style="font-size:11px;color:var(--secondary);margin-top:4px">Esforço estimado: 5 dias</div>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-epic">EPIC-1</div>
+          <div class="matrix-title">Pattern Engine</div>
+          <div class="matrix-row"><span class="matrix-key">Agente</span><span class="matrix-val">technology-director<br>+ product-director</span></div>
+          <div class="matrix-row"><span class="matrix-key">Inputs</span><span class="matrix-val">playbook.db (EPIC-0), docs/patternmaking/calca-performance-molde-v0.md, esquemas Pydantic existentes</span></div>
+          <div class="matrix-row"><span class="matrix-key">Outputs</span><span class="matrix-val">Especificação técnica do motor saia reta, fórmulas de cálculo, schema JSON de entrada/saída, golden patterns</span></div>
+          <div class="matrix-row"><span class="matrix-key">Depende de</span></div>
+          <div class="deps-list"><span class="dep-tag">EPIC-0</span></div>
+          <div class="matrix-row" style="margin-top:8px"><span class="matrix-key">Paralelo com</span></div>
+          <div class="parallel-list"><span class="parallel-tag">EPIC-3 (Library schema)</span></div>
+          <div class="matrix-agent">technology-director</div>
+          <div class="effort-bar"><div class="effort-fill" style="width:67%"></div></div>
+          <div style="font-size:11px;color:var(--secondary);margin-top:4px">Esforço estimado: 10 dias</div>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-epic">EPIC-2</div>
+          <div class="matrix-title">Pattern Validator</div>
+          <div class="matrix-row"><span class="matrix-key">Agente</span><span class="matrix-val">technology-director</span></div>
+          <div class="matrix-row"><span class="matrix-key">Inputs</span><span class="matrix-val">EPIC-1 (Engine outputs), lista de casos de borda geométrica, algoritmos de interseção de segmentos</span></div>
+          <div class="matrix-row"><span class="matrix-key">Outputs</span><span class="matrix-val">PatternValidator module, testes de intersecção, compatibility_matrix schema, suite de testes geométricos</span></div>
+          <div class="matrix-row"><span class="matrix-key">Depende de</span></div>
+          <div class="deps-list"><span class="dep-tag">EPIC-1</span></div>
+          <div class="matrix-row" style="margin-top:8px"><span class="matrix-key">Paralelo com</span></div>
+          <div class="parallel-list"><span class="parallel-tag">EPIC-4 (SVG)</span></div>
+          <div class="matrix-agent">technology-director</div>
+          <div class="effort-bar"><div class="effort-fill" style="width:33%"></div></div>
+          <div style="font-size:11px;color:var(--secondary);margin-top:4px">Esforço estimado: 5 dias</div>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-epic">EPIC-3</div>
+          <div class="matrix-title">Pattern Library</div>
+          <div class="matrix-row"><span class="matrix-key">Agente</span><span class="matrix-val">product-director<br>+ curador-modelagem-fit</span></div>
+          <div class="matrix-row"><span class="matrix-key">Inputs</span><span class="matrix-val">EPIC-0 (Playbook), catálogos existentes em docs/patternmaking/, js/catalogo-moldes.js</span></div>
+          <div class="matrix-row"><span class="matrix-key">Outputs</span><span class="matrix-val">Schema de bases e componentes, metadados por base, tabela de compatibilidade, seed inicial da Library</span></div>
+          <div class="matrix-row"><span class="matrix-key">Depende de</span></div>
+          <div class="deps-list"><span class="dep-tag">EPIC-0</span></div>
+          <div class="matrix-row" style="margin-top:8px"><span class="matrix-key">Paralelo com</span></div>
+          <div class="parallel-list"><span class="parallel-tag">EPIC-1</span><span class="parallel-tag">EPIC-2</span></div>
+          <div class="matrix-agent">product-director</div>
+          <div class="effort-bar"><div class="effort-fill" style="width:47%"></div></div>
+          <div style="font-size:11px;color:var(--secondary);margin-top:4px">Esforço estimado: 7 dias</div>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-epic">EPIC-4</div>
+          <div class="matrix-title">SVG / PDF Generator</div>
+          <div class="matrix-row"><span class="matrix-key">Agente</span><span class="matrix-val">technology-director<br>+ digital-products-lead</span></div>
+          <div class="matrix-row"><span class="matrix-key">Inputs</span><span class="matrix-val">EPIC-1 (coordenadas e curvas), especificação de impressoras domésticas, padrão SVG 1.1</span></div>
+          <div class="matrix-row"><span class="matrix-key">Outputs</span><span class="matrix-val">SVGRenderer module, PDFTesselator module, testes de paginação, golden patterns de PDF</span></div>
+          <div class="matrix-row"><span class="matrix-key">Depende de</span></div>
+          <div class="deps-list"><span class="dep-tag">EPIC-1</span></div>
+          <div class="matrix-row" style="margin-top:8px"><span class="matrix-key">Paralelo com</span></div>
+          <div class="parallel-list"><span class="parallel-tag">EPIC-2</span><span class="parallel-tag">EPIC-3</span></div>
+          <div class="matrix-agent">technology-director</div>
+          <div class="effort-bar"><div class="effort-fill" style="width:47%"></div></div>
+          <div style="font-size:11px;color:var(--secondary);margin-top:4px">Esforço estimado: 7 dias</div>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-epic">EPIC-5</div>
+          <div class="matrix-title">Web SaaS</div>
+          <div class="matrix-row"><span class="matrix-key">Agente</span><span class="matrix-val">design-lead<br>+ frontend-agent</span></div>
+          <div class="matrix-row"><span class="matrix-key">Inputs</span><span class="matrix-val">EPIC-1+4 (API estável), docs/planejamento/cto-arquitetura-tecnica.md (stack Next.js definido), design tokens existentes</span></div>
+          <div class="matrix-row"><span class="matrix-key">Outputs</span><span class="matrix-val">Wireframes, componentes Next.js, formulário dinâmico, visualizador SVG, tela de download</span></div>
+          <div class="matrix-row"><span class="matrix-key">Depende de</span></div>
+          <div class="deps-list"><span class="dep-tag">EPIC-1</span><span class="dep-tag">EPIC-4</span></div>
+          <div class="matrix-row" style="margin-top:8px"><span class="matrix-key">Paralelo com</span></div>
+          <div class="parallel-list"><span class="parallel-tag">EPIC-6 (spec)</span></div>
+          <div class="matrix-agent">design-lead + frontend-agent</div>
+          <div class="effort-bar"><div class="effort-fill" style="width:67%"></div></div>
+          <div style="font-size:11px;color:var(--secondary);margin-top:4px">Esforço estimado: 10 dias</div>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-epic">EPIC-6</div>
+          <div class="matrix-title">Natural Language Layer</div>
+          <div class="matrix-row"><span class="matrix-key">Agente</span><span class="matrix-val">ai-automation-lead</span></div>
+          <div class="matrix-row"><span class="matrix-key">Inputs</span><span class="matrix-val">EPIC-1+2 (Engine + Validator estáveis), dicionário de termos de modelagem, exemplos de comandos ambíguos</span></div>
+          <div class="matrix-row"><span class="matrix-key">Outputs</span><span class="matrix-val">Prompt engineering para extração de parâmetros, lista de ambiguidades mapeadas, testes de NLU por comando</span></div>
+          <div class="matrix-row"><span class="matrix-key">Depende de</span></div>
+          <div class="deps-list"><span class="dep-tag">EPIC-1</span><span class="dep-tag">EPIC-2</span></div>
+          <div class="matrix-row" style="margin-top:8px"><span class="matrix-key">Paralelo com</span></div>
+          <div class="parallel-list"><span class="parallel-tag">EPIC-5</span></div>
+          <div class="matrix-agent">ai-automation-lead</div>
+          <div class="effort-bar"><div class="effort-fill" style="width:47%"></div></div>
+          <div style="font-size:11px;color:var(--secondary);margin-top:4px">Esforço estimado: 7 dias</div>
+        </div>
+
+        <div class="matrix-card">
+          <div class="matrix-epic">EPIC-7</div>
+          <div class="matrix-title">AI Composer</div>
+          <div class="matrix-row"><span class="matrix-key">Agente</span><span class="matrix-val">product-innovation-agent<br>+ ai-automation-lead</span></div>
+          <div class="matrix-row"><span class="matrix-key">Inputs</span><span class="matrix-val">EPIC-3 (Library), EPIC-5+6 (SaaS + NLP), templates de ficha técnica em templates/</span></div>
+          <div class="matrix-row"><span class="matrix-key">Outputs</span><span class="matrix-val">Spec de composição, prompt de ficha técnica, spec de sugestão de tecidos, testes de composição inválida</span></div>
+          <div class="matrix-row"><span class="matrix-key">Depende de</span></div>
+          <div class="deps-list"><span class="dep-tag">EPIC-5</span><span class="dep-tag">EPIC-6</span></div>
+          <div class="matrix-row" style="margin-top:8px"><span class="matrix-key">Paralelo com</span></div>
+          <div class="parallel-list"><span class="dep-none">Último na cadeia</span></div>
+          <div class="matrix-agent">product-innovation-agent</div>
+          <div class="effort-bar"><div class="effort-fill" style="width:67%"></div></div>
+          <div style="font-size:11px;color:var(--secondary);margin-top:4px">Esforço estimado: 10 dias</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ROADMAP -->
+    <div id="roadmap" class="section">
+      <div class="section-header">
+        <div class="section-icon" style="background:rgba(0,113,227,0.1)">📅</div>
+        <div>
+          <div class="section-title">Roadmap — 6 Meses</div>
+          <div class="section-desc">Julho 2026 a Dezembro 2026 — Playbook → Engine → Library → SaaS → NLP</div>
+        </div>
+      </div>
+      <div class="roadmap-grid">
+        <div class="roadmap-card">
+          <div class="roadmap-month">Mês 1 · Jul 2026</div>
+          <div class="roadmap-focus">Motor + SVG · Saia Reta</div>
+          <ul class="roadmap-items">
+            <li>playbook.db com regras da saia reta</li>
+            <li>endpoint POST /molde funcional</li>
+            <li>SVG estático com curvas e piques</li>
+            <li>PatternValidator inicial</li>
+            <li>Golden patterns e testes unitários</li>
+          </ul>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-month">Mês 2 · Ago 2026</div>
+          <div class="roadmap-focus">Blusa Básica + PDF A4</div>
+          <ul class="roadmap-items">
+            <li>Segunda base: blusa básica</li>
+            <li>PDFTesselator com tesselation A4</li>
+            <li>Margens, overlap e marcas de montagem</li>
+            <li>Suite de testes de paginação</li>
+            <li>Visual diff CI/CD</li>
+          </ul>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-month">Mês 3 · Set 2026</div>
+          <div class="roadmap-focus">Calça Reta + Validação Física</div>
+          <ul class="roadmap-items">
+            <li>Calça reta com gancho e equilíbrio</li>
+            <li>PatternValidator completo</li>
+            <li>Teste com 5–10 costureiras/modelistas</li>
+            <li>Feedback estruturado de prova física</li>
+            <li>Critério: 3 peças cortadas e costuradas</li>
+          </ul>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-month">Mês 4 · Out 2026</div>
+          <div class="roadmap-focus">Biblioteca Modular</div>
+          <ul class="roadmap-items">
+            <li>Componentes: gola, manga, cós, bolso, punho</li>
+            <li>Metadados e compatibility_matrix</li>
+            <li>Estimativa de consumo de tecido</li>
+            <li>Arquitetura preparada para grading P/M/G/GG</li>
+          </ul>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-month">Mês 5 · Nov 2026</div>
+          <div class="roadmap-focus">Histórico, Projetos e Usuários</div>
+          <ul class="roadmap-items">
+            <li>Versionamento de bases e moldes gerados</li>
+            <li>Histórico de parâmetros por projeto</li>
+            <li>Projetos salvos por usuário</li>
+            <li>Audit trail de versões em produção</li>
+            <li>Primeiros fluxos de conta/SaaS</li>
+          </ul>
+        </div>
+        <div class="roadmap-card">
+          <div class="roadmap-month">Mês 6 · Dez 2026</div>
+          <div class="roadmap-focus">Linguagem Natural</div>
+          <ul class="roadmap-items">
+            <li>NLP Layer sobre engine validada</li>
+            <li>Dicionário de ambiguidades mapeadas</li>
+            <li>Conversão texto → JSON paramétrico</li>
+            <li>100 usuários pagantes alvo</li>
+            <li>NPS ≥ 40 · 3 depoimentos públicos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+function scrollTo(id){
+  document.querySelector(id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function filterPriority(p){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('f-'+(p==='all'?'all':p.toLowerCase())).classList.add('on');
+  document.querySelectorAll('[data-priority]').forEach(card=>{
+    if(p==='all'||card.dataset.priority===p){
+      card.dataset.hidden='false';
+      card.style.display='';
+    } else {
+      card.dataset.hidden='true';
+      card.style.display='none';
+    }
+  });
+}
+
+// Highlight active TOC item on scroll
+const sections=document.querySelectorAll('[id]');
+const tocItems=document.querySelectorAll('.toc-item');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      tocItems.forEach(t=>t.classList.remove('active'));
+      const active=document.querySelector('.toc-item[href="#'+e.target.id+'"]');
+      if(active)active.classList.add('active');
+    }
+  });
+},{threshold:0.3,rootMargin:'-52px 0px 0px 0px'});
+sections.forEach(s=>observer.observe(s));
+</script>
+</body>
+</html>
