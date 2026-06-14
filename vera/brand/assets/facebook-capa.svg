@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="312" viewBox="0 0 820 312">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;display=swap');
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="820" height="312" fill="#F5F2ED"/>
+
+  <!-- Organic shape right — large circle sage -->
+  <circle cx="720" cy="156" r="200" fill="#9CA88F" opacity="0.18"/>
+  <!-- Organic shape right — medium circle terracota -->
+  <circle cx="790" cy="260" r="110" fill="#C4856A" opacity="0.12"/>
+  <!-- Inner sage accent -->
+  <circle cx="680" cy="100" r="90" fill="#9CA88F" opacity="0.22"/>
+
+  <!-- Thin botanical stem lines -->
+  <line x1="540" y1="60" x2="540" y2="260" stroke="#9CA88F" stroke-width="1" opacity="0.5"/>
+  <line x1="560" y1="90" x2="560" y2="240" stroke="#9CA88F" stroke-width="0.8" opacity="0.35"/>
+  <!-- Leaf hints -->
+  <ellipse cx="540" cy="110" rx="22" ry="9" fill="none" stroke="#9CA88F" stroke-width="1" opacity="0.5" transform="rotate(-30 540 110)"/>
+  <ellipse cx="540" cy="170" rx="22" ry="9" fill="none" stroke="#9CA88F" stroke-width="1" opacity="0.5" transform="rotate(25 540 170)"/>
+  <ellipse cx="560" cy="140" rx="18" ry="7" fill="none" stroke="#9CA88F" stroke-width="0.8" opacity="0.4" transform="rotate(-20 560 140)"/>
+
+  <!-- Left content area -->
+  <!-- Brand name VERA -->
+  <text x="64" y="148" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="300" letter-spacing="20" fill="#2C2C2C">VERA</text>
+
+  <!-- Divider line -->
+  <rect x="64" y="165" width="48" height="2" fill="#C4856A"/>
+
+  <!-- Tagline -->
+  <text x="64" y="198" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="300" font-style="italic" fill="#6b6b6b" letter-spacing="1">Cuidar é um ato de inteligência.</text>
+
+  <!-- Sub label -->
+  <text x="64" y="232" font-family="Arial, sans-serif" font-size="10" font-weight="400" fill="#9CA88F" letter-spacing="4">BELEZA INTELIGENTE · BRASIL</text>
+
+  <!-- Bottom right tiny label -->
+  <text x="756" y="298" font-family="Arial, sans-serif" font-size="9" fill="#9CA88F" letter-spacing="2" text-anchor="end" opacity="0.7">vera.com.br</text>
+</svg>
