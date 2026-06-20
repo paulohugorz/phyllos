@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fashion OS — Busca de Referências</title>
+  <style>
+    body{font-family:system-ui, sans-serif; margin:40px; background:#f7f4ef; color:#161616;}
+    textarea{width:100%; min-height:90px; padding:14px; font-size:16px;}
+    button{margin-top:12px; padding:12px 18px; border-radius:999px; border:0; background:#111; color:white;}
+    .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin-top:24px;}
+    .fashion-ref-card{display:flex; gap:12px; padding:14px; border:1px solid #ddd; border-radius:16px; background:white;}
+    .fashion-ref-thumb{width:72px;height:72px;border-radius:12px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:12px;text-transform:uppercase;}
+    pre{white-space:pre-wrap;background:#111;color:white;padding:16px;border-radius:16px;}
+  </style>
+</head>
+<body>
+  <h1>Fashion OS — Curadoria antes da imagem</h1>
+  <form id="fashion-os-form">
+    <label for="fashion-prompt">Pedido</label>
+    <textarea id="fashion-prompt" name="prompt">calça masculina que pareça de alfaiataria mas seja flexível</textarea>
+    <input type="hidden" id="fashion-enriched-prompt" />
+    <button type="submit">Buscar referências</button>
+  </form>
+
+  <h2>Referências encontradas</h2>
+  <section id="fashion-os-references" class="grid"></section>
+
+  <h2>Prompt enriquecido</h2>
+  <pre id="debug-prompt"></pre>
+
+  <script src="../js/fashion-os-catalog.js"></script>
+  <script src="../js/fashion-os-page-hook.js"></script>
+  <script>
+    window.addEventListener('fashion-os:prompt-enriched', (event) => {
+      document.querySelector('#debug-prompt').textContent = event.detail.enrichedPrompt;
+    });
+  </script>
+</body>
+</html>
