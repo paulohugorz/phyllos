@@ -1,6 +1,6 @@
 # PHYLLOS — Sistema Operacional de Agentes
 
-A PHYLLOS deve operar como uma startup real desde o início. A prioridade agora não é criar mais agentes, mas transformar cada agente-chave em um departamento com responsabilidade, entradas, saídas, KPIs e handoffs claros.
+A PHYLLOS deve operar como uma startup real desde o início. Novos agentes so devem ser criados quando virarem uma celula operacional clara, com responsabilidade, entradas, saídas, KPIs e handoffs definidos.
 
 ## Racional de marca vigente
 
@@ -65,7 +65,7 @@ Essa distribuição corrige o risco de excesso de foco em IA, automação e tecn
 | Strategy Agent | [innovation-director.md](innovation-director.md) | Mercado, TAM/SAM/SOM, concorrentes, benchmark, unit economics e tese para investidores |
 | Customer Research Agent | [cx-lead.md](cx-lead.md) | ICP, 50 entrevistas, dores, objeções, disposição para pagar, lista de espera e pré-venda |
 | Product Agent | [product-director.md](product-director.md) | Materiais, Playbook, primeiras bases de molde, fichas técnicas e custos |
-| Fashion Taxonomy Agent | [fashion-taxonomy-director.md](fashion-taxonomy-director.md) | Governança do banco de termos técnicos de moda para imagem realista, ficha técnica, modelagem e produção |
+| Fashion Taxonomy Agent | [fashion-taxonomy-director.md](fashion-taxonomy-director.md) | Governança do banco de termos técnicos e semânticos de moda para imagem realista, ficha técnica, modelagem e produção |
 | Supply Chain Agent | [operations-lead.md](operations-lead.md) | Fornecedores, cotação, produção, PCP, lead time, qualidade e estoque |
 | Finance Agent | [cfo.md](cfo.md) | Caixa, CMV, margem, markup, cenários, captação e dashboard financeiro |
 | Brand Agent | [brand-director.md](brand-director.md) | Manifesto, voz, identidade visual, campanhas e storytelling |
@@ -84,6 +84,12 @@ O Motor de Imagens realista depende de um banco de termos tecnicos, nao apenas d
 | Agente | Arquivo | Responsabilidade central |
 |---|---|---|
 | Fashion Taxonomy Director | [fashion-taxonomy-director.md](fashion-taxonomy-director.md) | Governar schema, IDs, prioridade, qualidade e revisao cruzada da taxonomia |
+| Curador de Vocabulario Popular de Moda | [curador-vocabulario-popular-moda.md](curador-vocabulario-popular-moda.md) | Mapear fala de clientes, costureiras e atelies para termos normalizados |
+| Tradutor Linguagem-Modelagem | [tradutor-linguagem-modelagem.md](tradutor-linguagem-modelagem.md) | Converter frases naturais em conceitos tecnicos, bases, folgas, tecidos e regras |
+| Curador de Intencoes de Usuario | [curador-intencoes-usuario.md](curador-intencoes-usuario.md) | Normalizar objetivos como conforto, mobilidade, frescor, elegancia e economia |
+| Validador Semantico de Vocabulario | [validador-semantico-vocabulario.md](validador-semantico-vocabulario.md) | Revisar duplicidade, categoria, confianca e qualidade antes de alimentar SQLite |
+| Arquiteto de Vocabulario SQLite | [arquiteto-vocabulario-sqlite.md](arquiteto-vocabulario-sqlite.md) | Desenhar tabelas, chaves, indices e regras de importacao do vocabulario semantico |
+| Curador de Referencias Culturais de Moda | [curador-referencias-culturais-moda.md](curador-referencias-culturais-moda.md) | Conectar termos, silhuetas e estilos a historia da moda e referencias culturais |
 | Curador de Calcas | [curador-calcas.md](curador-calcas.md) | Tipos de calca, cintura, gancho, fit, bolsos, barras e proporcoes |
 | Curador de Camisas | [curador-camisas.md](curador-camisas.md) | Camisas, blusas, palas, vistas, recortes e partes superiores |
 | Curador de Golas e Decotes | [curador-golas-decotes.md](curador-golas-decotes.md) | Golas, decotes, pe de gola, lapelas e aberturas |
@@ -102,6 +108,17 @@ Arquivos base:
 - `data/fashion-taxonomy/seed_terms.csv`
 - `docs/decisoes/adr-001-motor-imagem-realista-fashion-os.md`
 - `docs/decisoes/plano-curadoria-moda-agentes.md`
+
+## Subcelula semantica do vocabulario
+
+A subcelula semantica existe para transformar linguagem natural em estrutura tecnica antes de qualquer geracao ampla de interface ou imagem. O fluxo recomendado e:
+
+1. `curador-vocabulario-popular-moda` preserva a frase real e normaliza o termo.
+2. `curador-intencoes-usuario` identifica a intencao acionavel.
+3. `tradutor-linguagem-modelagem` traduz a intencao em conceito tecnico, base, folga, tecido e regra.
+4. `validador-semantico-vocabulario` evita duplicidade e baixa qualidade.
+5. `arquiteto-vocabulario-sqlite` transforma a decisao em tabelas, relacoes e indices.
+6. `curador-referencias-culturais-moda` adiciona contexto historico ou cultural quando ele melhora decisao tecnica ou narrativa.
 
 ## Regra de prioridade
 

@@ -1008,20 +1008,44 @@
       return { x: originX + x, y: originY + y, rawX: (x - centerX) / cm, rawY: y / cm };
     }
 
-    function pathFromPants(points, back = false) {
+    function pathFromPants(points, back = false, shape = "straight") {
       const p = points;
       const sideCurve = `M ${p.waist.x} ${p.waist.y} C ${p.waist.x + 9} ${p.hip.y * .45}, ${p.hip.x} ${p.hip.y - 18}, ${p.hip.x} ${p.hip.y}`;
-      const hipToThigh = `C ${p.hip.x + 4} ${p.hip.y + 18}, ${p.thighOuter.x} ${p.thighOuter.y - 10}, ${p.thighOuter.x} ${p.thighOuter.y}`;
-      const outerLeg = `L ${p.kneeOuter.x} ${p.kneeOuter.y} L ${p.hemOuter.x} ${p.hemOuter.y}`;
-      const hem = `L ${p.hemInner.x} ${p.hemInner.y}`;
+
+      let hipToThigh, outerLeg;
+      if (shape === "wide") {
+        hipToThigh = `L ${p.thighOuter.x} ${p.thighOuter.y}`;
+        outerLeg   = `L ${p.kneeOuter.x} ${p.kneeOuter.y} L ${p.hemOuter.x} ${p.hemOuter.y}`;
+      } else if (shape === "flare") {
+        hipToThigh = `C ${p.hip.x + 4} ${p.hip.y + 18}, ${p.thighOuter.x} ${p.thighOuter.y - 10}, ${p.thighOuter.x} ${p.thighOuter.y}`;
+        outerLeg   = `L ${p.kneeOuter.x} ${p.kneeOuter.y} C ${p.kneeOuter.x + 10} ${p.kneeOuter.y + 34}, ${p.hemOuter.x} ${p.hemOuter.y - 18}, ${p.hemOuter.x} ${p.hemOuter.y}`;
+      } else if (shape === "slim") {
+        hipToThigh = `C ${p.hip.x - 1} ${p.hip.y + 18}, ${p.thighOuter.x - 2} ${p.thighOuter.y - 10}, ${p.thighOuter.x - 2} ${p.thighOuter.y}`;
+        outerLeg   = `L ${p.kneeOuter.x - 1} ${p.kneeOuter.y} L ${p.hemOuter.x - 1} ${p.hemOuter.y}`;
+      } else if (shape === "jogger") {
+        hipToThigh = `C ${p.hip.x + 4} ${p.hip.y + 18}, ${p.thighOuter.x} ${p.thighOuter.y - 10}, ${p.thighOuter.x} ${p.thighOuter.y}`;
+        // cuff: tapers to narrower hem
+        outerLeg   = `L ${p.kneeOuter.x} ${p.kneeOuter.y} L ${p.hemOuter.x - 6} ${p.hemOuter.y - 12} L ${p.hemOuter.x - 4} ${p.hemOuter.y}`;
+      } else if (shape === "harem") {
+        hipToThigh = `C ${p.hip.x + 16} ${p.hip.y + 26}, ${p.thighOuter.x + 10} ${p.thighOuter.y - 8}, ${p.thighOuter.x} ${p.thighOuter.y}`;
+        outerLeg   = `C ${p.thighOuter.x - 6} ${p.kneeOuter.y - 20}, ${p.kneeOuter.x} ${p.kneeOuter.y}, ${p.hemOuter.x - 5} ${p.hemOuter.y}`;
+      } else if (shape === "barrel") {
+        hipToThigh = `C ${p.hip.x + 8} ${p.hip.y + 20}, ${p.thighOuter.x + 4} ${p.thighOuter.y - 8}, ${p.thighOuter.x} ${p.thighOuter.y}`;
+        outerLeg   = `C ${p.thighOuter.x} ${p.kneeOuter.y - 10}, ${p.kneeOuter.x + 4} ${p.kneeOuter.y}, ${p.hemOuter.x - 3} ${p.hemOuter.y}`;
+      } else {
+        hipToThigh = `C ${p.hip.x + 4} ${p.hip.y + 18}, ${p.thighOuter.x} ${p.thighOuter.y - 10}, ${p.thighOuter.x} ${p.thighOuter.y}`;
+        outerLeg   = `L ${p.kneeOuter.x} ${p.kneeOuter.y} L ${p.hemOuter.x} ${p.hemOuter.y}`;
+      }
+
+      const hem    = `L ${p.hemInner.x} ${p.hemInner.y}`;
       const inseam = `L ${p.kneeInner.x} ${p.kneeInner.y} C ${p.kneeInner.x - 3} ${p.thighInner.y - 70}, ${p.crotch.x + 10} ${p.crotch.y + 20}, ${p.crotch.x} ${p.crotch.y}`;
-      const rise = back
+      const rise   = back
         ? `C ${p.crotch.x + 34} ${p.crotch.y + 14}, ${p.cf.x + 8} ${p.hip.y + 12}, ${p.cf.x} ${p.waist.y}`
         : `C ${p.crotch.x + 21} ${p.crotch.y + 8}, ${p.cf.x + 4} ${p.hip.y + 8}, ${p.cf.x} ${p.waist.y}`;
       return `${sideCurve} ${hipToThigh} ${outerLeg} ${hem} ${inseam} ${rise} Z`;
     }
 
-    function buildPantsPiece(kind, originX, originY) {
+    function buildPantsPiece(kind, originX, originY, shape = "straight") {
       const isBack = kind === "back";
       const waist = isBack ? state.waistBack : state.waistFront;
       const hip = isBack ? state.hipBack : state.hipFront;
@@ -1048,7 +1072,7 @@
         hemOuter: { x: centerX + hem * cm, y: yHem }
       };
       return {
-        kind,
+        kind, shape,
         label: isBack ? "COSTAS - meia perna" : "FRENTE - meia perna",
         originX,
         originY,
@@ -1062,7 +1086,7 @@
       const hidden = mode !== "all" && mode !== piece.kind;
       const g = make("g", { opacity: hidden ? ".16" : "1" });
       const p = piece.points;
-      const localPath = pathFromPants(piece.local, piece.kind === "back");
+      const localPath = pathFromPants(piece.local, piece.kind === "back", piece.shape);
       g.appendChild(make("path", { d: localPath, class: "piece", transform: `translate(${piece.originX} ${piece.originY})` }));
       addText(g, piece.originX + 78, piece.originY - 34, piece.label, "svg-label");
       addText(g, piece.originX + 78, piece.originY - 18, "base sem margem | cortar 2 espelhadas", "svg-small");
@@ -1107,8 +1131,9 @@
     }
 
     function drawPants(base) {
-      const front = buildPantsPiece("front", 90, 92);
-      const back = buildPantsPiece("back", 540, 92);
+      const shape = base.shape || "straight";
+      const front = buildPantsPiece("front", 90, 92, shape);
+      const back = buildPantsPiece("back", 540, 92, shape);
       drawPantsPiece(front);
       drawPantsPiece(back);
       return {
@@ -1287,6 +1312,7 @@
 
     function dressLocal(kind) {
       const isBack = kind === "back";
+      const shape = (currentBase().shape || "straight");
       const centerX = 72;
       const bust = isBack ? state.bustBack : state.bustFront;
       const waist = isBack ? state.waistBack : state.waistFront;
@@ -1294,27 +1320,76 @@
       const hem = isBack ? state.hemBack : state.hemFront;
       const neckDepth = isBack ? 2.4 : state.neckDepth;
       const shoulderDrop = 3.2;
+
+      // empire: waist seam high, near armhole
+      const waistDepth = shape === "empire"
+        ? state.armholeDepth + 6
+        : state.waistDepth;
+
       const local = {
-        cfTop: { x: centerX, y: neckDepth * cm },
-        neck: { x: centerX + state.neckWidth * cm, y: 0 },
-        shoulder: { x: centerX + (state.neckWidth + state.shoulder) * cm, y: shoulderDrop * cm },
-        armhole: { x: centerX + bust * cm, y: state.armholeDepth * cm },
-        waist: { x: centerX + waist * cm, y: state.waistDepth * cm },
-        hip: { x: centerX + hip * cm, y: (state.waistDepth + 20) * cm },
-        hem: { x: centerX + hem * cm, y: state.bodyLength * cm },
-        cfHem: { x: centerX, y: state.bodyLength * cm }
+        cfTop:    { x: centerX,                                              y: neckDepth * cm },
+        neck:     { x: centerX + state.neckWidth * cm,                       y: 0 },
+        shoulder: { x: centerX + (state.neckWidth + state.shoulder) * cm,    y: shoulderDrop * cm },
+        armhole:  { x: centerX + bust * cm,                                  y: state.armholeDepth * cm },
+        waist:    { x: centerX + (shape === "shift" ? bust : waist) * cm,    y: waistDepth * cm },
+        hip:      { x: centerX + hip * cm,                                   y: (waistDepth + 20) * cm },
+        hem:      { x: centerX + hem * cm,                                   y: state.bodyLength * cm },
+        cfHem:    { x: centerX,                                              y: state.bodyLength * cm },
       };
-      const path = [
-        `M ${local.cfTop.x} ${local.cfTop.y}`,
-        `C ${centerX + state.neckWidth * 1.7} ${local.cfTop.y * .35}, ${local.neck.x - 8} 0, ${local.neck.x} ${local.neck.y}`,
-        `L ${local.shoulder.x} ${local.shoulder.y}`,
-        `C ${local.shoulder.x - 2} ${local.armhole.y * .38}, ${local.armhole.x + 8} ${local.armhole.y - 18}, ${local.armhole.x} ${local.armhole.y}`,
-        `C ${local.armhole.x - 5} ${local.waist.y - 28}, ${local.waist.x + 4} ${local.waist.y - 10}, ${local.waist.x} ${local.waist.y}`,
-        `C ${local.hip.x + 6} ${local.hip.y - 40}, ${local.hem.x} ${local.hem.y - 120}, ${local.hem.x} ${local.hem.y}`,
-        `L ${local.cfHem.x} ${local.cfHem.y}`,
-        "Z"
-      ].join(" ");
-      return { centerX, local, path };
+
+      // mermaid: tight to knee, flare below
+      if (shape === "mermaid") {
+        const kneeY = state.bodyLength * 0.62;
+        local.knee = { x: centerX + (waist - 0.5) * cm, y: kneeY * cm };
+      }
+
+      const neck  = `M ${local.cfTop.x} ${local.cfTop.y} C ${centerX + state.neckWidth * 1.7} ${local.cfTop.y * .35}, ${local.neck.x - 8} 0, ${local.neck.x} ${local.neck.y}`;
+      const shld  = `L ${local.shoulder.x} ${local.shoulder.y}`;
+      const cava  = `C ${local.shoulder.x - 2} ${local.armhole.y * .38}, ${local.armhole.x + 8} ${local.armhole.y - 18}, ${local.armhole.x} ${local.armhole.y}`;
+      const waistCurve = `C ${local.armhole.x - 5} ${local.waist.y - 28}, ${local.waist.x + 4} ${local.waist.y - 10}, ${local.waist.x} ${local.waist.y}`;
+      const close = `L ${local.cfHem.x} ${local.cfHem.y} Z`;
+
+      let body;
+      if (shape === "mermaid") {
+        body = [
+          waistCurve,
+          `C ${local.waist.x - 2} ${local.knee.y - 60}, ${local.knee.x - 1} ${local.knee.y - 18}, ${local.knee.x} ${local.knee.y}`,
+          `C ${local.knee.x + 22} ${local.knee.y + 44}, ${local.hem.x} ${local.hem.y - 50}, ${local.hem.x} ${local.hem.y}`,
+        ].join(" ");
+      } else if (shape === "evase" || shape === "flare") {
+        body = [
+          waistCurve,
+          `C ${local.hip.x + 18} ${local.hip.y - 28}, ${local.hem.x - 6} ${local.hem.y - 70}, ${local.hem.x} ${local.hem.y}`,
+        ].join(" ");
+      } else if (shape === "pencil") {
+        const narrowHem = centerX + (hem - 2) * cm;
+        body = [
+          waistCurve,
+          `C ${local.hip.x + 2} ${local.hip.y - 18}, ${narrowHem + 1} ${local.hem.y - 80}, ${narrowHem} ${local.hem.y}`,
+          `L ${local.cfHem.x} ${local.cfHem.y} Z`,
+        ].join(" ");
+        return { centerX, local, path: `${neck} ${shld} ${cava} ${body}`, shape };
+      } else if (shape === "shift") {
+        body = `L ${local.armhole.x} ${local.hem.y} L ${local.hem.x} ${local.hem.y}`;
+      } else if (shape === "empire") {
+        body = [
+          `L ${local.waist.x} ${local.waist.y}`,
+          `C ${local.waist.x + 30} ${local.waist.y + 40}, ${local.hem.x + 10} ${local.hem.y - 80}, ${local.hem.x} ${local.hem.y}`,
+        ].join(" ");
+      } else if (shape === "wrap" && !isBack) {
+        body = [
+          waistCurve,
+          `C ${local.hip.x + 6} ${local.hip.y - 40}, ${local.hem.x} ${local.hem.y - 120}, ${local.hem.x} ${local.hem.y}`,
+        ].join(" ");
+      } else {
+        body = [
+          waistCurve,
+          `C ${local.hip.x + 6} ${local.hip.y - 40}, ${local.hem.x} ${local.hem.y - 120}, ${local.hem.x} ${local.hem.y}`,
+        ].join(" ");
+      }
+
+      const path = `${neck} ${shld} ${cava} ${body} ${close}`;
+      return { centerX, local, path, shape };
     }
 
     function drawDressPiece(kind, originX, originY, label, base) {
@@ -1375,26 +1450,60 @@
 
     function skirtLocal(kind) {
       const isBack = kind === "back";
+      const shape = (currentBase().shape || "straight");
       const centerX = 72;
       const waist = isBack ? state.waistBack : state.waistFront;
-      const hip = isBack ? state.hipBack : state.hipFront;
-      const hem = isBack ? state.hemBack : state.hemFront;
+      const hip   = isBack ? state.hipBack   : state.hipFront;
+      const hem   = isBack ? state.hemBack   : state.hemFront;
+
+      // circle: hem expands greatly beyond defaults
+      const effectiveHem = shape === "circle" ? Math.max(hem, hip * 2.1) : hem;
+      // pencil: hem narrower than hip
+      const pencilHem    = shape === "pencil" ? Math.max(hem - 2, waist - 1) : effectiveHem;
+      const finalHem     = shape === "pencil" ? pencilHem : effectiveHem;
+
       const local = {
-        waistCenter: { x: centerX, y: 0 },
-        waistSide: { x: centerX + waist * cm, y: 0 },
-        hipSide: { x: centerX + hip * cm, y: state.hipDepth * cm },
-        hemSide: { x: centerX + hem * cm, y: state.length * cm },
-        hemCenter: { x: centerX, y: state.length * cm }
+        waistCenter: { x: centerX,                        y: 0 },
+        waistSide:   { x: centerX + waist * cm,           y: 0 },
+        hipSide:     { x: centerX + hip * cm,             y: state.hipDepth * cm },
+        hemSide:     { x: centerX + finalHem * cm,        y: state.length * cm },
+        hemCenter:   { x: centerX,                        y: state.length * cm },
       };
-      const path = [
-        `M ${local.waistCenter.x} ${local.waistCenter.y}`,
-        `L ${local.waistSide.x} ${local.waistSide.y}`,
-        `C ${local.hipSide.x + 2} ${local.hipSide.y - 24}, ${local.hipSide.x} ${local.hipSide.y - 8}, ${local.hipSide.x} ${local.hipSide.y}`,
-        `L ${local.hemSide.x} ${local.hemSide.y}`,
-        `L ${local.hemCenter.x} ${local.hemCenter.y}`,
-        "Z"
-      ].join(" ");
-      return { centerX, local, path };
+
+      let path;
+      if (shape === "pencil") {
+        path = [
+          `M ${local.waistCenter.x} ${local.waistCenter.y}`,
+          `L ${local.waistSide.x} ${local.waistSide.y}`,
+          `C ${local.hipSide.x + 2} ${local.hipSide.y - 24}, ${local.hipSide.x} ${local.hipSide.y - 8}, ${local.hipSide.x} ${local.hipSide.y}`,
+          `L ${local.hemSide.x} ${local.hemSide.y}`,
+          `L ${local.hemCenter.x} ${local.hemCenter.y}`, "Z",
+        ].join(" ");
+      } else if (shape === "evase") {
+        path = [
+          `M ${local.waistCenter.x} ${local.waistCenter.y}`,
+          `L ${local.waistSide.x} ${local.waistSide.y}`,
+          `C ${local.hipSide.x + 4} ${local.hipSide.y - 20}, ${local.hipSide.x + 6} ${local.hipSide.y - 6}, ${local.hipSide.x} ${local.hipSide.y}`,
+          `C ${local.hipSide.x + 14} ${local.hipSide.y + 32}, ${local.hemSide.x} ${local.hemSide.y - 50}, ${local.hemSide.x} ${local.hemSide.y}`,
+          `L ${local.hemCenter.x} ${local.hemCenter.y}`, "Z",
+        ].join(" ");
+      } else if (shape === "circle") {
+        path = [
+          `M ${local.waistCenter.x} ${local.waistCenter.y}`,
+          `L ${local.waistSide.x} ${local.waistSide.y}`,
+          `C ${local.waistSide.x + 40} ${state.length * cm * 0.25}, ${local.hemSide.x - 16} ${state.length * cm * 0.6}, ${local.hemSide.x} ${local.hemSide.y}`,
+          `L ${local.hemCenter.x} ${local.hemCenter.y}`, "Z",
+        ].join(" ");
+      } else {
+        path = [
+          `M ${local.waistCenter.x} ${local.waistCenter.y}`,
+          `L ${local.waistSide.x} ${local.waistSide.y}`,
+          `C ${local.hipSide.x + 2} ${local.hipSide.y - 24}, ${local.hipSide.x} ${local.hipSide.y - 8}, ${local.hipSide.x} ${local.hipSide.y}`,
+          `L ${local.hemSide.x} ${local.hemSide.y}`,
+          `L ${local.hemCenter.x} ${local.hemCenter.y}`, "Z",
+        ].join(" ");
+      }
+      return { centerX, local, path, shape };
     }
 
     function drawSkirtPiece(kind, originX, originY, label) {

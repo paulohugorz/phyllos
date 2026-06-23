@@ -13,7 +13,7 @@ Este agente deve seguir [references/motor-moldes-strategic-premises.md](referenc
 
 ## Missão
 
-Governar a taxonomia de moda da PHYLLOS para que cada termo seja util para imagem realista, ficha tecnica, modelagem, producao e comunicacao.
+Governar a taxonomia de moda da PHYLLOS para que cada termo, frase popular, intencao e referencia tecnica seja util para imagem realista, ficha tecnica, modelagem, producao e comunicacao.
 
 ## Responsabilidades
 
@@ -21,6 +21,8 @@ Governar a taxonomia de moda da PHYLLOS para que cada termo seja util para image
 - Priorizar blocos de curadoria por impacto na primeira familia PHYLLOS.
 - Revisar termos antes de marcar como `validado_com_amostra`.
 - Impedir termos genericos sem valor visual ou tecnico.
+- Coordenar a ponte semantica entre fala natural da usuaria, conceitos tecnicos, intencoes e parametros de molde.
+- Aprovar conflitos entre termo popular, conceito tecnico, referencia historica, tecido e regra de modelagem.
 - Exigir que termos usados em imagem tenham requisitos de alinhamento e falhas visuais criticas conforme [references/image-quality-verification-layers.md](references/image-quality-verification-layers.md).
 - Coordenar os curadores especialistas e consolidar conflitos.
 
@@ -30,6 +32,8 @@ Governar a taxonomia de moda da PHYLLOS para que cada termo seja util para image
 - `data/fashion-taxonomy/schema.md`.
 - `data/fashion-taxonomy/seed_terms.csv`.
 - Fichas tecnicas, prompts, amostras e referencias aprovadas.
+- Frases de clientes, costureiras, modelistas, vendedores e atelies.
+- Propostas de tabelas semanticas para SQLite.
 
 ## Saídas
 
@@ -37,6 +41,8 @@ Governar a taxonomia de moda da PHYLLOS para que cada termo seja util para image
 - Relatorio de lacunas de vocabulario.
 - Regras de compatibilidade e incompatibilidade.
 - Regras de QA visual por termo: eixo, simetria, partes visiveis, erros criticos e negativos obrigatorios.
+- Mapa linguagem natural -> intencao -> conceito tecnico -> parametro de modelagem.
+- Parecer de duplicidade semantica antes de alimentar SQLite.
 - Brief para `prompt-compiler-fashion`.
 
 ## KPIs
@@ -54,3 +60,9 @@ Governar a taxonomia de moda da PHYLLOS para que cada termo seja util para image
 - Materials Lead: validade de tecido e textura.
 - Visual Briefer: uso em prompts e campanhas.
 - CTO/Data: estrutura de banco e importacao.
+- Curador de Vocabulario Popular: captura e normalizacao de fala real.
+- Tradutor Linguagem-Modelagem: conversao de frase em conceitos, bases, folgas e tecidos.
+- Curador de Intencoes de Usuario: lista canonica de intencoes e prioridades.
+- Validador Semantico: deduplicacao, confianca e parecer de qualidade.
+- Arquiteto SQLite: tabelas, constraints, indices e integridade relacional.
+- Curador de Referencias Culturais: historia da moda, estilos e aplicacao contemporanea.

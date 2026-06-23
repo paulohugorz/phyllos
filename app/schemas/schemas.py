@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
 
@@ -33,6 +33,9 @@ class PecaBase(BaseModel):
     observacoes: Optional[str] = None
     prompt_croqui: Optional[str] = None
     prompt_foto: Optional[str] = None
+    gtin: Optional[str] = None
+    dpp_uuid: Optional[str] = None
+    dpp_status: Optional[str] = "rascunho"
 
 
 class PecaCreate(PecaBase):
@@ -49,6 +52,9 @@ class PecaUpdate(BaseModel):
     observacoes: Optional[str] = None
     prompt_croqui: Optional[str] = None
     prompt_foto: Optional[str] = None
+    gtin: Optional[str] = None
+    dpp_uuid: Optional[str] = None
+    dpp_status: Optional[str] = None
 
 
 class PecaOut(PecaBase):
@@ -65,6 +71,14 @@ class FichaTecnicaBase(BaseModel):
     construcao: Optional[str] = None
     medidas: Optional[str] = None
     qualidade: Optional[str] = None
+    # DPP
+    composicao_fibras: Optional[str] = None       # JSON string
+    instrucoes_reparo: Optional[str] = None
+    instrucoes_fim_de_vida: Optional[str] = None
+    certificacoes: Optional[str] = None            # JSON string
+    conteudo_reciclado_pct: Optional[float] = None
+    pegada_carbono_kgco2e: Optional[float] = None
+    durabilidade_ciclos_lavagem: Optional[int] = None
 
 
 class FichaTecnicaCreate(FichaTecnicaBase):
@@ -72,6 +86,26 @@ class FichaTecnicaCreate(FichaTecnicaBase):
 
 
 class FichaTecnicaOut(FichaTecnicaBase):
+    id: int
+    peca_id: int
+    criado_em: datetime
+
+    class Config:
+        from_attributes = True
+
+
+class EtapaProducaoBase(BaseModel):
+    etapa: str
+    pais: Optional[str] = None
+    instalacao_nome: Optional[str] = None
+    instalacao_gln: Optional[str] = None
+
+
+class EtapaProducaoCreate(EtapaProducaoBase):
+    peca_id: int
+
+
+class EtapaProducaoOut(EtapaProducaoBase):
     id: int
     peca_id: int
     criado_em: datetime

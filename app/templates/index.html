@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fashion OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --obsidian: #0F0F0D;
+      --cream:    #F5F2EB;
+      --gold:     #B89A6A;
+      --muted:    #9E9B95;
+      --border:   rgba(15,15,13,0.12);
+      --border-md: rgba(15,15,13,0.22);
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--obsidian);
+      font-family: 'Jost', system-ui, sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 18px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .version {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    main {
+      display: flex;
+      height: calc(100vh - 49px);
+    }
+
+    .panel {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel-left { border-right: 1px solid var(--border); }
+
+    .panel-header {
+      padding: 20px 32px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .panel-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    textarea {
+      flex: 1;
+      resize: none;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 24px 32px;
+      font-family: 'Jost', system-ui, sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--obsidian);
+    }
+    textarea::placeholder { color: rgba(158,155,149,0.55); }
+
+    .panel-footer {
+      padding: 16px 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn {
+      padding: 10px 20px;
+      font-family: 'Jost', system-ui, sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.18s;
+    }
+    .btn-primary {
+      flex: 1;
+      background: var(--obsidian);
+      color: var(--cream);
+      border: 1px solid var(--obsidian);
+    }
+    .btn-primary:hover { background: #2a2a26; }
+    .btn-primary:disabled { opacity: 0.4; cursor: default; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(158,155,149,0.5);
+    }
+    .btn-ghost:hover { border-color: var(--obsidian); color: var(--obsidian); }
+
+    .loading-bar {
+      display: none;
+      height: 1px;
+      width: 40%;
+      background: var(--gold);
+      animation: sweep 0.9s ease-in-out infinite;
+      position: absolute;
+      bottom: 0; left: 0;
+    }
+    .loading-bar.visible { display: block; }
+    @keyframes sweep { 0%{left:-40%} 100%{left:100%} }
+
+    /* Right: empty */
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0.35;
+    }
+    .empty-icon {
+      width: 52px; height: 52px;
+      border: 1px solid var(--border-md);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .empty-label { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
+
+    /* Right: result */
+    .result-panel {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 24px 32px;
+      gap: 20px;
+    }
+    .result-panel.visible { display: flex; }
+
+    .result-sku {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .img-slot {
+      width: 100%;
+      min-height: 260px;
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      background: rgba(232,228,220,0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .img-slot span {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+    .img-slot img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .img-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .img-slot .img-loading {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(245,242,235,0.85);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .img-slot .img-loading.visible { display: flex; }
+    .img-spinner {
+      width: 20px; height: 20px;
+      border: 1.5px solid rgba(15,15,13,0.15);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .img-loading-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .meta-table { width: 100%; border-collapse: collapse; }
+    .meta-table tr { border-bottom: 1px solid var(--border); }
+    .meta-table tr:last-child { border-bottom: none; }
+    .meta-table td { padding: 9px 0; font-size: 12px; }
+    .meta-table td:first-child { color: var(--muted); }
+    .meta-table td:last-child { text-align: right; }
+
+    .status-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    ::selection { background: rgba(184,154,106,0.15); }
+
+    #fashion-os-references { display: none; flex-direction: column; gap: 8px; }
+    #fashion-os-references.visible { display: flex; }
+    .refs-label {
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted); padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+    .fashion-ref-card {
+      display: flex; gap: 10px; align-items: flex-start;
+      padding: 8px 0; border-bottom: 1px solid var(--border);
+    }
+    .fashion-ref-card:last-child { border-bottom: none; }
+    .fashion-ref-thumb {
+      width: 36px; height: 36px; border-radius: 2px;
+      background: rgba(232,228,220,0.6); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); flex-shrink: 0;
+    }
+    .fashion-ref-card strong { font-size: 11px; font-weight: 400; display: block; }
+    .fashion-ref-card p { font-size: 10px; color: var(--muted); margin: 2px 0; }
+    .fashion-ref-card small { font-size: 10px; color: var(--muted); opacity: 0.7; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="logo">Fashion OS</span>
+    <span class="version">v1</span>
+  </header>
+
+  <main>
+
+    <section class="panel panel-left">
+      <div class="panel-header">
+        <span class="panel-label">Descrição da peça</span>
+      </div>
+
+      <textarea
+        id="description"
+        placeholder="Descreva a peça — silhueta, tecido, caimento, cor, referências..."
+      ></textarea>
+
+      <div class="panel-footer">
+        <button class="btn btn-primary" id="btn-gerar" onclick="gerar()">Gerar peça</button>
+        <button class="btn btn-ghost" onclick="limpar()">Limpar</button>
+        <div class="loading-bar" id="loading-bar"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-label">Peça formada</span>
+      </div>
+
+      <div class="empty-state" id="empty-state">
+        <div class="empty-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M7 3H4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-3M7 3a2 2 0 0 0 4 0M7 3a2 2 0 0 1 4 0" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="empty-label">A peça aparecerá aqui</span>
+      </div>
+
+      <div class="result-panel" id="result-panel">
+        <span class="result-sku" id="result-sku"></span>
+
+        <div class="img-slot" id="img-slot">
+          <img id="generated-img" alt="Peça gerada" />
+          <div class="img-loading" id="img-loading">
+            <div class="img-spinner"></div>
+            <span class="img-loading-label">Gerando</span>
+          </div>
+          <div class="img-empty" id="img-empty">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="opacity:.35">
+              <rect x="3" y="5" width="22" height="18" rx="2" stroke="#9E9B95" stroke-width="1.2"/>
+              <circle cx="9.5" cy="11" r="2" stroke="#9E9B95" stroke-width="1.2"/>
+              <path d="M3 19l5-5 4 4 4-4 6 6" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <table class="meta-table" id="meta-table"></table>
+
+        <div id="fashion-os-references">
+          <p class="refs-label">Referências do catálogo</p>
+        </div>
+      </div>
+
+      <div class="panel-footer">
+        <span style="font-size:11px;color:var(--muted);letter-spacing:0.04em;">Powered by Stable Horde — geração gratuita, sem cadastro.</span>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+
+    // ── Mapeamento de peças PT → EN + tokens de prompt ────────────────────────
+    const GARMENT_MAP = [
+      { pt: ['vestido','dress'],        en: 'dress',      slug: 'vestido',           base: 'dress, full body, fashion editorial, woman' },
+      { pt: ['saia'],                   en: 'skirt',      slug: 'saia',              base: 'skirt, full body, fashion editorial, woman' },
+      { pt: ['calça','calca','pants','trousers'], en: 'trousers', slug: 'calca',     base: 'trousers, full body, fashion editorial, woman' },
+      { pt: ['camisa','shirt'],         en: 'shirt',      slug: 'camisa',            base: 'shirt, full body, fashion editorial, woman' },
+      { pt: ['blusa'],                  en: 'blouse',     slug: 'top-blusa',         base: 'blouse, full body, fashion editorial, woman' },
+      { pt: ['top','bralette','cropped'], en: 'top',      slug: 'top-blusa',         base: 'fashion top, full body, fashion editorial, woman' },
+      { pt: ['jaqueta','jacket'],       en: 'jacket',     slug: 'jaqueta',           base: 'jacket, full body, fashion editorial, woman' },
+      { pt: ['blazer'],                 en: 'blazer',     slug: 'jaqueta',           base: 'blazer, full body, fashion editorial, woman' },
+      { pt: ['casaco','coat','trench'], en: 'coat',       slug: 'jaqueta',           base: 'coat, full body, fashion editorial, woman' },
+      { pt: ['legging','leggings','leggins'], en: 'leggings', slug: 'legging-activewear', base: 'leggings, full body, fashion editorial, woman' },
+      { pt: ['shorts','bermuda'],       en: 'shorts',     slug: 'legging-activewear', base: 'shorts, full body, fashion editorial, woman' },
+      { pt: ['macacão','macacao','jumpsuit'], en: 'jumpsuit', slug: 'vestido',       base: 'jumpsuit, full body, fashion editorial, woman' },
+    ];
+
+    // Detecta o tipo de peça no texto
+    function detectGarment(txt) {
+      const q = normalize(txt);
+      for (const g of GARMENT_MAP) {
+        if (g.pt.some(p => q.includes(normalize(p)))) return g;
+      }
+      return null;
+    }
+
+    // Extrai cor e tecido do texto
+    function extractMeta(txt) {
+      const corMatch = txt.match(/pret[ao]|branc[ao]|cinz[ao]|azul|verde|vermelh[ao]|beg[eê]|crem[ae]|marrom|caramelo|dourad[ao]|off.white|nude|terrac[oô]|areia|lavanda/i);
+      const tecMatch = txt.match(/linho|seda|algodão|lã|jersey|crepe|tweed|veludo|cetim|tencel|viscose|denim|malha|modal|lyocell|neoprene|couro/i);
+      const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '—';
+      return { cor: cap(corMatch?.[0]), tec: cap(tecMatch?.[0]) };
+    }
+
+    function gerar() {
+      const txt = document.getElementById('description').value.trim();
+      if (!txt) { document.getElementById('description').focus(); return; }
+      const btn = document.getElementById('btn-gerar');
+      const bar = document.getElementById('loading-bar');
+      btn.disabled = true;
+      bar.classList.add('visible');
+      setTimeout(() => {
+        btn.disabled = false;
+        bar.classList.remove('visible');
+        mostrarResultado(txt);
+      }, 400);
+    }
+
+    function mostrarResultado(txt) {
+      const ts = Date.now().toString().slice(-4);
+      const sku = 'PH' + new Date().getFullYear().toString().slice(-2) + ts;
+      const garment = detectGarment(txt);
+      const { cor, tec } = extractMeta(txt);
+
+      document.getElementById('result-sku').textContent = sku;
+      document.getElementById('meta-table').innerHTML = `
+        <tr><td>Categoria</td><td>${garment ? garment.en.charAt(0).toUpperCase()+garment.en.slice(1) : '—'}</td></tr>
+        <tr><td>Cor</td><td>${cor}</td></tr>
+        <tr><td>Tecido</td><td>${tec}</td></tr>
+        <tr><td>Status</td><td><span class="status-badge">Rascunho</span></td></tr>
+      `;
+      document.getElementById('empty-state').style.display = 'none';
+      document.getElementById('result-panel').classList.add('visible');
+      document.getElementById('fashion-os-references').classList.remove('visible');
+      gerarImagem(txt, garment);
+    }
+
+    // ── Cache de dados ────────────────────────────────────────────────────────
+    let _fashionTerms = null;
+    let _visualRefs   = null;
+
+    function normalize(s) {
+      return String(s || '').toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g,' ').trim();
+    }
+
+    async function loadFashionTerms() {
+      if (_fashionTerms) return _fashionTerms;
+      try { const r = await fetch('./js/fashion-terms.json'); _fashionTerms = await r.json(); } catch(_){ _fashionTerms = []; }
+      return _fashionTerms;
+    }
+
+    async function loadVisualRefs() {
+      if (_visualRefs) return _visualRefs;
+      try { const r = await fetch('./js/visual-references.json'); _visualRefs = await r.json(); } catch(_){ _visualRefs = []; }
+      return _visualRefs;
+    }
+
+    // Retorna termos técnicos que combinam com o texto E com a categoria da peça
+    function matchTerms(txt, garment, terms) {
+      const q = normalize(txt);
+      const catFilter = garment ? normalize(garment.en) : null;
+      return terms.filter(t => {
+        const hay = normalize([t.termo_pt, t.termo_en, t.subcategoria, t.categoria, t.definicao, t.atributos_visuais].join(' '));
+        const wordMatch = q.split(' ').some(w => w.length > 3 && hay.includes(w));
+        // Se detectamos a peça, o termo precisa estar na mesma subcategoria OU ser de tecido/acabamento (universal)
+        if (catFilter && garment) {
+          const isUniversal = ['tecido','acabamento','costura','fechamento'].includes(t.categoria);
+          const isSameCat   = hay.includes(normalize(garment.en)) || hay.includes(normalize(garment.pt?.[0]||''));
+          return wordMatch && (isUniversal || isSameCat);
+        }
+        return wordMatch;
+      });
+    }
+
+    // Retorna referências visuais APENAS da categoria da peça detectada
+    function matchRefs(txt, garment, refs) {
+      // Filtro primário: campo categoria deve bater exatamente com o slug da peça
+      const filtered = garment
+        ? refs.filter(r => r.categoria === garment.slug)
+        : refs;
+
+      // Se não há refs para a categoria, devolve vazio (nunca mostra refs erradas)
+      if (!filtered.length) return [];
+
+      // Ordena: primeiro com imagem, depois por prioridade
+      return filtered
+        .sort((a, b) => {
+          const ai = a.image_url ? 1 : 0;
+          const bi = b.image_url ? 1 : 0;
+          if (bi !== ai) return bi - ai;
+          return (Number(b.prioridade)||0) - (Number(a.prioridade)||0);
+        });
+    }
+
+    // Compila prompt positivo e negativo a partir da taxonomia + referências
+    function buildPrompt(userTxt, garment, terms, refs) {
+      const pos = new Set(['fashion editorial photography', 'full body', 'soft studio lighting',
+        'realistic styled environment', 'clean contemporary studio or lifestyle setting',
+        'photorealistic', 'high quality', 'natural pose',
+        'premium fabric texture', 'clean garment construction', 'real person wearing clothes']);
+      const neg = new Set(['blurry', 'low quality', 'watermark', 'text overlay', 'logo',
+        'disfigured', 'deformed hands', 'extra limbs', 'cartoon', 'illustration',
+        'painting', 'render', 'plastic skin', 'overexposed', 'bad anatomy']);
+
+      // Base da peça
+      if (garment) garment.base.split(',').map(s=>s.trim()).forEach(s=>pos.add(s));
+
+      // Tokens da taxonomia
+      terms.forEach(t => {
+        t.prompt_tokens.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>pos.add(s));
+        t.prompt_negativo.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>neg.add(s));
+      });
+
+      // Tokens das referências visuais
+      refs.slice(0,4).forEach(r => {
+        String(r.prompt_tokens||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>pos.add(s));
+        String(r.prompt_negativo||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>neg.add(s));
+      });
+
+      return {
+        pos: userTxt + ', ' + [...pos].join(', '),
+        neg: [...neg].join(', ')
+      };
+    }
+
+    // Renderiza o painel de referências — só mostra imagens da categoria certa
+    function renderRefs(refs) {
+      const panel = document.getElementById('fashion-os-references');
+      panel.innerHTML = '<p class="refs-label">Referências da categoria</p>';
+
+      const withImg = refs.filter(r => r.image_url);
+      const noImg   = refs.filter(r => !r.image_url).slice(0, 3);
+
+      if (withImg.length) {
+        const grid = document.createElement('div');
+        grid.style.cssText = 'display:grid;grid-template-columns:repeat('+Math.min(withImg.length,3)+',1fr);gap:6px;margin-bottom:10px;';
+        withImg.slice(0,3).forEach(r => {
+          const cell = document.createElement('div');
+          cell.style.cssText = 'position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:2px;border:1px solid var(--border);background:rgba(232,228,220,.4)';
+          cell.innerHTML = `<img src="${r.image_url}" alt="${r.titulo}"
+            style="width:100%;height:100%;object-fit:cover"
+            onerror="this.parentElement.style.display='none'">
+            <span style="position:absolute;bottom:0;left:0;right:0;padding:4px 6px;
+              font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+              background:rgba(245,242,235,.88)">${r.categoria||''}</span>`;
+          grid.appendChild(cell);
+        });
+        panel.appendChild(grid);
+      }
+
+      noImg.forEach(r => {
+        const card = document.createElement('div');
+        card.className = 'fashion-ref-card';
+        card.innerHTML = `<div class="fashion-ref-thumb">${(r.categoria||'ref').slice(0,4)}</div>
+          <div><strong>${r.titulo}</strong>
+          <p>${r.contexto_uso||''}</p>
+          <small>${(r.styling_notes||'').slice(0,80)}</small></div>`;
+        panel.appendChild(card);
+      });
+
+      panel.classList.toggle('visible', withImg.length + noImg.length > 0);
+    }
+
+    async function gerarImagem(txt, garment) {
+      const img          = document.getElementById('generated-img');
+      const loading      = document.getElementById('img-loading');
+      const loadingLabel = loading.querySelector('.img-loading-label');
+      const empty        = document.getElementById('img-empty');
+
+      img.style.display = 'none';
+      empty.style.display = 'none';
+      loading.classList.add('visible');
+      loadingLabel.textContent = 'Buscando referências';
+
+      // ── 1. Carrega taxonomia e referências filtradas pela categoria ──────
+      let terms = [], refs = [];
+      try {
+        [terms, refs] = await Promise.all([loadFashionTerms(), loadVisualRefs()]);
+        terms = matchTerms(txt, garment, terms);
+        refs  = matchRefs(txt, garment, refs);
+        if (refs.length) renderRefs(refs);
+      } catch(_) {}
+
+      // ── 2. Compila prompt enriquecido ────────────────────────────────────
+      const { pos, neg } = buildPrompt(txt, garment, terms, refs);
+      loadingLabel.textContent = 'Gerando imagem';
+
+      // ── 3. Envia para Stable Horde — modelo Deliberate ───────────────────
+      try {
+        const sub = await fetch('https://stablehorde.net/api/v2/generate/async', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': '0000000000' },
+          body: JSON.stringify({
+            prompt: pos + ' ### ' + neg,
+            params: {
+              sampler_name: 'k_euler_a',
+              cfg_scale: 7.5,
+              steps: 25,
+              width: 512,
+              height: 768,
+              n: 1,
+              karras: true
+            },
+            r2: false,
+            slow_workers: true,
+            models: ['Deliberate']
+          })
+        });
+
+        if (!sub.ok) { showImgError('Erro ao enviar'); return; }
+        const { id } = await sub.json();
+
+        for (let i = 0; i < 80; i++) {
+          await new Promise(r => setTimeout(r, 4000));
+          const chk = await (await fetch(`https://stablehorde.net/api/v2/generate/check/${id}`)).json();
+          if (chk.faulted) { showImgError('Falha na geração — tente novamente'); return; }
+          if (chk.wait_time > 0) loadingLabel.textContent = `~${chk.wait_time}s`;
+          if (chk.done) {
+            const st  = await (await fetch(`https://stablehorde.net/api/v2/generate/status/${id}`)).json();
+            const b64 = st?.generations?.[0]?.img;
+            if (!b64) { showImgError('Imagem não retornada'); return; }
+            img.src = 'data:image/webp;base64,' + b64;
+            img.style.display = 'block';
+            loading.classList.remove('visible');
+            return;
+          }
+        }
+        showImgError('Tempo esgotado — tente novamente');
+      } catch(e) {
+        showImgError('Sem conexão com a API');
+      }
+    }
+
+    function showImgError(msg) {
+      document.getElementById('img-loading').classList.remove('visible');
+      const empty = document.getElementById('img-empty');
+      empty.innerHTML = `
+        <div style="text-align:center;padding:16px;display:flex;flex-direction:column;gap:8px;align-items:center;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="opacity:.3">
+            <rect x="3" y="5" width="18" height="14" rx="2" stroke="#9E9B95" stroke-width="1.2"/>
+            <path d="M12 10v4M12 16h.01" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+          <span style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">${msg}</span>
+        </div>`;
+      empty.style.display = 'flex';
+    }
+
+    function limpar() {
+      document.getElementById('description').value = '';
+      document.getElementById('result-panel').classList.remove('visible');
+      document.getElementById('empty-state').style.display = '';
+      document.getElementById('fashion-os-references').classList.remove('visible');
+      const img = document.getElementById('generated-img');
+      img.style.display = 'none';
+      img.src = '';
+      document.getElementById('img-empty').style.display = 'flex';
+      document.getElementById('img-loading').classList.remove('visible');
+    }
+  </script>
+
+  <script src="./js/fashion-os-catalog.js"></script>
+</body>
+</html>

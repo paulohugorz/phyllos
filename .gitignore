@@ -1,0 +1,20 @@
+.DS_Store
+
+# Local Python/runtime
+.venv/
+__pycache__/
+*.py[cod]
+
+# Local tool state
+.netlify/
+.codex/
+.claude/settings.local.json
+
+# Local databases and generated runtime data
+data/database/*.db
+data/.DS_Store
+
+# Logs and env files
+*.log
+.env
+.env.*
