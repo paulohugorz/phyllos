@@ -11,7 +11,7 @@ from app.models.models import Colecao, Peca, FichaTecnica, VisualReference, Peca
 from app.schemas.schemas import (
     ColecaoCreate, ColecaoOut,
     PecaCreate, PecaUpdate, PecaOut,
-    FichaTecnicaCreate, FichaTecnicaOut,
+    FichaTecnicaBase, FichaTecnicaCreate, FichaTecnicaOut,
     VisualReferenceCreate, VisualReferenceOut,
     PecaVisualReferenceCreate, PecaVisualReferenceOut,
     EtapaProducaoCreate, EtapaProducaoOut,
@@ -105,6 +105,18 @@ def obter_ficha(peca_id: int, db: Session = Depends(get_db)):
     ficha = db.query(FichaTecnica).filter(FichaTecnica.peca_id == peca_id).first()
     if not ficha:
         raise HTTPException(status_code=404, detail="Ficha técnica não encontrada")
+    return ficha
+
+
+@router.patch("/fichas-tecnicas/{peca_id}", response_model=FichaTecnicaOut, tags=["Fichas Técnicas"])
+def atualizar_ficha(peca_id: int, data: FichaTecnicaBase, db: Session = Depends(get_db)):
+    ficha = db.query(FichaTecnica).filter(FichaTecnica.peca_id == peca_id).first()
+    if not ficha:
+        raise HTTPException(status_code=404, detail="Ficha técnica não encontrada")
+    for field, value in data.model_dump(exclude_none=True).items():
+        setattr(ficha, field, value)
+    db.commit()
+    db.refresh(ficha)
     return ficha
 
 
