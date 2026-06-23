@@ -6,8 +6,14 @@ import json
 import uuid
 import io
 
+import re
+
 from app.core.database import get_db
-from app.models.models import Colecao, Peca, FichaTecnica, VisualReference, PecaVisualReference, EtapaProducao
+from app.models.models import (
+    Colecao, Peca, FichaTecnica, VisualReference,
+    PecaVisualReference, EtapaProducao,
+    PecaMaterial, ProdutoFornecedor,
+)
 from app.schemas.schemas import (
     ColecaoCreate, ColecaoOut,
     PecaCreate, PecaUpdate, PecaOut,
@@ -15,7 +21,10 @@ from app.schemas.schemas import (
     VisualReferenceCreate, VisualReferenceOut,
     PecaVisualReferenceCreate, PecaVisualReferenceOut,
     EtapaProducaoCreate, EtapaProducaoOut,
+    PecaMaterialCreate, PecaMaterialOut,
+    ISCMOut,
 )
+from app.api.fornecedores import _produto_para_materia_prima
 
 router = APIRouter()
 
@@ -212,6 +221,208 @@ def listar_etapas(codigo: str, db: Session = Depends(get_db)):
     return db.query(EtapaProducao).filter(EtapaProducao.peca_id == peca.id).all()
 
 
+# ---------- Materiais vinculados (catálogo → peça) ----------
+
+@router.post("/pecas/{codigo}/materiais", response_model=PecaMaterialOut, status_code=201, tags=["Materiais"])
+def vincular_material(codigo: str, data: PecaMaterialCreate, db: Session = Depends(get_db)):
+    peca = db.query(Peca).filter(Peca.codigo == codigo).first()
+    if not peca:
+        raise HTTPException(status_code=404, detail="Peça não encontrada")
+
+    produto = db.query(ProdutoFornecedor).filter(ProdutoFornecedor.id == data.produto_fornecedor_id).first()
+    if not produto:
+        raise HTTPException(status_code=404, detail="Produto do fornecedor não encontrado")
+
+    # Impede duplicata da mesma função
+    existe = db.query(PecaMaterial).filter(
+        PecaMaterial.peca_id == peca.id,
+        PecaMaterial.produto_fornecedor_id == produto.id,
+        PecaMaterial.funcao == (data.funcao or "principal"),
+    ).first()
+    if existe:
+        raise HTTPException(status_code=400, detail="Este material já está vinculado à peça com essa função")
+
+    # Auto-calcula peso_kg se não informado mas quantidade_m + gramatura + largura disponíveis
+    peso_kg = data.peso_kg
+    if peso_kg is None and data.quantidade_m and produto.gramatura_gm2 and produto.largura_m:
+        peso_kg = round(data.quantidade_m * produto.largura_m * produto.gramatura_gm2 / 1000, 4)
+
+    vinculo = PecaMaterial(
+        peca_id=peca.id,
+        produto_fornecedor_id=produto.id,
+        funcao=data.funcao or "principal",
+        quantidade_m=data.quantidade_m,
+        peso_kg=peso_kg,
+        observacoes=data.observacoes,
+    )
+    db.add(vinculo)
+    db.flush()
+
+    # Auto-popula FichaTecnica com dados do produto
+    _consolidar_ficha(peca, db)
+
+    # Cria EtapaProducao se ainda não existe para esse fornecedor/etapa
+    etapa_tipo = _etapa_para_tipo(produto.tipo)
+    if etapa_tipo:
+        ja_existe = db.query(EtapaProducao).filter(
+            EtapaProducao.peca_id == peca.id,
+            EtapaProducao.etapa == etapa_tipo,
+            EtapaProducao.instalacao_nome == produto.fornecedor.nome,
+        ).first()
+        if not ja_existe:
+            db.add(EtapaProducao(
+                peca_id=peca.id,
+                etapa=etapa_tipo,
+                pais="Brasil",
+                instalacao_nome=produto.fornecedor.nome,
+            ))
+
+    db.commit()
+    db.refresh(vinculo)
+
+    return {
+        "id": vinculo.id,
+        "peca_id": vinculo.peca_id,
+        "produto_fornecedor_id": vinculo.produto_fornecedor_id,
+        "funcao": vinculo.funcao,
+        "quantidade_m": vinculo.quantidade_m,
+        "peso_kg": vinculo.peso_kg,
+        "observacoes": vinculo.observacoes,
+        "criado_em": vinculo.criado_em,
+        "produto": _produto_para_materia_prima(produto),
+    }
+
+
+@router.get("/pecas/{codigo}/materiais", response_model=List[PecaMaterialOut], tags=["Materiais"])
+def listar_materiais_peca(codigo: str, db: Session = Depends(get_db)):
+    peca = db.query(Peca).filter(Peca.codigo == codigo).first()
+    if not peca:
+        raise HTTPException(status_code=404, detail="Peça não encontrada")
+
+    vinculos = db.query(PecaMaterial).filter(PecaMaterial.peca_id == peca.id).all()
+    return [
+        {
+            "id": v.id,
+            "peca_id": v.peca_id,
+            "produto_fornecedor_id": v.produto_fornecedor_id,
+            "funcao": v.funcao,
+            "quantidade_m": v.quantidade_m,
+            "peso_kg": v.peso_kg,
+            "observacoes": v.observacoes,
+            "criado_em": v.criado_em,
+            "produto": _produto_para_materia_prima(v.produto),
+        }
+        for v in vinculos
+    ]
+
+
+@router.delete("/pecas/{codigo}/materiais/{material_id}", status_code=204, tags=["Materiais"])
+def remover_material_peca(codigo: str, material_id: int, db: Session = Depends(get_db)):
+    peca = db.query(Peca).filter(Peca.codigo == codigo).first()
+    if not peca:
+        raise HTTPException(status_code=404, detail="Peça não encontrada")
+
+    vinculo = db.query(PecaMaterial).filter(
+        PecaMaterial.id == material_id,
+        PecaMaterial.peca_id == peca.id,
+    ).first()
+    if not vinculo:
+        raise HTTPException(status_code=404, detail="Vínculo de material não encontrado")
+
+    db.delete(vinculo)
+    db.flush()
+    _consolidar_ficha(peca, db)
+    db.commit()
+
+
+# ---------- helpers de integração ----------
+
+def _etapa_para_tipo(tipo: str | None) -> str | None:
+    return {
+        "pluma": "fiacao",
+        "fio": "fiacao",
+        "malha": "tecelagem",
+        "tecido_plano": "tecelagem",
+        "lona": "tecelagem",
+    }.get(tipo or "")
+
+
+def _parse_composicao(composicao: str) -> list:
+    """Converte string de composição em lista de fibras para FichaTecnica."""
+    if not composicao:
+        return []
+    # "100% Algodão Orgânico" / "95% CO, 5% Elastano"
+    matches = re.findall(r"(\d+)%\s*([^,%\n]+)", composicao)
+    if matches:
+        return [{"fibra": m[1].strip().lower(), "pct": int(m[0])} for m in matches]
+    # "Algodão/Cânhamo" ou "Cânhamo/Algodão"
+    partes = [p.strip() for p in re.split(r"[/,]", composicao) if p.strip()]
+    if len(partes) > 1:
+        return [{"fibra": p.lower(), "pct": None} for p in partes]
+    return [{"fibra": composicao.strip().lower(), "pct": 100}]
+
+
+def _consolidar_ficha(peca: Peca, db: Session):
+    """Recalcula FichaTecnica a partir de todos os materiais vinculados à peça."""
+    vinculos = db.query(PecaMaterial).filter(PecaMaterial.peca_id == peca.id).all()
+
+    if not vinculos:
+        # Sem materiais — limpa campos derivados
+        ficha = db.query(FichaTecnica).filter(FichaTecnica.peca_id == peca.id).first()
+        if ficha:
+            ficha.materiais = None
+            ficha.composicao_fibras = None
+            ficha.certificacoes = None
+        return
+
+    # Monta descrição de materiais
+    descricoes = []
+    for v in vinculos:
+        p = v.produto
+        cidade = p.fornecedor.cidade or p.fornecedor.estado or ""
+        descricoes.append(
+            f"{p.nome} [{v.funcao}] — {p.fornecedor.nome} ({cidade})"
+        )
+
+    # Monta composição de fibras (só do material principal)
+    fibras = []
+    principal = next((v for v in vinculos if v.funcao == "principal"), vinculos[0])
+    if principal.produto.composicao:
+        fibras = _parse_composicao(principal.produto.composicao)
+
+    # Coleta certificações únicas de todos os fornecedores vinculados
+    certs_vistas = set()
+    certs = []
+    for v in vinculos:
+        for c in v.produto.fornecedor.certificacoes:
+            chave = (c.tipo, c.numero_licenca or "")
+            if chave not in certs_vistas:
+                certs_vistas.add(chave)
+                certs.append({
+                    "nome": c.tipo,
+                    "numero": c.numero_licenca or "",
+                    "validade": c.validade or "",
+                    "escopo": c.escopo or "",
+                    "nivel_confianca": c.nivel_confianca or "",
+                    "fornecedor": v.produto.fornecedor.nome,
+                })
+
+    ficha = db.query(FichaTecnica).filter(FichaTecnica.peca_id == peca.id).first()
+    campos = {
+        "peca_id": peca.id,
+        "materiais": "\n".join(descricoes),
+        "composicao_fibras": json.dumps(fibras, ensure_ascii=False) if fibras else None,
+        "certificacoes": json.dumps(certs, ensure_ascii=False) if certs else None,
+    }
+
+    if ficha:
+        for k, v in campos.items():
+            if k != "peca_id":
+                setattr(ficha, k, v)
+    else:
+        db.add(FichaTecnica(**campos))
+
+
 # ---------- Digital Product Passport ----------
 
 @router.post("/pecas/{codigo}/dpp/publicar", response_model=PecaOut, tags=["DPP"])
@@ -275,6 +486,50 @@ def obter_qr_dpp(gtin: str, db: Session = Depends(get_db)):
     img.save(buf, format="PNG")
     buf.seek(0)
     return StreamingResponse(buf, media_type="image/png")
+
+
+# ---------- ISCM — Índice de Sustentabilidade da Cadeia de Moda ----------
+
+@router.get("/pecas/{codigo}/iscm", response_model=ISCMOut, tags=["ISCM"])
+def calcular_iscm_peca(codigo: str, db: Session = Depends(get_db)):
+    """
+    Calcula o ISCM (Índice de Sustentabilidade da Cadeia de Moda) para a peça.
+
+    Score 0–100 por 7 dimensões ponderadas:
+      carbono (25%), água (15%), químicos (15%), materiais (15%),
+      resíduos/circularidade (10%), social (10%), rastreabilidade (10%)
+
+    Níveis: insuficiente <35 | basico 35–55 | intermediario 55–70 |
+            avancado 70–85 | referencia ≥85
+
+    Metodologias de referência: ISO 14067, GHG Protocol Scope 3,
+    Higg FEM, ZDHC MRSL, GOTS, Textile Exchange, ABVTEX, PEF/PEFCR.
+    """
+    from app.services.iscm import calcular_iscm
+
+    peca = db.query(Peca).filter(Peca.codigo == codigo).first()
+    if not peca:
+        raise HTTPException(status_code=404, detail="Peça não encontrada")
+
+    result = calcular_iscm(peca, db)
+    return {
+        "peca_codigo": result.peca_codigo,
+        "score_total": result.score_total,
+        "nivel": result.nivel,
+        "dimensoes": {
+            k: {
+                "pontos": v.pontos,
+                "peso": v.peso,
+                "fonte": v.fonte,
+                "metodologia": v.metodologia,
+                "referencias": v.referencias,
+                "indicador_auditavel": v.indicador_auditavel,
+            }
+            for k, v in result.dimensoes.items()
+        },
+        "cobertura_dados_pct": result.cobertura_dados_pct,
+        "alertas": result.alertas,
+    }
 
 
 # ---------- Health ----------

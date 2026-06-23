@@ -3,10 +3,12 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from app.core.database import Base, engine
+from app.core.database import Base, engine, run_migrations
 from app.api.routes import router
+from app.api.fornecedores import router as router_fornecedores
 import os
 
+run_migrations()
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -29,6 +31,7 @@ os.makedirs(images_dir, exist_ok=True)
 app.mount("/static/images", StaticFiles(directory=images_dir), name="images")
 
 app.include_router(router)
+app.include_router(router_fornecedores)
 
 
 @app.get("/", response_class=HTMLResponse)

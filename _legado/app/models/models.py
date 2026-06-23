@@ -41,6 +41,7 @@ class Peca(Base):
     ficha_tecnica = relationship("FichaTecnica", back_populates="peca", uselist=False)
     referencias_visuais = relationship("PecaVisualReference", back_populates="peca")
     etapas_producao = relationship("EtapaProducao", back_populates="peca")
+    materiais = relationship("PecaMaterial", back_populates="peca", cascade="all, delete-orphan")
 
 
 class FichaTecnica(Base):
@@ -127,3 +128,119 @@ class PecaVisualReference(Base):
 
     peca = relationship("Peca", back_populates="referencias_visuais")
     referencia_visual = relationship("VisualReference", back_populates="pecas")
+
+
+# ---------------------------------------------------------------------------
+# Catálogo de Fornecedores de Matérias-Primas
+# ---------------------------------------------------------------------------
+
+class Fornecedor(Base):
+    __tablename__ = "fornecedores"
+
+    id = Column(Integer, primary_key=True, index=True)
+    # FOR-001, FOR-002 …
+    codigo = Column(String, unique=True, nullable=False, index=True)
+    nome = Column(String, nullable=False)
+    # cooperativa | industria | marca | distribuidor | projeto_agroecologico
+    tipo = Column(String)
+    estado = Column(String)
+    cidade = Column(String)
+    # JSON array: ["fibra","fiacao","tecido","malha","confeccao","produto_acabado"]
+    elo_cadeia = Column(Text)
+    produto_principal = Column(String)
+    # amostra | pequeno_lote | medio_lote | industrial
+    escala = Column(String)
+    # b2b | b2c | cooperativas | marcas | exportacao (pode ser lista JSON)
+    publico_alvo = Column(String)
+    # confirmado | lead_validar | parceiro_estrategico
+    status = Column(String, default="lead_validar")
+    # 1–5 (ver critério no catálogo)
+    nota_confianca = Column(Integer)
+    # ISCM — conformidade trabalhista declarada/verificada
+    # nao_verificado | em_processo | certificado_abvtex | certificado_sa8000
+    conformidade_social = Column(String, default="nao_verificado")
+    site = Column(String)
+    email_contato = Column(String)
+    telefone = Column(String)
+    observacoes = Column(Text)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+
+    produtos = relationship("ProdutoFornecedor", back_populates="fornecedor", cascade="all, delete-orphan")
+    certificacoes = relationship("CertificacaoFornecedor", back_populates="fornecedor", cascade="all, delete-orphan")
+
+
+class ProdutoFornecedor(Base):
+    __tablename__ = "produtos_fornecedor"
+
+    id = Column(Integer, primary_key=True, index=True)
+    fornecedor_id = Column(Integer, ForeignKey("fornecedores.id"), nullable=False)
+    nome = Column(String, nullable=False)
+    codigo_fornecedor = Column(String)
+    # pluma | fio | malha | tecido_plano | lona | produto_acabado
+    tipo = Column(String)
+    composicao = Column(String)
+    cor = Column(String)
+    # sem_tingimento | vegetal | convencional | natural
+    tingimento = Column(String, default="sem_tingimento")
+    gramatura_gm2 = Column(Float)
+    largura_m = Column(Float)
+    # pedido mínimo — string flexível: "100m", "200kg", "1 rolo"
+    moq = Column(String)
+    preco_referencia = Column(Float)
+    # metro | kg | rolo | unidade
+    unidade_preco = Column(String)
+    uso_recomendado = Column(Text)
+    risco = Column(Text)
+    # sim | nao | a_validar
+    disponivel = Column(String, default="a_validar")
+    # scraping | manual | email | catalogo_pdf
+    fonte = Column(String, default="manual")
+    # ISCM — dado primário de consumo hídrico; L de água por kg de material produzido
+    consumo_agua_litros_kg = Column(Float, nullable=True)
+    observacoes = Column(Text)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+
+    fornecedor = relationship("Fornecedor", back_populates="produtos")
+    usos_em_pecas = relationship("PecaMaterial", back_populates="produto")
+
+
+class CertificacaoFornecedor(Base):
+    __tablename__ = "certificacoes_fornecedor"
+
+    id = Column(Integer, primary_key=True, index=True)
+    fornecedor_id = Column(Integer, ForeignKey("fornecedores.id"), nullable=False)
+    # GOTS | OCS | IBD | ECOCERT | SisOrg | Participativa | USDA | EU_Organic
+    tipo = Column(String, nullable=False)
+    # sim | nao | pendente
+    apresentado = Column(String, default="pendente")
+    validade = Column(String)
+    # fibra | fio | tecido | confeccao | produto_final
+    escopo = Column(String)
+    numero_licenca = Column(String)
+    # URL, caminho de PDF, nota fiscal
+    evidencia = Column(Text)
+    # alto | medio | baixo
+    nivel_confianca = Column(String)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+
+    fornecedor = relationship("Fornecedor", back_populates="certificacoes")
+
+
+class PecaMaterial(Base):
+    """Vínculo entre uma peça e uma matéria-prima do catálogo de fornecedores."""
+    __tablename__ = "peca_materiais"
+
+    id = Column(Integer, primary_key=True, index=True)
+    peca_id = Column(Integer, ForeignKey("pecas.id"), nullable=False)
+    produto_fornecedor_id = Column(Integer, ForeignKey("produtos_fornecedor.id"), nullable=False)
+    # principal | forro | ribana | aviamento | entretela | elastico
+    funcao = Column(String, default="principal")
+    # metros de tecido usados nesta peça (opcional — para cálculo de peso)
+    quantidade_m = Column(Float, nullable=True)
+    # peso em kg deste material na peça final (calculado ou informado)
+    peso_kg = Column(Float, nullable=True)
+    observacoes = Column(Text)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+
+    peca = relationship("Peca", back_populates="materiais")
+    produto = relationship("ProdutoFornecedor", back_populates="usos_em_pecas")
