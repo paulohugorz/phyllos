@@ -140,6 +140,119 @@
     }
     .placeholder-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
+    /* ── Desenho técnico ── */
+    .technical-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+    .technical-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .technical-sheet,
+    .technical-panel,
+    .technical-upload {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .technical-sheet { padding: 18px; }
+    .technical-sheet-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .technical-drawing {
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(rgba(15,15,13,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,15,13,.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+      border-radius: 4px;
+      padding: 16px;
+    }
+    .technical-drawing svg {
+      width: min(100%, 520px);
+      height: auto;
+      display: block;
+    }
+    .technical-panel { padding: 16px; }
+    .technical-panel + .technical-upload { margin-top: 14px; }
+    .technical-block { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .technical-block:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+    .technical-label {
+      font-size: 10px;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .technical-value { font-size: 14px; color: var(--obsidian); line-height: 1.5; }
+    .technical-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .technical-pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--obsidian);
+      background: #fafaf8;
+    }
+    .technical-warning {
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--muted);
+      background: #f5f2eb;
+      border-radius: 4px;
+      padding: 12px;
+    }
+    .technical-upload { padding: 16px; }
+    .technical-upload-area {
+      border: 1.5px dashed var(--border-md);
+      border-radius: 5px;
+      padding: 22px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      background: #fafaf8;
+    }
+    .technical-upload-area:hover { border-color: var(--gold); background: #fff; }
+    .technical-upload-icon { font-size: 26px; margin-bottom: 8px; opacity: .35; }
+    .technical-upload-title { font-size: 13px; color: var(--obsidian); }
+    .technical-upload-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .technical-preview { margin-top: 12px; display: none; }
+    .technical-preview img {
+      max-width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: block;
+    }
+    @media (max-width: 760px) {
+      .technical-intro { display: block; }
+      .technical-grid { grid-template-columns: 1fr; }
+      .technical-drawing { min-height: 300px; }
+    }
+
     /* ── Painel de sustentabilidade ── */
     .painel-wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 60px; }
     .painel-heading {
@@ -1551,31 +1664,64 @@
         <span id="tecnico-titulo" class="back-bar-titulo"></span>
       </div>
 
-      <div class="placeholder-wrap" style="padding-top:40px;text-align:left;max-width:100%">
-        <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:400;margin-bottom:6px">Desenho Técnico</div>
-        <div style="font-size:13px;color:var(--muted);margin-bottom:28px">Anexe o esboço ou o arquivo de modelagem da peça.</div>
-
-        <div id="tecnico-upload-area"
-          style="border:2px dashed var(--border-md);border-radius:6px;padding:40px;text-align:center;cursor:pointer;transition:border-color .15s;background:#fff"
-          onclick="document.getElementById('tecnico-file-input').click()"
-          ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
-          ondragleave="this.style.borderColor=''"
-          ondrop="App.handleTecnicoDrop(event)">
-          <div style="font-size:32px;margin-bottom:12px;opacity:.4">📐</div>
-          <div style="font-size:14px;color:var(--muted)">Arraste uma imagem ou clique para selecionar</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:4px">PNG, JPG, SVG ou PDF · máx. 10 MB</div>
+      <div class="technical-intro">
+        <div>
+          <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:400;margin-bottom:6px">Desenho Técnico</div>
+          <div style="font-size:13px;color:var(--muted);max-width:560px">Revise a frente, costas, linhas de construção e componentes básicos antes de seguir para a ficha técnica.</div>
         </div>
-        <input type="file" id="tecnico-file-input" accept="image/*,.pdf,.svg" style="display:none" onchange="App.handleTecnicoFile(this)" />
+        <button class="btn btn-outline" onclick="App.renderDesenhoTecnico()">Atualizar desenho</button>
+      </div>
 
-        <div id="tecnico-preview" style="margin-top:16px;display:none">
-          <img id="tecnico-img" style="max-width:100%;border:1px solid var(--border);border-radius:4px" />
-          <div style="margin-top:8px;display:flex;gap:8px">
-            <button class="btn btn-ghost" onclick="App.limparTecnico()">Remover</button>
+      <div class="technical-grid">
+        <div class="technical-sheet">
+          <div class="technical-sheet-top">
+            <span id="tecnico-sheet-label">Peça selecionada</span>
+            <span>Frente + costas</span>
           </div>
+          <div id="tecnico-drawing" class="technical-drawing"></div>
         </div>
 
-        <div style="margin-top:24px;padding:14px;background:#f5f2eb;border-radius:4px;font-size:12px;color:var(--muted);line-height:1.6">
-          <strong style="color:var(--obsidian)">Em breve:</strong> integração com Valentina Project para modelagem paramétrica e exportação de moldes em DXF.
+        <div>
+          <div class="technical-panel">
+            <div class="technical-block">
+              <div class="technical-label">Base técnica</div>
+              <div id="tecnico-base" class="technical-value">—</div>
+            </div>
+            <div class="technical-block">
+              <div class="technical-label">Medidas usadas</div>
+              <div id="tecnico-medidas" class="technical-value">—</div>
+            </div>
+            <div class="technical-block">
+              <div class="technical-label">Componentes visíveis</div>
+              <div id="tecnico-componentes" class="technical-list"></div>
+            </div>
+            <div class="technical-block">
+              <div class="technical-label">Conferência</div>
+              <div id="tecnico-alerta" class="technical-warning">—</div>
+            </div>
+          </div>
+
+          <div class="technical-upload">
+            <div class="technical-label">Referência complementar</div>
+            <div id="tecnico-upload-area"
+              class="technical-upload-area"
+              onclick="document.getElementById('tecnico-file-input').click()"
+              ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
+              ondragleave="this.style.borderColor=''"
+              ondrop="App.handleTecnicoDrop(event)">
+              <div class="technical-upload-icon">+</div>
+              <div class="technical-upload-title">Anexar esboço, imagem ou SVG</div>
+              <div class="technical-upload-sub">PNG, JPG, SVG ou PDF · máx. 10 MB</div>
+            </div>
+            <input type="file" id="tecnico-file-input" accept="image/*,.pdf,.svg" style="display:none" onchange="App.handleTecnicoFile(this)" />
+
+            <div id="tecnico-preview" class="technical-preview">
+              <img id="tecnico-img" />
+              <div style="margin-top:8px;display:flex;gap:8px">
+                <button class="btn btn-ghost" onclick="App.limparTecnico()">Remover referência</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1815,8 +1961,7 @@
         App._carregarMateriaisVinculados(peca.codigo),
       ]);
       App.preencherTelaMaterial();
-      mostrarTela('screen-material');
-      App.setNavStage('ns-material');
+      App.irParaAjustes();
     },
 
     /* ── Navegação de estágios ── */
@@ -1878,8 +2023,8 @@
         App._renderChips();
         App.fecharModalNovaPeca();
         App.preencherTelaMaterial(true);
-        mostrarTela('screen-material');
-        App.setNavStage('ns-ficha');
+        App.limparTecnico();
+        App.irParaAjustes();
         toast('Peça criada!');
       } catch (e) {
         toast('Erro ao criar peça: ' + e.message, 'err');
@@ -2092,10 +2237,241 @@
       setTimeout(() => App.irParaTecnico(), 600);
     },
 
+    _medidasTecnicas() {
+      return {
+        altura:      document.getElementById('med-altura')?.value || '',
+        busto:       document.getElementById('med-busto')?.value || '',
+        cintura:     document.getElementById('med-cintura')?.value || '',
+        quadril:     document.getElementById('med-quadril')?.value || '',
+        ombro:       document.getElementById('med-ombro')?.value || '',
+        torso:       document.getElementById('med-torso')?.value || '',
+        manga:       document.getElementById('med-manga')?.value || '',
+        entrepernas: document.getElementById('med-entrepernas')?.value || '',
+      };
+    },
+
+    _observacoesPeca(peca) {
+      if (!peca?.observacoes) return {};
+      try {
+        const parsed = JSON.parse(peca.observacoes);
+        return parsed && typeof parsed === 'object' ? parsed : {};
+      } catch (_) {
+        return {};
+      }
+    },
+
+    _normalizarTexto(str) {
+      return String(str || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    },
+
+    _resolverTipoTecnico(peca) {
+      const obs = App._observacoesPeca(peca);
+      const texto = App._normalizarTexto([
+        peca?.nome,
+        peca?.codigo,
+        obs.categoria,
+        obs.silhueta,
+        obs.comprimento,
+      ].filter(Boolean).join(' '));
+
+      if (texto.match(/calca|legging|bermuda|short/)) return 'calca';
+      if (texto.match(/saia/)) return 'saia';
+      if (texto.match(/vestido|macacao/)) return 'vestido';
+      if (texto.match(/jaqueta|casaco|blazer|sobretudo/)) return 'casaco';
+      if (texto.match(/camisa|camiseta|blusa|top/)) return 'top';
+      return 'top';
+    },
+
+    _specDesenhoTecnico(peca) {
+      const tipo = App._resolverTipoTecnico(peca);
+      const obs = App._observacoesPeca(peca);
+      const medidas = App._medidasTecnicas();
+      const faltantes = Object.entries(medidas)
+        .filter(([, valor]) => !valor)
+        .map(([k]) => k);
+      const resumoMedidas = Object.entries(medidas)
+        .filter(([, valor]) => valor)
+        .map(([k, valor]) => `${k}: ${valor} cm`)
+        .join(' · ') || 'Sem medidas preenchidas nesta sessão.';
+
+      const specs = {
+        calca: {
+          base: 'Base inferior: calça / legging / short',
+          componentes: ['cós', 'gancho', 'entrepernas', 'lateral', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir gancho, entrepernas, cintura/quadril e linha de fio antes de transformar este desenho em molde.',
+        },
+        saia: {
+          base: 'Base inferior: saia',
+          componentes: ['cintura', 'pences', 'quadril', 'lateral', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir cintura, quadril, altura de quadril, comprimento e abertura antes de seguir para modelagem.',
+        },
+        vestido: {
+          base: 'Base corpo inteiro: vestido / macacão',
+          componentes: ['decote', 'ombro', 'cava', 'cintura', 'saia', 'frente', 'costas'],
+          alerta: 'Conferir busto, cintura, quadril, torso, comprimento e mobilidade do corpo inteiro.',
+        },
+        casaco: {
+          base: 'Base superior estruturada: jaqueta / casaco / blazer',
+          componentes: ['gola', 'ombro', 'cava', 'manga', 'abertura', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir ombro, busto, manga, folga de sobreposição e fechamento antes de aprovar a ficha.',
+        },
+        top: {
+          base: 'Base superior: blusa / camisa / camiseta / top',
+          componentes: ['decote', 'ombro', 'cava', 'manga', 'lateral', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir busto, ombro, torso, manga, cava e folga de mobilidade antes da ficha técnica.',
+        },
+      };
+
+      const spec = specs[tipo] || specs.top;
+      const detalheObs = [obs.categoria, obs.silhueta, obs.comprimento, obs.fechamento]
+        .filter(Boolean)
+        .join(' · ');
+
+      return {
+        tipo,
+        base: detalheObs ? `${spec.base} · ${detalheObs}` : spec.base,
+        componentes: spec.componentes,
+        medidas: resumoMedidas,
+        alerta: faltantes.length
+          ? `${spec.alerta} Medidas pendentes: ${faltantes.join(', ')}.`
+          : `${spec.alerta} Medidas mínimas preenchidas para conferência visual.`,
+      };
+    },
+
+    renderDesenhoTecnico() {
+      if (!State.pecaAtual) return;
+      const p = State.pecaAtual;
+      const spec = App._specDesenhoTecnico(p);
+
+      document.getElementById('tecnico-sheet-label').textContent = p.codigo || 'Peça sem código';
+      document.getElementById('tecnico-base').textContent = spec.base;
+      document.getElementById('tecnico-medidas').textContent = spec.medidas;
+      document.getElementById('tecnico-alerta').textContent = spec.alerta;
+      document.getElementById('tecnico-componentes').innerHTML = spec.componentes
+        .map(c => `<span class="technical-pill">${esc(c)}</span>`)
+        .join('');
+      document.getElementById('tecnico-drawing').innerHTML = App._svgDesenhoTecnico(spec.tipo, p);
+    },
+
+    _svgBaseStart(titulo, codigo) {
+      return `
+        <svg viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Desenho técnico da peça">
+          <defs>
+            <style>
+              .tech-line{fill:none;stroke:#141410;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+              .tech-thin{fill:none;stroke:#5e5a52;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+              .tech-dash{fill:none;stroke:#b89a6a;stroke-width:1.2;stroke-linecap:round;stroke-dasharray:6 5}
+              .tech-fill{fill:#f7f4ee;stroke:#141410;stroke-width:2;stroke-linejoin:round}
+              .tech-note{font:12px Jost,Arial,sans-serif;fill:#77736c}
+              .tech-title{font:17px Cormorant Garamond,Georgia,serif;fill:#141410}
+              .tech-small{font:10px Jost,Arial,sans-serif;fill:#9e9b95;letter-spacing:.08em}
+            </style>
+          </defs>
+          <text x="28" y="34" class="tech-title">${esc(titulo || 'Peça PHYLLOS')}</text>
+          <text x="28" y="53" class="tech-small">${esc(codigo || 'sem código')} · desenho técnico de conferência</text>
+          <text x="170" y="80" class="tech-small">FRENTE</text>
+          <text x="432" y="80" class="tech-small">COSTAS</text>`;
+    },
+
+    _svgBaseEnd() {
+      return `
+          <line x1="28" y1="384" x2="592" y2="384" class="tech-thin"/>
+          <text x="28" y="404" class="tech-note">Uso interno: conferir proporções, partes visíveis e pontos críticos antes da ficha técnica e do molde cortável.</text>
+        </svg>`;
+    },
+
+    _svgDesenhoTecnico(tipo, peca) {
+      const titulo = peca?.nome || 'Peça PHYLLOS';
+      const codigo = peca?.codigo || '';
+      const start = App._svgBaseStart(titulo, codigo);
+      const end = App._svgBaseEnd();
+      const desenhos = {
+        calca: `
+          <path class="tech-fill" d="M130 98 L232 98 L224 360 L188 360 L178 198 L158 360 L122 360 Z"/>
+          <path class="tech-dash" d="M130 132 H232"/>
+          <path class="tech-thin" d="M181 104 C174 132 171 160 178 198"/>
+          <path class="tech-thin" d="M178 198 L188 360"/>
+          <path class="tech-thin" d="M158 360 L178 198"/>
+          <path class="tech-fill" d="M390 98 L492 98 L500 360 L464 360 L442 198 L420 360 L384 360 Z"/>
+          <path class="tech-dash" d="M390 132 H492"/>
+          <path class="tech-thin" d="M441 104 C448 132 449 160 442 198"/>
+          <path class="tech-thin" d="M442 198 L464 360"/>
+          <path class="tech-thin" d="M420 360 L442 198"/>
+          <text x="242" y="136" class="tech-note">cós</text>
+          <text x="236" y="206" class="tech-note">gancho</text>
+          <text x="236" y="358" class="tech-note">barra</text>`,
+        saia: `
+          <path class="tech-fill" d="M142 102 H222 L252 358 H112 Z"/>
+          <path class="tech-dash" d="M142 134 H222"/>
+          <path class="tech-thin" d="M164 112 L154 184"/>
+          <path class="tech-thin" d="M200 112 L210 184"/>
+          <path class="tech-dash" d="M128 218 H236"/>
+          <path class="tech-fill" d="M402 102 H482 L512 358 H372 Z"/>
+          <path class="tech-dash" d="M402 134 H482"/>
+          <path class="tech-thin" d="M424 112 L414 184"/>
+          <path class="tech-thin" d="M460 112 L470 184"/>
+          <path class="tech-dash" d="M388 218 H496"/>
+          <text x="256" y="136" class="tech-note">cintura</text>
+          <text x="256" y="221" class="tech-note">quadril</text>
+          <text x="256" y="358" class="tech-note">barra</text>`,
+        vestido: `
+          <path class="tech-fill" d="M150 98 L214 98 L236 176 L270 358 H94 L128 176 Z"/>
+          <path class="tech-thin" d="M150 98 Q182 126 214 98"/>
+          <path class="tech-dash" d="M126 184 H238"/>
+          <path class="tech-dash" d="M112 250 H254"/>
+          <path class="tech-thin" d="M156 116 L150 176"/>
+          <path class="tech-thin" d="M208 116 L214 176"/>
+          <path class="tech-fill" d="M410 98 L474 98 L496 176 L530 358 H354 L388 176 Z"/>
+          <path class="tech-thin" d="M410 98 Q442 116 474 98"/>
+          <path class="tech-dash" d="M386 184 H498"/>
+          <path class="tech-dash" d="M372 250 H514"/>
+          <path class="tech-thin" d="M442 100 V358"/>
+          <text x="274" y="186" class="tech-note">cintura</text>
+          <text x="274" y="252" class="tech-note">quadril</text>
+          <text x="274" y="358" class="tech-note">barra</text>`,
+        casaco: `
+          <path class="tech-fill" d="M134 104 L226 104 L250 352 H112 Z"/>
+          <path class="tech-fill" d="M134 108 L86 178 L102 214 L132 158 Z"/>
+          <path class="tech-fill" d="M226 108 L274 178 L258 214 L228 158 Z"/>
+          <path class="tech-thin" d="M160 106 L182 146 L204 106"/>
+          <path class="tech-thin" d="M182 146 V352"/>
+          <path class="tech-dash" d="M124 206 H240"/>
+          <path class="tech-fill" d="M394 104 L486 104 L510 352 H372 Z"/>
+          <path class="tech-fill" d="M394 108 L346 178 L362 214 L392 158 Z"/>
+          <path class="tech-fill" d="M486 108 L534 178 L518 214 L488 158 Z"/>
+          <path class="tech-thin" d="M440 104 V352"/>
+          <path class="tech-dash" d="M384 206 H500"/>
+          <text x="282" y="146" class="tech-note">gola</text>
+          <text x="282" y="208" class="tech-note">linha busto</text>
+          <text x="282" y="352" class="tech-note">barra</text>`,
+        top: `
+          <path class="tech-fill" d="M138 102 L226 102 L246 178 L232 344 H132 L118 178 Z"/>
+          <path class="tech-fill" d="M138 106 L88 170 L104 202 L128 156 Z"/>
+          <path class="tech-fill" d="M226 106 L276 170 L260 202 L236 156 Z"/>
+          <path class="tech-thin" d="M154 104 Q182 132 210 104"/>
+          <path class="tech-dash" d="M122 196 H242"/>
+          <path class="tech-dash" d="M132 286 H232"/>
+          <path class="tech-fill" d="M398 102 L486 102 L506 178 L492 344 H392 L378 178 Z"/>
+          <path class="tech-fill" d="M398 106 L348 170 L364 202 L388 156 Z"/>
+          <path class="tech-fill" d="M486 106 L536 170 L520 202 L496 156 Z"/>
+          <path class="tech-thin" d="M416 104 Q442 120 468 104"/>
+          <path class="tech-dash" d="M382 196 H502"/>
+          <path class="tech-dash" d="M392 286 H492"/>
+          <text x="282" y="128" class="tech-note">decote</text>
+          <text x="282" y="198" class="tech-note">busto</text>
+          <text x="282" y="286" class="tech-note">cintura</text>`,
+      };
+      return start + (desenhos[tipo] || desenhos.top) + end;
+    },
+
     irParaTecnico() {
       if (!State.pecaAtual) { App.irParaBusca(); return; }
       const p = State.pecaAtual;
       document.getElementById('tecnico-titulo').textContent = p.nome || p.codigo;
+      App.renderDesenhoTecnico();
       mostrarTela('screen-tecnico');
       App.setNavStage('ns-tecnico');
     },

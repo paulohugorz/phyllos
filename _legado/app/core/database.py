@@ -26,8 +26,9 @@ def _migrate(conn):
     add_if_missing("pecas", "dpp_uuid",   "VARCHAR")
     add_if_missing("pecas", "dpp_status", "VARCHAR DEFAULT 'rascunho'")
 
-    conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_pecas_gtin     ON pecas(gtin)"))
-    conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_pecas_dpp_uuid ON pecas(dpp_uuid)"))
+    if _table_exists(conn, "pecas"):
+        conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_pecas_gtin     ON pecas(gtin)"))
+        conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_pecas_dpp_uuid ON pecas(dpp_uuid)"))
 
     # fichas_tecnicas — colunas DPP adicionadas depois da criação inicial
     add_if_missing("fichas_tecnicas", "composicao_fibras",          "TEXT")
