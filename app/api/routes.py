@@ -257,7 +257,7 @@ def obter_qr_dpp(gtin: str, db: Session = Depends(get_db)):
     if not peca or peca.dpp_status != "publicado":
         raise HTTPException(status_code=404, detail="DPP não encontrado ou não publicado")
     # GS1 Digital Link URI format
-    url = f"https://dpp.phyllos.com.br/dpp/{gtin}"
+    url = f"https://phyllos-production.up.railway.app/dpp/{gtin}"
     img = qrcode.make(url)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
