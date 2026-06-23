@@ -27,7 +27,7 @@
       color: var(--obsidian);
       font-family: 'Jost', system-ui, sans-serif;
       font-weight: 300;
-      font-size: 14px;
+      font-size: 15px;
       line-height: 1.6;
       min-height: 100vh;
     }
@@ -35,7 +35,7 @@
     /* ── Header ── */
     header {
       border-bottom: 1px solid var(--border);
-      padding: 14px 24px;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -58,92 +58,127 @@
       color: var(--muted);
     }
 
+    /* ── Breadcrumb de tela ── */
+    .screen-nav {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .screen-nav span.active { color: var(--obsidian); font-weight: 400; }
+
     /* ── Toast ── */
     #toast {
       position: fixed;
       bottom: 24px;
-      right: 24px;
+      right: 20px;
       padding: 12px 20px;
       border-radius: 3px;
       font-size: 13px;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
       z-index: 9999;
       opacity: 0;
       transform: translateY(8px);
       transition: opacity 0.2s, transform 0.2s;
       pointer-events: none;
-      max-width: 320px;
+      max-width: 300px;
     }
     #toast.show { opacity: 1; transform: translateY(0); }
     #toast.ok  { background: var(--obsidian); color: var(--cream); }
     #toast.err { background: var(--red); color: #fff; }
 
-    /* ── Tela 1 — Lista ── */
-    #screen-list { display: block; }
-    #screen-detail { display: none; }
+    /* ── Telas ── */
+    .screen { display: none; }
+    .screen.active { display: block; }
 
-    .list-header {
-      padding: 28px 24px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+    /* ══════════════════════════════════════
+       TELA 1 — BUSCA / LISTA
+    ══════════════════════════════════════ */
+    .list-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
     }
-    .list-title {
+    .list-heading {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 400;
-    }
-
-    .cards-grid {
-      padding: 0 24px 40px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 14px;
-    }
-
-    .peca-card {
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      padding: 18px 20px;
-      cursor: pointer;
-      transition: border-color 0.18s, box-shadow 0.18s;
-      background: #fff;
-    }
-    .peca-card:hover {
-      border-color: var(--border-md);
-      box-shadow: 0 2px 12px rgba(15,15,13,0.06);
-    }
-    .card-code {
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
       margin-bottom: 6px;
     }
-    .card-name {
+    .list-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* Barra de busca + botão nova peça */
+    .list-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .search-input {
+      flex: 1;
+      background: #fff;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      padding: 11px 14px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--obsidian);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: var(--gold); }
+    .search-input::placeholder { color: var(--muted); }
+
+    /* Lista de peças */
+    .pecas-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .peca-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .peca-item:hover {
+      border-color: var(--border-md);
+      box-shadow: 0 2px 10px rgba(15,15,13,0.06);
+    }
+    .peca-item-main { flex: 1; min-width: 0; }
+    .peca-item-nome {
       font-size: 15px;
       font-weight: 400;
-      margin-bottom: 10px;
-    }
-    .card-tecido {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 12px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    .peca-item-cod {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+    .peca-item-arrow { color: var(--muted); font-size: 18px; flex-shrink: 0; }
 
-    /* Badges de status */
     .badge {
-      display: inline-block;
-      padding: 3px 10px;
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
       border-radius: 20px;
       font-size: 11px;
-      letter-spacing: 0.06em;
-      font-weight: 400;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .badge-ideia        { background: rgba(158,155,149,0.15); color: var(--muted); border: 1px solid var(--border); }
     .badge-desenvolvimento { background: rgba(184,154,106,0.15); color: #8a6e3a; border: 1px solid rgba(184,154,106,0.3); }
@@ -151,22 +186,73 @@
     .badge-produzindo   { background: rgba(74,124,89,0.08); color: #3a6b4a; border: 1px solid rgba(74,124,89,0.2); }
     .badge-entregue     { background: rgba(15,15,13,0.07); color: var(--obsidian); border: 1px solid var(--border-md); }
 
-    .empty-list {
-      grid-column: 1/-1;
+    .empty-msg {
       text-align: center;
-      padding: 60px 24px;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
+      padding: 48px 0;
     }
 
-    /* ── Tela 2 — Detalhe ── */
-    .detail-header {
-      padding: 20px 24px 0;
+    /* Modal nova peça */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,15,13,0.4);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--cream);
+      border-radius: 4px;
+      padding: 32px 28px;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--obsidian); }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    /* ══════════════════════════════════════
+       TELA 2 — MATERIAL
+       TELA 3 — ETAPAS
+    ══════════════════════════════════════ */
+    .screen-wrap {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    .back-bar {
       display: flex;
       align-items: center;
-      gap: 14px;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 28px;
     }
     .btn-back {
       background: none;
@@ -182,278 +268,285 @@
       transition: color 0.15s;
     }
     .btn-back:hover { color: var(--obsidian); }
-    .detail-title {
+    .back-sep { color: var(--border-md); }
+
+    .screen-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 400;
-      flex: 1;
+      margin-bottom: 4px;
     }
-    .detail-code {
-      font-size: 10px;
-      letter-spacing: 0.18em;
+    .screen-peca-codigo {
+      font-size: 11px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--gold);
+      margin-bottom: 28px;
     }
 
-    /* Seções */
-    .detail-body {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 32px 24px 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 17px;
-      font-weight: 500;
-      margin-bottom: 18px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-    .field-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    @media (max-width: 540px) { .field-row { grid-template-columns: 1fr; } }
-
+    /* Campos */
+    .field { margin-bottom: 20px; }
     .field label {
       display: block;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
+      font-size: 13px;
+      color: var(--obsidian);
+      margin-bottom: 7px;
+      font-weight: 400;
     }
-    .field input,
+    .field label .hint {
+      font-weight: 300;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .field input[type="text"],
+    .field input[type="number"],
     .field select,
     .field textarea {
       width: 100%;
-      background: transparent;
+      background: #fff;
       border: 1px solid var(--border-md);
-      border-radius: 2px;
-      padding: 10px 12px;
+      border-radius: 3px;
+      padding: 11px 13px;
       font-family: 'Jost', sans-serif;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 300;
       color: var(--obsidian);
       outline: none;
       transition: border-color 0.15s;
+      -webkit-appearance: none;
     }
     .field input:focus,
     .field select:focus,
     .field textarea:focus { border-color: var(--gold); }
-    .field input[readonly] {
-      background: rgba(158,155,149,0.08);
-      color: var(--muted);
-      cursor: default;
-    }
-    .field textarea { resize: vertical; min-height: 80px; line-height: 1.7; }
+    .field textarea { resize: vertical; min-height: 86px; line-height: 1.7; }
     .field select { cursor: pointer; }
 
-    /* Fibras */
-    .fibras-list, .certs-list, .etapas-list { display: flex; flex-direction: column; gap: 10px; }
-
-    .fibra-row, .cert-row, .etapa-row {
+    /* ── Toggle sim/não ── */
+    .toggle-row {
       display: flex;
-      gap: 10px;
-      align-items: flex-start;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
     }
-    .fibra-row .field-pct { width: 80px; flex-shrink: 0; }
-    .fibra-row .field-mat { flex: 1; }
+    .toggle-label { font-size: 13px; font-weight: 400; }
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--border-md);
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.2s;
+    }
+    .toggle-switch input:checked + .toggle-track { background: var(--gold); }
+    .toggle-switch input:checked + .toggle-track::after { transform: translateX(18px); }
+    .toggle-content { display: none; }
+    .toggle-content.open { display: block; }
 
-    .cert-row .field-nome { flex: 2; }
-    .cert-row .field-num  { flex: 1.2; }
-    .cert-row .field-val  { flex: 1; }
+    /* ── Linhas de fibra ── */
+    .fibras-list, .certs-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
 
-    .etapa-row .field-etapa { flex: 1.5; }
-    .etapa-row .field-pais  { flex: 1; }
-    .etapa-row .field-inst  { flex: 1.5; }
+    .fibra-row {
+      display: grid;
+      grid-template-columns: 1fr 72px auto;
+      gap: 8px;
+      align-items: center;
+    }
+    .fibra-row input { margin: 0; }
+
+    .cert-row {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+    .cert-row input { margin: 0; }
+
+    @media (max-width: 520px) {
+      .fibra-row { grid-template-columns: 1fr 64px auto; }
+      .cert-row  { grid-template-columns: 1fr 1fr; }
+      .cert-row .btn-remove { grid-column: span 2; justify-self: end; }
+    }
 
     .btn-remove {
       background: none;
       border: none;
       cursor: pointer;
       color: var(--muted);
-      font-size: 18px;
+      font-size: 20px;
       line-height: 1;
-      padding: 8px 4px 0;
+      padding: 4px;
       transition: color 0.15s;
-      flex-shrink: 0;
+      align-self: center;
     }
     .btn-remove:hover { color: var(--red); }
 
     .pct-total {
       font-size: 12px;
-      margin-top: 6px;
+      color: var(--muted);
+      margin-top: 4px;
     }
     .pct-total.ok  { color: var(--green); }
     .pct-total.err { color: var(--red); }
 
-    /* Botões */
-    .btn {
-      padding: 11px 22px;
-      font-family: 'Jost', sans-serif;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 0.06em;
+    .col-headers {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .col-headers.fibra-headers { grid-template-columns: 1fr 72px auto; }
+    .col-headers.cert-headers  { grid-template-columns: 1.6fr 1fr 1fr auto; }
+    .col-headers span {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    @media (max-width: 520px) {
+      .col-headers.fibra-headers { grid-template-columns: 1fr 64px auto; }
+      .col-headers.cert-headers  { display: none; }
+    }
+
+    .btn-add {
+      background: none;
+      border: none;
       cursor: pointer;
-      border-radius: 2px;
-      transition: all 0.18s;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      color: var(--gold);
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: opacity 0.15s;
+    }
+    .btn-add:hover { opacity: 0.7; }
+
+    /* Separador de seção */
+    .section-sep {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+
+    /* ── Etapas registradas ── */
+    .etapas-registradas { margin-bottom: 24px; }
+    .etapa-card {
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 12px 16px;
+      background: #fff;
+      margin-bottom: 6px;
+    }
+    .etapa-card-titulo { font-size: 14px; font-weight: 400; }
+    .etapa-card-detalhe { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .etapas-vazio { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+
+    /* ── Rodapé de ações ── */
+    .screen-footer {
+      display: flex;
+      gap: 10px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Botões ── */
+    .btn {
+      padding: 12px 22px;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.16s;
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
     }
     .btn-primary {
       background: var(--obsidian);
       color: var(--cream);
       border: 1px solid var(--obsidian);
     }
-    .btn-primary:hover { background: #2a2a26; }
+    .btn-primary:hover:not(:disabled) { background: #2a2a26; }
     .btn-primary:disabled { opacity: 0.4; cursor: default; }
     .btn-outline {
       background: transparent;
       color: var(--obsidian);
       border: 1px solid var(--border-md);
     }
-    .btn-outline:hover { border-color: var(--obsidian); }
-    .btn-gold {
-      background: var(--gold);
-      color: #fff;
-      border: 1px solid var(--gold);
-    }
-    .btn-gold:hover { background: #a6895a; }
-    .btn-gold:disabled { opacity: 0.4; cursor: default; }
-    .btn-add {
-      background: none;
+    .btn-outline:hover:not(:disabled) { border-color: var(--obsidian); }
+    .btn-outline:disabled { opacity: 0.4; cursor: default; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
       border: none;
-      cursor: pointer;
-      font-family: 'Jost', sans-serif;
-      font-size: 12px;
-      color: var(--gold);
-      letter-spacing: 0.06em;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 4px;
-      transition: opacity 0.15s;
+      padding-left: 0;
+      padding-right: 0;
     }
-    .btn-add:hover { opacity: 0.7; }
+    .btn-ghost:hover { color: var(--obsidian); }
 
-    .section-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    /* DPP */
-    .dpp-section { display: none; }
-    .dpp-section.visible { display: block; }
-
-    .dpp-published {
-      display: none;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .dpp-published.visible { display: flex; }
-    .badge-published {
-      background: rgba(74,124,89,0.12);
-      color: var(--green);
-      border: 1px solid rgba(74,124,89,0.25);
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      letter-spacing: 0.06em;
-    }
-
-    #dpp-qr img {
-      width: 160px;
-      height: 160px;
-      border: 1px solid var(--border);
-      border-radius: 3px;
-      margin-top: 12px;
-    }
-    .dpp-link {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 8px;
-      word-break: break-all;
-    }
-    .dpp-link a { color: var(--gold); }
-
-    .tooltip {
-      display: inline-block;
-      position: relative;
-      cursor: help;
-      margin-left: 4px;
-      font-size: 11px;
-      color: var(--muted);
-      border: 1px solid var(--border-md);
-      border-radius: 50%;
-      width: 16px;
-      height: 16px;
-      text-align: center;
-      line-height: 14px;
-    }
-    .tooltip::after {
-      content: attr(data-tip);
-      position: absolute;
-      bottom: calc(100% + 6px);
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--obsidian);
-      color: var(--cream);
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 2px;
-      width: 200px;
-      white-space: normal;
-      text-transform: none;
-      letter-spacing: 0;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.15s;
-      z-index: 200;
-    }
-    .tooltip:hover::after { opacity: 1; }
-
-    /* Loading spinner inline */
+    /* Spinner inline */
     .spinner {
       display: inline-block;
-      width: 14px;
-      height: 14px;
+      width: 13px;
+      height: 13px;
       border: 1.5px solid rgba(255,255,255,0.3);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
-      vertical-align: middle;
-      margin-right: 6px;
+      flex-shrink: 0;
+    }
+    .spinner-dark {
+      border-color: rgba(15,15,13,0.15);
+      border-top-color: var(--obsidian);
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    ::selection { background: rgba(184,154,106,0.15); }
-
-    /* Mobile tweaks */
-    @media (max-width: 480px) {
-      .fibra-row, .cert-row, .etapa-row { flex-wrap: wrap; }
-      .fibra-row .field-pct { width: 100%; }
-      .cert-row .field-nome,
-      .cert-row .field-num,
-      .cert-row .field-val  { flex: 1 1 100%; }
-      .etapa-row .field-etapa,
-      .etapa-row .field-pais,
-      .etapa-row .field-inst { flex: 1 1 100%; }
+    /* Input inline para pct reciclado */
+    .inline-pct {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
     }
+    .inline-pct input {
+      width: 80px;
+      background: #fff;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      padding: 9px 12px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--obsidian);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    .inline-pct input:focus { border-color: var(--gold); }
+    .inline-pct span { font-size: 14px; color: var(--muted); }
+
+    ::selection { background: rgba(184,154,106,0.15); }
   </style>
 </head>
 <body>
@@ -463,196 +556,221 @@
       <span class="logo">PHYLLOS</span>
       <span class="logo-sub">Ateliê</span>
     </div>
+    <div id="header-nav" class="screen-nav"></div>
   </header>
 
   <div id="toast"></div>
 
-  <!-- ═══════════════════════════════════════ TELA 1 — LISTA ═════════════════════════════════════ -->
-  <div id="screen-list">
-    <div class="list-header">
-      <h1 class="list-title">Peças cadastradas</h1>
-      <button class="btn btn-primary" onclick="App.abrirNovaPeca()">+ Nova Peça</button>
-    </div>
-    <div class="cards-grid" id="cards-grid">
-      <div class="empty-list">Carregando peças...</div>
+  <!-- ══════════════════════════════════════════════════════
+       TELA 1 — BUSCA / LISTA
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-busca" class="screen active">
+    <div class="list-wrap">
+      <div class="list-heading">Qual peça você está trabalhando?</div>
+      <div class="list-sub">Selecione uma peça existente ou crie uma nova.</div>
+
+      <div class="list-controls">
+        <input
+          id="search-input"
+          class="search-input"
+          type="search"
+          placeholder="Buscar por nome ou código..."
+          autocomplete="off"
+          oninput="App.filtrarLista(this.value)"
+        />
+        <button class="btn btn-primary" onclick="App.abrirModalNovaPeca()">+ Nova peça</button>
+      </div>
+
+      <div class="pecas-list" id="pecas-list">
+        <div class="empty-msg">Carregando...</div>
+      </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ TELA 2 — DETALHE ══════════════════════════════════ -->
-  <div id="screen-detail">
-    <div class="detail-header">
-      <button class="btn-back" onclick="App.voltarLista()">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Voltar
-      </button>
-      <div style="flex:1">
-        <div class="detail-code" id="d-code"></div>
-        <div class="detail-title" id="d-title">Nova Peça</div>
+  <!-- ══════════════════════════════════════════════════════
+       TELA 2 — MATERIAL
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-material" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaBusca()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+            <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Busca
+        </button>
       </div>
-      <div id="d-badge"></div>
+
+      <div class="screen-title" id="mat-titulo">Material da peça</div>
+      <div class="screen-peca-codigo" id="mat-codigo"></div>
+
+      <!-- 1. De que é feita -->
+      <div class="field">
+        <label>
+          De que é feita?
+          <span class="hint"> — descreva livremente o tecido ou material</span>
+        </label>
+        <input type="text" id="mat-descricao" placeholder="ex: Malha 95% algodão 5% elastano, origem Brasil" />
+      </div>
+
+      <!-- 2. Composição detalhada -->
+      <div class="field">
+        <label>Composição detalhada <span class="hint">(opcional)</span></label>
+        <div class="col-headers fibra-headers">
+          <span>Material</span>
+          <span>%</span>
+          <span></span>
+        </div>
+        <div class="fibras-list" id="fibras-list"></div>
+        <button class="btn-add" onclick="App.addFibra()">+ Adicionar material</button>
+        <div class="pct-total" id="pct-total"></div>
+      </div>
+
+      <hr class="section-sep" />
+
+      <!-- 3. Certificados -->
+      <div class="field">
+        <div class="toggle-row">
+          <label class="toggle-switch" for="toggle-cert">
+            <input type="checkbox" id="toggle-cert" onchange="App.toggleCerts(this.checked)" />
+            <span class="toggle-track"></span>
+          </label>
+          <span class="toggle-label">Tem algum certificado que veio com o material?</span>
+        </div>
+        <div class="toggle-content" id="certs-content">
+          <div class="col-headers cert-headers">
+            <span>Nome do certificado</span>
+            <span>Número</span>
+            <span>Válido até</span>
+            <span></span>
+          </div>
+          <div class="certs-list" id="certs-list"></div>
+          <button class="btn-add" onclick="App.addCert()">+ Adicionar certificado</button>
+        </div>
+      </div>
+
+      <hr class="section-sep" />
+
+      <!-- 4. Material reciclado -->
+      <div class="field">
+        <div class="toggle-row">
+          <label class="toggle-switch" for="toggle-rec">
+            <input type="checkbox" id="toggle-rec" onchange="App.toggleReciclado(this.checked)" />
+            <span class="toggle-track"></span>
+          </label>
+          <span class="toggle-label">O material tem parte reciclada?</span>
+        </div>
+        <div class="toggle-content" id="rec-content">
+          <div class="inline-pct">
+            <span>Quanto?</span>
+            <input type="number" id="mat-reciclado" min="0" max="100" placeholder="0" />
+            <span>%</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-sep" />
+
+      <!-- 5. Como cuidar -->
+      <div class="field">
+        <label>Como cuidar dessa peça?</label>
+        <textarea id="mat-cuidados" placeholder="ex: Lavar à mão em água fria. Não usar alvejante. Secar à sombra."></textarea>
+      </div>
+
+      <!-- Rodapé -->
+      <div class="screen-footer">
+        <button class="btn btn-primary" id="btn-salvar-mat" onclick="App.salvarMaterial()">Salvar material</button>
+        <button class="btn btn-outline" onclick="App.irParaEtapas()">Próximo: registrar etapa →</button>
+      </div>
     </div>
+  </div>
 
-    <div class="detail-body">
+  <!-- ══════════════════════════════════════════════════════
+       TELA 3 — ETAPAS DE PRODUÇÃO
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-etapas" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaBusca()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+            <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Busca
+        </button>
+        <span class="back-sep">›</span>
+        <button class="btn-back" onclick="App.irParaMaterial()">Material</button>
+      </div>
 
-      <!-- ── Seção 1: Informações básicas ── -->
-      <section>
-        <div class="section-title">Informações básicas</div>
-        <div class="field-group">
-          <div class="field-row">
-            <div class="field">
-              <label>Nome da peça</label>
-              <input type="text" id="f-nome" placeholder="ex: Calça Wide Leg Alfaiataria" />
-            </div>
-            <div class="field">
-              <label>Código</label>
-              <input type="text" id="f-codigo" placeholder="ex: PH-CAL-001" />
-            </div>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label>Tecido principal</label>
-              <input type="text" id="f-tecido" placeholder="ex: Malha ribana 95% algodão 5% elastano" />
-            </div>
-            <div class="field">
-              <label>Situação</label>
-              <select id="f-status">
-                <option value="ideia">Em ideia</option>
-                <option value="desenvolvimento">Em desenvolvimento</option>
-                <option value="finalizado">Finalizada</option>
-                <option value="produzindo">Produzindo</option>
-                <option value="entregue">Entregue</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="section-actions">
-          <button class="btn btn-primary" onclick="App.salvarBasico()">Salvar informações</button>
-        </div>
-      </section>
+      <div class="screen-title" id="etapa-titulo">Registrar etapa</div>
+      <div class="screen-peca-codigo" id="etapa-codigo"></div>
 
-      <!-- ── Seção 2: Matéria-prima ── -->
-      <section>
-        <div class="section-title">Matéria-prima</div>
-        <div class="field-group">
+      <!-- Etapas já registradas -->
+      <div id="etapas-registradas" class="etapas-registradas">
+        <div class="etapas-vazio" id="etapas-vazio">Nenhuma etapa registrada ainda.</div>
+      </div>
 
-          <!-- Composição de fibras -->
-          <div class="field">
-            <label>De que é feita essa peça?</label>
-            <div class="fibras-list" id="fibras-list"></div>
-            <button class="btn-add" onclick="App.addFibra()">+ Adicionar material</button>
-            <div class="pct-total" id="pct-total"></div>
-          </div>
+      <!-- Formulário de nova etapa -->
+      <div class="field">
+        <label>O que foi feito?</label>
+        <select id="nef-etapa">
+          <option value="fiacao">Fiação do fio</option>
+          <option value="tecelagem">Tecelagem / Malharia</option>
+          <option value="corte">Corte</option>
+          <option value="costura" selected>Costura</option>
+          <option value="tingimento">Tingimento</option>
+          <option value="acabamento">Acabamento</option>
+          <option value="lavanderia">Lavanderia</option>
+        </select>
+      </div>
 
-          <!-- Certificados -->
-          <div class="field">
-            <label>Tem algum certificado de qualidade?</label>
-            <div class="certs-list" id="certs-list"></div>
-            <button class="btn-add" onclick="App.addCert()">+ Adicionar certificado</button>
-          </div>
+      <div class="field">
+        <label>Em qual país?</label>
+        <input type="text" id="nef-pais" placeholder="Brasil" value="Brasil" />
+      </div>
 
-          <!-- Reciclado -->
-          <div class="field" style="max-width:240px">
-            <label>Tem material reciclado? Qual porcentagem?</label>
-            <input type="number" id="f-reciclado" min="0" max="100" placeholder="0" />
-          </div>
+      <div class="field">
+        <label>
+          Nome do fornecedor ou local
+          <span class="hint"> — opcional</span>
+        </label>
+        <input type="text" id="nef-inst" placeholder="ex: Ateliê Central SP, Tinturaria Alfa" />
+      </div>
 
-          <!-- Cuidados -->
-          <div class="field">
-            <label>Como lavar e cuidar?</label>
-            <textarea id="f-cuidados" placeholder="ex: Lavar à mão em água fria. Não usar alvejante. Secar à sombra..."></textarea>
-          </div>
+      <div class="screen-footer">
+        <button class="btn btn-primary" id="btn-registrar-etapa" onclick="App.registrarEtapa()">Registrar</button>
+        <button class="btn btn-ghost" onclick="App.irParaMaterial()">← Voltar para o material</button>
+      </div>
+    </div>
+  </div>
 
-          <!-- Reparo -->
-          <div class="field">
-            <label>Como consertar se tiver algum problema?</label>
-            <textarea id="f-reparo" placeholder="ex: Costuras podem ser refeitas em ateliê especializado. Tecido aceita remendo invisível..."></textarea>
-          </div>
-
-          <!-- Fim de vida -->
-          <div class="field">
-            <label>O que fazer com a peça quando não usar mais?</label>
-            <textarea id="f-fimvida" placeholder="ex: Pode ser reciclada em pontos de coleta têxtil, doada ou compostada se for 100% natural..."></textarea>
-          </div>
-
-        </div>
-        <div class="section-actions">
-          <button class="btn btn-primary" onclick="App.salvarFicha()">Salvar matéria-prima</button>
-        </div>
-      </section>
-
-      <!-- ── Seção 3: Cadeia produtiva ── -->
-      <section>
-        <div class="section-title">Onde cada parte foi feita?</div>
-        <div class="etapas-list" id="etapas-list">
-          <div style="color:var(--muted);font-size:13px">Nenhuma etapa registrada ainda.</div>
-        </div>
-        <div class="section-actions">
-          <button class="btn btn-outline" onclick="App.addEtapa()">+ Registrar etapa</button>
-        </div>
-        <div id="etapa-form" style="display:none;margin-top:20px">
-          <div class="etapa-row">
-            <div class="field field-etapa">
-              <label>O que foi feito?</label>
-              <select id="nef-etapa">
-                <option value="fiacao">Fiação de fio</option>
-                <option value="tecelagem">Tecelagem / Malharia</option>
-                <option value="corte">Corte</option>
-                <option value="costura">Costura</option>
-                <option value="tingimento">Tingimento</option>
-                <option value="acabamento">Acabamento</option>
-                <option value="lavanderia">Lavanderia</option>
-              </select>
-            </div>
-            <div class="field field-pais">
-              <label>Em qual país?</label>
-              <input type="text" id="nef-pais" placeholder="ex: Brasil" />
-            </div>
-            <div class="field field-inst">
-              <label>Nome do fornecedor / fábrica <span style="color:var(--muted)">(opcional)</span></label>
-              <input type="text" id="nef-inst" placeholder="ex: Têxtil São Paulo" />
-            </div>
-          </div>
-          <div class="section-actions">
-            <button class="btn btn-primary" onclick="App.salvarEtapa()">Salvar etapa</button>
-            <button class="btn btn-outline" onclick="App.cancelarEtapa()">Cancelar</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- ── Seção 4: DPP ── -->
-      <section class="dpp-section" id="dpp-section">
-        <div class="section-title">Passaporte Digital do Produto (DPP)</div>
-        <div class="dpp-published" id="dpp-published">
-          <span class="badge-published">Publicado</span>
-          <span style="font-size:12px;color:var(--muted)">O passaporte já está disponível publicamente.</span>
-        </div>
-        <div id="dpp-qr"></div>
-        <div id="dpp-link-wrap" class="dpp-link"></div>
-        <div class="field-group" style="margin-top:20px">
-          <div class="field" style="max-width:320px">
-            <label>
-              Código de barras (GTIN)
-              <span class="tooltip" data-tip="Código de 13 dígitos do produto, encontrado no código de barras da etiqueta.">?</span>
-            </label>
-            <input type="text" id="f-gtin" placeholder="ex: 7891234567890" maxlength="14" />
-          </div>
-        </div>
-        <div class="section-actions">
-          <button class="btn btn-gold" id="btn-publicar-dpp" onclick="App.publicarDPP()">Publicar Passaporte Digital</button>
-        </div>
-      </section>
-
+  <!-- ══════════════════════════════════════════════════════
+       MODAL — NOVA PEÇA
+  ══════════════════════════════════════════════════════ -->
+  <div id="modal-nova-peca" class="modal-overlay" onclick="App.fecharModalSePano(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="App.fecharModalNovaPeca()">&#215;</button>
+      <div class="modal-title">Nova peça</div>
+      <div class="field">
+        <label>Nome da peça</label>
+        <input type="text" id="nova-nome" placeholder="ex: Calça Wide Leg Alfaiataria" />
+      </div>
+      <div class="field">
+        <label>Código</label>
+        <input type="text" id="nova-codigo" placeholder="ex: PH-CAL-001" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-criar-peca" onclick="App.criarPeca()">Criar peça</button>
+        <button class="btn btn-ghost" onclick="App.fecharModalNovaPeca()">Cancelar</button>
+      </div>
     </div>
   </div>
 
   <script>
   'use strict';
 
-  /* ═══════════════════════════════════════════════════════════════
+  /* ═══════════════════════════════════════════════════
      UTILITÁRIOS
-  ═══════════════════════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════════ */
 
   let _toastTimer = null;
   function toast(msg, tipo = 'ok') {
@@ -660,38 +778,19 @@
     el.textContent = msg;
     el.className = 'show ' + tipo;
     clearTimeout(_toastTimer);
-    _toastTimer = setTimeout(() => { el.className = ''; }, 3000);
+    _toastTimer = setTimeout(() => { el.className = ''; }, 3200);
   }
 
-  function badgeClass(status) {
-    const map = {
-      ideia: 'badge-ideia',
-      desenvolvimento: 'badge-desenvolvimento',
-      finalizado: 'badge-finalizado',
-      produzindo: 'badge-produzindo',
-      entregue: 'badge-entregue',
-    };
-    return map[status] || 'badge-ideia';
-  }
-
-  function badgeLabel(status) {
-    const map = {
-      ideia: 'Em ideia',
-      desenvolvimento: 'Em desenvolvimento',
-      finalizado: 'Finalizada',
-      produzindo: 'Produzindo',
-      entregue: 'Entregue',
-    };
-    return map[status] || status || 'Em ideia';
-  }
-
-  function setLoading(btn, loading) {
+  function setLoading(btn, loading, label) {
+    if (!btn) return;
     if (loading) {
-      btn._origText = btn.innerHTML;
-      btn.innerHTML = '<span class="spinner"></span>Salvando…';
+      btn._orig = btn.innerHTML;
+      const spinClass = btn.classList.contains('btn-outline') || btn.classList.contains('btn-ghost')
+        ? 'spinner spinner-dark' : 'spinner';
+      btn.innerHTML = `<span class="${spinClass}"></span>${label || 'Salvando…'}`;
       btn.disabled = true;
     } else {
-      btn.innerHTML = btn._origText || 'Salvar';
+      btn.innerHTML = btn._orig || label || 'Salvar';
       btn.disabled = false;
     }
   }
@@ -701,260 +800,301 @@
     if (body !== undefined) opts.body = JSON.stringify(body);
     const res = await fetch(path, opts);
     let data;
-    try { data = await res.json(); } catch(_) { data = {}; }
+    try { data = await res.json(); } catch (_) { data = {}; }
     if (!res.ok) throw new Error(data.detail || data.message || `Erro ${res.status}`);
     return data;
   }
 
-  /* ═══════════════════════════════════════════════════════════════
-     ESTADO GLOBAL
-  ═══════════════════════════════════════════════════════════════ */
-
-  const State = {
-    pecas: [],
-    pecaAtual: null,   // objeto peça
-    fichaId: null,     // id da ficha técnica
-    fichaExiste: false,
-    etapas: [],
-    dppPublicado: false,
+  const ETAPA_LABEL = {
+    fiacao:     'Fiação do fio',
+    tecelagem:  'Tecelagem / Malharia',
+    corte:      'Corte',
+    costura:    'Costura',
+    tingimento: 'Tingimento',
+    acabamento: 'Acabamento',
+    lavanderia: 'Lavanderia',
   };
 
-  /* ═══════════════════════════════════════════════════════════════
+  const STATUS_LABEL = {
+    ideia:          'Em ideia',
+    desenvolvimento:'Em desenvolvimento',
+    finalizado:     'Finalizada',
+    produzindo:     'Produzindo',
+    entregue:       'Entregue',
+  };
+
+  function badgeClass(status) {
+    return {
+      ideia:          'badge-ideia',
+      desenvolvimento:'badge-desenvolvimento',
+      finalizado:     'badge-finalizado',
+      produzindo:     'badge-produzindo',
+      entregue:       'badge-entregue',
+    }[status] || 'badge-ideia';
+  }
+
+  /* ═══════════════════════════════════════════════════
+     ESTADO
+  ═══════════════════════════════════════════════════ */
+
+  const State = {
+    pecas:       [],          // todas as peças
+    pecaAtual:   null,        // objeto peça selecionada
+    fichaExiste: false,       // se já existe ficha técnica
+    etapas:      [],          // etapas carregadas
+  };
+
+  /* ═══════════════════════════════════════════════════
+     NAVEGAÇÃO DE TELAS
+  ═══════════════════════════════════════════════════ */
+
+  function mostrarTela(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    atualizarNav(id);
+  }
+
+  function atualizarNav(tela) {
+    const nav = document.getElementById('header-nav');
+    const steps = [
+      { id: 'screen-busca',    label: 'Busca'    },
+      { id: 'screen-material', label: 'Material' },
+      { id: 'screen-etapas',   label: 'Etapa'    },
+    ];
+    const idx = steps.findIndex(s => s.id === tela);
+    if (idx <= 0) { nav.innerHTML = ''; return; }
+    nav.innerHTML = steps.slice(0, idx + 1).map((s, i) => {
+      const cls = s.id === tela ? 'active' : '';
+      return (i > 0 ? '<span>›</span>' : '') + `<span class="${cls}">${s.label}</span>`;
+    }).join('');
+  }
+
+  /* ═══════════════════════════════════════════════════
      APP
-  ═══════════════════════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════════ */
 
   const App = {
 
-    /* ─── LISTA ─── */
+    /* ─── TELA 1 — LISTA ─── */
 
     async carregarLista() {
       try {
-        const pecas = await api('GET', '/pecas');
-        State.pecas = pecas;
-        App.renderLista();
-      } catch(e) {
-        document.getElementById('cards-grid').innerHTML =
-          `<div class="empty-list">Não foi possível carregar as peças. Verifique se a API está rodando.</div>`;
+        State.pecas = await api('GET', '/pecas');
+        App.renderLista(State.pecas);
+      } catch (e) {
+        document.getElementById('pecas-list').innerHTML =
+          '<div class="empty-msg">Não foi possível carregar as peças. Verifique se a API está rodando.</div>';
       }
     },
 
-    renderLista() {
-      const grid = document.getElementById('cards-grid');
-      if (!State.pecas.length) {
-        grid.innerHTML = '<div class="empty-list">Nenhuma peça cadastrada ainda. Crie a primeira!</div>';
+    renderLista(pecas) {
+      const el = document.getElementById('pecas-list');
+      if (!pecas.length) {
+        el.innerHTML = '<div class="empty-msg">Nenhuma peça encontrada.</div>';
         return;
       }
-      grid.innerHTML = State.pecas.map(p => `
-        <div class="peca-card" onclick="App.abrirPeca(${JSON.stringify(p.codigo).replace(/"/g,'&quot;')})">
-          <div class="card-code">${p.codigo || ''}</div>
-          <div class="card-name">${p.nome || '—'}</div>
-          <div class="card-tecido">${p.tecido || 'Tecido não informado'}</div>
-          <span class="badge ${badgeClass(p.status)}">${badgeLabel(p.status)}</span>
+      el.innerHTML = pecas.map(p => `
+        <div class="peca-item" onclick="App.selecionarPeca(${JSON.stringify(String(p.codigo)).replace(/"/g,'&quot;')})">
+          <div class="peca-item-main">
+            <div class="peca-item-nome">${esc(p.nome || '—')}</div>
+            <div class="peca-item-cod">${esc(p.codigo || '')}</div>
+          </div>
+          <span class="badge ${badgeClass(p.status)}">${STATUS_LABEL[p.status] || p.status || 'Em ideia'}</span>
+          <span class="peca-item-arrow">›</span>
         </div>
       `).join('');
     },
 
-    abrirNovaPeca() {
-      State.pecaAtual = null;
-      State.fichaId = null;
-      State.fichaExiste = false;
-      State.etapas = [];
-      State.dppPublicado = false;
-      App.limparFormulario();
-      App.mostrarTela('detail');
+    filtrarLista(q) {
+      const termo = q.trim().toLowerCase();
+      if (!termo) { App.renderLista(State.pecas); return; }
+      const filtradas = State.pecas.filter(p =>
+        (p.nome   || '').toLowerCase().includes(termo) ||
+        (p.codigo || '').toLowerCase().includes(termo)
+      );
+      App.renderLista(filtradas);
     },
 
-    voltarLista() {
-      App.mostrarTela('list');
+    async selecionarPeca(codigo) {
+      const peca = State.pecas.find(p => String(p.codigo) === String(codigo));
+      if (!peca) { toast('Peça não encontrada.', 'err'); return; }
+      State.pecaAtual = peca;
+      await App.carregarFicha(peca.id);
+      await App.carregarEtapas(peca.codigo);
+      App.preencherTelaMaterial();
+      mostrarTela('screen-material');
+    },
+
+    irParaBusca() {
+      mostrarTela('screen-busca');
       App.carregarLista();
     },
 
-    mostrarTela(tela) {
-      document.getElementById('screen-list').style.display   = tela === 'list'   ? 'block' : 'none';
-      document.getElementById('screen-detail').style.display = tela === 'detail' ? 'block' : 'none';
+    /* ─── MODAL NOVA PEÇA ─── */
+
+    abrirModalNovaPeca() {
+      document.getElementById('nova-nome').value   = '';
+      document.getElementById('nova-codigo').value = '';
+      document.getElementById('modal-nova-peca').classList.add('open');
+      setTimeout(() => document.getElementById('nova-nome').focus(), 80);
     },
 
-    /* ─── ABRIR PEÇA EXISTENTE ─── */
+    fecharModalNovaPeca() {
+      document.getElementById('modal-nova-peca').classList.remove('open');
+    },
 
-    async abrirPeca(codigo) {
+    fecharModalSePano(e) {
+      if (e.target === document.getElementById('modal-nova-peca')) App.fecharModalNovaPeca();
+    },
+
+    async criarPeca() {
+      const nome   = document.getElementById('nova-nome').value.trim();
+      const codigo = document.getElementById('nova-codigo').value.trim();
+      if (!nome)   { toast('Informe o nome da peça.', 'err'); return; }
+      if (!codigo) { toast('Informe o código da peça.', 'err'); return; }
+      const btn = document.getElementById('btn-criar-peca');
+      setLoading(btn, true, 'Criando…');
       try {
-        // Carrega peça
-        const pecas = await api('GET', '/pecas');
-        const peca = pecas.find(p => p.codigo === codigo);
-        if (!peca) { toast('Peça não encontrada.', 'err'); return; }
-        State.pecaAtual = peca;
+        const nova = await api('POST', '/pecas', { codigo, nome });
+        State.pecas.push(nova);
+        State.pecaAtual   = nova;
+        State.fichaExiste = false;
+        State.etapas      = [];
+        App.fecharModalNovaPeca();
+        App.preencherTelaMaterial(true);
+        mostrarTela('screen-material');
+        toast('Peça criada!');
+      } catch (e) {
+        toast('Erro ao criar peça: ' + e.message, 'err');
+      }
+      setLoading(btn, false, 'Criar peça');
+    },
 
-        App.preencherBasico(peca);
-        App.mostrarTela('detail');
+    /* ─── TELA 2 — MATERIAL ─── */
 
-        // Carrega ficha
-        await App.carregarFicha(peca.id);
+    preencherTelaMaterial(nova = false) {
+      const p = State.pecaAtual;
+      document.getElementById('mat-titulo').textContent  = 'Material de ' + (p.nome || 'peça');
+      document.getElementById('mat-codigo').textContent  = p.codigo || '';
 
-        // Carrega etapas
-        await App.carregarEtapas(peca.codigo);
-
-        // DPP
-        App.atualizarDPPSection();
-      } catch(e) {
-        toast('Erro ao abrir peça: ' + e.message, 'err');
+      if (nova) {
+        // Limpar campos
+        document.getElementById('mat-descricao').value = '';
+        document.getElementById('mat-cuidados').value  = '';
+        document.getElementById('mat-reciclado').value = '';
+        document.getElementById('fibras-list').innerHTML = '';
+        document.getElementById('certs-list').innerHTML  = '';
+        document.getElementById('pct-total').textContent = '';
+        document.getElementById('toggle-cert').checked = false;
+        document.getElementById('toggle-rec').checked  = false;
+        document.getElementById('certs-content').classList.remove('open');
+        document.getElementById('rec-content').classList.remove('open');
+        App.atualizarTotalPct();
       }
     },
 
-    preencherBasico(peca) {
-      document.getElementById('d-code').textContent  = peca.codigo || '';
-      document.getElementById('d-title').textContent = peca.nome   || 'Nova Peça';
-      document.getElementById('d-badge').innerHTML   =
-        `<span class="badge ${badgeClass(peca.status)}">${badgeLabel(peca.status)}</span>`;
-      document.getElementById('f-nome').value   = peca.nome   || '';
-      document.getElementById('f-codigo').value = peca.codigo || '';
-      document.getElementById('f-tecido').value = peca.tecido || '';
-      document.getElementById('f-status').value = peca.status || 'ideia';
-      // Código é read-only se já existe
-      document.getElementById('f-codigo').readOnly = !!peca.codigo;
+    irParaMaterial() {
+      App.preencherTelaMaterial();
+      mostrarTela('screen-material');
     },
-
-    limparFormulario() {
-      document.getElementById('d-code').textContent  = '';
-      document.getElementById('d-title').textContent = 'Nova Peça';
-      document.getElementById('d-badge').innerHTML   = '';
-      ['f-nome','f-codigo','f-tecido','f-gtin'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) { el.value = ''; el.readOnly = false; }
-      });
-      document.getElementById('f-status').value = 'ideia';
-      document.getElementById('f-reciclado').value = '';
-      document.getElementById('f-cuidados').value = '';
-      document.getElementById('f-reparo').value = '';
-      document.getElementById('f-fimvida').value = '';
-      document.getElementById('fibras-list').innerHTML = '';
-      document.getElementById('certs-list').innerHTML  = '';
-      document.getElementById('pct-total').textContent = '';
-      document.getElementById('etapas-list').innerHTML =
-        '<div style="color:var(--muted);font-size:13px">Nenhuma etapa registrada ainda.</div>';
-      document.getElementById('etapa-form').style.display = 'none';
-      document.getElementById('dpp-section').classList.remove('visible');
-      document.getElementById('dpp-published').classList.remove('visible');
-      document.getElementById('dpp-qr').innerHTML = '';
-      document.getElementById('dpp-link-wrap').innerHTML = '';
-    },
-
-    /* ─── BÁSICO ─── */
-
-    async salvarBasico() {
-      const btn  = document.querySelector('[onclick="App.salvarBasico()"]');
-      const nome = document.getElementById('f-nome').value.trim();
-      const cod  = document.getElementById('f-codigo').value.trim();
-
-      if (!nome) { toast('Informe o nome da peça.', 'err'); return; }
-      if (!cod)  { toast('Informe o código da peça.', 'err'); return; }
-
-      setLoading(btn, true);
-      try {
-        if (State.pecaAtual) {
-          // Atualizar
-          const updated = await api('PATCH', `/pecas/${cod}`, {
-            nome,
-            tecido: document.getElementById('f-tecido').value.trim() || null,
-            status: document.getElementById('f-status').value,
-          });
-          State.pecaAtual = updated;
-          App.preencherBasico(updated);
-          toast('Informações salvas.');
-          App.atualizarDPPSection();
-        } else {
-          // Criar nova
-          const colecaoId = null;
-          const nova = await api('POST', '/pecas', {
-            codigo: cod,
-            nome,
-            tecido: document.getElementById('f-tecido').value.trim() || null,
-            status: document.getElementById('f-status').value,
-            colecao_id: colecaoId,
-          });
-          State.pecaAtual = nova;
-          document.getElementById('f-codigo').readOnly = true;
-          App.preencherBasico(nova);
-          toast('Peça criada com sucesso!');
-          App.atualizarDPPSection();
-        }
-      } catch(e) {
-        toast('Erro ao salvar: ' + e.message, 'err');
-      }
-      setLoading(btn, false);
-    },
-
-    /* ─── FICHA TÉCNICA ─── */
 
     async carregarFicha(pecaId) {
+      State.fichaExiste = false;
       try {
         const ficha = await api('GET', `/fichas-tecnicas/${pecaId}`);
-        State.fichaId     = ficha.id;
         State.fichaExiste = true;
-        App.preencherFicha(ficha);
-      } catch(e) {
-        // 404 = ficha ainda não existe
-        State.fichaId     = null;
-        State.fichaExiste = false;
+        App.preencherCamposFicha(ficha);
+      } catch (_) {
+        // 404 — ficha ainda não existe, ok
+        document.getElementById('mat-descricao').value = '';
+        document.getElementById('mat-cuidados').value  = '';
+        document.getElementById('mat-reciclado').value = '';
+        document.getElementById('fibras-list').innerHTML = '';
+        document.getElementById('certs-list').innerHTML  = '';
+        document.getElementById('pct-total').textContent = '';
+        document.getElementById('toggle-cert').checked = false;
+        document.getElementById('toggle-rec').checked  = false;
+        document.getElementById('certs-content').classList.remove('open');
+        document.getElementById('rec-content').classList.remove('open');
+        App.atualizarTotalPct();
       }
     },
 
-    preencherFicha(ficha) {
-      document.getElementById('f-reciclado').value = ficha.conteudo_reciclado_pct ?? '';
-      document.getElementById('f-cuidados').value  = ficha.materiais              || '';
-      document.getElementById('f-reparo').value    = ficha.instrucoes_reparo      || '';
-      document.getElementById('f-fimvida').value   = ficha.instrucoes_fim_de_vida || '';
+    preencherCamposFicha(ficha) {
+      document.getElementById('mat-descricao').value = ficha.materiais || '';
+      document.getElementById('mat-cuidados').value  = '';  // campo de cuidados não mapeado separado
+
+      // Reciclado
+      const rec = ficha.conteudo_reciclado_pct;
+      if (rec !== null && rec !== undefined) {
+        document.getElementById('toggle-rec').checked = true;
+        document.getElementById('rec-content').classList.add('open');
+        document.getElementById('mat-reciclado').value = rec;
+      } else {
+        document.getElementById('toggle-rec').checked = false;
+        document.getElementById('rec-content').classList.remove('open');
+        document.getElementById('mat-reciclado').value = '';
+      }
 
       // Fibras
       let fibras = [];
-      try { fibras = JSON.parse(ficha.composicao_fibras || '[]'); } catch(_) {}
+      try { fibras = JSON.parse(ficha.composicao_fibras || '[]'); } catch (_) {}
       document.getElementById('fibras-list').innerHTML = '';
       fibras.forEach(f => App.addFibra(f.fibra, f.pct));
       App.atualizarTotalPct();
 
       // Certificados
       let certs = [];
-      try { certs = JSON.parse(ficha.certificacoes || '[]'); } catch(_) {}
+      try { certs = JSON.parse(ficha.certificacoes || '[]'); } catch (_) {}
       document.getElementById('certs-list').innerHTML = '';
-      certs.forEach(c => App.addCert(c.nome, c.numero, c.validade));
+      if (certs.length) {
+        document.getElementById('toggle-cert').checked = true;
+        document.getElementById('certs-content').classList.add('open');
+        certs.forEach(c => App.addCert(c.nome, c.numero, c.validade));
+      } else {
+        document.getElementById('toggle-cert').checked = false;
+        document.getElementById('certs-content').classList.remove('open');
+      }
     },
 
-    async salvarFicha() {
-      if (!State.pecaAtual) { toast('Salve as informações básicas primeiro.', 'err'); return; }
-      const btn = document.querySelector('[onclick="App.salvarFicha()"]');
-      setLoading(btn, true);
+    async salvarMaterial() {
+      const p = State.pecaAtual;
+      if (!p) { toast('Selecione uma peça primeiro.', 'err'); return; }
 
-      try {
-        const fibras = App.coletarFibras();
-        const certs  = App.coletarCerts();
-        const total  = fibras.reduce((s, f) => s + Number(f.pct || 0), 0);
-
-        if (fibras.length && total !== 100) {
+      const fibras = App.coletarFibras();
+      if (fibras.length) {
+        const total = fibras.reduce((s, f) => s + Number(f.pct || 0), 0);
+        if (total !== 100) {
           toast('A soma dos materiais deve ser 100%. Corrija antes de salvar.', 'err');
-          setLoading(btn, false);
           return;
         }
+      }
 
-        const payload = {
-          peca_id:                   State.pecaAtual.id,
-          materiais:                 document.getElementById('f-cuidados').value.trim() || null,
-          instrucoes_reparo:         document.getElementById('f-reparo').value.trim()   || null,
-          instrucoes_fim_de_vida:    document.getElementById('f-fimvida').value.trim()  || null,
-          composicao_fibras:         fibras.length ? JSON.stringify(fibras) : null,
-          certificacoes:             certs.length  ? JSON.stringify(certs)  : null,
-          conteudo_reciclado_pct:    document.getElementById('f-reciclado').value !== ''
-                                       ? Number(document.getElementById('f-reciclado').value)
-                                       : null,
-        };
+      const btn = document.getElementById('btn-salvar-mat');
+      setLoading(btn, true);
 
+      const recEl  = document.getElementById('mat-reciclado');
+      const recVal = document.getElementById('toggle-rec').checked && recEl.value !== ''
+        ? Number(recEl.value) : null;
+
+      const payload = {
+        peca_id:               p.id,
+        materiais:             document.getElementById('mat-descricao').value.trim() || null,
+        composicao_fibras:     fibras.length ? JSON.stringify(fibras) : null,
+        certificacoes:         App.coletarCerts().length ? JSON.stringify(App.coletarCerts()) : null,
+        conteudo_reciclado_pct: recVal,
+      };
+
+      try {
         if (State.fichaExiste) {
-          await api('PATCH', `/fichas-tecnicas/${State.pecaAtual.id}`, payload);
+          await api('PATCH', `/fichas-tecnicas/${p.id}`, payload);
         } else {
-          const criada = await api('POST', '/fichas-tecnicas', payload);
-          State.fichaId     = criada.id;
+          await api('POST', '/fichas-tecnicas', payload);
           State.fichaExiste = true;
         }
-        toast('Matéria-prima salva.');
-      } catch(e) {
+        toast('Material salvo.');
+      } catch (e) {
         toast('Erro ao salvar: ' + e.message, 'err');
       }
       setLoading(btn, false);
@@ -967,12 +1107,8 @@
       const row  = document.createElement('div');
       row.className = 'fibra-row';
       row.innerHTML = `
-        <div class="field field-mat">
-          <input type="text" placeholder="ex: algodão orgânico" value="${material}" oninput="App.atualizarTotalPct()" />
-        </div>
-        <div class="field field-pct">
-          <input type="number" placeholder="%" min="0" max="100" value="${pct}" oninput="App.atualizarTotalPct()" />
-        </div>
+        <input type="text" placeholder="ex: algodão orgânico" value="${esc(String(material))}" oninput="App.atualizarTotalPct()" />
+        <input type="number" placeholder="%" min="0" max="100" value="${esc(String(pct))}" oninput="App.atualizarTotalPct()" />
         <button class="btn-remove" title="Remover" onclick="this.parentElement.remove();App.atualizarTotalPct()">&#215;</button>
       `;
       list.appendChild(row);
@@ -981,35 +1117,40 @@
 
     coletarFibras() {
       return [...document.getElementById('fibras-list').querySelectorAll('.fibra-row')].map(row => {
-        const inputs = row.querySelectorAll('input');
-        return { fibra: inputs[0].value.trim(), pct: Number(inputs[1].value) };
+        const [inp1, inp2] = row.querySelectorAll('input');
+        return { fibra: inp1.value.trim(), pct: Number(inp2.value) };
       }).filter(f => f.fibra);
     },
 
     atualizarTotalPct() {
-      const total = App.coletarFibras().reduce((s, f) => s + Number(f.pct || 0), 0);
-      const el    = document.getElementById('pct-total');
-      if (!App.coletarFibras().length) { el.textContent = ''; return; }
+      const fibras = App.coletarFibras();
+      const el = document.getElementById('pct-total');
+      if (!fibras.length) { el.textContent = ''; return; }
+      const total = fibras.reduce((s, f) => s + Number(f.pct || 0), 0);
       el.textContent = `Total: ${total}%`;
       el.className   = 'pct-total ' + (total === 100 ? 'ok' : 'err');
     },
 
     /* ─── CERTIFICADOS ─── */
 
+    toggleCerts(checked) {
+      const cont = document.getElementById('certs-content');
+      if (checked) {
+        cont.classList.add('open');
+        if (!document.getElementById('certs-list').children.length) App.addCert();
+      } else {
+        cont.classList.remove('open');
+      }
+    },
+
     addCert(nome = '', numero = '', validade = '') {
       const list = document.getElementById('certs-list');
       const row  = document.createElement('div');
       row.className = 'cert-row';
       row.innerHTML = `
-        <div class="field field-nome">
-          <input type="text" placeholder="ex: OEKO-TEX, GOTS, GRS" value="${nome}" />
-        </div>
-        <div class="field field-num">
-          <input type="text" placeholder="Número" value="${numero}" />
-        </div>
-        <div class="field field-val">
-          <input type="text" placeholder="Válido até (mês/ano ex: 2027-06)" value="${validade}" />
-        </div>
+        <input type="text" placeholder="ex: OEKO-TEX, GOTS" value="${esc(String(nome))}" />
+        <input type="text" placeholder="Número" value="${esc(String(numero))}" />
+        <input type="text" placeholder="2027-06" value="${esc(String(validade))}" />
         <button class="btn-remove" title="Remover" onclick="this.parentElement.remove()">&#215;</button>
       `;
       list.appendChild(row);
@@ -1017,133 +1158,120 @@
 
     coletarCerts() {
       return [...document.getElementById('certs-list').querySelectorAll('.cert-row')].map(row => {
-        const inputs = row.querySelectorAll('input');
-        return { nome: inputs[0].value.trim(), numero: inputs[1].value.trim(), validade: inputs[2].value.trim() };
+        const [i1, i2, i3] = row.querySelectorAll('input');
+        return { nome: i1.value.trim(), numero: i2.value.trim(), validade: i3.value.trim() };
       }).filter(c => c.nome);
     },
 
-    /* ─── ETAPAS ─── */
+    /* ─── RECICLADO TOGGLE ─── */
+
+    toggleReciclado(checked) {
+      const cont = document.getElementById('rec-content');
+      if (checked) {
+        cont.classList.add('open');
+        document.getElementById('mat-reciclado').focus();
+      } else {
+        cont.classList.remove('open');
+        document.getElementById('mat-reciclado').value = '';
+      }
+    },
+
+    /* ─── TELA 3 — ETAPAS ─── */
 
     async carregarEtapas(codigo) {
+      State.etapas = [];
       try {
-        const etapas = await api('GET', `/pecas/${codigo}/etapas-producao`);
-        State.etapas = etapas;
-        App.renderEtapas();
-      } catch(_) {
-        State.etapas = [];
-      }
+        State.etapas = await api('GET', `/pecas/${codigo}/etapas-producao`);
+      } catch (_) {}
+    },
+
+    irParaEtapas() {
+      if (!State.pecaAtual) { toast('Selecione uma peça primeiro.', 'err'); return; }
+      App.preencherTelaEtapas();
+      mostrarTela('screen-etapas');
+    },
+
+    preencherTelaEtapas() {
+      const p = State.pecaAtual;
+      document.getElementById('etapa-titulo').textContent = 'Registrar etapa — ' + (p.nome || 'peça');
+      document.getElementById('etapa-codigo').textContent = p.codigo || '';
+      document.getElementById('nef-pais').value = 'Brasil';
+      document.getElementById('nef-inst').value = '';
+      App.renderEtapas();
     },
 
     renderEtapas() {
-      const list = document.getElementById('etapas-list');
+      const container = document.getElementById('etapas-registradas');
+      const vazio     = document.getElementById('etapas-vazio');
+      // Remover cards antigos
+      container.querySelectorAll('.etapa-card').forEach(c => c.remove());
+
       if (!State.etapas.length) {
-        list.innerHTML = '<div style="color:var(--muted);font-size:13px">Nenhuma etapa registrada ainda.</div>';
+        if (vazio) vazio.style.display = 'block';
         return;
       }
-      const labelMap = {
-        fiacao: 'Fiação de fio',
-        tecelagem: 'Tecelagem / Malharia',
-        corte: 'Corte',
-        costura: 'Costura',
-        tingimento: 'Tingimento',
-        acabamento: 'Acabamento',
-        lavanderia: 'Lavanderia',
+      if (vazio) vazio.style.display = 'none';
+      State.etapas.forEach(e => {
+        const card = document.createElement('div');
+        card.className = 'etapa-card';
+        const detalhe = [e.pais, e.instalacao_nome].filter(Boolean).join(' — ');
+        card.innerHTML = `
+          <div class="etapa-card-titulo">${ETAPA_LABEL[e.etapa] || e.etapa}</div>
+          ${detalhe ? `<div class="etapa-card-detalhe">${esc(detalhe)}</div>` : ''}
+        `;
+        container.insertBefore(card, vazio);
+      });
+    },
+
+    async registrarEtapa() {
+      const p = State.pecaAtual;
+      if (!p) { toast('Nenhuma peça selecionada.', 'err'); return; }
+
+      const btn = document.getElementById('btn-registrar-etapa');
+      setLoading(btn, true, 'Registrando…');
+
+      const payload = {
+        etapa:           document.getElementById('nef-etapa').value,
+        pais:            document.getElementById('nef-pais').value.trim() || null,
+        instalacao_nome: document.getElementById('nef-inst').value.trim() || null,
       };
-      list.innerHTML = State.etapas.map(e => `
-        <div style="border:1px solid var(--border);border-radius:2px;padding:12px 16px;margin-bottom:4px;background:#fff">
-          <div style="font-size:13px;font-weight:400">${labelMap[e.etapa] || e.etapa}</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:3px">
-            ${e.pais ? e.pais : ''}${e.pais && e.instalacao_nome ? ' — ' : ''}${e.instalacao_nome || ''}
-          </div>
-        </div>
-      `).join('');
-    },
 
-    addEtapa() {
-      document.getElementById('etapa-form').style.display = 'block';
-    },
-
-    cancelarEtapa() {
-      document.getElementById('etapa-form').style.display = 'none';
-      document.getElementById('nef-pais').value = '';
-      document.getElementById('nef-inst').value = '';
-    },
-
-    async salvarEtapa() {
-      if (!State.pecaAtual) { toast('Salve as informações básicas primeiro.', 'err'); return; }
-      const btn = document.querySelector('[onclick="App.salvarEtapa()"]');
-      setLoading(btn, true);
       try {
-        const payload = {
-          etapa:          document.getElementById('nef-etapa').value,
-          pais:           document.getElementById('nef-pais').value.trim() || null,
-          instalacao_nome: document.getElementById('nef-inst').value.trim() || null,
-        };
-        await api('POST', `/pecas/${State.pecaAtual.codigo}/etapas-producao`, payload);
-        await App.carregarEtapas(State.pecaAtual.codigo);
-        App.cancelarEtapa();
+        await api('POST', `/pecas/${p.codigo}/etapas-producao`, payload);
+        await App.carregarEtapas(p.codigo);
+        App.renderEtapas();
+        document.getElementById('nef-pais').value = 'Brasil';
+        document.getElementById('nef-inst').value = '';
         toast('Etapa registrada.');
-      } catch(e) {
-        toast('Erro ao salvar etapa: ' + e.message, 'err');
+      } catch (e) {
+        toast('Erro ao registrar etapa: ' + e.message, 'err');
       }
-      setLoading(btn, false);
-    },
-
-    /* ─── DPP ─── */
-
-    atualizarDPPSection() {
-      const section = document.getElementById('dpp-section');
-      const status  = document.getElementById('f-status').value;
-      if (!State.pecaAtual || status === 'ideia') {
-        section.classList.remove('visible');
-        return;
-      }
-      section.classList.add('visible');
-    },
-
-    async publicarDPP() {
-      if (!State.pecaAtual) { toast('Salve a peça primeiro.', 'err'); return; }
-      const gtin = document.getElementById('f-gtin').value.trim();
-      if (!gtin) { toast('Informe o código GTIN antes de publicar.', 'err'); return; }
-
-      const btn = document.getElementById('btn-publicar-dpp');
-      setLoading(btn, true);
-      try {
-        await api('POST', `/pecas/${State.pecaAtual.codigo}/dpp/publicar`, { gtin });
-        toast('Passaporte Digital publicado!');
-        State.dppPublicado = true;
-
-        document.getElementById('dpp-published').classList.add('visible');
-
-        // Exibir QR code
-        const qrWrap = document.getElementById('dpp-qr');
-        qrWrap.innerHTML = `<img src="/dpp/${gtin}/qr" alt="QR Code DPP" onerror="this.alt='QR indisponível'" />`;
-
-        // Link público
-        document.getElementById('dpp-link-wrap').innerHTML =
-          `Ver passaporte: <a href="/dpp/${gtin}" target="_blank">/dpp/${gtin}</a>`;
-      } catch(e) {
-        toast('Erro ao publicar DPP: ' + e.message, 'err');
-      }
-      setLoading(btn, false);
+      setLoading(btn, false, 'Registrar');
     },
 
   };
 
-  /* ═══════════════════════════════════════════════════════════════
+  /* ─── helper escape html ─── */
+  function esc(str) {
+    return String(str)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;');
+  }
+
+  /* ═══════════════════════════════════════════════════
      INIT
-  ═══════════════════════════════════════════════════════════════ */
+  ═══════════════════════════════════════════════════ */
 
   document.addEventListener('DOMContentLoaded', () => {
-    App.mostrarTela('list');
     App.carregarLista();
 
-    // Atualiza seção DPP ao mudar status
-    document.getElementById('f-status').addEventListener('change', () => {
-      App.atualizarDPPSection();
+    // Fechar modal com Esc
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') App.fecharModalNovaPeca();
     });
   });
   </script>
-
 </body>
 </html>
