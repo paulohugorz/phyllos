@@ -43,9 +43,20 @@ def _migrate(conn):
 
     # peca_materiais — criada inteiramente via create_all (tabela nova)
 
-    # ISCM — dados primários de sustentabilidade
+    # fornecedores — colunas adicionadas após criação inicial
+    add_if_missing("fornecedores", "conformidade_social", "VARCHAR DEFAULT 'nao_verificado'")
+    add_if_missing("fornecedores", "site",                "VARCHAR")
+    add_if_missing("fornecedores", "email_contato",       "VARCHAR")
+    add_if_missing("fornecedores", "telefone",            "VARCHAR")
+    add_if_missing("fornecedores", "observacoes",         "TEXT")
+
+    # produtos_fornecedor — colunas extras e ISCM
     add_if_missing("produtos_fornecedor", "consumo_agua_litros_kg", "FLOAT")
-    add_if_missing("fornecedores",        "conformidade_social",    "VARCHAR DEFAULT 'nao_verificado'")
+    add_if_missing("produtos_fornecedor", "risco",                  "TEXT")
+    add_if_missing("produtos_fornecedor", "uso_recomendado",        "TEXT")
+    add_if_missing("produtos_fornecedor", "disponivel",             "VARCHAR DEFAULT 'a_validar'")
+    add_if_missing("produtos_fornecedor", "fonte",                  "VARCHAR DEFAULT 'manual'")
+    add_if_missing("produtos_fornecedor", "observacoes",            "TEXT")
 
     # peca_materiais — quantidade e peso para ponderação mássica no ISCM
     add_if_missing("peca_materiais", "quantidade_m", "FLOAT")

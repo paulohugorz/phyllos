@@ -65,6 +65,8 @@ def criar_peca(data: PecaCreate, db: Session = Depends(get_db)):
     if db.query(Peca).filter(Peca.codigo == data.codigo).first():
         raise HTTPException(status_code=400, detail="Código já existe")
     peca = Peca(**data.model_dump())
+    if not peca.dpp_uuid:
+        peca.dpp_uuid = str(uuid.uuid4())
     db.add(peca)
     db.commit()
     db.refresh(peca)
@@ -475,17 +477,54 @@ def obter_qr_dpp(gtin: str, db: Session = Depends(get_db)):
     try:
         import qrcode
     except ImportError:
-        raise HTTPException(status_code=501, detail="qrcode não instalado. Execute: pip install qrcode[pil]")
+        raise HTTPException(status_code=501, detail="qrcode não instalado")
     peca = db.query(Peca).filter(Peca.gtin == gtin).first()
     if not peca or peca.dpp_status != "publicado":
         raise HTTPException(status_code=404, detail="DPP não encontrado ou não publicado")
-    # GS1 Digital Link URI format
-    url = f"https://phyllos-production.up.railway.app/dpp/{gtin}"
+    url = f"https://phyllos-production.up.railway.app/p/{peca.dpp_uuid}"
     img = qrcode.make(url)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     buf.seek(0)
     return StreamingResponse(buf, media_type="image/png")
+
+
+def _gerar_qr_base64(url: str) -> str:
+    """Gera QR code como PNG base64 inline."""
+    try:
+        import qrcode
+        import base64
+        img = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_M,
+            box_size=6,
+            border=2,
+        )
+        img.add_data(url)
+        img.make(fit=True)
+        pil = img.make_image(fill_color="black", back_color="white")
+        buf = io.BytesIO()
+        pil.save(buf, format="PNG")
+        return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode()
+    except ImportError:
+        return ""
+
+
+@router.get("/pecas/{codigo}/qr", tags=["DPP"])
+def qr_peca(codigo: str, db: Session = Depends(get_db)):
+    """QR code PNG para qualquer peça com dpp_uuid, independente de estar publicada."""
+    peca = db.query(Peca).filter(Peca.codigo == codigo).first()
+    if not peca:
+        raise HTTPException(status_code=404, detail="Peça não encontrada")
+    if not peca.dpp_uuid:
+        raise HTTPException(status_code=400, detail="Peça sem UUID — recrie a peça para gerar o QR")
+    url = f"https://phyllos-production.up.railway.app/p/{peca.dpp_uuid}"
+    b64 = _gerar_qr_base64(url)
+    if not b64:
+        raise HTTPException(status_code=501, detail="qrcode não instalado")
+    import base64
+    png = base64.b64decode(b64.split(",")[1])
+    return StreamingResponse(io.BytesIO(png), media_type="image/png")
 
 
 # ---------- ISCM — Índice de Sustentabilidade da Cadeia de Moda ----------

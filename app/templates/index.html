@@ -32,33 +32,88 @@
       min-height: 100vh;
     }
 
-    /* ── Header ── */
-    header {
-      border-bottom: 1px solid var(--border);
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    /* ── Navbar de etapas ── */
+    .atelier-nav {
       position: sticky;
       top: 0;
-      background: var(--cream);
-      z-index: 100;
-    }
-    .header-left { display: flex; align-items: baseline; gap: 10px; }
-    .logo {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 18px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-    .logo-sub {
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
+      z-index: 200;
+      background: var(--obsidian);
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid #2a2a26;
     }
 
-    /* ── Breadcrumb de tela ── */
+    .nav-brand {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 18px;
+      border-right: 1px solid #2a2a26;
+      white-space: nowrap;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 15px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #f0ede8;
+    }
+    .nav-logo-sep { color: #3a3a36; font-size: 14px; }
+    .nav-logo-sub {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    .nav-stages {
+      display: flex;
+      align-items: stretch;
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex: 1;
+    }
+    .nav-stages::-webkit-scrollbar { display: none; }
+
+    .nav-stage {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 16px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: #555;
+      cursor: pointer;
+      border-right: 1px solid #1e1e1b;
+      white-space: nowrap;
+      transition: color .15s, background .15s;
+      position: relative;
+      user-select: none;
+      min-height: 46px;
+    }
+    .nav-stage:hover { color: #ccc; background: rgba(255,255,255,.04); }
+    .nav-stage.active {
+      color: #f0ede8;
+      background: rgba(255,255,255,.06);
+    }
+    .nav-stage.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+    }
+    .nav-stage-num {
+      font-size: 9px;
+      opacity: .4;
+      font-variant-numeric: tabular-nums;
+    }
+    .nav-stage.locked { cursor: default; }
+    .nav-stage.locked:hover { color: #555; background: none; }
+
+    /* ── Breadcrumb de tela (mantido para compat.) ── */
     .screen-nav {
       font-size: 11px;
       letter-spacing: 0.08em;
@@ -68,6 +123,75 @@
       gap: 6px;
     }
     .screen-nav span.active { color: var(--obsidian); font-weight: 400; }
+
+    /* ── Placeholder de tela em construção ── */
+    .placeholder-wrap {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .placeholder-icon { font-size: 48px; margin-bottom: 20px; opacity: .5; }
+    .placeholder-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+    .placeholder-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Painel de sustentabilidade ── */
+    .painel-wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 60px; }
+    .painel-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .painel-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 32px; }
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+    }
+    .stat-card-val { font-size: 28px; font-weight: 600; letter-spacing: -.02em; color: var(--obsidian); }
+    .stat-card-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    .painel-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .painel-table th { text-align: left; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 8px 12px; border-bottom: 1px solid var(--border-md); font-weight: 400; }
+    .painel-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .painel-table tr:hover td { background: rgba(184,154,106,.04); }
+    .painel-table a { color: var(--gold); text-decoration: none; font-size: 11px; }
+    .painel-table a:hover { text-decoration: underline; }
+    .badge-status { font-size: 10px; padding: 2px 8px; border-radius: 20px; letter-spacing: .05em; }
+    .badge-publicado { background: rgba(74,124,89,.12); color: var(--green); border: 1px solid rgba(74,124,89,.2); }
+    .badge-rascunho  { background: rgba(184,154,106,.12); color: var(--gold); border: 1px solid rgba(184,154,106,.2); }
+
+    /* ── Chips de seleção (Descrever / Ajustes) ── */
+    .desc-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .desc-chip {
+      font-size: 12px;
+      padding: 5px 13px;
+      border: 1px solid var(--border-md);
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--muted);
+      background: #fff;
+      transition: border-color .12s, color .12s, background .12s;
+      user-select: none;
+    }
+    .desc-chip:hover { border-color: var(--gold); color: var(--obsidian); }
+    .desc-chip.sel { border-color: var(--obsidian); background: var(--obsidian); color: var(--cream); }
+
+    /* back-bar título */
+    .back-bar-titulo {
+      font-size: 13px;
+      color: var(--muted);
+      margin-left: 4px;
+    }
 
     /* ── Toast ── */
     #toast {
@@ -581,6 +705,71 @@
       align-items: center;
       gap: 6px;
     }
+
+    /* ── Painel de grupos do catálogo ── */
+    .grupo-toggle {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      user-select: none;
+      transition: color 0.12s;
+    }
+    .grupo-toggle:hover { color: var(--gold); }
+    .grupo-toggle-arrow { transition: transform 0.2s; display: inline-block; }
+    .grupo-toggle.open .grupo-toggle-arrow { transform: rotate(90deg); }
+
+    .grupo-panel {
+      display: none;
+      margin-top: 10px;
+      border: 1px solid var(--border-md);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .grupo-panel.open { display: block; }
+
+    .grupo-pills {
+      display: flex;
+      border-bottom: 1px solid var(--border-md);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .grupo-pills::-webkit-scrollbar { display: none; }
+
+    .grupo-pill {
+      flex: 0 0 auto;
+      padding: 9px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      color: var(--muted);
+      border-right: 1px solid var(--border-md);
+      white-space: nowrap;
+      transition: background 0.12s, color 0.12s;
+    }
+    .grupo-pill:last-child { border-right: none; }
+    .grupo-pill:hover { color: var(--obsidian); background: rgba(0,0,0,0.03); }
+    .grupo-pill.ativo { color: var(--gold); background: rgba(184,154,106,0.07); }
+
+    .grupo-resultados {
+      max-height: 240px;
+      overflow-y: auto;
+    }
+    .grupo-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-lt);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .grupo-item:last-child { border-bottom: none; }
+    .grupo-item:hover { background: rgba(184,154,106,0.06); }
+    .grupo-item-nome { font-size: 13px; font-weight: 500; color: var(--obsidian); }
+    .grupo-item-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .grupo-empty { padding: 14px; font-size: 13px; color: var(--muted); text-align: center; }
     .catalog-importing .spinner { border-top-color: var(--gold); border-color: rgba(184,154,106,0.2); }
 
     /* ── Etapas registradas ── */
@@ -642,6 +831,52 @@
     }
     .btn-ghost:hover { color: var(--obsidian); }
 
+    /* ── Barra DPP / Etiqueta ── */
+    .dpp-bar {
+      margin-top: 28px;
+      padding: 16px;
+      border: 1px solid var(--border-md);
+      border-radius: 4px;
+      background: #fafaf8;
+    }
+    .dpp-bar-label {
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .dpp-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-dpp {
+      font-size: 12px;
+      padding: 9px 14px;
+      background: transparent;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      color: var(--obsidian);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: border-color .14s, background .14s;
+    }
+    .btn-dpp:hover { border-color: var(--obsidian); background: rgba(0,0,0,.03); }
+    .dpp-qr-preview {
+      margin-top: 12px;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .dpp-qr-preview.visible { display: flex; }
+    .dpp-qr-preview img { width: 96px; height: 96px; border: 1px solid var(--border-lt); border-radius: 4px; }
+    .dpp-qr-url { font-size: 10px; color: var(--muted); word-break: break-all; max-width: 260px; }
+
     /* Spinner inline */
     .spinner {
       display: inline-block;
@@ -688,20 +923,46 @@
 </head>
 <body>
 
-  <header>
-    <div class="header-left">
-      <span class="logo">PHYLLOS</span>
-      <span class="logo-sub">Ateliê</span>
+  <nav class="atelier-nav" id="atelier-nav">
+    <div class="nav-brand">
+      <span class="nav-logo">Phyllos</span>
+      <span class="nav-logo-sep">·</span>
+      <span class="nav-logo-sub">Ateliê</span>
     </div>
-    <div id="header-nav" class="screen-nav"></div>
-  </header>
+    <div class="nav-stages" id="nav-stages">
+      <div class="nav-stage active" id="ns-descrever" onclick="App.irParaDescrever()">
+        <span class="nav-stage-num">01</span> Descrever
+      </div>
+      <div class="nav-stage locked" id="ns-selecionar" onclick="App.irParaBusca()">
+        <span class="nav-stage-num">02</span> Selecionar
+      </div>
+      <div class="nav-stage locked" id="ns-ajustes" onclick="App.irParaAjustes()">
+        <span class="nav-stage-num">03</span> Ajustes
+      </div>
+      <div class="nav-stage locked" id="ns-tecnico" onclick="App.irParaTecnico()">
+        <span class="nav-stage-num">04</span> Técnico
+      </div>
+      <div class="nav-stage locked" id="ns-ficha" onclick="App.irParaMaterial()">
+        <span class="nav-stage-num">05</span> Ficha & Material
+      </div>
+      <div class="nav-stage locked" id="ns-corte" onclick="App.irParaEtapas()">
+        <span class="nav-stage-num">06</span> Plano de Corte
+      </div>
+      <div class="nav-stage locked" id="ns-validar" onclick="App.irParaValidar()">
+        <span class="nav-stage-num">07</span> Validar
+      </div>
+      <div class="nav-stage" id="ns-painel" onclick="App.irParaPainel()">
+        <span class="nav-stage-num">08</span> Painel
+      </div>
+    </div>
+  </nav>
 
   <div id="toast"></div>
 
   <!-- ══════════════════════════════════════════════════════
        TELA 1 — BUSCA / LISTA
   ══════════════════════════════════════════════════════ -->
-  <div id="screen-busca" class="screen active">
+  <div id="screen-busca" class="screen">
     <div class="list-wrap">
       <div class="list-heading">Qual peça você está trabalhando?</div>
       <div class="list-sub">Selecione uma peça existente ou crie uma nova.</div>
@@ -764,6 +1025,22 @@
           <span class="spinner"></span> Vinculando material…
         </div>
         <div id="materiais-vinculados" class="materiais-vinculados"></div>
+
+        <!-- Explorar por grupo -->
+        <span class="grupo-toggle" id="grupo-toggle" onclick="App.toggleGrupoPanel()">
+          <span class="grupo-toggle-arrow">›</span> Explorar por grupo
+        </span>
+        <div class="grupo-panel" id="grupo-panel">
+          <div class="grupo-pills" id="grupo-pills">
+            <div class="grupo-pill" data-grupo="fibra"          onclick="App.selecionarGrupo('fibra')">🌱 Fibra / Pluma</div>
+            <div class="grupo-pill" data-grupo="fios"           onclick="App.selecionarGrupo('fios')">🧵 Fios</div>
+            <div class="grupo-pill" data-grupo="tecidos"        onclick="App.selecionarGrupo('tecidos')">🪡 Tecidos / Malhas</div>
+            <div class="grupo-pill" data-grupo="beneficiamento" onclick="App.selecionarGrupo('beneficiamento')">✂️ Beneficiamento</div>
+          </div>
+          <div class="grupo-resultados" id="grupo-resultados">
+            <div class="grupo-empty">Selecione um grupo acima</div>
+          </div>
+        </div>
       </div>
 
       <hr class="section-sep" />
@@ -904,6 +1181,230 @@
         <button class="btn btn-primary" id="btn-registrar-etapa" onclick="App.registrarEtapa()">Registrar</button>
         <button class="btn btn-ghost" onclick="App.irParaMaterial()">← Voltar para o material</button>
       </div>
+
+      <!-- Barra DPP & Etiqueta -->
+      <div class="dpp-bar" id="dpp-bar">
+        <div class="dpp-bar-label">Passaporte & Etiqueta</div>
+        <div class="dpp-actions">
+          <button class="btn-dpp" onclick="App.abrirPassaporte()">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 8h6M5 5.5h6M5 10.5h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Ver passaporte
+          </button>
+          <button class="btn-dpp" onclick="App.toggleQrPreview()">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="5" height="5" rx=".8" stroke="currentColor" stroke-width="1.3"/><rect x="9.5" y="1.5" width="5" height="5" rx=".8" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="9.5" width="5" height="5" rx=".8" stroke="currentColor" stroke-width="1.3"/><rect x="10" y="10" width="3" height="3" rx=".4" fill="currentColor"/><path d="M10 13.5h3M13 10v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            QR code
+          </button>
+          <button class="btn-dpp" onclick="App.imprimirEtiqueta()">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="3" y="1.5" width="10" height="7" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M3 8.5H1.5A.5.5 0 0 0 1 9v4.5A.5.5 0 0 0 1.5 14h13a.5.5 0 0 0 .5-.5V9a.5.5 0 0 0-.5-.5H13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><rect x="4.5" y="10" width="7" height="4.5" rx=".6" stroke="currentColor" stroke-width="1.2"/><circle cx="12.5" cy="10.5" r=".6" fill="currentColor"/></svg>
+            Imprimir etiqueta
+          </button>
+        </div>
+        <div class="dpp-qr-preview" id="dpp-qr-preview">
+          <img id="dpp-qr-img" src="" alt="QR code" />
+          <span class="dpp-qr-url" id="dpp-qr-url"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA 0 — DESCREVER
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-descrever" class="screen active">
+    <div class="list-wrap">
+      <div class="list-heading">O que você quer criar?</div>
+      <div class="list-sub">Descreva a peça antes de escolher ou criar. Isso alimenta a ficha técnica.</div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Descrição livre</label>
+        <textarea id="desc-texto" rows="4"
+          placeholder="ex: Camiseta feminina ampla, manga raglan, caimento fluido, para treino e rua. Tecido respirável, preferencialmente orgânico."
+          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Tipo de peça</label>
+        <div class="desc-chips" id="desc-tipo-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Camiseta</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Calça</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Shorts</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Vestido</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Jaqueta</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Top</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Macacão</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Legging</span>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Silhueta</label>
+        <div class="desc-chips" id="desc-silhueta-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Ampla</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Justa</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Cropped</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Oversized</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Midi</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Maxi</span>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Preferência de fibra</label>
+        <div class="desc-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Algodão orgânico</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Linho</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Malha</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Tecido plano</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Misto</span>
+        </div>
+      </div>
+
+      <div class="screen-footer" style="margin-top:24px">
+        <button class="btn btn-primary" onclick="App.irParaBusca()">Selecionar ou criar peça →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — AJUSTES
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-ajustes" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaBusca()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Selecionar
+        </button>
+        <span id="ajustes-titulo" class="back-bar-titulo"></span>
+      </div>
+
+      <div class="field" style="margin-bottom:20px">
+        <label>Observações e ajustes da peça</label>
+        <textarea id="ajustes-notas" rows="5"
+          placeholder="ex: Aumentar 2cm na lateral. Reduzir largura do ombro. Cliente prefere abertura lateral no lugar de zíper."
+          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
+      </div>
+
+      <div class="field" style="margin-bottom:20px">
+        <label>Graduação / Tamanhos</label>
+        <div class="desc-chips" id="ajustes-tam-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">PP</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">P</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">M</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">G</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">GG</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">XGG</span>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:20px">
+        <label>Prioridade</label>
+        <div class="desc-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Urgente</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Normal</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Aguardando insumo</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Em revisão</span>
+        </div>
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn btn-primary" onclick="App.salvarAjustes()">Salvar ajustes</button>
+        <button class="btn btn-outline" onclick="App.irParaTecnico()">Próximo: desenho técnico →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — DESENHO TÉCNICO
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-tecnico" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaAjustes()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Ajustes
+        </button>
+        <span id="tecnico-titulo" class="back-bar-titulo"></span>
+      </div>
+
+      <div class="placeholder-wrap" style="padding-top:40px;text-align:left;max-width:100%">
+        <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:400;margin-bottom:6px">Desenho Técnico</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:28px">Anexe o esboço ou o arquivo de modelagem da peça.</div>
+
+        <div id="tecnico-upload-area"
+          style="border:2px dashed var(--border-md);border-radius:6px;padding:40px;text-align:center;cursor:pointer;transition:border-color .15s;background:#fff"
+          onclick="document.getElementById('tecnico-file-input').click()"
+          ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
+          ondragleave="this.style.borderColor=''"
+          ondrop="App.handleTecnicoDrop(event)">
+          <div style="font-size:32px;margin-bottom:12px;opacity:.4">📐</div>
+          <div style="font-size:14px;color:var(--muted)">Arraste uma imagem ou clique para selecionar</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px">PNG, JPG, SVG ou PDF · máx. 10 MB</div>
+        </div>
+        <input type="file" id="tecnico-file-input" accept="image/*,.pdf,.svg" style="display:none" onchange="App.handleTecnicoFile(this)" />
+
+        <div id="tecnico-preview" style="margin-top:16px;display:none">
+          <img id="tecnico-img" style="max-width:100%;border:1px solid var(--border);border-radius:4px" />
+          <div style="margin-top:8px;display:flex;gap:8px">
+            <button class="btn btn-ghost" onclick="App.limparTecnico()">Remover</button>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;padding:14px;background:#f5f2eb;border-radius:4px;font-size:12px;color:var(--muted);line-height:1.6">
+          <strong style="color:var(--obsidian)">Em breve:</strong> integração com Valentina Project para modelagem paramétrica e exportação de moldes em DXF.
+        </div>
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn btn-primary" onclick="App.irParaMaterial()">Próximo: ficha & material →</button>
+        <button class="btn btn-ghost" onclick="App.irParaAjustes()">← Voltar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — VALIDAR
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-validar" class="screen">
+    <div class="list-wrap">
+      <div class="list-heading">Validar peças</div>
+      <div class="list-sub">Revise as peças prontas e aprove para publicar o passaporte digital.</div>
+
+      <div id="validar-list" class="pecas-list">
+        <div class="empty-msg">Carregando…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — PAINEL DE SUSTENTABILIDADE
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-painel" class="screen">
+    <div class="painel-wrap">
+      <div class="painel-heading">Painel de Sustentabilidade</div>
+      <div class="painel-sub">Registro virtual de indicadores de todas as peças criadas no ateliê.</div>
+
+      <div class="stat-grid" id="painel-stats">
+        <div class="stat-card"><div class="stat-card-val" id="stat-total">—</div><div class="stat-card-label">Peças no ateliê</div></div>
+        <div class="stat-card"><div class="stat-card-val" id="stat-publicadas">—</div><div class="stat-card-label">Com passaporte ativo</div></div>
+        <div class="stat-card"><div class="stat-card-val" id="stat-fornecedores">—</div><div class="stat-card-label">Fornecedores vinculados</div></div>
+        <div class="stat-card"><div class="stat-card-val" id="stat-nota-media">—</div><div class="stat-card-label">Nota média de confiança</div></div>
+      </div>
+
+      <table class="painel-table" id="painel-table">
+        <thead>
+          <tr>
+            <th>Peça</th>
+            <th>Status</th>
+            <th>Material principal</th>
+            <th>Nota</th>
+            <th>Passaporte</th>
+          </tr>
+        </thead>
+        <tbody id="painel-tbody">
+          <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Carregando…</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -1091,10 +1592,31 @@
       ]);
       App.preencherTelaMaterial();
       mostrarTela('screen-material');
+      App.setNavStage('ns-ficha');
+    },
+
+    /* ── Navegação de estágios ── */
+
+    setNavStage(stageId) {
+      document.querySelectorAll('.nav-stage').forEach(el => el.classList.remove('active'));
+      const el = document.getElementById(stageId);
+      if (el) el.classList.add('active');
+      // Desbloqueia etapas 03-07 quando há peça selecionada
+      const temPeca = !!State.pecaAtual;
+      ['ns-ajustes','ns-tecnico','ns-ficha','ns-corte','ns-validar'].forEach(id => {
+        const s = document.getElementById(id);
+        if (s) s.classList.toggle('locked', !temPeca);
+      });
+    },
+
+    irParaDescrever() {
+      mostrarTela('screen-descrever');
+      App.setNavStage('ns-descrever');
     },
 
     irParaBusca() {
       mostrarTela('screen-busca');
+      App.setNavStage('ns-selecionar');
       App.carregarLista();
     },
 
@@ -1133,6 +1655,7 @@
         App.fecharModalNovaPeca();
         App.preencherTelaMaterial(true);
         mostrarTela('screen-material');
+        App.setNavStage('ns-ficha');
         toast('Peça criada!');
       } catch (e) {
         toast('Erro ao criar peça: ' + e.message, 'err');
@@ -1262,6 +1785,53 @@
       if (res) res.classList.add('hidden');
     },
 
+    /* ─── Painel de grupos ─── */
+
+    toggleGrupoPanel() {
+      const toggle = document.getElementById('grupo-toggle');
+      const panel  = document.getElementById('grupo-panel');
+      const isOpen = panel.classList.contains('open');
+      toggle.classList.toggle('open', !isOpen);
+      panel.classList.toggle('open', !isOpen);
+    },
+
+    _grupoAtivo: null,
+
+    async selecionarGrupo(grupo) {
+      // pill ativo
+      document.querySelectorAll('.grupo-pill').forEach(p => p.classList.toggle('ativo', p.dataset.grupo === grupo));
+      App._grupoAtivo = grupo;
+
+      const res = document.getElementById('grupo-resultados');
+      res.innerHTML = '<div class="grupo-empty"><span class="spinner spinner-dark"></span></div>';
+
+      try {
+        const items = await api('GET', `/fornecedores/materias-primas?grupo=${grupo}&nota_min=1`);
+        if (!items.length) {
+          res.innerHTML = '<div class="grupo-empty">Nenhum material encontrado neste grupo.</div>';
+          return;
+        }
+        res.innerHTML = items.map(p => {
+          const dots = Array.from({length: 5}, (_, i) =>
+            `<span class="catalog-nota-dot${i < (p.nota_confianca || 0) ? ' ativo' : ''}"></span>`
+          ).join('');
+          const meta = [p.composicao, p.gramatura_gm2 ? p.gramatura_gm2 + ' g/m²' : null]
+            .filter(Boolean).join(' · ');
+          return `
+            <div class="grupo-item" onclick="App._selecionarMaterial(${p.id}, event)">
+              <div class="grupo-item-nome">${p.nome}</div>
+              <div class="grupo-item-meta">
+                <span class="catalog-nota">${dots}</span>
+                ${p.fornecedor_nome} · ${p.fornecedor_cidade || ''}
+                ${meta ? ' · ' + meta : ''}
+              </div>
+            </div>`;
+        }).join('');
+      } catch (e) {
+        res.innerHTML = '<div class="grupo-empty">Erro ao carregar grupo.</div>';
+      }
+    },
+
     /* ─── TELA 2 — MATERIAL ─── */
 
     preencherTelaMaterial(nova = false) {
@@ -1285,9 +1855,188 @@
       }
     },
 
+    irParaAjustes() {
+      if (!State.pecaAtual) { App.irParaBusca(); return; }
+      const p = State.pecaAtual;
+      document.getElementById('ajustes-titulo').textContent = p.nome || p.codigo;
+      mostrarTela('screen-ajustes');
+      App.setNavStage('ns-ajustes');
+    },
+
+    salvarAjustes() {
+      toast('Ajustes registrados.');
+      setTimeout(() => App.irParaTecnico(), 600);
+    },
+
+    irParaTecnico() {
+      if (!State.pecaAtual) { App.irParaBusca(); return; }
+      const p = State.pecaAtual;
+      document.getElementById('tecnico-titulo').textContent = p.nome || p.codigo;
+      mostrarTela('screen-tecnico');
+      App.setNavStage('ns-tecnico');
+    },
+
+    handleTecnicoFile(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.getElementById('tecnico-img');
+        const preview = document.getElementById('tecnico-preview');
+        if (file.type.startsWith('image/')) {
+          img.src = e.target.result;
+          img.style.display = 'block';
+        } else {
+          img.style.display = 'none';
+        }
+        preview.style.display = 'block';
+        document.getElementById('tecnico-upload-area').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    },
+
+    handleTecnicoDrop(e) {
+      e.preventDefault();
+      e.currentTarget.style.borderColor = '';
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      const input = document.getElementById('tecnico-file-input');
+      input.files = dt.files;
+      App.handleTecnicoFile(input);
+    },
+
+    limparTecnico() {
+      document.getElementById('tecnico-img').src = '';
+      document.getElementById('tecnico-preview').style.display = 'none';
+      document.getElementById('tecnico-upload-area').style.display = 'block';
+      document.getElementById('tecnico-file-input').value = '';
+    },
+
+    toggleDescChip(el) {
+      el.classList.toggle('sel');
+    },
+
+    irParaValidar() {
+      if (!State.pecaAtual && !confirm('Ver validação de todas as peças?')) return;
+      mostrarTela('screen-validar');
+      App.setNavStage('ns-validar');
+      App.carregarValidar();
+    },
+
+    async carregarValidar() {
+      const list = document.getElementById('validar-list');
+      list.innerHTML = '<div class="empty-msg">Carregando…</div>';
+      try {
+        const pecas = await api('GET', '/pecas');
+        if (!pecas.length) { list.innerHTML = '<div class="empty-msg">Nenhuma peça no ateliê ainda.</div>'; return; }
+        list.innerHTML = pecas.map(p => {
+          const status = p.dpp_status || 'rascunho';
+          const badge = status === 'publicado'
+            ? '<span class="badge-status badge-publicado">Passaporte ativo</span>'
+            : '<span class="badge-status badge-rascunho">Rascunho</span>';
+          const passBtn = p.dpp_uuid
+            ? `<a href="/p/${p.dpp_uuid}" target="_blank" style="font-size:11px;color:var(--gold);text-decoration:none">Ver →</a>`
+            : '<span style="font-size:11px;color:var(--muted)">—</span>';
+          const pubBtn = status !== 'publicado' && p.dpp_uuid
+            ? `<button onclick="App._publicarDPP('${p.codigo}', this)" style="font-size:11px;padding:4px 10px;border:1px solid var(--border-md);border-radius:3px;cursor:pointer;background:#fff;margin-left:8px">Publicar DPP</button>`
+            : '';
+          return `<div class="peca-item" style="flex-direction:column;align-items:flex-start;gap:8px">
+            <div style="display:flex;align-items:center;gap:10px;width:100%">
+              <div class="peca-item-main">
+                <div class="peca-item-nome">${p.nome}</div>
+                <div class="peca-item-cod">${p.codigo}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
+                ${badge}${pubBtn}
+                ${passBtn}
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+      } catch(e) {
+        list.innerHTML = '<div class="empty-msg">Erro ao carregar peças.</div>';
+      }
+    },
+
+    async _publicarDPP(codigo, btn) {
+      btn.disabled = true; btn.textContent = '…';
+      try {
+        await api('POST', `/pecas/${codigo}/dpp/publicar`);
+        toast('Passaporte publicado.');
+        App.carregarValidar();
+      } catch(e) {
+        toast('Para publicar: peça precisa de GTIN e composição de fibras preenchidos.', 'err');
+        btn.disabled = false; btn.textContent = 'Publicar DPP';
+      }
+    },
+
+    irParaPainel() {
+      mostrarTela('screen-painel');
+      App.setNavStage('ns-painel');
+      App.carregarPainel();
+    },
+
+    async carregarPainel() {
+      try {
+        const [pecas, fornecedores] = await Promise.all([
+          api('GET', '/pecas'),
+          api('GET', '/fornecedores'),
+        ]);
+
+        const publicadas = pecas.filter(p => p.dpp_status === 'publicado').length;
+        document.getElementById('stat-total').textContent = pecas.length;
+        document.getElementById('stat-publicadas').textContent = publicadas;
+        document.getElementById('stat-fornecedores').textContent = fornecedores.length;
+
+        const notas = fornecedores.map(f => f.nota_confianca).filter(Boolean);
+        const media = notas.length ? (notas.reduce((a,b) => a+b,0) / notas.length).toFixed(1) : '—';
+        document.getElementById('stat-nota-media').textContent = media;
+
+        const tbody = document.getElementById('painel-tbody');
+        if (!pecas.length) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Nenhuma peça ainda.</td></tr>';
+          return;
+        }
+
+        const rows = await Promise.all(pecas.map(async p => {
+          let mat = '—', nota = '—';
+          try {
+            const mats = await api('GET', `/pecas/${p.codigo}/materiais`);
+            if (mats.length) {
+              const principal = mats.find(m => m.funcao === 'principal') || mats[0];
+              mat = principal.produto?.nome || '—';
+              nota = principal.produto?.fornecedor_nota || '—';
+            }
+          } catch(_) {}
+          const status = p.dpp_status || 'rascunho';
+          const badge = status === 'publicado'
+            ? '<span class="badge-status badge-publicado">Ativo</span>'
+            : '<span class="badge-status badge-rascunho">Rascunho</span>';
+          const passLink = p.dpp_uuid
+            ? `<a href="/p/${p.dpp_uuid}" target="_blank">Ver passaporte</a>`
+            : '—';
+          return `<tr>
+            <td><strong style="font-weight:500">${p.nome}</strong><br><span style="font-size:11px;color:var(--muted)">${p.codigo}</span></td>
+            <td>${badge}</td>
+            <td style="font-size:12px">${mat}</td>
+            <td style="font-size:13px">${nota}</td>
+            <td>${passLink}</td>
+          </tr>`;
+        }));
+        tbody.innerHTML = rows.join('');
+      } catch(e) {
+        document.getElementById('painel-tbody').innerHTML =
+          '<tr><td colspan="5" style="text-align:center;color:var(--muted)">Erro ao carregar dados.</td></tr>';
+      }
+    },
+
     irParaMaterial() {
+      if (!State.pecaAtual) { App.irParaBusca(); return; }
       App.preencherTelaMaterial();
       mostrarTela('screen-material');
+      App.setNavStage('ns-ficha');
     },
 
     async carregarFicha(pecaId) {
@@ -1480,6 +2229,7 @@
       if (!State.pecaAtual) { toast('Selecione uma peça primeiro.', 'err'); return; }
       App.preencherTelaEtapas();
       mostrarTela('screen-etapas');
+      App.setNavStage('ns-corte');
     },
 
     preencherTelaEtapas() {
@@ -1540,6 +2290,39 @@
       setLoading(btn, false, 'Registrar');
     },
 
+    /* ─── DPP & Etiqueta ─── */
+
+    abrirPassaporte() {
+      const p = State.pecaAtual;
+      if (!p?.dpp_uuid) { toast('Peça sem UUID — salve a peça primeiro.', 'err'); return; }
+      window.open(`/p/${p.dpp_uuid}`, '_blank');
+    },
+
+    _qrVisible: false,
+
+    async toggleQrPreview() {
+      const p = State.pecaAtual;
+      if (!p) return;
+      const wrap = document.getElementById('dpp-qr-preview');
+      if (App._qrVisible) {
+        wrap.classList.remove('visible');
+        App._qrVisible = false;
+        return;
+      }
+      const img = document.getElementById('dpp-qr-img');
+      const urlEl = document.getElementById('dpp-qr-url');
+      img.src = `/pecas/${p.codigo}/qr?t=${Date.now()}`;
+      urlEl.textContent = `phyllos.com.br/p/${p.dpp_uuid || '…'}`;
+      wrap.classList.add('visible');
+      App._qrVisible = true;
+    },
+
+    imprimirEtiqueta() {
+      const p = State.pecaAtual;
+      if (!p) return;
+      window.open(`/pecas/${p.codigo}/etiqueta`, '_blank');
+    },
+
   };
 
   /* ─── helper escape html ─── */
@@ -1556,6 +2339,9 @@
   ═══════════════════════════════════════════════════ */
 
   document.addEventListener('DOMContentLoaded', () => {
+    // Inicia na tela Descrever e configura nav
+    App.setNavStage('ns-descrever');
+    // Carrega lista em background para quando o usuário navegar
     App.carregarLista();
 
     document.addEventListener('keydown', e => {
@@ -1565,7 +2351,6 @@
       }
     });
 
-    // Fecha dropdown do catálogo ao clicar fora
     document.addEventListener('click', e => {
       const wrap = document.getElementById('catalog-search')?.closest('.catalog-wrap');
       if (wrap && !wrap.contains(e.target)) App._fecharCatalog();
