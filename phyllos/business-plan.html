@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYLLOS Create — Business Plan Vivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&amp;family=Jost:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="business-plan-page">
+
+<div class="cursor" id="cursor"></div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-phi">Φ</span>
+    <div class="nav-rule"></div>
+    <span class="nav-wordmark">Phyllos</span>
+    <span class="nav-sub">create</span>
+  </a>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links">
+    <li><a href="colecoes.html">Coleções</a></li>
+    <li><a href="essencial.html">Essencial</a></li>
+    <li><a href="business-plan.html">Plano</a></li>
+    <li><a href="fashion-os.html">Fashion OS</a></li>
+    <li><a href="materiais.html">Materiais</a></li>
+    <li><a href="manifesto.html">Manifesto</a></li>
+  </ul>
+  <div class="nav-actions nav-status">
+    <span>Business plan vivo</span>
+  </div>
+</nav>
+
+<section class="bp-hero" id="topo">
+  <div class="bp-hero-image bp-pattern-hero" role="img" aria-label="Mesa de desenvolvimento com medidas, tecido e desenho técnico"></div>
+  <div class="bp-hero-content">
+    <div class="hero-season">PHYLLOS Create · Parametric Pattern Engine</div>
+    <h1 class="hero-title">
+      Da medida<br>
+      ao <em>molde cortável</em>.<br>
+      Sem CAD.
+    </h1>
+    <p class="hero-body">
+      A nova tese de negócio da PHYLLOS concentra o MVP em um motor paramétrico de moldes: parâmetros estruturados, regras de modelagem, SVG, PDF A4 e validação física antes de prometer uma plataforma ampla.
+    </p>
+    <div class="hero-actions">
+      <a href="#financeiro" class="btn-primary">Ver métricas</a>
+      <a href="#execucao" class="btn-text">Ver plano de execução</a>
+    </div>
+  </div>
+</section>
+
+<div class="bp-subnav" aria-label="Navegação do business plan">
+  <a href="#tese">Tese</a>
+  <a href="#dor">Dor</a>
+  <a href="#mercado">Mercado</a>
+  <a href="#produto">Produto</a>
+  <a href="#financeiro">Financeiro</a>
+  <a href="#gtm">Go-to-market</a>
+  <a href="#riscos">Riscos</a>
+  <a href="#execucao">Execução</a>
+</div>
+
+<section class="bp-sequence" id="tese">
+  <div class="section-label">Tese vigente</div>
+  <h2 class="section-title">O valor da PHYLLOS migra de coleção para <em>engine</em></h2>
+  <div class="bp-hypothesis-band">
+    <p><strong>Premissa central:</strong> modelagem é um gargalo técnico caro, lento e pouco acessível para criadores independentes. A PHYLLOS Create vira uma empresa de software aplicada à moda quando codifica regras de modelagem em um motor que gera moldes reais.</p>
+    <span>Plano vivo · métricas hipotéticas · validação obrigatória</span>
+  </div>
+  <div class="bp-flow">
+    <a href="#produto"><span>1</span><strong>Playbook</strong><small>Regras de modelagem, folgas, tecidos, compatibilidades e critérios de prova.</small></a>
+    <a href="#produto"><span>2</span><strong>Engine</strong><small>Cálculo geométrico, dependências, validadores, SVG, PDF A4 e testes.</small></a>
+    <a href="#produto"><span>3</span><strong>Library</strong><small>Bases, componentes, metadados, versionamento e matriz de compatibilidade.</small></a>
+    <a href="#gtm"><span>4</span><strong>SaaS</strong><small>Interface simples para escolher base, preencher parâmetros e baixar saídas.</small></a>
+    <a href="#financeiro"><span>5</span><strong>API</strong><small>Licenciamento B2B e marketplace quando houver precisão técnica e usuários.</small></a>
+  </div>
+</section>
+
+<section class="bp-framework" id="dor">
+  <div class="bp-framework-copy">
+    <div class="section-label">D — Dor</div>
+    <h2 class="section-title">Modelagem é onde a ideia <em>encontra o caixa</em></h2>
+    <p>O ICP não precisa de mais uma tela bonita para desenhar roupa. Precisa reduzir dependência técnica, custo de iteração e tempo entre uma ideia e um molde que possa ser impresso, cortado e testado.</p>
+  </div>
+  <div class="bp-cards">
+    <article>
+      <span>Quem sofre?</span>
+      <p>Criadores de moda independentes, modelistas freelance, alfaiates, professores de modelagem e fundadores de micro-marcas que operam com 1 a 5 pessoas.</p>
+    </article>
+    <article>
+      <span>Quanto custa?</span>
+      <p>Um molde pode custar R$300 a R$1.200 por peça e tomar de 2 dias a 3 semanas. Cada ajuste vira uma nova decisão de caixa.</p>
+    </article>
+    <article>
+      <span>Como resolvem hoje?</span>
+      <p>Papel, CAD técnico, Valentina, modelista terceirizado ou tentativa manual. O desenho existe, mas o conhecimento geométrico continua preso em poucos especialistas.</p>
+    </article>
+  </div>
+</section>
+
+<section class="bp-deep-dive" id="jtbd">
+  <div class="bp-panel">
+    <span class="bp-kicker">Jobs To Be Done</span>
+    <h2>Quando eu tenho uma ideia de peça, quero transformar medidas e tecido em um molde confiável para testar sem virar operadora de CAD.</h2>
+    <div class="bp-job-grid">
+      <div><strong>Funcional</strong><p>Gerar base, coordenadas, curvas, margens, piques, linha de fio, sequência operacional, SVG e PDF A4 a partir de parâmetros estruturados.</p></div>
+      <div><strong>Econômico</strong><p>Reduzir o custo e o tempo de cada iteração antes de pagar por ajuste fino, piloto físico ou lote de produção.</p></div>
+      <div><strong>Técnico</strong><p>Separar medida corporal, folga, tecido, elasticidade e medida final do molde para evitar erro bonito, plausível e impossível de costurar.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="bp-canvas" id="mercado">
+  <div class="section-label">Mercado</div>
+  <h2 class="section-title">Um nicho menor, mais técnico e <em>mais defensável</em></h2>
+  <div class="bp-metric-grid">
+    <article class="bp-metric"><span>TAM conservador</span><strong>USD 500M/ano</strong><p>Software especializado em patternmaking e gradação de moldes.</p></article>
+    <article class="bp-metric"><span>TAM expansível</span><strong>USD 1,2B</strong><p>Democratização para professores, estudantes, alfaiates e criadores que hoje não pagam CAD.</p></article>
+    <article class="bp-metric"><span>SAM 3 anos</span><strong>USD 120–180M/ano</strong><p>Criadores independentes e pequenas marcas com disposição para pagar por SaaS acessível.</p></article>
+    <article class="bp-metric"><span>SOM 18 meses</span><strong>USD 240–630K ARR</strong><p>Meta realista de pre-seed: provar pagamento, precisão técnica e custo marginal baixo.</p></article>
+  </div>
+  <div class="bp-table-wrap">
+    <table class="bp-table">
+      <thead>
+        <tr><th>Cenário 18 meses</th><th>Usuários pagantes</th><th>ARPU/mês</th><th>ARR projetado</th><th>Leitura estratégica</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Conservador</td><td>800</td><td>USD 25</td><td>USD 240.000</td><td>Prova mínima de dor e retenção.</td></tr>
+        <tr><td>Base</td><td>1.500</td><td>USD 35</td><td>USD 630.000</td><td>Tese pre-seed forte com caminho para seed.</td></tr>
+        <tr><td>Otimista</td><td>3.000</td><td>USD 45</td><td>USD 1.620.000</td><td>Categoria emergente com efeito comunidade.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="bp-note">A tese não depende de parecer grande no mês 18. Depende de provar que usuários pagam por autonomia técnica, que a engine gera saída confiável e que cada novo molde melhora a biblioteca.</p>
+</section>
+
+<section class="bp-canvas" id="lean">
+  <div class="section-label">Lean Canvas</div>
+  <h2 class="section-title">A oportunidade vira <em>hipótese testável</em></h2>
+  <div class="bp-canvas-grid">
+    <article><span>Problema</span><p>Transformar ideia em molde cortável é caro, lento e dependente de CAD ou modelista especializado.</p></article>
+    <article><span>Clientes</span><p>Criadores independentes, modelistas freelance, alfaiates, professores e micro-marcas de 20 a 500 peças por modelo.</p></article>
+    <article><span>Proposta única</span><p>Da descrição ao molde. Sem software de CAD. Na V1: de parâmetros estruturados ao molde.</p></article>
+    <article><span>Solução</span><p>Motor que transforma medidas, tecido, folgas e base em SVG, PDF A4, coordenadas, margens e sequência operacional.</p></article>
+    <article><span>Canais</span><p>Conteúdo técnico, comunidades de costura, escolas de moda, LinkedIn, YouTube, Instagram, beta fechado e parcerias com modelistas.</p></article>
+    <article><span>Receitas</span><p>Assinatura individual, plano profissional, licença API B2B, marketplace de moldes e serviços técnicos premium em fase posterior.</p></article>
+    <article><span>Custos</span><p>Engenharia geométrica, revisão de modelagem, testes físicos, PDF/DXF, aquisição de beta users, suporte e infraestrutura.</p></article>
+    <article><span>Métricas</span><p>Primeiro molde gerado, exportação PDF, corte/prova física, ajuste v1, conversão paga, retenção, NPS e ARR.</p></article>
+    <article><span>Vantagem injusta</span><p>Playbook proprietário de modelagem + engine + biblioteca modular + comunidade de usuários gerando dados técnicos reais.</p></article>
+  </div>
+</section>
+
+<section class="bp-value" id="produto">
+  <div class="bp-value-left">
+    <div class="section-label">Produto</div>
+    <h2 class="section-title">A V1 não é IA conversacional. É <em>geometria confiável</em></h2>
+    <p class="bp-note">A linguagem natural entra depois. Primeiro, a PHYLLOS precisa provar Playbook, Engine, Library e SaaS simples com entrada estruturada.</p>
+  </div>
+  <div class="bp-value-map">
+    <article>
+      <span>Entrada V1</span>
+      <h3>Formulário estruturado</h3>
+      <p>Base da peça, cintura, quadril, altura do quadril, comprimento, tecido, elasticidade, gramatura, folga e preferências de fit. Primeira base: saia reta.</p>
+    </article>
+    <article>
+      <span>Saída V1</span>
+      <h3>Molde validável</h3>
+      <p>SVG estático, PDF A4 com tesselation, margens, overlap, marcas de montagem, piques, linha de fio, medidas finais e sequência operacional.</p>
+    </article>
+  </div>
+</section>
+
+<section class="bp-framework">
+  <div class="bp-framework-copy">
+    <div class="section-label">Sequência técnica</div>
+    <h2 class="section-title">O produto não é o desenho. É o <em>sistema que gera o desenho</em></h2>
+    <p>O valor defensável está nas regras, dependências, validações e no acúmulo de bases. O SVG é consequência; o ativo é a lógica que permite gerar e corrigir moldes.</p>
+  </div>
+  <div class="bp-cards">
+    <article><span>EPIC 0 · Playbook</span><p>Codificar regras de modelagem, folgas, proporções, tecido, elasticidade, compatibilidade e critérios de prova.</p></article>
+    <article><span>EPIC 1–2 · Engine + Validator</span><p>Calcular molde paramétrico, detectar interseções, limites, comprimentos inconsistentes e componentes impossíveis.</p></article>
+    <article><span>EPIC 3–4 · Library + PDF</span><p>Versionar bases e componentes, gerar SVG/PDF imprimível e preparar DXF quando houver confiabilidade.</p></article>
+  </div>
+</section>
+
+<section class="bp-canvas bp-model" id="financeiro">
+  <div class="section-label">Unit economics</div>
+  <h2 class="section-title">Valor de negócio com <em>SaaS técnico</em>, não só marca física</h2>
+  <div class="bp-metric-grid">
+    <article class="bp-metric"><span>ARPU blended</span><strong>USD 35/mês</strong><p>Mix projetado: 70% individual, 25% profissional, 5% B2B.</p></article>
+    <article class="bp-metric"><span>CAC estimado</span><strong>USD 80–120</strong><p>Conteúdo técnico, comunidade e busca de alta intenção.</p></article>
+    <article class="bp-metric"><span>LTV estimado</span><strong>USD 840</strong><p>24 meses de retenção média × USD 35.</p></article>
+    <article class="bp-metric"><span>LTV/CAC</span><strong>7x–10x</strong><p>Saudável se ativação, retenção e prova técnica forem confirmadas.</p></article>
+  </div>
+  <div class="bp-table-wrap">
+    <table class="bp-table">
+      <thead>
+        <tr><th>Plano</th><th>Preço referência</th><th>Usuário-alvo</th><th>Valor entregue</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Individual</td><td>USD 29/mês</td><td>Freelance, alfaiate, professor</td><td>Motor completo, exportações, histórico e bases essenciais.</td></tr>
+        <tr><td>Profissional</td><td>USD 79/mês</td><td>Marca pequena ou ateliê</td><td>Colaboração, gradação quando validada, múltiplos usuários e biblioteca ampliada.</td></tr>
+        <tr><td>API B2B</td><td>USD 500–2.000/mês</td><td>Marca média, escola, plataforma</td><td>Integração com sistemas próprios, volume e suporte técnico.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="bp-funding-grid">
+    <article><span>Margem bruta esperada</span><strong>80%+</strong><p>Custo marginal é computacional e de suporte, não humano por molde gerado.</p></article>
+    <article><span>Pre-seed alvo</span><strong>USD 300–500K</strong><p>Capital para engine, beta users, testes físicos, IP, jurídico e primeira aquisição paga.</p></article>
+    <article><span>Valuation cap</span><strong>USD 3,5–5M</strong><p>SAFE com diluição alvo de 8% a 12%, dependente de protótipo funcional e prova técnica.</p></article>
+  </div>
+</section>
+
+<section class="bp-framework" id="gtm">
+  <div class="bp-framework-copy">
+    <div class="section-label">Go-to-market</div>
+    <h2 class="section-title">A primeira venda é <em>confiança técnica</em></h2>
+    <p>O produto precisa atravessar um ciclo físico: gerar, imprimir, cortar, costurar ou testar em papel, receber feedback e ajustar. Sem esse ciclo, ARR e valuation continuam narrativa.</p>
+  </div>
+  <div class="bp-cards">
+    <article><span>Beta fechado</span><p>5 a 8 modelistas, professores, alfaiates ou fundadores de micro-marca comprometidos com o ciclo completo.</p></article>
+    <article><span>Critério de saída</span><p>Pelo menos 3 usuários cortaram, costuraram ou validaram fisicamente uma peça gerada pelo motor.</p></article>
+    <article><span>Meta de tração</span><p>100 pagantes ativos até Fase 2; 800 a 1.500 pagantes em 18 meses se a precisão técnica sustentar retenção.</p></article>
+  </div>
+</section>
+
+<section class="bp-canvas" id="riscos">
+  <div class="section-label">Riscos e mitigação</div>
+  <h2 class="section-title">A tese é forte porque o escopo <em>ficou menor</em></h2>
+  <div class="bp-risk-grid">
+    <article><span>Risco técnico</span><h3>Molde plausível, mas incorreto</h3><p>Mitigação: PatternValidator, golden patterns, visual diff, revisão de modelistas e limites explícitos por base.</p></article>
+    <article><span>Risco de escopo</span><h3>Virar um mini CAD</h3><p>Mitigação: Playbook → Engine → Library → SaaS. Interface polida só depois da lógica correta.</p></article>
+    <article><span>Risco comercial</span><h3>ICP não paga</h3><p>Mitigação: medir disposição a pagar com beta users, pré-venda e valor em velocidade de iteração, não só economia.</p></article>
+    <article><span>Risco de input</span><h3>Linguagem natural cedo demais</h3><p>Mitigação: formulário estruturado na V1; linguagem natural apenas como camada sobre parâmetros confiáveis.</p></article>
+    <article><span>Risco operacional</span><h3>PDF A4 desalinhado</h3><p>Mitigação: tratar impressão doméstica como feature própria, com tesselation, overlap, marcas e testes automatizados.</p></article>
+    <article><span>Risco competitivo</span><h3>Incumbent copiar a feature</h3><p>Mitigação: comunidade, biblioteca proprietária, velocidade de adoção e profundidade de regras de modelagem.</p></article>
+  </div>
+</section>
+
+<section class="bp-execution" id="execucao">
+  <div class="section-label">Execução</div>
+  <h2 class="section-title">Próximos gates de <em>produto, caixa e captação</em></h2>
+  <div class="bp-roadmap">
+    <article><span>01</span><h3>API /molde</h3><p>Endpoint FastAPI recebendo JSON estruturado e retornando parâmetros calculados + SVG da saia reta.</p></article>
+    <article><span>02</span><h3>Formulário mínimo</h3><p>Cintura, quadril, altura do quadril, comprimento, tecido, elasticidade, gramatura e folga separados.</p></article>
+    <article><span>03</span><h3>PDF A4</h3><p>Arquivo imprimível com margens, overlap, marcas de montagem e tolerância a impressoras domésticas.</p></article>
+    <article><span>04</span><h3>Beta físico</h3><p>5 a 8 usuários; meta de 3 validações físicas documentadas com foto, ajuste e feedback.</p></article>
+    <article><span>05</span><h3>One-pager</h3><p>Preparar captação com problema, demo funcional, mercado, engine, ask e 10 investidores-alvo.</p></article>
+  </div>
+</section>
+
+<section class="bp-directors" id="diretoria">
+  <div class="bp-directors-head">
+    <div>
+      <div class="section-label">Governança</div>
+      <h2 class="section-title">Cada decisão precisa de <em>dono e evidência</em></h2>
+    </div>
+    <p>A diretoria de agentes continua útil, mas subordinada ao foco do motor: codificar conhecimento, validar geometria, recrutar beta users e transformar prova técnica em valor de negócio.</p>
+  </div>
+  <div class="bp-director-grid">
+    <article><span>Founder</span><h3>Foco e captação</h3><p>Bloqueia dispersão, define narrativa, prioriza gates e transforma o motor em tese de investimento.</p><small>Gate: fortalece a engine ou dispersa o foco?</small></article>
+    <article><span>Produto / Modelagem</span><h3>Playbook</h3><p>Transforma conhecimento tácito em regras, folgas, medidas, compatibilidades e critérios de prova.</p><small>Gate: a regra gera molde testável?</small></article>
+    <article><span>Tecnologia</span><h3>Engine</h3><p>Constrói cálculo paramétrico, validadores, SVG, PDF, versionamento, testes e API clara.</p><small>Gate: a lógica é confiável antes da interface?</small></article>
+    <article><span>Growth / CX</span><h3>Beta users</h3><p>Recruta usuários reais, coleta feedback, mede intenção de compra, ativação e retenção.</p><small>Gate: alguém paga para usar de novo?</small></article>
+    <article><span>Brand</span><h3>Categoria</h3><p>Comunica acesso à precisão técnica sem prometer CAD completo, IA mágica ou perfeição industrial.</p><small>Gate: a promessa cabe na prova atual?</small></article>
+    <article><span>CFO / Strategy</span><h3>Valor de negócio</h3><p>Modela ARR, CAC, LTV, margem, valuation, captação e uso de recursos como hipótese auditável.</p><small>Gate: o valor depende de evidência mensurável?</small></article>
+  </div>
+</section>
+
+<section class="bp-operating-loop">
+  <div class="section-label">Loop vivo</div>
+  <h2 class="section-title">Business plan não termina. <em>Ele aprende com o molde.</em></h2>
+  <div class="bp-loop-grid">
+    <div><strong>Codificar</strong><span>Playbook transforma modelagem em regras explícitas.</span></div>
+    <div><strong>Gerar</strong><span>Engine calcula SVG e PDF a partir de parâmetros.</span></div>
+    <div><strong>Validar</strong><span>Validator bloqueia medidas, curvas e componentes incoerentes.</span></div>
+    <div><strong>Imprimir</strong><span>PDF A4 leva a hipótese para papel, corte e prova.</span></div>
+    <div><strong>Ajustar</strong><span>Feedback físico vira nova regra, versão ou limite.</span></div>
+    <div><strong>Vender</strong><span>Prova técnica vira assinatura, API e captação.</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div>
+      <span class="footer-brand-phi">Φ</span>
+      <span class="footer-brand-name">Phyllos</span>
+      <span class="footer-brand-sub">create</span>
+      <p class="footer-tagline">"O valor está na regra que gera o molde, não no desenho isolado."</p>
+    </div>
+    <div class="footer-col">
+      <h4>Plano</h4>
+      <ul>
+        <li><a href="#mercado">Mercado</a></li>
+        <li><a href="#produto">Produto</a></li>
+        <li><a href="#financeiro">Financeiro</a></li>
+        <li><a href="#riscos">Riscos</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Execução</h4>
+      <ul>
+        <li><a href="#execucao">Gates</a></li>
+        <li><a href="#gtm">Beta users</a></li>
+        <li><a href="#diretoria">Governança</a></li>
+        <li><a href="#topo">Voltar ao topo</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Site</h4>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="fashion-os.html">Fashion OS</a></li>
+        <li><a href="colecoes.html">Coleções</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Phyllos · Business plan vivo</span>
+    <span>hipótese · engine · validação · ARR · captação</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

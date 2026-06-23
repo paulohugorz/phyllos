@@ -25,6 +25,55 @@ def read(path):
     with open(path, encoding='utf-8') as f:
         return f.read()
 
+def detect_shape(title, silhueta, prefix):
+    t = (title + ' ' + (silhueta or '')).lower()
+    t = re.sub(r'[áàãâ]','a',t); t = re.sub(r'[éèê]','e',t)
+    t = re.sub(r'[íìî]','i',t);  t = re.sub(r'[óòõô]','o',t)
+    t = re.sub(r'[úùû]','u',t);  t = re.sub(r'ç','c',t)
+
+    if prefix in ('CALC',):
+        if any(x in t for x in ['wide leg','palazzo','pantalona','culottes','culotte','gaucho','bloomers','knicker']):
+            return 'wide'
+        if any(x in t for x in ['slim','skinny','cigarrete','cigarette','compressao']):
+            return 'slim'
+        if any(x in t for x in ['flare','bootcut','boca de sino','boca-de-sino']):
+            return 'flare'
+        if any(x in t for x in ['jogger','punho elastico','elastico total','thai pant','pescador']):
+            return 'jogger'
+        if any(x in t for x in ['saruel','harem','thai','bloomers']):
+            return 'harem'
+        if any(x in t for x in ['barrel leg','barrel']):
+            return 'barrel'
+        if any(x in t for x in ['legging','3/4','ciclismo','compressao']):
+            return 'slim'
+        return 'straight'
+
+    if prefix in ('VEST',):
+        if any(x in t for x in ['evase','evasê','a-line','aline','trapezio','trapézio']):
+            return 'evase'
+        if any(x in t for x in ['sereia','mermaid']):
+            return 'mermaid'
+        if any(x in t for x in ['wrap','envelope','kimono','cruzado']):
+            return 'wrap'
+        if any(x in t for x in ['empire','babydoll','baby doll','godê','gode','camadas','rodado','flare']):
+            return 'empire'
+        if any(x in t for x in ['tubo','pencil','lapis','lapiz','ajustado','bustier']):
+            return 'pencil'
+        if any(x in t for x in ['oversized','camisetao','camisetão','shift','solto']):
+            return 'shift'
+        return 'straight'
+
+    if prefix in ('SAIA',):
+        if any(x in t for x in ['lapis','lapiz','pencil','tubo']):
+            return 'pencil'
+        if any(x in t for x in ['rodada','circle','full','circulo']):
+            return 'circle'
+        if any(x in t for x in ['evase','evasê','a-line','plissada','babado','camadas','gode','godê']):
+            return 'evase'
+        return 'straight'
+
+    return 'straight'
+
 # ---------- parsers ----------
 
 def parse_medidas(block):
@@ -339,6 +388,8 @@ def parse_catalog(path, prefix):
         if len(summary) > 120:
             summary = summary[:117] + '...'
 
+        shape = detect_shape(title, silhueta, prefix)
+
         entry = {
             'id': slug(f'{pid}-{title}'),
             'catalogId': pid,
@@ -346,6 +397,7 @@ def parse_catalog(path, prefix):
             'title': title,
             'badge': badge[:12],
             'draft': draft,
+            'shape': shape,
             'summary': summary,
             'search': search_words[:200],
             'mukai': mukai[:3],

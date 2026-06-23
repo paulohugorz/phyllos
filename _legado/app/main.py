@@ -1,20 +1,17 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
+from app.core.database import Base, engine
+from app.api.routes import router
 import os
-
-load_dotenv()
-
-from app.core.database import engine, Base
-from app.revenda import models as revenda_models  # noqa: F401 — registers tables
-from app.revenda.api.router import router as revenda_router
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="Revenda AI",
-    description="Chatbot com múltiplos agentes para revendedoras de cosméticos",
+    title="Fashion OS v1",
+    description="Sistema operacional para criação, gestão, produção e lançamento de moda com IA, agentes Claude e stack gratuita.",
     version="1.0.0",
 )
 
@@ -25,12 +22,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(revenda_router)
+templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
 
-if os.path.isdir("app/static"):
-    app.mount("/static", StaticFiles(directory="app/static"), name="static")
+images_dir = os.path.join(os.path.dirname(__file__), "../data/images")
+os.makedirs(images_dir, exist_ok=True)
+app.mount("/static/images", StaticFiles(directory=images_dir), name="images")
+
+app.include_router(router)
 
 
-@app.get("/health")
-def health():
-    return {"status": "ok", "service": "revenda-ai"}
+@app.get("/", response_class=HTMLResponse)
+async def frontend(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
