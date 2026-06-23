@@ -3,632 +3,1147 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fashion OS</title>
+  <title>PHYLLOS — Ateliê</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --obsidian: #0F0F0D;
-      --cream:    #F5F2EB;
-      --gold:     #B89A6A;
-      --muted:    #9E9B95;
-      --border:   rgba(15,15,13,0.12);
+      --obsidian:  #0F0F0D;
+      --cream:     #F5F2EB;
+      --gold:      #B89A6A;
+      --muted:     #9E9B95;
+      --border:    rgba(15,15,13,0.12);
       --border-md: rgba(15,15,13,0.22);
+      --green:     #4A7C59;
+      --red:       #8B3A3A;
     }
+
+    html, body { height: 100%; }
 
     body {
       background: var(--cream);
       color: var(--obsidian);
       font-family: 'Jost', system-ui, sans-serif;
       font-weight: 300;
+      font-size: 14px;
+      line-height: 1.6;
       min-height: 100vh;
     }
 
+    /* ── Header ── */
     header {
       border-bottom: 1px solid var(--border);
-      padding: 14px 32px;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: var(--cream);
+      z-index: 100;
     }
+    .header-left { display: flex; align-items: baseline; gap: 10px; }
     .logo {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 18px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
     }
-    .version {
+    .logo-sub {
       font-size: 11px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--muted);
     }
 
-    main {
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      padding: 12px 20px;
+      border-radius: 3px;
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+      max-width: 320px;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.ok  { background: var(--obsidian); color: var(--cream); }
+    #toast.err { background: var(--red); color: #fff; }
+
+    /* ── Tela 1 — Lista ── */
+    #screen-list { display: block; }
+    #screen-detail { display: none; }
+
+    .list-header {
+      padding: 28px 24px 16px;
       display: flex;
-      height: calc(100vh - 49px);
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .list-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px;
+      font-weight: 400;
     }
 
-    .panel {
-      width: 50%;
+    .cards-grid {
+      padding: 0 24px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+    }
+
+    .peca-card {
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: border-color 0.18s, box-shadow 0.18s;
+      background: #fff;
+    }
+    .peca-card:hover {
+      border-color: var(--border-md);
+      box-shadow: 0 2px 12px rgba(15,15,13,0.06);
+    }
+    .card-code {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .card-name {
+      font-size: 15px;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+    .card-tecido {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Badges de status */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      font-weight: 400;
+    }
+    .badge-ideia        { background: rgba(158,155,149,0.15); color: var(--muted); border: 1px solid var(--border); }
+    .badge-desenvolvimento { background: rgba(184,154,106,0.15); color: #8a6e3a; border: 1px solid rgba(184,154,106,0.3); }
+    .badge-finalizado   { background: rgba(74,124,89,0.12); color: var(--green); border: 1px solid rgba(74,124,89,0.25); }
+    .badge-produzindo   { background: rgba(74,124,89,0.08); color: #3a6b4a; border: 1px solid rgba(74,124,89,0.2); }
+    .badge-entregue     { background: rgba(15,15,13,0.07); color: var(--obsidian); border: 1px solid var(--border-md); }
+
+    .empty-list {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ── Tela 2 — Detalhe ── */
+    .detail-header {
+      padding: 20px 24px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+    .btn-back {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .btn-back:hover { color: var(--obsidian); }
+    .detail-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      flex: 1;
+    }
+    .detail-code {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* Seções */
+    .detail-body {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
       display: flex;
       flex-direction: column;
+      gap: 40px;
     }
-    .panel-left { border-right: 1px solid var(--border); }
 
-    .panel-header {
-      padding: 20px 32px 16px;
+    .section-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 17px;
+      font-weight: 500;
+      margin-bottom: 18px;
+      padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
     }
-    .panel-label {
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 540px) { .field-row { grid-template-columns: 1fr; } }
+
+    .field label {
+      display: block;
       font-size: 11px;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
+      margin-bottom: 6px;
     }
-
-    textarea {
-      flex: 1;
-      resize: none;
-      border: none;
-      outline: none;
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
       background: transparent;
-      padding: 24px 32px;
-      font-family: 'Jost', system-ui, sans-serif;
+      border: 1px solid var(--border-md);
+      border-radius: 2px;
+      padding: 10px 12px;
+      font-family: 'Jost', sans-serif;
       font-size: 13px;
       font-weight: 300;
-      line-height: 1.8;
       color: var(--obsidian);
+      outline: none;
+      transition: border-color 0.15s;
     }
-    textarea::placeholder { color: rgba(158,155,149,0.55); }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--gold); }
+    .field input[readonly] {
+      background: rgba(158,155,149,0.08);
+      color: var(--muted);
+      cursor: default;
+    }
+    .field textarea { resize: vertical; min-height: 80px; line-height: 1.7; }
+    .field select { cursor: pointer; }
 
-    .panel-footer {
-      padding: 16px 32px;
-      border-top: 1px solid var(--border);
+    /* Fibras */
+    .fibras-list, .certs-list, .etapas-list { display: flex; flex-direction: column; gap: 10px; }
+
+    .fibra-row, .cert-row, .etapa-row {
       display: flex;
       gap: 10px;
-      position: relative;
-      overflow: hidden;
+      align-items: flex-start;
     }
+    .fibra-row .field-pct { width: 80px; flex-shrink: 0; }
+    .fibra-row .field-mat { flex: 1; }
+
+    .cert-row .field-nome { flex: 2; }
+    .cert-row .field-num  { flex: 1.2; }
+    .cert-row .field-val  { flex: 1; }
+
+    .etapa-row .field-etapa { flex: 1.5; }
+    .etapa-row .field-pais  { flex: 1; }
+    .etapa-row .field-inst  { flex: 1.5; }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1;
+      padding: 8px 4px 0;
+      transition: color 0.15s;
+      flex-shrink: 0;
+    }
+    .btn-remove:hover { color: var(--red); }
+
+    .pct-total {
+      font-size: 12px;
+      margin-top: 6px;
+    }
+    .pct-total.ok  { color: var(--green); }
+    .pct-total.err { color: var(--red); }
+
+    /* Botões */
     .btn {
-      padding: 10px 20px;
-      font-family: 'Jost', system-ui, sans-serif;
+      padding: 11px 22px;
+      font-family: 'Jost', sans-serif;
       font-size: 12px;
       font-weight: 400;
       letter-spacing: 0.06em;
       cursor: pointer;
       border-radius: 2px;
       transition: all 0.18s;
+      white-space: nowrap;
     }
     .btn-primary {
-      flex: 1;
       background: var(--obsidian);
       color: var(--cream);
       border: 1px solid var(--obsidian);
     }
     .btn-primary:hover { background: #2a2a26; }
     .btn-primary:disabled { opacity: 0.4; cursor: default; }
-    .btn-ghost {
+    .btn-outline {
       background: transparent;
-      color: var(--muted);
-      border: 1px solid rgba(158,155,149,0.5);
-    }
-    .btn-ghost:hover { border-color: var(--obsidian); color: var(--obsidian); }
-
-    .loading-bar {
-      display: none;
-      height: 1px;
-      width: 40%;
-      background: var(--gold);
-      animation: sweep 0.9s ease-in-out infinite;
-      position: absolute;
-      bottom: 0; left: 0;
-    }
-    .loading-bar.visible { display: block; }
-    @keyframes sweep { 0%{left:-40%} 100%{left:100%} }
-
-    /* Right: empty */
-    .empty-state {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      opacity: 0.35;
-    }
-    .empty-icon {
-      width: 52px; height: 52px;
+      color: var(--obsidian);
       border: 1px solid var(--border-md);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
     }
-    .empty-label { font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
-
-    /* Right: result */
-    .result-panel {
-      display: none;
-      flex: 1;
-      flex-direction: column;
-      overflow-y: auto;
-      padding: 24px 32px;
-      gap: 20px;
+    .btn-outline:hover { border-color: var(--obsidian); }
+    .btn-gold {
+      background: var(--gold);
+      color: #fff;
+      border: 1px solid var(--gold);
     }
-    .result-panel.visible { display: flex; }
-
-    .result-sku {
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+    .btn-gold:hover { background: #a6895a; }
+    .btn-gold:disabled { opacity: 0.4; cursor: default; }
+    .btn-add {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
       color: var(--gold);
+      letter-spacing: 0.06em;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 4px;
+      transition: opacity 0.15s;
     }
+    .btn-add:hover { opacity: 0.7; }
 
-    .img-slot {
-      width: 100%;
-      min-height: 260px;
-      flex: 1;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      background: rgba(232,228,220,0.4);
+    .section-actions {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      position: relative;
-      overflow: hidden;
-    }
-    .img-slot span {
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      opacity: 0.5;
-    }
-    .img-slot img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: none;
-    }
-    .img-empty {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .img-slot .img-loading {
-      display: none;
-      position: absolute;
-      inset: 0;
-      background: rgba(245,242,235,0.85);
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
       gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
     }
-    .img-slot .img-loading.visible { display: flex; }
-    .img-spinner {
-      width: 20px; height: 20px;
-      border: 1.5px solid rgba(15,15,13,0.15);
-      border-top-color: var(--gold);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+
+    /* DPP */
+    .dpp-section { display: none; }
+    .dpp-section.visible { display: block; }
+
+    .dpp-published {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
     }
-    .img-loading-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .meta-table { width: 100%; border-collapse: collapse; }
-    .meta-table tr { border-bottom: 1px solid var(--border); }
-    .meta-table tr:last-child { border-bottom: none; }
-    .meta-table td { padding: 9px 0; font-size: 12px; }
-    .meta-table td:first-child { color: var(--muted); }
-    .meta-table td:last-child { text-align: right; }
-
-    .status-badge {
-      display: inline-block;
-      padding: 2px 10px;
-      border: 1px solid var(--border);
+    .dpp-published.visible { display: flex; }
+    .badge-published {
+      background: rgba(74,124,89,0.12);
+      color: var(--green);
+      border: 1px solid rgba(74,124,89,0.25);
+      padding: 3px 10px;
       border-radius: 20px;
       font-size: 11px;
-      letter-spacing: 0.08em;
-      color: var(--muted);
+      letter-spacing: 0.06em;
     }
+
+    #dpp-qr img {
+      width: 160px;
+      height: 160px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      margin-top: 12px;
+    }
+    .dpp-link {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      word-break: break-all;
+    }
+    .dpp-link a { color: var(--gold); }
+
+    .tooltip {
+      display: inline-block;
+      position: relative;
+      cursor: help;
+      margin-left: 4px;
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--border-md);
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      text-align: center;
+      line-height: 14px;
+    }
+    .tooltip::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--obsidian);
+      color: var(--cream);
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 2px;
+      width: 200px;
+      white-space: normal;
+      text-transform: none;
+      letter-spacing: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+      z-index: 200;
+    }
+    .tooltip:hover::after { opacity: 1; }
+
+    /* Loading spinner inline */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     ::selection { background: rgba(184,154,106,0.15); }
 
-    #fashion-os-references { display: none; flex-direction: column; gap: 8px; }
-    #fashion-os-references.visible { display: flex; }
-    .refs-label {
-      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--muted); padding-bottom: 4px;
-      border-bottom: 1px solid var(--border);
+    /* Mobile tweaks */
+    @media (max-width: 480px) {
+      .fibra-row, .cert-row, .etapa-row { flex-wrap: wrap; }
+      .fibra-row .field-pct { width: 100%; }
+      .cert-row .field-nome,
+      .cert-row .field-num,
+      .cert-row .field-val  { flex: 1 1 100%; }
+      .etapa-row .field-etapa,
+      .etapa-row .field-pais,
+      .etapa-row .field-inst { flex: 1 1 100%; }
     }
-    .fashion-ref-card {
-      display: flex; gap: 10px; align-items: flex-start;
-      padding: 8px 0; border-bottom: 1px solid var(--border);
-    }
-    .fashion-ref-card:last-child { border-bottom: none; }
-    .fashion-ref-thumb {
-      width: 36px; height: 36px; border-radius: 2px;
-      background: rgba(232,228,220,0.6); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase;
-      color: var(--muted); flex-shrink: 0;
-    }
-    .fashion-ref-card strong { font-size: 11px; font-weight: 400; display: block; }
-    .fashion-ref-card p { font-size: 10px; color: var(--muted); margin: 2px 0; }
-    .fashion-ref-card small { font-size: 10px; color: var(--muted); opacity: 0.7; }
   </style>
 </head>
 <body>
 
   <header>
-    <span class="logo">Fashion OS</span>
-    <span class="version">v1</span>
+    <div class="header-left">
+      <span class="logo">PHYLLOS</span>
+      <span class="logo-sub">Ateliê</span>
+    </div>
   </header>
 
-  <main>
+  <div id="toast"></div>
 
-    <section class="panel panel-left">
-      <div class="panel-header">
-        <span class="panel-label">Descrição da peça</span>
+  <!-- ═══════════════════════════════════════ TELA 1 — LISTA ═════════════════════════════════════ -->
+  <div id="screen-list">
+    <div class="list-header">
+      <h1 class="list-title">Peças cadastradas</h1>
+      <button class="btn btn-primary" onclick="App.abrirNovaPeca()">+ Nova Peça</button>
+    </div>
+    <div class="cards-grid" id="cards-grid">
+      <div class="empty-list">Carregando peças...</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ TELA 2 — DETALHE ══════════════════════════════════ -->
+  <div id="screen-detail">
+    <div class="detail-header">
+      <button class="btn-back" onclick="App.voltarLista()">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Voltar
+      </button>
+      <div style="flex:1">
+        <div class="detail-code" id="d-code"></div>
+        <div class="detail-title" id="d-title">Nova Peça</div>
       </div>
+      <div id="d-badge"></div>
+    </div>
 
-      <textarea
-        id="description"
-        placeholder="Descreva a peça — silhueta, tecido, caimento, cor, referências..."
-      ></textarea>
+    <div class="detail-body">
 
-      <div class="panel-footer">
-        <button class="btn btn-primary" id="btn-gerar" onclick="gerar()">Gerar peça</button>
-        <button class="btn btn-ghost" onclick="limpar()">Limpar</button>
-        <div class="loading-bar" id="loading-bar"></div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <div class="panel-header">
-        <span class="panel-label">Peça formada</span>
-      </div>
-
-      <div class="empty-state" id="empty-state">
-        <div class="empty-icon">
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <path d="M7 3H4a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1h-3M7 3a2 2 0 0 0 4 0M7 3a2 2 0 0 1 4 0" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <span class="empty-label">A peça aparecerá aqui</span>
-      </div>
-
-      <div class="result-panel" id="result-panel">
-        <span class="result-sku" id="result-sku"></span>
-
-        <div class="img-slot" id="img-slot">
-          <img id="generated-img" alt="Peça gerada" />
-          <div class="img-loading" id="img-loading">
-            <div class="img-spinner"></div>
-            <span class="img-loading-label">Gerando</span>
+      <!-- ── Seção 1: Informações básicas ── -->
+      <section>
+        <div class="section-title">Informações básicas</div>
+        <div class="field-group">
+          <div class="field-row">
+            <div class="field">
+              <label>Nome da peça</label>
+              <input type="text" id="f-nome" placeholder="ex: Calça Wide Leg Alfaiataria" />
+            </div>
+            <div class="field">
+              <label>Código</label>
+              <input type="text" id="f-codigo" placeholder="ex: PH-CAL-001" />
+            </div>
           </div>
-          <div class="img-empty" id="img-empty">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style="opacity:.35">
-              <rect x="3" y="5" width="22" height="18" rx="2" stroke="#9E9B95" stroke-width="1.2"/>
-              <circle cx="9.5" cy="11" r="2" stroke="#9E9B95" stroke-width="1.2"/>
-              <path d="M3 19l5-5 4 4 4-4 6 6" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+          <div class="field-row">
+            <div class="field">
+              <label>Tecido principal</label>
+              <input type="text" id="f-tecido" placeholder="ex: Malha ribana 95% algodão 5% elastano" />
+            </div>
+            <div class="field">
+              <label>Situação</label>
+              <select id="f-status">
+                <option value="ideia">Em ideia</option>
+                <option value="desenvolvimento">Em desenvolvimento</option>
+                <option value="finalizado">Finalizada</option>
+                <option value="produzindo">Produzindo</option>
+                <option value="entregue">Entregue</option>
+              </select>
+            </div>
           </div>
         </div>
-
-        <table class="meta-table" id="meta-table"></table>
-
-        <div id="fashion-os-references">
-          <p class="refs-label">Referências do catálogo</p>
+        <div class="section-actions">
+          <button class="btn btn-primary" onclick="App.salvarBasico()">Salvar informações</button>
         </div>
-      </div>
+      </section>
 
-      <div class="panel-footer">
-        <span style="font-size:11px;color:var(--muted);letter-spacing:0.04em;">Powered by Stable Horde — geração gratuita, sem cadastro.</span>
-      </div>
-    </section>
+      <!-- ── Seção 2: Matéria-prima ── -->
+      <section>
+        <div class="section-title">Matéria-prima</div>
+        <div class="field-group">
 
-  </main>
+          <!-- Composição de fibras -->
+          <div class="field">
+            <label>De que é feita essa peça?</label>
+            <div class="fibras-list" id="fibras-list"></div>
+            <button class="btn-add" onclick="App.addFibra()">+ Adicionar material</button>
+            <div class="pct-total" id="pct-total"></div>
+          </div>
+
+          <!-- Certificados -->
+          <div class="field">
+            <label>Tem algum certificado de qualidade?</label>
+            <div class="certs-list" id="certs-list"></div>
+            <button class="btn-add" onclick="App.addCert()">+ Adicionar certificado</button>
+          </div>
+
+          <!-- Reciclado -->
+          <div class="field" style="max-width:240px">
+            <label>Tem material reciclado? Qual porcentagem?</label>
+            <input type="number" id="f-reciclado" min="0" max="100" placeholder="0" />
+          </div>
+
+          <!-- Cuidados -->
+          <div class="field">
+            <label>Como lavar e cuidar?</label>
+            <textarea id="f-cuidados" placeholder="ex: Lavar à mão em água fria. Não usar alvejante. Secar à sombra..."></textarea>
+          </div>
+
+          <!-- Reparo -->
+          <div class="field">
+            <label>Como consertar se tiver algum problema?</label>
+            <textarea id="f-reparo" placeholder="ex: Costuras podem ser refeitas em ateliê especializado. Tecido aceita remendo invisível..."></textarea>
+          </div>
+
+          <!-- Fim de vida -->
+          <div class="field">
+            <label>O que fazer com a peça quando não usar mais?</label>
+            <textarea id="f-fimvida" placeholder="ex: Pode ser reciclada em pontos de coleta têxtil, doada ou compostada se for 100% natural..."></textarea>
+          </div>
+
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-primary" onclick="App.salvarFicha()">Salvar matéria-prima</button>
+        </div>
+      </section>
+
+      <!-- ── Seção 3: Cadeia produtiva ── -->
+      <section>
+        <div class="section-title">Onde cada parte foi feita?</div>
+        <div class="etapas-list" id="etapas-list">
+          <div style="color:var(--muted);font-size:13px">Nenhuma etapa registrada ainda.</div>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-outline" onclick="App.addEtapa()">+ Registrar etapa</button>
+        </div>
+        <div id="etapa-form" style="display:none;margin-top:20px">
+          <div class="etapa-row">
+            <div class="field field-etapa">
+              <label>O que foi feito?</label>
+              <select id="nef-etapa">
+                <option value="fiacao">Fiação de fio</option>
+                <option value="tecelagem">Tecelagem / Malharia</option>
+                <option value="corte">Corte</option>
+                <option value="costura">Costura</option>
+                <option value="tingimento">Tingimento</option>
+                <option value="acabamento">Acabamento</option>
+                <option value="lavanderia">Lavanderia</option>
+              </select>
+            </div>
+            <div class="field field-pais">
+              <label>Em qual país?</label>
+              <input type="text" id="nef-pais" placeholder="ex: Brasil" />
+            </div>
+            <div class="field field-inst">
+              <label>Nome do fornecedor / fábrica <span style="color:var(--muted)">(opcional)</span></label>
+              <input type="text" id="nef-inst" placeholder="ex: Têxtil São Paulo" />
+            </div>
+          </div>
+          <div class="section-actions">
+            <button class="btn btn-primary" onclick="App.salvarEtapa()">Salvar etapa</button>
+            <button class="btn btn-outline" onclick="App.cancelarEtapa()">Cancelar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Seção 4: DPP ── -->
+      <section class="dpp-section" id="dpp-section">
+        <div class="section-title">Passaporte Digital do Produto (DPP)</div>
+        <div class="dpp-published" id="dpp-published">
+          <span class="badge-published">Publicado</span>
+          <span style="font-size:12px;color:var(--muted)">O passaporte já está disponível publicamente.</span>
+        </div>
+        <div id="dpp-qr"></div>
+        <div id="dpp-link-wrap" class="dpp-link"></div>
+        <div class="field-group" style="margin-top:20px">
+          <div class="field" style="max-width:320px">
+            <label>
+              Código de barras (GTIN)
+              <span class="tooltip" data-tip="Código de 13 dígitos do produto, encontrado no código de barras da etiqueta.">?</span>
+            </label>
+            <input type="text" id="f-gtin" placeholder="ex: 7891234567890" maxlength="14" />
+          </div>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-gold" id="btn-publicar-dpp" onclick="App.publicarDPP()">Publicar Passaporte Digital</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
 
   <script>
+  'use strict';
 
-    // ── Mapeamento de peças PT → EN + tokens de prompt ────────────────────────
-    const GARMENT_MAP = [
-      { pt: ['vestido','dress'],        en: 'dress',      slug: 'vestido',           base: 'dress, full body, fashion editorial, woman' },
-      { pt: ['saia'],                   en: 'skirt',      slug: 'saia',              base: 'skirt, full body, fashion editorial, woman' },
-      { pt: ['calça','calca','pants','trousers'], en: 'trousers', slug: 'calca',     base: 'trousers, full body, fashion editorial, woman' },
-      { pt: ['camisa','shirt'],         en: 'shirt',      slug: 'camisa',            base: 'shirt, full body, fashion editorial, woman' },
-      { pt: ['blusa'],                  en: 'blouse',     slug: 'top-blusa',         base: 'blouse, full body, fashion editorial, woman' },
-      { pt: ['top','bralette','cropped'], en: 'top',      slug: 'top-blusa',         base: 'fashion top, full body, fashion editorial, woman' },
-      { pt: ['jaqueta','jacket'],       en: 'jacket',     slug: 'jaqueta',           base: 'jacket, full body, fashion editorial, woman' },
-      { pt: ['blazer'],                 en: 'blazer',     slug: 'jaqueta',           base: 'blazer, full body, fashion editorial, woman' },
-      { pt: ['casaco','coat','trench'], en: 'coat',       slug: 'jaqueta',           base: 'coat, full body, fashion editorial, woman' },
-      { pt: ['legging','leggings','leggins'], en: 'leggings', slug: 'legging-activewear', base: 'leggings, full body, fashion editorial, woman' },
-      { pt: ['shorts','bermuda'],       en: 'shorts',     slug: 'legging-activewear', base: 'shorts, full body, fashion editorial, woman' },
-      { pt: ['macacão','macacao','jumpsuit'], en: 'jumpsuit', slug: 'vestido',       base: 'jumpsuit, full body, fashion editorial, woman' },
-    ];
+  /* ═══════════════════════════════════════════════════════════════
+     UTILITÁRIOS
+  ═══════════════════════════════════════════════════════════════ */
 
-    // Detecta o tipo de peça no texto
-    function detectGarment(txt) {
-      const q = normalize(txt);
-      for (const g of GARMENT_MAP) {
-        if (g.pt.some(p => q.includes(normalize(p)))) return g;
-      }
-      return null;
-    }
+  let _toastTimer = null;
+  function toast(msg, tipo = 'ok') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'show ' + tipo;
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(() => { el.className = ''; }, 3000);
+  }
 
-    // Extrai cor e tecido do texto
-    function extractMeta(txt) {
-      const corMatch = txt.match(/pret[ao]|branc[ao]|cinz[ao]|azul|verde|vermelh[ao]|beg[eê]|crem[ae]|marrom|caramelo|dourad[ao]|off.white|nude|terrac[oô]|areia|lavanda/i);
-      const tecMatch = txt.match(/linho|seda|algodão|lã|jersey|crepe|tweed|veludo|cetim|tencel|viscose|denim|malha|modal|lyocell|neoprene|couro/i);
-      const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '—';
-      return { cor: cap(corMatch?.[0]), tec: cap(tecMatch?.[0]) };
-    }
+  function badgeClass(status) {
+    const map = {
+      ideia: 'badge-ideia',
+      desenvolvimento: 'badge-desenvolvimento',
+      finalizado: 'badge-finalizado',
+      produzindo: 'badge-produzindo',
+      entregue: 'badge-entregue',
+    };
+    return map[status] || 'badge-ideia';
+  }
 
-    function gerar() {
-      const txt = document.getElementById('description').value.trim();
-      if (!txt) { document.getElementById('description').focus(); return; }
-      const btn = document.getElementById('btn-gerar');
-      const bar = document.getElementById('loading-bar');
+  function badgeLabel(status) {
+    const map = {
+      ideia: 'Em ideia',
+      desenvolvimento: 'Em desenvolvimento',
+      finalizado: 'Finalizada',
+      produzindo: 'Produzindo',
+      entregue: 'Entregue',
+    };
+    return map[status] || status || 'Em ideia';
+  }
+
+  function setLoading(btn, loading) {
+    if (loading) {
+      btn._origText = btn.innerHTML;
+      btn.innerHTML = '<span class="spinner"></span>Salvando…';
       btn.disabled = true;
-      bar.classList.add('visible');
-      setTimeout(() => {
-        btn.disabled = false;
-        bar.classList.remove('visible');
-        mostrarResultado(txt);
-      }, 400);
+    } else {
+      btn.innerHTML = btn._origText || 'Salvar';
+      btn.disabled = false;
     }
+  }
 
-    function mostrarResultado(txt) {
-      const ts = Date.now().toString().slice(-4);
-      const sku = 'PH' + new Date().getFullYear().toString().slice(-2) + ts;
-      const garment = detectGarment(txt);
-      const { cor, tec } = extractMeta(txt);
+  async function api(method, path, body) {
+    const opts = { method, headers: { 'Content-Type': 'application/json' } };
+    if (body !== undefined) opts.body = JSON.stringify(body);
+    const res = await fetch(path, opts);
+    let data;
+    try { data = await res.json(); } catch(_) { data = {}; }
+    if (!res.ok) throw new Error(data.detail || data.message || `Erro ${res.status}`);
+    return data;
+  }
 
-      document.getElementById('result-sku').textContent = sku;
-      document.getElementById('meta-table').innerHTML = `
-        <tr><td>Categoria</td><td>${garment ? garment.en.charAt(0).toUpperCase()+garment.en.slice(1) : '—'}</td></tr>
-        <tr><td>Cor</td><td>${cor}</td></tr>
-        <tr><td>Tecido</td><td>${tec}</td></tr>
-        <tr><td>Status</td><td><span class="status-badge">Rascunho</span></td></tr>
-      `;
-      document.getElementById('empty-state').style.display = 'none';
-      document.getElementById('result-panel').classList.add('visible');
-      document.getElementById('fashion-os-references').classList.remove('visible');
-      gerarImagem(txt, garment);
-    }
+  /* ═══════════════════════════════════════════════════════════════
+     ESTADO GLOBAL
+  ═══════════════════════════════════════════════════════════════ */
 
-    // ── Cache de dados ────────────────────────────────────────────────────────
-    let _fashionTerms = null;
-    let _visualRefs   = null;
+  const State = {
+    pecas: [],
+    pecaAtual: null,   // objeto peça
+    fichaId: null,     // id da ficha técnica
+    fichaExiste: false,
+    etapas: [],
+    dppPublicado: false,
+  };
 
-    function normalize(s) {
-      return String(s || '').toLowerCase()
-        .normalize('NFD').replace(/[̀-ͯ]/g, '')
-        .replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g,' ').trim();
-    }
+  /* ═══════════════════════════════════════════════════════════════
+     APP
+  ═══════════════════════════════════════════════════════════════ */
 
-    async function loadFashionTerms() {
-      if (_fashionTerms) return _fashionTerms;
-      try { const r = await fetch('./js/fashion-terms.json'); _fashionTerms = await r.json(); } catch(_){ _fashionTerms = []; }
-      return _fashionTerms;
-    }
+  const App = {
 
-    async function loadVisualRefs() {
-      if (_visualRefs) return _visualRefs;
-      try { const r = await fetch('./js/visual-references.json'); _visualRefs = await r.json(); } catch(_){ _visualRefs = []; }
-      return _visualRefs;
-    }
+    /* ─── LISTA ─── */
 
-    // Retorna termos técnicos que combinam com o texto E com a categoria da peça
-    function matchTerms(txt, garment, terms) {
-      const q = normalize(txt);
-      const catFilter = garment ? normalize(garment.en) : null;
-      return terms.filter(t => {
-        const hay = normalize([t.termo_pt, t.termo_en, t.subcategoria, t.categoria, t.definicao, t.atributos_visuais].join(' '));
-        const wordMatch = q.split(' ').some(w => w.length > 3 && hay.includes(w));
-        // Se detectamos a peça, o termo precisa estar na mesma subcategoria OU ser de tecido/acabamento (universal)
-        if (catFilter && garment) {
-          const isUniversal = ['tecido','acabamento','costura','fechamento'].includes(t.categoria);
-          const isSameCat   = hay.includes(normalize(garment.en)) || hay.includes(normalize(garment.pt?.[0]||''));
-          return wordMatch && (isUniversal || isSameCat);
-        }
-        return wordMatch;
-      });
-    }
-
-    // Retorna referências visuais APENAS da categoria da peça detectada
-    function matchRefs(txt, garment, refs) {
-      // Filtro primário: campo categoria deve bater exatamente com o slug da peça
-      const filtered = garment
-        ? refs.filter(r => r.categoria === garment.slug)
-        : refs;
-
-      // Se não há refs para a categoria, devolve vazio (nunca mostra refs erradas)
-      if (!filtered.length) return [];
-
-      // Ordena: primeiro com imagem, depois por prioridade
-      return filtered
-        .sort((a, b) => {
-          const ai = a.image_url ? 1 : 0;
-          const bi = b.image_url ? 1 : 0;
-          if (bi !== ai) return bi - ai;
-          return (Number(b.prioridade)||0) - (Number(a.prioridade)||0);
-        });
-    }
-
-    // Compila prompt positivo e negativo a partir da taxonomia + referências
-    function buildPrompt(userTxt, garment, terms, refs) {
-      const pos = new Set(['fashion editorial photography', 'full body', 'soft studio lighting',
-        'realistic styled environment', 'clean contemporary studio or lifestyle setting',
-        'photorealistic', 'high quality', 'natural pose',
-        'premium fabric texture', 'clean garment construction', 'real person wearing clothes']);
-      const neg = new Set(['blurry', 'low quality', 'watermark', 'text overlay', 'logo',
-        'disfigured', 'deformed hands', 'extra limbs', 'cartoon', 'illustration',
-        'painting', 'render', 'plastic skin', 'overexposed', 'bad anatomy']);
-
-      // Base da peça
-      if (garment) garment.base.split(',').map(s=>s.trim()).forEach(s=>pos.add(s));
-
-      // Tokens da taxonomia
-      terms.forEach(t => {
-        t.prompt_tokens.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>pos.add(s));
-        t.prompt_negativo.split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>neg.add(s));
-      });
-
-      // Tokens das referências visuais
-      refs.slice(0,4).forEach(r => {
-        String(r.prompt_tokens||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>pos.add(s));
-        String(r.prompt_negativo||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(s=>neg.add(s));
-      });
-
-      return {
-        pos: userTxt + ', ' + [...pos].join(', '),
-        neg: [...neg].join(', ')
-      };
-    }
-
-    // Renderiza o painel de referências — só mostra imagens da categoria certa
-    function renderRefs(refs) {
-      const panel = document.getElementById('fashion-os-references');
-      panel.innerHTML = '<p class="refs-label">Referências da categoria</p>';
-
-      const withImg = refs.filter(r => r.image_url);
-      const noImg   = refs.filter(r => !r.image_url).slice(0, 3);
-
-      if (withImg.length) {
-        const grid = document.createElement('div');
-        grid.style.cssText = 'display:grid;grid-template-columns:repeat('+Math.min(withImg.length,3)+',1fr);gap:6px;margin-bottom:10px;';
-        withImg.slice(0,3).forEach(r => {
-          const cell = document.createElement('div');
-          cell.style.cssText = 'position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:2px;border:1px solid var(--border);background:rgba(232,228,220,.4)';
-          cell.innerHTML = `<img src="${r.image_url}" alt="${r.titulo}"
-            style="width:100%;height:100%;object-fit:cover"
-            onerror="this.parentElement.style.display='none'">
-            <span style="position:absolute;bottom:0;left:0;right:0;padding:4px 6px;
-              font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
-              background:rgba(245,242,235,.88)">${r.categoria||''}</span>`;
-          grid.appendChild(cell);
-        });
-        panel.appendChild(grid);
-      }
-
-      noImg.forEach(r => {
-        const card = document.createElement('div');
-        card.className = 'fashion-ref-card';
-        card.innerHTML = `<div class="fashion-ref-thumb">${(r.categoria||'ref').slice(0,4)}</div>
-          <div><strong>${r.titulo}</strong>
-          <p>${r.contexto_uso||''}</p>
-          <small>${(r.styling_notes||'').slice(0,80)}</small></div>`;
-        panel.appendChild(card);
-      });
-
-      panel.classList.toggle('visible', withImg.length + noImg.length > 0);
-    }
-
-    async function gerarImagem(txt, garment) {
-      const img          = document.getElementById('generated-img');
-      const loading      = document.getElementById('img-loading');
-      const loadingLabel = loading.querySelector('.img-loading-label');
-      const empty        = document.getElementById('img-empty');
-
-      img.style.display = 'none';
-      empty.style.display = 'none';
-      loading.classList.add('visible');
-      loadingLabel.textContent = 'Buscando referências';
-
-      // ── 1. Carrega taxonomia e referências filtradas pela categoria ──────
-      let terms = [], refs = [];
+    async carregarLista() {
       try {
-        [terms, refs] = await Promise.all([loadFashionTerms(), loadVisualRefs()]);
-        terms = matchTerms(txt, garment, terms);
-        refs  = matchRefs(txt, garment, refs);
-        if (refs.length) renderRefs(refs);
-      } catch(_) {}
-
-      // ── 2. Compila prompt enriquecido ────────────────────────────────────
-      const { pos, neg } = buildPrompt(txt, garment, terms, refs);
-      loadingLabel.textContent = 'Gerando imagem';
-
-      // ── 3. Envia para Stable Horde — modelo Deliberate ───────────────────
-      try {
-        const sub = await fetch('https://stablehorde.net/api/v2/generate/async', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'apikey': '0000000000' },
-          body: JSON.stringify({
-            prompt: pos + ' ### ' + neg,
-            params: {
-              sampler_name: 'k_euler_a',
-              cfg_scale: 7.5,
-              steps: 25,
-              width: 512,
-              height: 768,
-              n: 1,
-              karras: true
-            },
-            r2: false,
-            slow_workers: true,
-            models: ['Deliberate']
-          })
-        });
-
-        if (!sub.ok) { showImgError('Erro ao enviar'); return; }
-        const { id } = await sub.json();
-
-        for (let i = 0; i < 80; i++) {
-          await new Promise(r => setTimeout(r, 4000));
-          const chk = await (await fetch(`https://stablehorde.net/api/v2/generate/check/${id}`)).json();
-          if (chk.faulted) { showImgError('Falha na geração — tente novamente'); return; }
-          if (chk.wait_time > 0) loadingLabel.textContent = `~${chk.wait_time}s`;
-          if (chk.done) {
-            const st  = await (await fetch(`https://stablehorde.net/api/v2/generate/status/${id}`)).json();
-            const b64 = st?.generations?.[0]?.img;
-            if (!b64) { showImgError('Imagem não retornada'); return; }
-            img.src = 'data:image/webp;base64,' + b64;
-            img.style.display = 'block';
-            loading.classList.remove('visible');
-            return;
-          }
-        }
-        showImgError('Tempo esgotado — tente novamente');
+        const pecas = await api('GET', '/pecas');
+        State.pecas = pecas;
+        App.renderLista();
       } catch(e) {
-        showImgError('Sem conexão com a API');
+        document.getElementById('cards-grid').innerHTML =
+          `<div class="empty-list">Não foi possível carregar as peças. Verifique se a API está rodando.</div>`;
       }
-    }
+    },
 
-    function showImgError(msg) {
-      document.getElementById('img-loading').classList.remove('visible');
-      const empty = document.getElementById('img-empty');
-      empty.innerHTML = `
-        <div style="text-align:center;padding:16px;display:flex;flex-direction:column;gap:8px;align-items:center;">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="opacity:.3">
-            <rect x="3" y="5" width="18" height="14" rx="2" stroke="#9E9B95" stroke-width="1.2"/>
-            <path d="M12 10v4M12 16h.01" stroke="#9E9B95" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-          <span style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)">${msg}</span>
-        </div>`;
-      empty.style.display = 'flex';
-    }
+    renderLista() {
+      const grid = document.getElementById('cards-grid');
+      if (!State.pecas.length) {
+        grid.innerHTML = '<div class="empty-list">Nenhuma peça cadastrada ainda. Crie a primeira!</div>';
+        return;
+      }
+      grid.innerHTML = State.pecas.map(p => `
+        <div class="peca-card" onclick="App.abrirPeca(${JSON.stringify(p.codigo).replace(/"/g,'&quot;')})">
+          <div class="card-code">${p.codigo || ''}</div>
+          <div class="card-name">${p.nome || '—'}</div>
+          <div class="card-tecido">${p.tecido || 'Tecido não informado'}</div>
+          <span class="badge ${badgeClass(p.status)}">${badgeLabel(p.status)}</span>
+        </div>
+      `).join('');
+    },
 
-    function limpar() {
-      document.getElementById('description').value = '';
-      document.getElementById('result-panel').classList.remove('visible');
-      document.getElementById('empty-state').style.display = '';
-      document.getElementById('fashion-os-references').classList.remove('visible');
-      const img = document.getElementById('generated-img');
-      img.style.display = 'none';
-      img.src = '';
-      document.getElementById('img-empty').style.display = 'flex';
-      document.getElementById('img-loading').classList.remove('visible');
-    }
+    abrirNovaPeca() {
+      State.pecaAtual = null;
+      State.fichaId = null;
+      State.fichaExiste = false;
+      State.etapas = [];
+      State.dppPublicado = false;
+      App.limparFormulario();
+      App.mostrarTela('detail');
+    },
+
+    voltarLista() {
+      App.mostrarTela('list');
+      App.carregarLista();
+    },
+
+    mostrarTela(tela) {
+      document.getElementById('screen-list').style.display   = tela === 'list'   ? 'block' : 'none';
+      document.getElementById('screen-detail').style.display = tela === 'detail' ? 'block' : 'none';
+    },
+
+    /* ─── ABRIR PEÇA EXISTENTE ─── */
+
+    async abrirPeca(codigo) {
+      try {
+        // Carrega peça
+        const pecas = await api('GET', '/pecas');
+        const peca = pecas.find(p => p.codigo === codigo);
+        if (!peca) { toast('Peça não encontrada.', 'err'); return; }
+        State.pecaAtual = peca;
+
+        App.preencherBasico(peca);
+        App.mostrarTela('detail');
+
+        // Carrega ficha
+        await App.carregarFicha(peca.id);
+
+        // Carrega etapas
+        await App.carregarEtapas(peca.codigo);
+
+        // DPP
+        App.atualizarDPPSection();
+      } catch(e) {
+        toast('Erro ao abrir peça: ' + e.message, 'err');
+      }
+    },
+
+    preencherBasico(peca) {
+      document.getElementById('d-code').textContent  = peca.codigo || '';
+      document.getElementById('d-title').textContent = peca.nome   || 'Nova Peça';
+      document.getElementById('d-badge').innerHTML   =
+        `<span class="badge ${badgeClass(peca.status)}">${badgeLabel(peca.status)}</span>`;
+      document.getElementById('f-nome').value   = peca.nome   || '';
+      document.getElementById('f-codigo').value = peca.codigo || '';
+      document.getElementById('f-tecido').value = peca.tecido || '';
+      document.getElementById('f-status').value = peca.status || 'ideia';
+      // Código é read-only se já existe
+      document.getElementById('f-codigo').readOnly = !!peca.codigo;
+    },
+
+    limparFormulario() {
+      document.getElementById('d-code').textContent  = '';
+      document.getElementById('d-title').textContent = 'Nova Peça';
+      document.getElementById('d-badge').innerHTML   = '';
+      ['f-nome','f-codigo','f-tecido','f-gtin'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.value = ''; el.readOnly = false; }
+      });
+      document.getElementById('f-status').value = 'ideia';
+      document.getElementById('f-reciclado').value = '';
+      document.getElementById('f-cuidados').value = '';
+      document.getElementById('f-reparo').value = '';
+      document.getElementById('f-fimvida').value = '';
+      document.getElementById('fibras-list').innerHTML = '';
+      document.getElementById('certs-list').innerHTML  = '';
+      document.getElementById('pct-total').textContent = '';
+      document.getElementById('etapas-list').innerHTML =
+        '<div style="color:var(--muted);font-size:13px">Nenhuma etapa registrada ainda.</div>';
+      document.getElementById('etapa-form').style.display = 'none';
+      document.getElementById('dpp-section').classList.remove('visible');
+      document.getElementById('dpp-published').classList.remove('visible');
+      document.getElementById('dpp-qr').innerHTML = '';
+      document.getElementById('dpp-link-wrap').innerHTML = '';
+    },
+
+    /* ─── BÁSICO ─── */
+
+    async salvarBasico() {
+      const btn  = document.querySelector('[onclick="App.salvarBasico()"]');
+      const nome = document.getElementById('f-nome').value.trim();
+      const cod  = document.getElementById('f-codigo').value.trim();
+
+      if (!nome) { toast('Informe o nome da peça.', 'err'); return; }
+      if (!cod)  { toast('Informe o código da peça.', 'err'); return; }
+
+      setLoading(btn, true);
+      try {
+        if (State.pecaAtual) {
+          // Atualizar
+          const updated = await api('PATCH', `/pecas/${cod}`, {
+            nome,
+            tecido: document.getElementById('f-tecido').value.trim() || null,
+            status: document.getElementById('f-status').value,
+          });
+          State.pecaAtual = updated;
+          App.preencherBasico(updated);
+          toast('Informações salvas.');
+          App.atualizarDPPSection();
+        } else {
+          // Criar nova
+          const colecaoId = null;
+          const nova = await api('POST', '/pecas', {
+            codigo: cod,
+            nome,
+            tecido: document.getElementById('f-tecido').value.trim() || null,
+            status: document.getElementById('f-status').value,
+            colecao_id: colecaoId,
+          });
+          State.pecaAtual = nova;
+          document.getElementById('f-codigo').readOnly = true;
+          App.preencherBasico(nova);
+          toast('Peça criada com sucesso!');
+          App.atualizarDPPSection();
+        }
+      } catch(e) {
+        toast('Erro ao salvar: ' + e.message, 'err');
+      }
+      setLoading(btn, false);
+    },
+
+    /* ─── FICHA TÉCNICA ─── */
+
+    async carregarFicha(pecaId) {
+      try {
+        const ficha = await api('GET', `/fichas-tecnicas/${pecaId}`);
+        State.fichaId     = ficha.id;
+        State.fichaExiste = true;
+        App.preencherFicha(ficha);
+      } catch(e) {
+        // 404 = ficha ainda não existe
+        State.fichaId     = null;
+        State.fichaExiste = false;
+      }
+    },
+
+    preencherFicha(ficha) {
+      document.getElementById('f-reciclado').value = ficha.conteudo_reciclado_pct ?? '';
+      document.getElementById('f-cuidados').value  = ficha.materiais              || '';
+      document.getElementById('f-reparo').value    = ficha.instrucoes_reparo      || '';
+      document.getElementById('f-fimvida').value   = ficha.instrucoes_fim_de_vida || '';
+
+      // Fibras
+      let fibras = [];
+      try { fibras = JSON.parse(ficha.composicao_fibras || '[]'); } catch(_) {}
+      document.getElementById('fibras-list').innerHTML = '';
+      fibras.forEach(f => App.addFibra(f.fibra, f.pct));
+      App.atualizarTotalPct();
+
+      // Certificados
+      let certs = [];
+      try { certs = JSON.parse(ficha.certificacoes || '[]'); } catch(_) {}
+      document.getElementById('certs-list').innerHTML = '';
+      certs.forEach(c => App.addCert(c.nome, c.numero, c.validade));
+    },
+
+    async salvarFicha() {
+      if (!State.pecaAtual) { toast('Salve as informações básicas primeiro.', 'err'); return; }
+      const btn = document.querySelector('[onclick="App.salvarFicha()"]');
+      setLoading(btn, true);
+
+      try {
+        const fibras = App.coletarFibras();
+        const certs  = App.coletarCerts();
+        const total  = fibras.reduce((s, f) => s + Number(f.pct || 0), 0);
+
+        if (fibras.length && total !== 100) {
+          toast('A soma dos materiais deve ser 100%. Corrija antes de salvar.', 'err');
+          setLoading(btn, false);
+          return;
+        }
+
+        const payload = {
+          peca_id:                   State.pecaAtual.id,
+          materiais:                 document.getElementById('f-cuidados').value.trim() || null,
+          instrucoes_reparo:         document.getElementById('f-reparo').value.trim()   || null,
+          instrucoes_fim_de_vida:    document.getElementById('f-fimvida').value.trim()  || null,
+          composicao_fibras:         fibras.length ? JSON.stringify(fibras) : null,
+          certificacoes:             certs.length  ? JSON.stringify(certs)  : null,
+          conteudo_reciclado_pct:    document.getElementById('f-reciclado').value !== ''
+                                       ? Number(document.getElementById('f-reciclado').value)
+                                       : null,
+        };
+
+        if (State.fichaExiste) {
+          await api('PATCH', `/fichas-tecnicas/${State.pecaAtual.id}`, payload);
+        } else {
+          const criada = await api('POST', '/fichas-tecnicas', payload);
+          State.fichaId     = criada.id;
+          State.fichaExiste = true;
+        }
+        toast('Matéria-prima salva.');
+      } catch(e) {
+        toast('Erro ao salvar: ' + e.message, 'err');
+      }
+      setLoading(btn, false);
+    },
+
+    /* ─── FIBRAS ─── */
+
+    addFibra(material = '', pct = '') {
+      const list = document.getElementById('fibras-list');
+      const row  = document.createElement('div');
+      row.className = 'fibra-row';
+      row.innerHTML = `
+        <div class="field field-mat">
+          <input type="text" placeholder="ex: algodão orgânico" value="${material}" oninput="App.atualizarTotalPct()" />
+        </div>
+        <div class="field field-pct">
+          <input type="number" placeholder="%" min="0" max="100" value="${pct}" oninput="App.atualizarTotalPct()" />
+        </div>
+        <button class="btn-remove" title="Remover" onclick="this.parentElement.remove();App.atualizarTotalPct()">&#215;</button>
+      `;
+      list.appendChild(row);
+      App.atualizarTotalPct();
+    },
+
+    coletarFibras() {
+      return [...document.getElementById('fibras-list').querySelectorAll('.fibra-row')].map(row => {
+        const inputs = row.querySelectorAll('input');
+        return { fibra: inputs[0].value.trim(), pct: Number(inputs[1].value) };
+      }).filter(f => f.fibra);
+    },
+
+    atualizarTotalPct() {
+      const total = App.coletarFibras().reduce((s, f) => s + Number(f.pct || 0), 0);
+      const el    = document.getElementById('pct-total');
+      if (!App.coletarFibras().length) { el.textContent = ''; return; }
+      el.textContent = `Total: ${total}%`;
+      el.className   = 'pct-total ' + (total === 100 ? 'ok' : 'err');
+    },
+
+    /* ─── CERTIFICADOS ─── */
+
+    addCert(nome = '', numero = '', validade = '') {
+      const list = document.getElementById('certs-list');
+      const row  = document.createElement('div');
+      row.className = 'cert-row';
+      row.innerHTML = `
+        <div class="field field-nome">
+          <input type="text" placeholder="ex: OEKO-TEX, GOTS, GRS" value="${nome}" />
+        </div>
+        <div class="field field-num">
+          <input type="text" placeholder="Número" value="${numero}" />
+        </div>
+        <div class="field field-val">
+          <input type="text" placeholder="Válido até (mês/ano ex: 2027-06)" value="${validade}" />
+        </div>
+        <button class="btn-remove" title="Remover" onclick="this.parentElement.remove()">&#215;</button>
+      `;
+      list.appendChild(row);
+    },
+
+    coletarCerts() {
+      return [...document.getElementById('certs-list').querySelectorAll('.cert-row')].map(row => {
+        const inputs = row.querySelectorAll('input');
+        return { nome: inputs[0].value.trim(), numero: inputs[1].value.trim(), validade: inputs[2].value.trim() };
+      }).filter(c => c.nome);
+    },
+
+    /* ─── ETAPAS ─── */
+
+    async carregarEtapas(codigo) {
+      try {
+        const etapas = await api('GET', `/pecas/${codigo}/etapas-producao`);
+        State.etapas = etapas;
+        App.renderEtapas();
+      } catch(_) {
+        State.etapas = [];
+      }
+    },
+
+    renderEtapas() {
+      const list = document.getElementById('etapas-list');
+      if (!State.etapas.length) {
+        list.innerHTML = '<div style="color:var(--muted);font-size:13px">Nenhuma etapa registrada ainda.</div>';
+        return;
+      }
+      const labelMap = {
+        fiacao: 'Fiação de fio',
+        tecelagem: 'Tecelagem / Malharia',
+        corte: 'Corte',
+        costura: 'Costura',
+        tingimento: 'Tingimento',
+        acabamento: 'Acabamento',
+        lavanderia: 'Lavanderia',
+      };
+      list.innerHTML = State.etapas.map(e => `
+        <div style="border:1px solid var(--border);border-radius:2px;padding:12px 16px;margin-bottom:4px;background:#fff">
+          <div style="font-size:13px;font-weight:400">${labelMap[e.etapa] || e.etapa}</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:3px">
+            ${e.pais ? e.pais : ''}${e.pais && e.instalacao_nome ? ' — ' : ''}${e.instalacao_nome || ''}
+          </div>
+        </div>
+      `).join('');
+    },
+
+    addEtapa() {
+      document.getElementById('etapa-form').style.display = 'block';
+    },
+
+    cancelarEtapa() {
+      document.getElementById('etapa-form').style.display = 'none';
+      document.getElementById('nef-pais').value = '';
+      document.getElementById('nef-inst').value = '';
+    },
+
+    async salvarEtapa() {
+      if (!State.pecaAtual) { toast('Salve as informações básicas primeiro.', 'err'); return; }
+      const btn = document.querySelector('[onclick="App.salvarEtapa()"]');
+      setLoading(btn, true);
+      try {
+        const payload = {
+          etapa:          document.getElementById('nef-etapa').value,
+          pais:           document.getElementById('nef-pais').value.trim() || null,
+          instalacao_nome: document.getElementById('nef-inst').value.trim() || null,
+        };
+        await api('POST', `/pecas/${State.pecaAtual.codigo}/etapas-producao`, payload);
+        await App.carregarEtapas(State.pecaAtual.codigo);
+        App.cancelarEtapa();
+        toast('Etapa registrada.');
+      } catch(e) {
+        toast('Erro ao salvar etapa: ' + e.message, 'err');
+      }
+      setLoading(btn, false);
+    },
+
+    /* ─── DPP ─── */
+
+    atualizarDPPSection() {
+      const section = document.getElementById('dpp-section');
+      const status  = document.getElementById('f-status').value;
+      if (!State.pecaAtual || status === 'ideia') {
+        section.classList.remove('visible');
+        return;
+      }
+      section.classList.add('visible');
+    },
+
+    async publicarDPP() {
+      if (!State.pecaAtual) { toast('Salve a peça primeiro.', 'err'); return; }
+      const gtin = document.getElementById('f-gtin').value.trim();
+      if (!gtin) { toast('Informe o código GTIN antes de publicar.', 'err'); return; }
+
+      const btn = document.getElementById('btn-publicar-dpp');
+      setLoading(btn, true);
+      try {
+        await api('POST', `/pecas/${State.pecaAtual.codigo}/dpp/publicar`, { gtin });
+        toast('Passaporte Digital publicado!');
+        State.dppPublicado = true;
+
+        document.getElementById('dpp-published').classList.add('visible');
+
+        // Exibir QR code
+        const qrWrap = document.getElementById('dpp-qr');
+        qrWrap.innerHTML = `<img src="/dpp/${gtin}/qr" alt="QR Code DPP" onerror="this.alt='QR indisponível'" />`;
+
+        // Link público
+        document.getElementById('dpp-link-wrap').innerHTML =
+          `Ver passaporte: <a href="/dpp/${gtin}" target="_blank">/dpp/${gtin}</a>`;
+      } catch(e) {
+        toast('Erro ao publicar DPP: ' + e.message, 'err');
+      }
+      setLoading(btn, false);
+    },
+
+  };
+
+  /* ═══════════════════════════════════════════════════════════════
+     INIT
+  ═══════════════════════════════════════════════════════════════ */
+
+  document.addEventListener('DOMContentLoaded', () => {
+    App.mostrarTela('list');
+    App.carregarLista();
+
+    // Atualiza seção DPP ao mudar status
+    document.getElementById('f-status').addEventListener('change', () => {
+      App.atualizarDPPSection();
+    });
+  });
   </script>
 
-  <script src="./js/fashion-os-catalog.js"></script>
 </body>
 </html>
