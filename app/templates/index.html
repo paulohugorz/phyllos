@@ -446,6 +446,143 @@
       margin: 28px 0;
     }
 
+    /* ── Catálogo de matérias-primas ── */
+    .catalog-wrap { position: relative; }
+
+    .catalog-input {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      padding: 11px 13px 11px 36px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--obsidian);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .catalog-input:focus { border-color: var(--gold); }
+    .catalog-input::placeholder { color: var(--muted); }
+
+    .catalog-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+      font-size: 15px;
+    }
+
+    .catalog-results {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      box-shadow: 0 6px 20px rgba(15,15,13,0.1);
+      z-index: 200;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+    .catalog-results.hidden { display: none; }
+
+    .catalog-item {
+      padding: 12px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+    .catalog-item:last-child { border-bottom: none; }
+    .catalog-item:hover { background: rgba(184,154,106,0.06); }
+
+    .catalog-item-nome {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--obsidian);
+    }
+    .catalog-item-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .catalog-item-forn {
+      color: var(--gold);
+    }
+    .catalog-nota {
+      display: inline-flex;
+      gap: 1px;
+    }
+    .catalog-nota-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border-md);
+      margin-top: 3px;
+    }
+    .catalog-nota-dot.ativo { background: var(--gold); }
+
+    .catalog-empty {
+      padding: 16px 14px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* ── Chips de materiais vinculados ── */
+    .materiais-vinculados {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .mat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(184,154,106,0.1);
+      border: 1px solid rgba(184,154,106,0.3);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12px;
+      color: var(--obsidian);
+    }
+    .mat-chip-funcao {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .mat-chip-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      transition: color 0.12s;
+    }
+    .mat-chip-remove:hover { color: var(--red); }
+
+    .catalog-importing {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .catalog-importing .spinner { border-top-color: var(--gold); border-color: rgba(184,154,106,0.2); }
+
     /* ── Etapas registradas ── */
     .etapas-registradas { margin-bottom: 24px; }
     .etapa-card {
@@ -603,6 +740,33 @@
 
       <div class="screen-title" id="mat-titulo">Material da peça</div>
       <div class="screen-peca-codigo" id="mat-codigo"></div>
+
+      <!-- 0. Importar do catálogo -->
+      <div class="field">
+        <label>
+          Importar do catálogo de fornecedores
+          <span class="hint"> — busque por malha, tecido, fio, algodão…</span>
+        </label>
+        <div class="catalog-wrap">
+          <span class="catalog-icon">⌕</span>
+          <input
+            type="search"
+            id="catalog-search"
+            class="catalog-input"
+            placeholder="ex: jersey orgânico, sarja, ribana…"
+            autocomplete="off"
+            oninput="App.onCatalogInput(this.value)"
+            onfocus="App.onCatalogFocus()"
+          />
+          <div id="catalog-results" class="catalog-results hidden"></div>
+        </div>
+        <div id="catalog-importing" style="display:none" class="catalog-importing">
+          <span class="spinner"></span> Vinculando material…
+        </div>
+        <div id="materiais-vinculados" class="materiais-vinculados"></div>
+      </div>
+
+      <hr class="section-sep" />
 
       <!-- 1. De que é feita -->
       <div class="field">
@@ -920,8 +1084,11 @@
       const peca = State.pecas.find(p => String(p.codigo) === String(codigo));
       if (!peca) { toast('Peça não encontrada.', 'err'); return; }
       State.pecaAtual = peca;
-      await App.carregarFicha(peca.id);
-      await App.carregarEtapas(peca.codigo);
+      await Promise.all([
+        App.carregarFicha(peca.id),
+        App.carregarEtapas(peca.codigo),
+        App._carregarMateriaisVinculados(peca.codigo),
+      ]);
       App.preencherTelaMaterial();
       mostrarTela('screen-material');
     },
@@ -961,6 +1128,8 @@
         State.pecaAtual   = nova;
         State.fichaExiste = false;
         State.etapas      = [];
+        App._materiaisVinculados = [];
+        App._renderChips();
         App.fecharModalNovaPeca();
         App.preencherTelaMaterial(true);
         mostrarTela('screen-material');
@@ -969,6 +1138,128 @@
         toast('Erro ao criar peça: ' + e.message, 'err');
       }
       setLoading(btn, false, 'Criar peça');
+    },
+
+    /* ─── CATÁLOGO DE MATÉRIAS-PRIMAS ─── */
+
+    _catalogTimer: null,
+    _catalogProdutos: [],   // cache da última busca
+    _materiaisVinculados: [], // [{id, funcao, produto}]
+
+    onCatalogInput(val) {
+      clearTimeout(App._catalogTimer);
+      const q = val.trim();
+      if (!q) { App._fecharCatalog(); return; }
+      App._catalogTimer = setTimeout(() => App._buscarCatalogo(q), 320);
+    },
+
+    onCatalogFocus() {
+      const q = document.getElementById('catalog-search').value.trim();
+      if (q && App._catalogProdutos.length) App._renderResultados(App._catalogProdutos);
+    },
+
+    async _buscarCatalogo(q) {
+      const res = document.getElementById('catalog-results');
+      res.classList.remove('hidden');
+      res.innerHTML = '<div class="catalog-empty"><span class="spinner spinner-dark"></span></div>';
+      try {
+        const dados = await api('GET', `/fornecedores/materias-primas?q=${encodeURIComponent(q)}&nota_min=2`);
+        App._catalogProdutos = dados;
+        App._renderResultados(dados);
+      } catch (_) {
+        res.innerHTML = '<div class="catalog-empty">Erro ao buscar no catálogo.</div>';
+      }
+    },
+
+    _renderResultados(produtos) {
+      const res = document.getElementById('catalog-results');
+      if (!produtos.length) {
+        res.innerHTML = '<div class="catalog-empty">Nenhum material encontrado.</div>';
+        res.classList.remove('hidden');
+        return;
+      }
+      res.innerHTML = produtos.map(p => {
+        const notas = Array.from({length: 5}, (_, i) =>
+          `<span class="catalog-nota-dot${i < (p.nota_confianca || 0) ? ' ativo' : ''}"></span>`
+        ).join('');
+        const tipo  = p.tipo ? p.tipo.replace('_', ' ') : '';
+        const comp  = p.composicao ? ` · ${p.composicao}` : '';
+        return `
+          <div class="catalog-item" onclick="App._selecionarMaterial(${p.id}, event)">
+            <div class="catalog-item-nome">${esc(p.nome)}</div>
+            <div class="catalog-item-meta">
+              <span class="catalog-item-forn">${esc(p.fornecedor_nome)}</span>
+              ${tipo ? `<span>${esc(tipo)}</span>` : ''}
+              ${comp ? `<span>${esc(comp)}</span>` : ''}
+              <span class="catalog-nota">${notas}</span>
+            </div>
+          </div>`;
+      }).join('');
+      res.classList.remove('hidden');
+    },
+
+    async _selecionarMaterial(produtoId, e) {
+      e && e.stopPropagation();
+      App._fecharCatalog();
+      document.getElementById('catalog-search').value = '';
+
+      const p = State.pecaAtual;
+      if (!p) return;
+
+      document.getElementById('catalog-importing').style.display = 'flex';
+      try {
+        const mat = await api('POST', `/pecas/${p.codigo}/materiais`, {
+          produto_fornecedor_id: produtoId,
+          funcao: 'principal',
+        });
+        App._materiaisVinculados.push(mat);
+        App._renderChips();
+        // Preenche campos da ficha técnica com o que voltou do servidor
+        await App.carregarFicha(p.id);
+        toast(`Material vinculado: ${mat.produto.nome}`);
+      } catch (err) {
+        toast(err.message || 'Erro ao vincular material.', 'err');
+      }
+      document.getElementById('catalog-importing').style.display = 'none';
+    },
+
+    async _removerMaterial(materialId) {
+      const p = State.pecaAtual;
+      if (!p) return;
+      try {
+        await api('DELETE', `/pecas/${p.codigo}/materiais/${materialId}`);
+        App._materiaisVinculados = App._materiaisVinculados.filter(m => m.id !== materialId);
+        App._renderChips();
+        await App.carregarFicha(p.id);
+        toast('Material removido.');
+      } catch (err) {
+        toast(err.message || 'Erro ao remover.', 'err');
+      }
+    },
+
+    _renderChips() {
+      const el = document.getElementById('materiais-vinculados');
+      if (!App._materiaisVinculados.length) { el.innerHTML = ''; return; }
+      el.innerHTML = App._materiaisVinculados.map(m => `
+        <span class="mat-chip">
+          <span class="mat-chip-funcao">${esc(m.funcao || 'principal')}</span>
+          ${esc(m.produto.nome)}
+          <button class="mat-chip-remove" title="Remover" onclick="App._removerMaterial(${m.id})">&#215;</button>
+        </span>
+      `).join('');
+    },
+
+    async _carregarMateriaisVinculados(codigo) {
+      App._materiaisVinculados = [];
+      try {
+        App._materiaisVinculados = await api('GET', `/pecas/${codigo}/materiais`);
+      } catch (_) {}
+      App._renderChips();
+    },
+
+    _fecharCatalog() {
+      const res = document.getElementById('catalog-results');
+      if (res) res.classList.add('hidden');
     },
 
     /* ─── TELA 2 — MATERIAL ─── */
@@ -1267,9 +1558,17 @@
   document.addEventListener('DOMContentLoaded', () => {
     App.carregarLista();
 
-    // Fechar modal com Esc
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') App.fecharModalNovaPeca();
+      if (e.key === 'Escape') {
+        App.fecharModalNovaPeca();
+        App._fecharCatalog();
+      }
+    });
+
+    // Fecha dropdown do catálogo ao clicar fora
+    document.addEventListener('click', e => {
+      const wrap = document.getElementById('catalog-search')?.closest('.catalog-wrap');
+      if (wrap && !wrap.contains(e.target)) App._fecharCatalog();
     });
   });
   </script>
