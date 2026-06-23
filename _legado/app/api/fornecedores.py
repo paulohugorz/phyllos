@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from typing import List, Optional
 
@@ -13,6 +14,25 @@ from app.schemas.schemas import (
 
 router = APIRouter(prefix="/fornecedores", tags=["Fornecedores"])
 
+# Constantes de grupo — definidas antes dos routes que as referenciam
+_GRUPO_TIPOS = {
+    "fibra":          ["pluma", "fibra"],
+    "fios":           ["fio"],
+    "tecidos":        ["malha", "tecido_plano", "lona"],
+    "beneficiamento": ["produto_acabado", "acabamento", "insumo", "confeccao"],
+}
+
+_GRUPO_META = [
+    {"id": "fibra",          "label": "Fibra / Pluma",    "emoji": "🌱"},
+    {"id": "fios",           "label": "Fios",             "emoji": "🧵"},
+    {"id": "tecidos",        "label": "Tecidos / Malhas", "emoji": "🪡"},
+    {"id": "beneficiamento", "label": "Beneficiamento",   "emoji": "✂️"},
+]
+
+
+# ── Rotas de coleção (sem path param) ────────────────────────────────────────
+# IMPORTANTE: todas as rotas estáticas devem vir ANTES de /{fornecedor_id}
+# para evitar que o Starlette capture "grupos"/"materias-primas" como inteiro.
 
 @router.get("", response_model=List[FornecedorOut])
 def listar_fornecedores(
@@ -41,6 +61,73 @@ def criar_fornecedor(data: FornecedorCreate, db: Session = Depends(get_db)):
     db.refresh(f)
     return f
 
+
+@router.get("/grupos", tags=["Catálogo"])
+def listar_grupos():
+    return _GRUPO_META
+
+
+@router.get("/materias-primas", response_model=List[MateriaPrimaOut], tags=["Catálogo"])
+def buscar_materias_primas(
+    q: Optional[str] = Query(None, description="Busca livre por nome ou composição"),
+    tipo: Optional[str] = Query(None, description="malha | tecido_plano | fio | pluma | lona"),
+    grupo: Optional[str] = Query(None, description="fibra | fios | tecidos | beneficiamento"),
+    nota_min: Optional[int] = Query(None, description="Nota mínima de confiança do fornecedor (1–5)"),
+    disponivel: Optional[str] = Query(None, description="sim | nao | a_validar"),
+    db: Session = Depends(get_db),
+):
+    produtos = db.query(ProdutoFornecedor).join(Fornecedor)
+
+    if q:
+        termo = f"%{q.lower()}%"
+        produtos = produtos.filter(
+            ProdutoFornecedor.nome.ilike(termo) |
+            ProdutoFornecedor.composicao.ilike(termo) |
+            ProdutoFornecedor.tipo.ilike(termo)
+        )
+    if grupo and grupo in _GRUPO_TIPOS:
+        tipos = _GRUPO_TIPOS[grupo]
+        produtos = produtos.filter(or_(*[ProdutoFornecedor.tipo == t for t in tipos]))
+    elif tipo:
+        produtos = produtos.filter(ProdutoFornecedor.tipo == tipo)
+    if nota_min is not None:
+        produtos = produtos.filter(Fornecedor.nota_confianca >= nota_min)
+    if disponivel:
+        produtos = produtos.filter(ProdutoFornecedor.disponivel == disponivel)
+
+    produtos = produtos.order_by(
+        Fornecedor.nota_confianca.desc().nulls_last(),
+        ProdutoFornecedor.nome,
+    ).limit(60).all()
+
+    return [_produto_para_materia_prima(p) for p in produtos]
+
+
+def _produto_para_materia_prima(p: ProdutoFornecedor) -> dict:
+    f = p.fornecedor
+    return {
+        "id": p.id,
+        "nome": p.nome,
+        "codigo_fornecedor": p.codigo_fornecedor,
+        "tipo": p.tipo,
+        "composicao": p.composicao,
+        "tingimento": p.tingimento,
+        "gramatura_gm2": p.gramatura_gm2,
+        "largura_m": p.largura_m,
+        "moq": p.moq,
+        "preco_referencia": p.preco_referencia,
+        "unidade_preco": p.unidade_preco,
+        "uso_recomendado": p.uso_recomendado,
+        "disponivel": p.disponivel,
+        "fornecedor_id": f.id,
+        "fornecedor_nome": f.nome,
+        "fornecedor_cidade": f.cidade,
+        "nota_confianca": f.nota_confianca,
+        "certificacoes_fornecedor": f.certificacoes,
+    }
+
+
+# ── Rotas com path param /{fornecedor_id} ────────────────────────────────────
 
 @router.get("/{fornecedor_id}", response_model=FornecedorOut)
 def obter_fornecedor(fornecedor_id: int, db: Session = Depends(get_db)):
@@ -135,64 +222,6 @@ def remover_certificacao(fornecedor_id: int, cert_id: int, db: Session = Depends
         raise HTTPException(status_code=404, detail="Certificação não encontrada")
     db.delete(c)
     db.commit()
-
-
-# ---------- Busca de matérias-primas (catálogo unificado) ----------
-
-@router.get("/materias-primas", response_model=List[MateriaPrimaOut], tags=["Catálogo"])
-def buscar_materias_primas(
-    q: Optional[str] = Query(None, description="Busca livre por nome ou composição"),
-    tipo: Optional[str] = Query(None, description="malha | tecido_plano | fio | pluma | lona"),
-    nota_min: Optional[int] = Query(None, description="Nota mínima de confiança do fornecedor (1–5)"),
-    disponivel: Optional[str] = Query(None, description="sim | nao | a_validar"),
-    db: Session = Depends(get_db),
-):
-    produtos = db.query(ProdutoFornecedor).join(Fornecedor)
-
-    if q:
-        termo = f"%{q.lower()}%"
-        produtos = produtos.filter(
-            ProdutoFornecedor.nome.ilike(termo) |
-            ProdutoFornecedor.composicao.ilike(termo) |
-            ProdutoFornecedor.tipo.ilike(termo)
-        )
-    if tipo:
-        produtos = produtos.filter(ProdutoFornecedor.tipo == tipo)
-    if nota_min is not None:
-        produtos = produtos.filter(Fornecedor.nota_confianca >= nota_min)
-    if disponivel:
-        produtos = produtos.filter(ProdutoFornecedor.disponivel == disponivel)
-
-    produtos = produtos.order_by(
-        Fornecedor.nota_confianca.desc().nulls_last(),
-        ProdutoFornecedor.nome,
-    ).limit(60).all()
-
-    return [_produto_para_materia_prima(p) for p in produtos]
-
-
-def _produto_para_materia_prima(p: ProdutoFornecedor) -> dict:
-    f = p.fornecedor
-    return {
-        "id": p.id,
-        "nome": p.nome,
-        "codigo_fornecedor": p.codigo_fornecedor,
-        "tipo": p.tipo,
-        "composicao": p.composicao,
-        "tingimento": p.tingimento,
-        "gramatura_gm2": p.gramatura_gm2,
-        "largura_m": p.largura_m,
-        "moq": p.moq,
-        "preco_referencia": p.preco_referencia,
-        "unidade_preco": p.unidade_preco,
-        "uso_recomendado": p.uso_recomendado,
-        "disponivel": p.disponivel,
-        "fornecedor_id": f.id,
-        "fornecedor_nome": f.nome,
-        "fornecedor_cidade": f.cidade,
-        "nota_confianca": f.nota_confianca,
-        "certificacoes_fornecedor": f.certificacoes,
-    }
 
 
 # ---------- helpers ----------
