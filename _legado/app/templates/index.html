@@ -942,17 +942,20 @@
       <div class="nav-stage locked" id="ns-tecnico" onclick="App.irParaTecnico()">
         <span class="nav-stage-num">04</span> Técnico
       </div>
-      <div class="nav-stage locked" id="ns-ficha" onclick="App.irParaMaterial()">
-        <span class="nav-stage-num">05</span> Ficha & Material
+      <div class="nav-stage locked" id="ns-ficha" onclick="App.irParaFicha()">
+        <span class="nav-stage-num">05</span> Ficha Técnica
+      </div>
+      <div class="nav-stage locked" id="ns-material" onclick="App.irParaMaterial()">
+        <span class="nav-stage-num">06</span> Material
       </div>
       <div class="nav-stage locked" id="ns-corte" onclick="App.irParaEtapas()">
-        <span class="nav-stage-num">06</span> Plano de Corte
+        <span class="nav-stage-num">07</span> Plano de Corte
       </div>
       <div class="nav-stage locked" id="ns-validar" onclick="App.irParaValidar()">
-        <span class="nav-stage-num">07</span> Validar
+        <span class="nav-stage-num">08</span> Validar
       </div>
       <div class="nav-stage" id="ns-painel" onclick="App.irParaPainel()">
-        <span class="nav-stage-num">08</span> Painel
+        <span class="nav-stage-num">09</span> Painel
       </div>
     </div>
   </nav>
@@ -986,16 +989,174 @@
   </div>
 
   <!-- ══════════════════════════════════════════════════════
+       TELA — FICHA TÉCNICA
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-ficha" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaTecnico()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Desenho Técnico
+        </button>
+        <span id="ficha-titulo" class="back-bar-titulo"></span>
+      </div>
+
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:400;margin-bottom:4px">Ficha Técnica</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">O que define esta peça como produto — identidade, estrutura e intenção.</div>
+
+      <!-- Identidade da peça -->
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">Identidade</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Categoria</label>
+          <select id="ficha-categoria" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Calça</option>
+            <option>Saia</option>
+            <option>Vestido</option>
+            <option>Blusa</option>
+            <option>Camisa</option>
+            <option>Casaco / Sobretudo</option>
+            <option>Jaqueta</option>
+            <option>Macacão</option>
+            <option>Conjunto</option>
+            <option>Bermuda / Short</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Silhueta</label>
+          <select id="ficha-silhueta" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Reta / Tubinho</option>
+            <option>A-line</option>
+            <option>Ampla / Oversized</option>
+            <option>Ajustada / Slim</option>
+            <option>Evasê</option>
+            <option>Wrap / Cruzado</option>
+            <option>Cargo / Funcional</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Comprimento</label>
+          <select id="ficha-comprimento" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Curto (acima do joelho)</option>
+            <option>Midi (joelho)</option>
+            <option>Longo (tornozelo)</option>
+            <option>Cropped</option>
+            <option>Maxi</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Ocasião de uso</label>
+          <select id="ficha-ocasiao" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Casual / Dia a dia</option>
+            <option>Trabalho / Corporativo</option>
+            <option>Treino / Esporte</option>
+            <option>Social / Festa</option>
+            <option>Praia / Piscina</option>
+            <option>Outdoor / Aventura</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Construção -->
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">Construção</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Tipo de modelagem</label>
+          <select id="ficha-modelagem" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Plana / Industrial</option>
+            <option>Moulage</option>
+            <option>Mista</option>
+            <option>Paramétrica</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Tipo de costura</label>
+          <select id="ficha-costura" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Overloque + Pespoint</option>
+            <option>Flatlock</option>
+            <option>Overlock + Caseado</option>
+            <option>Francesa</option>
+            <option>Inglesa</option>
+            <option>Invisível</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Fechamento</label>
+          <select id="ficha-fechamento" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Elástico</option>
+            <option>Zíper invisível</option>
+            <option>Zíper aparente</option>
+            <option>Botões</option>
+            <option>Cordão</option>
+            <option>Velcro</option>
+            <option>Sem fechamento</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Cós / Acabamento</label>
+          <select id="ficha-cos" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Cós inteiro</option>
+            <option>Cós embutido</option>
+            <option>Sem cós / Elástico nu</option>
+            <option>Gola / Decote específico</option>
+            <option>Não se aplica</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Aviamentos -->
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">Aviamentos obrigatórios</div>
+      <div class="field" style="margin-bottom:20px">
+        <div class="desc-chips" id="ficha-aviamentos-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Zíper</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Botões</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Elástico</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Entretela</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Forro</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Viés</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Cordão</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Ilhós</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Rebite</span>
+        </div>
+      </div>
+
+      <!-- Observações -->
+      <div class="field" style="margin-bottom:24px">
+        <label>Observações para a costureira</label>
+        <textarea id="ficha-obs" rows="3"
+          placeholder="ex: Atenção ao sentido do fio na frente. Costurar bolso antes do forro."
+          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn btn-primary" onclick="App.salvarFicha()">Salvar ficha</button>
+        <button class="btn btn-outline" onclick="App.irParaMaterial()">Próximo: material →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
        TELA 2 — MATERIAL
   ══════════════════════════════════════════════════════ -->
   <div id="screen-material" class="screen">
     <div class="screen-wrap">
       <div class="back-bar">
-        <button class="btn-back" onclick="App.irParaBusca()">
+        <button class="btn-back" onclick="App.irParaFicha()">
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
             <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Busca
+          Ficha Técnica
         </button>
       </div>
 
@@ -1278,11 +1439,77 @@
         <span id="ajustes-titulo" class="back-bar-titulo"></span>
       </div>
 
-      <div class="field" style="margin-bottom:20px">
-        <label>Observações e ajustes da peça</label>
-        <textarea id="ajustes-notas" rows="5"
-          placeholder="ex: Aumentar 2cm na lateral. Reduzir largura do ombro. Cliente prefere abertura lateral no lugar de zíper."
-          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
+      <!-- Medidas sobre o molde -->
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:400;margin-bottom:4px">Medidas do corpo</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Preencha as medidas reais da cliente para ajustar o molde base.</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Altura (cm)</label>
+          <input id="med-altura" type="number" placeholder="168" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Busto (cm)</label>
+          <input id="med-busto" type="number" placeholder="90" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Cintura (cm)</label>
+          <input id="med-cintura" type="number" placeholder="72" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Quadril (cm)</label>
+          <input id="med-quadril" type="number" placeholder="98" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Ombro (cm)</label>
+          <input id="med-ombro" type="number" placeholder="38" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Comprimento torso (cm)</label>
+          <input id="med-torso" type="number" placeholder="42" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Manga (cm)</label>
+          <input id="med-manga" type="number" placeholder="60" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Entrepernas (cm)</label>
+          <input id="med-entrepernas" type="number" placeholder="75" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+      </div>
+
+      <!-- Visualização do molde com medidas sobrepostas -->
+      <div style="background:#f8f7f5;border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:20px;text-align:center">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Referência visual do molde</div>
+        <svg viewBox="0 0 240 320" style="max-width:180px;width:100%;" xmlns="http://www.w3.org/2000/svg">
+          <!-- silhueta frontal simplificada -->
+          <g stroke="#333" stroke-width="1.2" fill="none">
+            <!-- cabeça -->
+            <ellipse cx="120" cy="28" rx="18" ry="22" fill="#e8e4de" stroke="#bbb"/>
+            <!-- pescoço -->
+            <rect x="113" y="48" width="14" height="12" rx="2" fill="#e8e4de" stroke="#bbb"/>
+            <!-- tronco -->
+            <path d="M88 60 Q72 68 70 100 Q68 130 75 160 L165 160 Q172 130 170 100 Q168 68 152 60 Z" fill="#ede9e2" stroke="#bbb"/>
+            <!-- ombros -->
+            <line x1="88" y1="62" x2="70" y2="75" stroke="#999" stroke-dasharray="3,2"/>
+            <line x1="152" y1="62" x2="170" y2="75" stroke="#999" stroke-dasharray="3,2"/>
+            <!-- busto -->
+            <line x1="72" y1="90" x2="168" y2="90" stroke="#c8a97a" stroke-width="1" stroke-dasharray="4,2"/>
+            <!-- cintura -->
+            <line x1="74" y1="128" x2="166" y2="128" stroke="#c8a97a" stroke-width="1" stroke-dasharray="4,2"/>
+            <!-- quadril -->
+            <line x1="70" y1="155" x2="170" y2="155" stroke="#c8a97a" stroke-width="1" stroke-dasharray="4,2"/>
+            <!-- pernas -->
+            <path d="M75 160 Q72 200 70 260 L100 260 Q105 220 120 200 Q135 220 140 260 L170 260 Q168 200 165 160 Z" fill="#ede9e2" stroke="#bbb"/>
+          </g>
+          <!-- labels -->
+          <text x="174" y="93" font-size="8" fill="#c8a97a" font-family="Jost,sans-serif">busto</text>
+          <text x="170" y="131" font-size="8" fill="#c8a97a" font-family="Jost,sans-serif">cintura</text>
+          <text x="172" y="158" font-size="8" fill="#c8a97a" font-family="Jost,sans-serif">quadril</text>
+          <text x="30" y="70" font-size="8" fill="#888" font-family="Jost,sans-serif">ombro</text>
+          <line x1="56" y1="68" x2="72" y2="68" stroke="#888" stroke-width=".8"/>
+        </svg>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px">As medidas preenchidas ajustam o molde base automaticamente.</div>
       </div>
 
       <div class="field" style="margin-bottom:20px">
@@ -1298,17 +1525,14 @@
       </div>
 
       <div class="field" style="margin-bottom:20px">
-        <label>Prioridade</label>
-        <div class="desc-chips">
-          <span class="desc-chip" onclick="App.toggleDescChip(this)">Urgente</span>
-          <span class="desc-chip" onclick="App.toggleDescChip(this)">Normal</span>
-          <span class="desc-chip" onclick="App.toggleDescChip(this)">Aguardando insumo</span>
-          <span class="desc-chip" onclick="App.toggleDescChip(this)">Em revisão</span>
-        </div>
+        <label>Observações adicionais</label>
+        <textarea id="ajustes-notas" rows="3"
+          placeholder="ex: Reduzir 2cm na lateral. Cliente prefere abertura lateral no lugar de zíper."
+          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
       </div>
 
       <div class="screen-footer">
-        <button class="btn btn-primary" onclick="App.salvarAjustes()">Salvar ajustes</button>
+        <button class="btn btn-primary" onclick="App.salvarAjustes()">Salvar medidas</button>
         <button class="btn btn-outline" onclick="App.irParaTecnico()">Próximo: desenho técnico →</button>
       </div>
     </div>
@@ -1356,7 +1580,7 @@
       </div>
 
       <div class="screen-footer">
-        <button class="btn btn-primary" onclick="App.irParaMaterial()">Próximo: ficha & material →</button>
+        <button class="btn btn-primary" onclick="App.irParaFicha()">Próximo: ficha técnica →</button>
         <button class="btn btn-ghost" onclick="App.irParaAjustes()">← Voltar</button>
       </div>
     </div>
@@ -1592,7 +1816,7 @@
       ]);
       App.preencherTelaMaterial();
       mostrarTela('screen-material');
-      App.setNavStage('ns-ficha');
+      App.setNavStage('ns-material');
     },
 
     /* ── Navegação de estágios ── */
@@ -1603,7 +1827,7 @@
       if (el) el.classList.add('active');
       // Desbloqueia etapas 03-07 quando há peça selecionada
       const temPeca = !!State.pecaAtual;
-      ['ns-ajustes','ns-tecnico','ns-ficha','ns-corte','ns-validar'].forEach(id => {
+      ['ns-ajustes','ns-tecnico','ns-ficha','ns-material','ns-corte','ns-validar'].forEach(id => {
         const s = document.getElementById(id);
         if (s) s.classList.toggle('locked', !temPeca);
       });
@@ -1914,6 +2138,37 @@
       document.getElementById('tecnico-file-input').value = '';
     },
 
+    irParaFicha() {
+      if (!State.pecaAtual) { App.irParaBusca(); return; }
+      const p = State.pecaAtual;
+      document.getElementById('ficha-titulo').textContent = p.nome || p.codigo;
+      mostrarTela('screen-ficha');
+      App.setNavStage('ns-ficha');
+    },
+
+    salvarFicha() {
+      if (!State.pecaAtual) return;
+      const dados = {
+        categoria:   document.getElementById('ficha-categoria').value,
+        silhueta:    document.getElementById('ficha-silhueta').value,
+        comprimento: document.getElementById('ficha-comprimento').value,
+        ocasiao:     document.getElementById('ficha-ocasiao').value,
+        modelagem:   document.getElementById('ficha-modelagem').value,
+        costura:     document.getElementById('ficha-costura').value,
+        fechamento:  document.getElementById('ficha-fechamento').value,
+        cos:         document.getElementById('ficha-cos').value,
+        obs_costureira: document.getElementById('ficha-obs').value,
+      };
+      const aviamentos = [...document.querySelectorAll('#ficha-aviamentos-chips .desc-chip.sel')]
+                          .map(el => el.textContent).join(', ');
+      dados.aviamentos = aviamentos;
+      fetch(`/pecas/${State.pecaAtual.codigo}`, {
+        method: 'PATCH',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ observacoes: JSON.stringify(dados) })
+      }).then(() => App.irParaMaterial());
+    },
+
     toggleDescChip(el) {
       el.classList.toggle('sel');
     },
@@ -2036,7 +2291,7 @@
       if (!State.pecaAtual) { App.irParaBusca(); return; }
       App.preencherTelaMaterial();
       mostrarTela('screen-material');
-      App.setNavStage('ns-ficha');
+      App.setNavStage('ns-material');
     },
 
     async carregarFicha(pecaId) {
