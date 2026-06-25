@@ -562,7 +562,12 @@ def obter_dpp(identifier: str, db: Session = Depends(get_db)):
             "energy": ficha.fonte_energia_kwh_kg,
             "carbon": ficha.fonte_carbono_kgco2e_kg,
             "methodology": ficha.metodologia_fatores_impacto,
-            "limitation": "Indicadores estimados nao substituem ACV oficial ou auditoria ambiental.",
+            "limitation": (
+                "Fatores estimados com base genérica (Ecoinvent/IPCC). "
+                "Valores reais dependem de dados primários do fornecedor e ACV oficial."
+                if ficha.metodologia_fatores_impacto and "estimativa genérica" in ficha.metodologia_fatores_impacto
+                else "Indicadores estimados não substituem ACV oficial ou auditoria ambiental."
+            ),
         } if ficha else {},
         "cutWaste": {
             "areaLostM2": ficha.area_perdida_m2,
