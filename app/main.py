@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from app.core.database import Base, engine, run_migrations, SessionLocal
 from app.api.routes import public_dpp_url, router
 from app.api.fornecedores import router as router_fornecedores
+from app.api.modelagem import router as router_modelagem
 from app.validators.dpp_validators import EVIDENCE_LABELS
 import os, json
 
@@ -34,6 +35,7 @@ app.mount("/static/images", StaticFiles(directory=images_dir), name="images")
 
 app.include_router(router)
 app.include_router(router_fornecedores)
+app.include_router(router_modelagem)
 
 
 @app.get("/", response_class=HTMLResponse)

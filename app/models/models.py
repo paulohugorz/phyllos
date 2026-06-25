@@ -49,6 +49,7 @@ class Peca(Base):
     referencias_visuais = relationship("PecaVisualReference", back_populates="peca")
     etapas_producao = relationship("EtapaProducao", back_populates="peca")
     materiais = relationship("PecaMaterial", back_populates="peca", cascade="all, delete-orphan")
+    modelagem_spec = relationship("ModelagemSpec", back_populates="peca", uselist=False)
 
 
 class FichaTecnica(Base):
@@ -245,6 +246,81 @@ class CertificacaoFornecedor(Base):
     criado_em = Column(DateTime(timezone=True), server_default=func.now())
 
     fornecedor = relationship("Fornecedor", back_populates="certificacoes")
+
+
+class ModelagemSpec(Base):
+    """MIE — Modelagem Intelligence Engine. Especificação técnica estruturada de modelagem.
+    Cada registro é 1:1 com Peca. O campo status_revisao + notas_revisao alimenta o data moat."""
+    __tablename__ = "modelagem_specs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    peca_id = Column(Integer, ForeignKey("pecas.id"), unique=True, nullable=False)
+    versao = Column(String, default="1.0")
+
+    # Entrada em linguagem natural
+    input_raw = Column(Text)
+    intencoes = Column(Text)  # JSON: ["disfarcar_abdomen", "aumentar_conforto", ...]
+
+    # Base de molde
+    base_id = Column(String)        # "base_blusa_evase" | "base_calca_reta" | ...
+    categoria_peca = Column(String) # blusa | calca | vestido | saia | macacao | ...
+    silhueta = Column(String)       # reta | evase | ajustada | boxy | oversized | ...
+
+    # Medidas corporais (cm)
+    altura_cm = Column(Float)
+    busto_cm = Column(Float)
+    cintura_cm = Column(Float)
+    quadril_cm = Column(Float)
+    ombro_cm = Column(Float)
+    costas_cm = Column(Float)
+    cava_cm = Column(Float)
+    braco_cm = Column(Float)
+    punho_cm = Column(Float)
+    gancho_cm = Column(Float)
+    coxa_cm = Column(Float)
+    joelho_cm = Column(Float)
+    entreperna_cm = Column(Float)
+    tornozelo_cm = Column(Float)
+    comprimento_total_cm = Column(Float)
+
+    # Folgas de vestibilidade (cm)
+    folga_busto = Column(Float)
+    folga_cintura = Column(Float)
+    folga_quadril = Column(Float)
+    folga_ombro = Column(Float)
+    folga_cava = Column(Float)
+    folga_coxa = Column(Float)
+    folga_gancho = Column(Float)
+    folga_entreperna = Column(Float)
+    grau_ajuste = Column(String)  # fitted | semi | relaxed | oversized | compression
+
+    # Construção — mecanismos 3D→2D
+    mecanismos = Column(Text)           # JSON: ["pence_busto", "recorte_princesa", ...]
+    linha_fio = Column(String)          # reto | trama | vies | misto
+    tecidos_recomendados = Column(Text) # JSON: termos normalizados PLC
+    tecidos_a_evitar = Column(Text)     # JSON: termos normalizados PLC
+
+    # Comportamento de tecido
+    elasticidade = Column(String)       # plano | 2vias | 4vias
+    caimento = Column(String)           # fluido | estruturado | medio
+    # medida_final = medida_corporal + folga - (medida_corporal * reducao_elastica_pct / 100)
+    reducao_elastica_pct = Column(Float)
+
+    # Graduação
+    grade_base = Column(String)     # PP | P | M | G | GG | Plus
+    regras_grading = Column(Text)   # JSON: incrementos por região e grade
+
+    # Revisão humana — o coração do feedback loop / data moat
+    # gerado | em_revisao | aprovado | reprovado
+    status_revisao = Column(String, default="gerado")
+    revisado_por = Column(String)
+    revisado_em = Column(DateTime(timezone=True))
+    notas_revisao = Column(Text)
+
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+
+    peca = relationship("Peca", back_populates="modelagem_spec")
 
 
 class PecaMaterial(Base):
