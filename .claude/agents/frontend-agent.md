@@ -5,7 +5,7 @@ tools: Read, Write, Bash, Edit
 version: 1.0.0
 status: active
 owner: cto
-last_reviewed: 2026-06-10
+last_reviewed: 2026-06-25
 ---
 ## Premissas estrategicas vigentes
 

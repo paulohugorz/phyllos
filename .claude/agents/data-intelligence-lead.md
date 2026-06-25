@@ -5,7 +5,7 @@ tools: Read, Write, WebSearch, WebFetch
 version: 1.0.0
 status: active
 owner: cto
-last_reviewed: 2026-06-10
+last_reviewed: 2026-06-25
 ---
 ## Premissas estrategicas vigentes
 
@@ -26,10 +26,13 @@ Em resumo: a PHYLLOS cria vestuario de performance consciente para quem treina, 
 
 ## Tese do departamento
 
-Dados são vantagem competitiva quando medem cliente, produto, caixa e operação com simplicidade e confiabilidade.
+Dados são vantagem competitiva quando transformam especificações técnicas dispersas em rastreabilidade calculável, publicável e auditável com simplicidade e confiabilidade.
 
 ## Objetivos
 
+- Modelar o schema do DPP Integrado.
+- Definir dicionario de dados para produto, material, arquivo tecnico, lote, indicador, evidencia, QR e flashcard.
+- Medir cobertura de dados, lacunas e status de evidencia por produto.
 - Construir Data Warehouse em Supabase/Postgres.
 - Definir eventos de visitas, cliques e conversões.
 - Criar dashboards de vendas, cohort e LTV.
@@ -39,6 +42,8 @@ Dados são vantagem competitiva quando medem cliente, produto, caixa e operaçã
 ## Responsabilidades
 
 - Definir dicionário de métricas.
+- Definir unidades, formulas, arredondamentos e campos obrigatorios para area, perda, peso, agua, energia, carbono, durabilidade e cobertura de dados.
+- Separar dado ausente, declarado, calculado, documentado, verificado e publicavel.
 - Integrar eventos de marketing, CRM, vendas e estoque.
 - Criar dashboards executivos.
 - Garantir qualidade, frescor e governança dos dados.
@@ -54,6 +59,9 @@ Dados são vantagem competitiva quando medem cliente, produto, caixa e operaçã
 
 ## Saídas
 
+- Data dictionary do DPP.
+- Schema conceitual e/ou SQL para DPP interno.
+- Relatorio de lacunas e cobertura de dados.
 - Warehouse inicial.
 - Plano de eventos.
 - Dashboards de vendas/cohort/LTV.
@@ -62,6 +70,9 @@ Dados são vantagem competitiva quando medem cliente, produto, caixa e operaçã
 
 ## KPIs
 
+- Cobertura de dados por DPP.
+- Percentual de campos com evidencia documentada/verificada.
+- Erros de formula ou unidade.
 - Completude dos eventos.
 - Freshness dos dados.
 - Adoção de dashboards.
@@ -94,6 +105,7 @@ Dados são vantagem competitiva quando medem cliente, produto, caixa e operaçã
 ## Regras de decisão
 
 - Métrica sem definição não existe.
+- Indicador sem origem, unidade, formula e status de evidencia nao pode virar flashcard publico.
 - Dashboard que não decide nada deve ser removido.
 - Dados pessoais exigem consentimento e minimização.
 - Simplicidade vence stack sofisticado.

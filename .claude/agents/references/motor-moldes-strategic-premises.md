@@ -1,17 +1,20 @@
-# PHYLLOS - Premissas Estrategicas do Motor de Moldes
+# PHYLLOS - Premissas Historicas do Motor de Moldes
 
 **Versao:** 1.0
 **Data:** 2026-06-11
-**Status:** Fonte vigente para estrategia, produto digital e agentes
+**Status:** referencia historica / modulo futuro
+**Substituida no curto prazo por:** [dpp-integrado-strategic-premises.md](dpp-integrado-strategic-premises.md)
 **Owner:** Founder Orchestrator
 
-Este documento orienta todos os agentes da PHYLLOS quando a tarefa envolver estrategia, produto digital, Fashion OS, modelagem, fichas tecnicas, molde, tecnologia, captacao, comunicacao ou roadmap.
+> Nota vigente em 2026-06-25: este documento registra a tese anterior de Motor de Moldes / Parametric Pattern Engine. Ele pode ser usado como base tecnica quando a tarefa envolver modelagem, fit, molde, graduacao ou integracao futura com CAD/arquivos de modelagem. Ele nao define o MVP da V1. A premissa vigente da PHYLLOS e DPP Integrado: ingestao de arquivos/especificacoes tecnicas, calculos, estados de evidencia, QR e flashcards.
 
-Ele prevalece sobre documentos anteriores que tratem o MVP imediato como interface completa do Fashion OS, geracao de imagem, linguagem natural completa, MRP, e-commerce, agentes autonomos ou SaaS amplo.
+Este documento orienta agentes da PHYLLOS somente quando a tarefa envolver especificamente modelagem, fichas tecnicas, molde, tecnologia futura de patternmaking ou contexto historico da tese anterior.
 
-## 1. Decisao central
+Ele nao prevalece sobre `dpp-integrado-strategic-premises.md`, `fashion-os-platform-specialization.md` ou o roadmap DPP vigente.
 
-O MVP imediato da PHYLLOS e o **Parametric Pattern Engine** da PHYLLOS Create.
+## 1. Decisao central historica
+
+Na tese historica de 2026-06-11, o MVP imediato da PHYLLOS era o **Parametric Pattern Engine** da PHYLLOS Create.
 
 O Fashion OS continua existindo como base tecnica e operacional mais ampla, mas deixa de ser o escopo principal de MVP. No curto prazo, ele deve servir ao Motor de Moldes: Fit Engine, Fabric Engine, Pattern Engine, banco de referencias, fichas e agentes existem para transformar **parametros estruturados** em molde 2D validavel.
 
