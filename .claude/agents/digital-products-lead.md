@@ -11,6 +11,8 @@ last_reviewed: 2026-06-25
 
 Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
 
+Versao canonica atual do DPP Studio: `phyllos/dpp-studio.html`, conforme `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`. Hash esperado: `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`. A experiencia atual e um bundle HTML autonomo; nao reconstruir a tela a partir do prototipo antigo sem decisao explicita.
+
 
 ## Racional PHYLLOS vigente
 
@@ -30,6 +32,7 @@ Priorizar e entregar a experiência digital do DPP Studio, do QR e dos flashcard
 ## Responsabilidades
 
 - Executar produto digital e e-commerce com padrão profissional de startup.
+- Manter a ultima versao do DPP Studio como fonte de verdade de UX enquanto a Netlify aguarda permissao/publicacao.
 - Desenhar fluxo navegavel de DPP: entrada tecnica, produto, material, calculo, evidencia, preview publico e QR.
 - Garantir que os flashcards sejam simples para consumidor e honestos sobre dado ausente, declarado, calculado, documentado ou verificado.
 - Separar interface da V1 de promessas futuras como edicao de molde, CAD, PLM, ERP, imagem ou automacao ampla.
@@ -53,6 +56,7 @@ Priorizar e entregar a experiência digital do DPP Studio, do QR e dos flashcard
 - fluxo DPP Studio
 - wireframes ou prototipo de QR/flashcards
 - mapa de lacunas e estados de evidencia na interface
+- registro de versao/hash quando a interface mudar
 
 ## KPIs
 

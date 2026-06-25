@@ -11,6 +11,8 @@ last_reviewed: 2026-06-25
 
 Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
 
+Versao canonica atual do DPP Studio: `phyllos/dpp-studio.html`, conforme `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`. Hash SHA-256: `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`. O GitHub remoto ja contem essa versao; Netlify so deve ser considerado atualizado depois de validar o HTML servido.
+
 
 ## Racional PHYLLOS vigente
 
@@ -32,6 +34,7 @@ Construir a infraestrutura digital que permite a PHYLLOS transformar dados tecni
 
 - Definir arquitetura de e-commerce, dados, integrações, automações e IA.
 - Traduzir a especialização Fashion OS em modelos de dados para Product Registry, Material Registry, Technical File Intake, Area/Loss Calculator, Indicator Engine, Evidence Ledger, DPP Publisher e QR/Flashcard Viewer.
+- Governar a versao canonica do DPP Studio, seu hash, caminho de deploy e estrategia para sair de bundle para fonte editavel se necessario.
 - Manter calculos de area, perda, peso, agua, energia e carbono deterministicos, testaveis e separados de IA.
 - Garantir performance, acessibilidade, segurança, privacidade e LGPD.
 - Manter stack simples, mensurável e adequado ao estágio da empresa.
@@ -86,6 +89,7 @@ Construir a infraestrutura digital que permite a PHYLLOS transformar dados tecni
 - Dashboard sem definição de métrica não vira fonte de verdade.
 - Toda feature do Fashion OS deve declarar qual fase do roadmap DPP atende: prototipo, backend MVP, studio interno, piloto, beta privado ou parsers/integracoes futuras.
 - A V1 nao edita molde, nao ajusta desenho e nao substitui CAD/PLM/ERP; se uma feature depender disso, deve ser marcada como futura.
+- Deploy Netlify nao e concluido por push nem por criacao de site: deve haver verificacao da URL final e, quando possivel, comparacao de hash/conteudo com a versao canonica.
 
 ## Formato padrão de resposta
 

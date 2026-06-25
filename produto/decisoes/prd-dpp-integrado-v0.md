@@ -104,7 +104,7 @@ Marketplace, plataforma B2B2C ou operador de moda que precisa padronizar DPPs de
 
 ## 6. Jornada do usuario
 
-Fluxo linear do DPP Studio:
+Contrato funcional do DPP Studio:
 
 ```text
 1. Arquivo tecnico / especificacao
@@ -115,6 +115,8 @@ Fluxo linear do DPP Studio:
 6. Geracao do QR
 7. Flashcards publicos
 ```
+
+Nota de versao: a interface canonica atual em `phyllos/dpp-studio.html` e o bundle registrado em `dpp-studio-versao-canonica-2026-06-25.md`. Ela demonstra o fluxo em macroetapas de intencao, materiais, especificacoes e indicadores. O contrato acima segue como alvo funcional de backend/produto.
 
 ### Etapa 1 - Arquivo tecnico
 
@@ -260,7 +262,7 @@ Motivacao:
 
 Fluxo:
 
-- Em qual das 7 etapas voce travaria?
+- Em qual parte do fluxo voce travaria: intencao, materiais, especificacoes, indicadores, evidencia, QR ou pagina publica?
 - Um badge "estimativa com fator padrao" seria aceitavel?
 - O que a pagina publica precisa mostrar para representar sua marca?
 

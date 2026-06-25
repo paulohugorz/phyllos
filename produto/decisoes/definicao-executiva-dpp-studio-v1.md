@@ -3,6 +3,7 @@
 **Data:** 2026-06-25
 **Status:** decisao executiva para piloto V1
 **Relacionado:** [tese-produto-dpp-integrado-phyllos.md](tese-produto-dpp-integrado-phyllos.md), [prd-dpp-integrado-v0.md](prd-dpp-integrado-v0.md), [dpp-data-contract-v0.md](dpp-data-contract-v0.md)
+**Versao de interface vigente:** [dpp-studio-versao-canonica-2026-06-25.md](dpp-studio-versao-canonica-2026-06-25.md)
 
 ## 1. Recorte exato da V1
 
@@ -84,3 +85,21 @@ Identidade publica: usar o dominio Phyllos existente e posicionar DPP Studio com
 Entrada de dados: formulario manual no piloto; uploads entram como anexos de evidencia, nao como parser.
 
 Fonte dos fatores: agua, energia e carbono precisam de fonte documentada por fator antes de publicacao. Proxy de demonstracao nao e publicavel.
+
+## 8. Versao operacional atual
+
+A interface vigente do DPP Studio e o bundle em `phyllos/dpp-studio.html`, adotado a partir de `/Users/paulonascimento/Downloads/dpp-studio.html`.
+
+Hash SHA-256:
+
+```text
+560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2
+```
+
+Essa versao e a referencia para demos, ajustes e validacao ate nova decisao explicita do founder.
+
+Status de publicacao:
+
+- GitHub remoto: atualizado no commit `6559b48`;
+- Netlify: aguardando permissao/liberacao para publicar como ultima versao;
+- resposta operacional: nao declarar Netlify atualizado ate validar a URL final.

@@ -1,6 +1,7 @@
 # PHYLLOS DPP Integrado - Premissas Estrategicas Vigentes
 
 **Data:** 2026-06-23
+**Atualizacao de versao:** 2026-06-25
 **Status:** fonte vigente para roadmap tecnologico interno
 **Substitui no curto prazo:** prioridade anterior de MVP centrado em Motor de Moldes / Parametric Pattern Engine
 
@@ -17,6 +18,25 @@ O produto deve receber arquivos e especificacoes que marcas, modelistas, atelies
 - estados de evidencia;
 - QR de etiqueta;
 - flashcards publicos para consumidor.
+
+## 1.1 Versao canonica do DPP Studio
+
+A interface vigente do DPP Studio e o bundle registrado em:
+
+- `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`
+- `phyllos/dpp-studio.html`
+
+Hash SHA-256 esperado:
+
+```text
+560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2
+```
+
+Regra para agentes: trabalhar apenas sobre essa ultima versao enquanto nao houver nova decisao do founder. Nao voltar ao prototipo anterior em HTML/CSS/JS separado, nem recriar o fluxo antigo de 7 etapas sem pedido explicito.
+
+Essa versao e um HTML bundled/autonomo. `style.css` e `main.js` nao sao fonte da tela principal do DPP Studio atual.
+
+Netlify: publicacao da ultima versao ainda depende de permissao/liberacao. O GitHub remoto ja contem o arquivo canonico, mas deploy publico so pode ser declarado depois de verificar a URL servida.
 
 ## 2. O que sai da V1
 
@@ -85,4 +105,3 @@ carbono_peca = peso_peca * carbono_kgco2e_kg
 - Supply Chain / Operations: lote, producao, perda, responsabilidades e fluxo operacional.
 - QA: testes, validacao de calculo, regressao, acessibilidade e criterios go/no-go.
 - CFO: custo interno, runway, etapas de investimento e gatilhos de contratacao externa se necessario.
-

@@ -11,6 +11,8 @@ last_reviewed: 2026-06-25
 
 Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
 
+Versao canonica atual do DPP Studio: `phyllos/dpp-studio.html`, hash SHA-256 `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`, registrada em `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`. O arquivo e um bundle HTML autonomo; `style.css` e `main.js` nao devem ser tratados como fonte da tela principal atual.
+
 
 ## Racional PHYLLOS vigente
 
@@ -30,6 +32,8 @@ Implementar UI rápida, responsiva, acessível e fiel ao design system.
 ## Responsabilidades
 
 - Executar interface web com padrão profissional de startup.
+- Antes de editar DPP Studio, comparar o hash da versao local com a versao canonica e registrar novo hash se houver alteracao aprovada.
+- Preservar o bundle canonico ou propor explicitamente uma fonte editavel equivalente com paridade visual/funcional antes de refatorar.
 - Manter CTO informado sobre decisões, riscos e dependências.
 - Registrar premissas, critérios de qualidade e próximos passos.
 - Escalar qualquer conflito que afete marca, margem, prazo, qualidade, segurança ou experiência da cliente.
@@ -47,6 +51,7 @@ Implementar UI rápida, responsiva, acessível e fiel ao design system.
 - páginas
 - correções
 - documentação técnica
+- evidência de versão/hash da interface entregue
 
 ## KPIs
 

@@ -1,9 +1,10 @@
 # Roadmap e Cronograma - PHYLLOS DPP Integrado
 
 **Data:** 2026-06-23
-**Status:** plano executivo v0.1
+**Status:** plano executivo v0.2 - atualizado com bundle canonico do DPP Studio
 **Premissa:** toda a tecnologia deve ser desenvolvida internamente com apoio de Codex, Claude e agentes PHYLLOS.
 **Produto:** DPP middleware para moda - importacao/input tecnico, calculo por peca, evidencia, QR e flashcards.
+**Versao atual do prototipo:** `phyllos/dpp-studio.html`, hash `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`, conforme `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`.
 
 ---
 
@@ -68,7 +69,7 @@ Motivo: a PHYLLOS consegue desenvolver internamente a primeira versao com Codex/
 
 ### Stack inicial
 
-- Frontend: HTML/CSS/JS no prototipo; depois app web leve.
+- Frontend: bundle HTML canonico no prototipo; depois fonte editavel/app web leve com paridade funcional.
 - Backend: FastAPI.
 - Banco: SQLite no desenvolvimento; Postgres/Supabase quando houver usuario real.
 - Arquivos: armazenamento local no MVP; bucket futuro.
@@ -129,8 +130,9 @@ Objetivo: transformar a tese em fluxo testavel.
 
 Entregas:
 
-- `phyllos/dpp-studio.html` refinado.
-- fluxo: upload/input tecnico -> produto -> material -> calculo -> flashcards.
+- `phyllos/dpp-studio.html` substituido pela versao canonica fornecida pelo founder e validado por hash.
+- fluxo demonstrado: intencao -> tipo de peca -> materiais -> especificacoes -> indicadores -> dossie/QR.
+- contrato futuro segue mirando: upload/input tecnico -> produto -> material -> calculo -> evidencia -> flashcards.
 - schema conceitual em SQL/Markdown, a partir de `produto/decisoes/dpp-data-contract-v0.md`.
 - dicionario de dados, a partir de `produto/decisoes/dpp-data-contract-v0.md`.
 - formulas documentadas.
@@ -145,7 +147,7 @@ Responsaveis:
 
 Uso de Codex/Claude:
 
-- Codex implementa prototipo, schema e validacoes.
+- Codex preserva o bundle canonico, implementa schema e validacoes ao redor dele, e so altera a UI com nova decisao/hash.
 - Claude auxilia em PRD, copies, criterios de aceite e entrevistas.
 
 Critério de aceite:

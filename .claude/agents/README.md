@@ -22,10 +22,12 @@ Todos os agentes devem seguir [references/dpp-integrado-strategic-premises.md](r
 
 Decisao central: o MVP imediato nao e uma ferramenta propria de modelagem, nem edicao de desenho, nem CAD, nem PLM, nem ERP, nem ACV oficial. O MVP imediato e provar que um usuario real consegue importar ou informar dados tecnicos existentes, calcular consumo/perda/indicadores por peca, classificar o status de evidencia e publicar um QR com flashcards claros para consumidor.
 
+Versao canonica atual do DPP Studio: `phyllos/dpp-studio.html` deve corresponder ao bundle adotado em `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`, hash SHA-256 `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`. Todos os agentes devem trabalhar nessa ultima versao enquanto nao houver nova decisao explicita do founder. O prototipo anterior e a estrutura `style.css` + `main.js` nao comandam mais a tela principal do DPP Studio.
+
 Prioridade de execucao:
 
 1. consolidar PRD, schema e criterios de aceite do DPP Integrado;
-2. refinar o DPP Studio: upload/input tecnico, produto, material, calculo, evidencia, QR e flashcards;
+2. preservar e evoluir o DPP Studio canonico: bundle atual, produto, material, especificacoes, calculo, evidencia, QR/passaporte e dossie;
 3. implementar backend interno para produto, material, arquivo tecnico, lote, indicador, DPP e flashcard;
 4. testar formulas, estados de evidencia, acessibilidade e publicacao do QR;
 5. validar com 3 a 5 produtos reais antes de parser robusto, integracoes nativas, imagem, marketplace ou automacao ampla.
@@ -137,7 +139,7 @@ A subcelula semantica existe para transformar linguagem natural em estrutura tec
 3. Customer Research executa 50 entrevistas e valida disposição para pagar.
 4. Product fecha PRD do DPP Integrado, ICP, criterios de aceite e piloto.
 5. Technology/Data definem schema, API, calculos deterministicos, estados de evidencia e storage de arquivos.
-6. Digital Products/Frontend refinam DPP Studio, pagina publica, QR e flashcards.
+6. Digital Products/Frontend preservam a versao canonica do DPP Studio, evoluem a pagina publica, QR e flashcards somente com nova verificacao de versao/hash.
 7. Materials/Supply Chain normalizam materiais, fatores, lote, perda e evidencias.
 8. QA valida formulas, acessibilidade, regressao, lacunas e anti-greenwashing.
 9. Finance calcula custo interno, margem, runway e gatilhos de investimento.

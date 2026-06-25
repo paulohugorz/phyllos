@@ -43,7 +43,10 @@ Decisao operacional recebida em 2026-06-25:
 
 ### C0 - Pendencias antes de push/deploy
 
-- Revisar se `phyllos/dpp-studio.html` ja reflete QR real e fluxo de 7 etapas no estado atual do repo.
+- Concluido: `phyllos/dpp-studio.html` foi substituido pela versao canonica fornecida pelo founder em `/Users/paulonascimento/Downloads/dpp-studio.html`.
+- Hash canonico validado local/GitHub: `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`.
+- Decisao registrada em `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`.
+- Pendente: publicar na Netlify como ultima versao quando houver permissao/liberacao; nao declarar Netlify atualizado antes de validar a URL final.
 - Instalar dependencias Python de `requirements.txt` ou rodar em ambiente que ja tenha FastAPI/Jinja para validar render do template.
 - Decidir se os arquivos novos em `app/` e `tests/` serao commitados neste branch.
 - Se aprovado, commitar e subir as alteracoes.

@@ -160,14 +160,14 @@ O catálogo de fibras BR calibradas funciona como o corpus PLC funciona para o F
 
 ## Decisão de produto decorrente
 
-**O fluxo de 7 etapas do DPP Studio precisa ser atualizado.**
+**O DPP Studio canonico precisa incorporar o catalogo sem voltar ao wizard antigo.**
 
-Etapa 2 (Material) hoje pede `agua_litros_kg`, `energia_kwh_kg`, `carbono_kgco2e_kg` manualmente.
+A interface vigente e o bundle registrado em `dpp-studio-versao-canonica-2026-06-25.md`. Qualquer evolucao de materiais deve partir desse bundle ou de uma fonte editavel equivalente aprovada, nao do prototipo anterior.
 
-Com o catálogo, o novo fluxo é:
+No fluxo atual, materiais e composicao sao macroetapa central. Com o catalogo, a evolucao correta e:
 
 ```
-Etapa 2 — Material (novo)
+Materiais — Catalogo de fatores
   → usuário informa: composição em % (fibra_id + percentual)
   → sistema chama POST /catalogo/calcular-blend automaticamente
   → campos agua/energia/carbono preenchidos automaticamente com status "Calculado — catálogo v0"
@@ -176,7 +176,7 @@ Etapa 2 — Material (novo)
 
 Isso elimina a principal barreira técnica do onboarding e torna o campo "Calculado" acessível para 100% das marcas com qualquer dado de etiqueta.
 
-**Próxima ação técnica:** integrar `/catalogo/calcular-blend` na UI do DPP Studio (etapa 2 do wizard).
+**Próxima ação técnica:** integrar `/catalogo/calcular-blend` na macroetapa de materiais do DPP Studio canonico, registrando novo hash se a interface mudar.
 
 ---
 

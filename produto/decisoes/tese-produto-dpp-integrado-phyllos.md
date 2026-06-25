@@ -1,7 +1,7 @@
 # Tese de Produto - PHYLLOS DPP Integrado
 
 **Data:** 2026-06-23
-**Status:** tese de produto v0.2 - refinada apos decisao de abrir mao da edicao de modelagem na V1
+**Status:** tese de produto v0.3 - refinada apos adoção do bundle canonico do DPP Studio
 **Owner:** Founder / Product
 **Escopo:** PHYLLOS, Fashion OS, DPP, integracao com modelagem, indicadores de produto e experiencia de QR para consumidor
 
@@ -323,19 +323,28 @@ O MVP e promissor se 5 marcas/atelies conseguirem, com seus proprios dados:
 
 ## 12. Prototipo
 
-Prototipo atualizado:
+Prototipo canonico atual:
 
 `phyllos/dpp-studio.html`
 
-O prototipo deve mostrar:
+Decisao de versao:
 
-- upload/input de arquivo tecnico;
-- dados do produto cadastrado;
-- material, area e perda;
-- calculo automatico de agua, energia, carbono e peso;
-- painel de cobertura;
-- flashcards do QR para consumidor;
-- alertas sobre estimativas e ausencias.
+- fonte de decisao: `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`;
+- arquivo de origem adotado: `/Users/paulonascimento/Downloads/dpp-studio.html`;
+- hash SHA-256: `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`;
+- commit de adoção: `6559b48`.
+
+O prototipo atual mostra:
+
+- intencao da peca;
+- tipo de peca;
+- materiais e composicao;
+- especificacoes dimensionais;
+- area, massa e indicadores;
+- dossie lateral;
+- QR/passaporte em prototipo.
+
+O contrato de produto segue mirando a V1 completa de DPP middleware: arquivo tecnico, produto, material, lote, evidencia, QR publico e flashcards. O bundle atual e a interface de trabalho mais recente, nao a implementacao final de backend.
 
 Nao deve mostrar:
 
@@ -350,10 +359,12 @@ Nao deve mostrar:
 
 ### Fase 0 - Prototipo navegavel
 
-- dados mockados;
+- bundle canonico preservado;
+- dados mockados/demonstrativos;
 - calculos visiveis;
-- flashcards de consumidor;
-- teste de entendimento.
+- dossie e QR/passaporte em prototipo;
+- teste de entendimento;
+- Netlify somente apos permissao e validacao da URL final.
 
 ### Fase 1 - MVP manual assistido
 
@@ -390,4 +401,3 @@ O foco passa a ser:
 > Capturar o dado tecnico onde ele ja nasce, calcular o que ainda nao esta claro e traduzir tudo em uma experiencia de transparencia para quem compra a peca.
 
 Essa e uma tese mais enxuta, mais vendavel e mais facil de validar.
-

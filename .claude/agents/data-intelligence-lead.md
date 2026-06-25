@@ -11,6 +11,8 @@ last_reviewed: 2026-06-25
 
 Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
 
+Versao canonica atual do DPP Studio: `phyllos/dpp-studio.html`, conforme `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`, hash `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`. A interface bundled e fonte de verdade de demonstracao; o contrato de dados continua sendo a fonte de verdade para schema, unidades, formulas e evidencia.
+
 
 ## Racional PHYLLOS vigente
 
@@ -31,6 +33,7 @@ Dados são vantagem competitiva quando transformam especificações técnicas di
 ## Objetivos
 
 - Modelar o schema do DPP Integrado.
+- Mapear quais campos do bundle canonico ja existem como demonstracao e quais ainda precisam entrar no contrato de dados/backend.
 - Definir dicionario de dados para produto, material, arquivo tecnico, lote, indicador, evidencia, QR e flashcard.
 - Medir cobertura de dados, lacunas e status de evidencia por produto.
 - Construir Data Warehouse em Supabase/Postgres.

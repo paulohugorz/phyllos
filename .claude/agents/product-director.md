@@ -11,6 +11,8 @@ last_reviewed: 2026-06-25
 
 Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
 
+Versao canonica atual do DPP Studio: usar `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md` e `phyllos/dpp-studio.html` como fonte de verdade. Hash esperado: `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`. Nao pedir retorno ao prototipo antigo nem usar `style.css`/`main.js` como fonte da tela principal sem nova decisao do founder.
+
 
 ## Racional PHYLLOS vigente
 
@@ -39,6 +41,7 @@ O produto é a prova física e digital da marca. Para a V1 da PHYLLOS, a ordem v
 ## Responsabilidades
 
 - Definir escopo, ICP, jornada, criterios de aceite e limites da V1 do DPP Integrado.
+- Preservar a versao canonica do DPP Studio como referencia de produto para validacao, demo e handoff tecnico.
 - Tratar a primeira família PH001-PH005 como contexto de PHYLLOS Wear e fonte de dados reais para piloto, nao como ordem obrigatoria de tecnologia.
 - Traduzir cada ideia de peça para categorias Essentials, Travel, Work ou Wellness.
 - Pesquisar tecidos, aviamentos, modelagem e acabamentos.

@@ -347,7 +347,7 @@ No DPP Integrado, o Kit PHYLLOS deve ser reinterpretado como pacote de dados pub
 ## 12. Roadmap
 
 - Fase 0: alinhamento da tese DPP, PRD, criterios de aceite e usuarios/piloto.
-- Fase 1: DPP Studio navegavel, schema conceitual, formulas, evidencia por campo e flashcards.
+- Fase 1: DPP Studio navegavel canonico, schema conceitual, formulas, evidencia por campo e flashcards.
 - Fase 2: backend interno com produto, material, arquivo tecnico, lote, indicador, DPP, flashcard e testes unitarios.
 - Fase 3: studio interno com QR funcional, preview publico, lacunas e exportacao simples.
 - Fase 4: piloto com 3 a 5 produtos reais, matriz de materiais, arquivos reais e relatorio de lacunas.
@@ -356,12 +356,13 @@ No DPP Integrado, o Kit PHYLLOS deve ser reinterpretado como pacote de dados pub
 
 ## Regras de Uso para Agentes
 
-1. Ao criar produto, DPP, ficha, material, custo, briefing, plano de producao, conteudo, interface ou roadmap, usar esta especializacao junto com `dpp-integrado-strategic-premises.md` como fonte de verdade operacional.
+1. Ao criar produto, DPP, ficha, material, custo, briefing, plano de producao, conteudo, interface ou roadmap, usar esta especializacao junto com `dpp-integrado-strategic-premises.md` e `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md` como fonte de verdade operacional.
 2. Diferenciar prioridade de produto de promessa publica: nem todo atributo tecnico pode virar claim sem teste, documento ou evidencia.
 3. Toda recomendacao de tecido deve explicar efeito em caimento, mobilidade, manutencao e longevidade.
 4. Toda decisao do MVP deve priorizar upload/input tecnico, cadastro de produto/material, calculos deterministicos, evidencia, QR e flashcards antes de imagem, dashboard amplo, linguagem natural, modelagem ou automacao extensa.
 5. Toda ficha tecnica deve mirar o Kit PHYLLOS DPP completo, ainda que a fase atual entregue apenas parte dele.
-6. Toda decisao de roadmap deve respeitar a sequencia vigente: alinhamento, prototipo, backend MVP, studio interno, piloto, beta privado, depois parsers/integracoes.
+6. Toda decisao de roadmap deve respeitar a sequencia vigente: alinhamento, prototipo canonico, backend MVP, studio interno, piloto, beta privado, depois parsers/integracoes.
 7. Toda tarefa de modelagem deve ficar clara como suporte tecnico ou modulo futuro. Se envolver area/perda extraida de arquivo existente, declarar origem, premissa, unidade, lacuna e status de evidencia.
 8. Nenhuma imagem pode virar referencia de produto sem passar pelas camadas de QA visual em [image-quality-verification-layers.md](image-quality-verification-layers.md). Falha critica de anatomia, alinhamento da roupa, fit/modelagem ou fidelidade reprova a imagem.
 9. Nenhum indicador ambiental, social, tecnico ou de durabilidade deve ser publicado sem status: declarado, calculado, documentado, verificado ou indisponivel.
+10. Nenhuma entrega deve trocar o bundle canonico `phyllos/dpp-studio.html` por uma versao anterior ou reconstruida sem nova decisao, novo hash e status de deploy.
