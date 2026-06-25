@@ -229,6 +229,23 @@
       grid-column: 1 / -1;
       margin-top: 0;
     }
+    .source-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .source-list strong {
+      color: var(--text);
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
 
     /* ── Fornecedor origin pills ── */
     .origin-list {
@@ -345,16 +362,16 @@
     <div class="gtin-tag">GTIN {{ peca_gtin }}</div>
   </div>
 
-  <div class="deck-label">Credenciais de sustentabilidade</div>
+  <div class="deck-label">Dados e evidências do passaporte</div>
 
   <div class="cards-track" id="track">
 
-    {# ── Card 1: Origem & Certificação (mandatory) ── #}
+    {# ── Card 1: Origem e certificações (mandatory) ── #}
     <div class="card" style="--accent: #4caf82">
       <div class="card-index">01 / {{ total_cards }}</div>
       <div class="card-icon">🌱</div>
       <div class="card-body">
-        <div class="card-title">Certificação de Origem</div>
+        <div class="card-title">Origem e certificações</div>
         {% set cert_status = evidence_statuses.get('certificacoes', 'ausente') %}
         <span class="evidence-badge {{ cert_status }}">{{ evidence_labels.get(cert_status, cert_status) }}</span>
 
@@ -373,7 +390,7 @@
           </div>
         {% else %}
           <div class="card-value apuracao">Em apuração</div>
-          <div class="card-sub">Certificações em processo de verificação.</div>
+          <div class="card-sub">Certificações ainda não informadas ou em revisão.</div>
         {% endif %}
 
         {% if fornecedores %}
@@ -393,12 +410,12 @@
       </div>
     </div>
 
-    {# ── Card 2: Impacto calculado (mandatory) ── #}
+    {# ── Card 2: Indicadores calculados (mandatory) ── #}
     <div class="card" style="--accent: #6cb4e4">
       <div class="card-index">02 / {{ total_cards }}</div>
       <div class="card-icon">💨</div>
       <div class="card-body">
-        <div class="card-title">Impacto Calculado</div>
+        <div class="card-title">Indicadores calculados</div>
 
         <div class="metric-list">
           {% set carbon_status = evidence_statuses.get('carbono_peca_kgco2e', 'ausente') %}
@@ -440,6 +457,13 @@
           <div class="card-sub" style="margin-top: 14px">
             Estimativas calculadas a partir da área da peça, perda de corte, gramatura e fatores cadastrados. Não substitui ACV auditada.
           </div>
+          <div class="source-list">
+            <strong>Fonte dos fatores</strong>
+            <span>Água: {{ impact_sources.agua or 'fonte não informada' }}</span>
+            <span>Energia: {{ impact_sources.energia or 'fonte não informada' }}</span>
+            <span>Carbono: {{ impact_sources.carbono or 'fonte não informada' }}</span>
+            {% if impact_sources.metodologia %}<span>Metodologia: {{ impact_sources.metodologia }}</span>{% endif %}
+          </div>
         {% else %}
           <div class="card-sub">
             Indicadores aguardam ficha técnica, fatores e evidências mínimas para publicação.
@@ -471,7 +495,7 @@
         {% else %}
           <div class="card-value apuracao">Em apuração</div>
           <div class="card-sub">
-            Teste de resistência em andamento. Damos preferência a fibras comprovadamente duráveis.
+            Teste de resistência ainda não informado para esta peça.
           </div>
         {% endif %}
       </div>

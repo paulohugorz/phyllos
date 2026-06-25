@@ -39,6 +39,7 @@ class PecaBase(BaseModel):
     area_peca_m2: Optional[float] = None
     perda_corte_pct: Optional[float] = None
     lote_quantidade: Optional[int] = None
+    pais_fabricacao: Optional[str] = None
     dpp_version: Optional[str] = "1.0"
     data_publicacao: Optional[datetime] = None
     data_atualizacao: Optional[datetime] = None
@@ -64,6 +65,7 @@ class PecaUpdate(BaseModel):
     area_peca_m2: Optional[float] = None
     perda_corte_pct: Optional[float] = None
     lote_quantidade: Optional[int] = None
+    pais_fabricacao: Optional[str] = None
     dpp_version: Optional[str] = None
     data_publicacao: Optional[datetime] = None
     data_atualizacao: Optional[datetime] = None
@@ -94,6 +96,10 @@ class FichaTecnicaBase(BaseModel):
     agua_litros_kg: Optional[float] = None
     energia_kwh_kg: Optional[float] = None
     carbono_kgco2e_kg: Optional[float] = None
+    fonte_agua_litros_kg: Optional[str] = None
+    fonte_energia_kwh_kg: Optional[str] = None
+    fonte_carbono_kgco2e_kg: Optional[str] = None
+    metodologia_fatores_impacto: Optional[str] = None
     area_total_requerida_m2: Optional[float] = None
     area_perdida_m2: Optional[float] = None
     peso_peca_kg: Optional[float] = None

@@ -24,6 +24,7 @@ Regras:
 - Valores negativos sao invalidos.
 - `perda_pct >= 1` e invalido.
 - Fatores editados pelo usuario devem mudar status para `declarado`, salvo upload de documento.
+- Todo fator de agua, energia e carbono precisa de uma fonte textual cadastrada antes da publicacao. Proxy de demonstracao nao e fonte publicavel.
 
 ## 2. Entidades conceituais
 
@@ -74,6 +75,10 @@ Produto
 | `agua_peca_litros` | float | calculado |
 | `energia_peca_kwh` | float | calculado |
 | `carbono_peca_kgco2e` | float | calculado |
+| `fonte_agua_litros_kg` | text | fonte obrigatoria do fator de agua |
+| `fonte_energia_kwh_kg` | text | fonte obrigatoria do fator de energia |
+| `fonte_carbono_kgco2e_kg` | text | fonte obrigatoria do fator de carbono |
+| `metodologia_fatores_impacto` | text | limitacao/metodologia comum aos fatores |
 
 ### Certificacoes e durabilidade
 
@@ -154,6 +159,8 @@ Regras:
 - QR publico exige campos obrigatorios pelo menos `declarado`.
 - Campo calculado sem label publico deve falhar.
 - Fator fora de limite de referencia deve exigir documento antes de `documentado` ou `verificado`.
+- Fator calculado sem fonte textual deve falhar.
+- Fonte contendo proxy interno, demonstracao, demo ou "nao usar em piloto" deve falhar.
 
 ## 7. Payload de exemplo para prototipo
 
@@ -174,7 +181,11 @@ Regras:
   "fatores": {
     "agua_litros_kg": 320,
     "energia_kwh_kg": 12,
-    "carbono_kgco2e_kg": 4.8
+    "carbono_kgco2e_kg": 4.8,
+    "fonte_agua_litros_kg": "Fonte documentada do fornecedor ou base setorial textil indicada no piloto",
+    "fonte_energia_kwh_kg": "Fonte documentada do fornecedor ou base setorial textil indicada no piloto",
+    "fonte_carbono_kgco2e_kg": "Fonte documentada do fornecedor, Higg MSI, ecoinvent, IPCC ou GHG Protocol conforme material/processo",
+    "metodologia_fatores_impacto": "Estimativa calculada por peso da peca; nao substitui ACV oficial ou auditoria ambiental"
   }
 }
 ```

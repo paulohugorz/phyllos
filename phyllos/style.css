@@ -3531,7 +3531,7 @@ footer {
     border-bottom: 1px solid rgba(15,15,13,0.12);
   }
   .trace-progress {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
   }
   .trace-step {
     min-height: 70px;
@@ -3574,7 +3574,7 @@ footer {
     border-bottom: 1px solid rgba(15,15,13,0.12);
   }
   .trace-progress {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
   .trace-techpack dl div {
     grid-template-columns: 1fr;

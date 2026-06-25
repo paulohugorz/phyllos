@@ -36,6 +36,20 @@ class DppCalculatorTests(unittest.TestCase):
                 "carbono_kgco2e_kg": 2,
             })
 
+    def test_calculate_dpp_indicators_accepts_zero_cut_loss(self):
+        result = calculate_dpp_indicators(DppCalculationInput(
+            area_peca_m2=1,
+            perda_corte_pct=0,
+            gramatura_g_m2=200,
+            agua_litros_kg=100,
+            energia_kwh_kg=10,
+            carbono_kgco2e_kg=2,
+        ))
+
+        self.assertEqual(result.area_total_requerida_m2, 1)
+        self.assertEqual(result.area_perdida_m2, 0)
+        self.assertEqual(result.peso_peca_kg, 0.2)
+
 
 if __name__ == "__main__":
     unittest.main()

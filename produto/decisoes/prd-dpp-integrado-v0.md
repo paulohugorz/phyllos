@@ -235,6 +235,8 @@ Validacao com dado real:
 
 ## 8. Pilotos alvo
 
+Plano operacional detalhado: [phyllos-dpp-v1-estrategia-piloto.md](phyllos-dpp-v1-estrategia-piloto.md).
+
 1. Marca slow fashion feminina em SP, com 2 fundadoras, lotes de 80 a 150 pecas e tecidos nacionais certificados.
 2. Estilista independente com producao em faccao, lotes de 20 a 40 pecas e dados minimos.
 3. Marca de athleisure/moda ativa no RJ, lotes de 200 a 500 pecas e composicao sintetica.

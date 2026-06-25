@@ -23,6 +23,7 @@ Todo DPP publico deve comunicar:
 | GW5 | Certificacao expirada aparece como valida | media | alto | badge expirado ou bloqueio |
 | GW6 | Score verde comunica falsa precisao | baixa | alto | score publico proibido |
 | GW7 | Dados de amostra sao publicados como lote real | media | medio | versao, lote e data visiveis |
+| GW8 | Fator de impacto sem fonte vira numero aparentemente confiavel | alta | alto | fonte textual obrigatoria por fator |
 
 ## 3. Hard gates
 
@@ -61,6 +62,10 @@ Todo DPP publico deve mostrar:
 - lote ou codigo relacionado;
 - fonte/limite dos indicadores.
 
+### AG7 - Fonte do fator
+
+Agua, energia e carbono calculados devem ter fonte textual por fator. Proxy interno, demo ou "nao usar em piloto" bloqueia publicacao.
+
 ## 4. Checklist de QA
 
 Antes de publicar:
@@ -69,6 +74,7 @@ Antes de publicar:
 - campos obrigatorios estao pelo menos `declarado`;
 - todo indicador tem badge;
 - estimativas aparecem como estimativas;
+- fontes dos fatores de agua, energia e carbono aparecem na pagina publica;
 - campo ausente aparece como lacuna ou bloqueia publicacao;
 - QR abre a pagina publica correta;
 - pagina publica nao exige login;

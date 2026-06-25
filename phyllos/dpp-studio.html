@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A PHYLLOS V1 é um estúdio web que recebe dados técnicos de uma peça de moda, calcula indicadores por unidade e publica um passaporte digital com QR e flashcards para o consumidor — sem editar molde, sem fazer ACV oficial e sem prometer conformidade regulatória.">
 <title>PHYLLOS wear - DPP Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -18,6 +19,7 @@
   .publish-success { display: none; margin-top: 14px; padding: 12px 16px; border: 1px solid #4caf82; border-radius: 8px; font-size: 13px; color: #4caf82; }
   .publish-success a { color: #4caf82; word-break: break-all; }
   .qr-download { display: none; margin-top: 10px; font-size: 12px; color: var(--muted, #888); cursor: pointer; text-decoration: underline; }
+  .evidence-pill { display:inline-block; margin-top:8px; padding:5px 8px; border-radius:999px; border:1px solid rgba(15,15,13,.18); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--mid-gray,#666); }
 </style>
 </head>
 <body class="home-development trace-atelier-page dpp-studio-page">
@@ -44,13 +46,16 @@
     <aside class="trace-sidebar">
       <div class="trace-kicker">DPP Studio · v0</div>
       <h1>Arquivo técnico entra. Passaporte sai.</h1>
-      <p>A PHYLLOS não edita o molde na V1. Ela lê ou recebe os dados técnicos, calcula consumo, perda e indicadores, e publica flashcards no QR da peça.</p>
+      <p>PHYLLOS organiza os dados técnicos que você já tem, calcula o impacto estimado por peça e gera um passaporte digital com QR para a etiqueta — sem exagerar o que ainda não foi verificado.</p>
 
       <div class="trace-progress" aria-label="Progresso do DPP">
-        <button class="trace-step active" data-step="arquivo" type="button"><span>01</span> Arquivo</button>
-        <button class="trace-step" data-step="produto" type="button"><span>02</span> Produto</button>
-        <button class="trace-step" data-step="calculo" type="button"><span>03</span> Cálculo</button>
-        <button class="trace-step" data-step="flashcards" type="button"><span>04</span> Flashcards</button>
+        <button class="trace-step active" data-step="ficha" type="button"><span>01</span> Ficha técnica</button>
+        <button class="trace-step" data-step="material" type="button"><span>02</span> Material</button>
+        <button class="trace-step" data-step="lote" type="button"><span>03</span> Lote</button>
+        <button class="trace-step" data-step="area" type="button"><span>04</span> Área/perda</button>
+        <button class="trace-step" data-step="calculo" type="button"><span>05</span> Cálculo</button>
+        <button class="trace-step" data-step="evidencias" type="button"><span>06</span> Evidências</button>
+        <button class="trace-step" data-step="qr" type="button"><span>07</span> QR/flashcards</button>
       </div>
 
       <figure class="trace-image-card">
@@ -76,50 +81,104 @@
       </div>
 
       <form class="trace-form" id="traceForm">
-        <section class="trace-form-step visible" data-panel="arquivo">
+        <section class="trace-form-step visible" data-panel="ficha">
           <div class="trace-section-head">
             <div>
-              <span>01 · Integração técnica</span>
-              <h2>Conectar o que a modelagem já produz.</h2>
+              <span>01 · Ficha técnica</span>
+              <h2>Preencher o que a ficha já sabe.</h2>
             </div>
-            <p>Na V1, o arquivo técnico é entrada para cálculo e evidência. O desenho não é editado aqui.</p>
+            <p>O piloto usa formulário manual. Arquivos anexados servem como evidência; parser automático fica fora da V1.</p>
           </div>
 
           <div class="trace-file-card">
             <label class="trace-upload-zone">
-              <input id="techFile" type="file" accept=".pdf,.dxf,.csv,.xlsx,.xls,.png,.jpg,.jpeg">
-              <span>Upload de ficha, molde, encaixe ou planilha</span>
-              <strong id="fileName">Nenhum arquivo enviado</strong>
-              <small>PDF, DXF, CSV, XLSX ou imagem. Protótipo simula leitura e usa os campos abaixo.</small>
+              <input id="techFile" type="file" accept=".pdf,.png,.jpg,.jpeg">
+              <span>Anexo opcional de evidência</span>
+              <strong id="fileName">Nenhum documento anexado</strong>
+              <small>PDF ou imagem de ficha, laudo ou fornecedor. Os campos abaixo continuam sendo a fonte do piloto.</small>
             </label>
-          </div>
-
-          <div class="trace-input-grid">
-            <label>Ferramenta de origem<select id="sourceTool"><option>Audaces / encaixe exportado</option><option>Lectra / Gerber</option><option>CLO / arquivo técnico</option><option>Valentina / DXF</option><option>Planilha manual</option><option>PDF de ficha técnica</option></select></label>
-            <label>Área da peça (m²)<input id="pieceArea" type="number" value="1.42" min="0.1" max="8" step="0.01"></label>
-            <label>Perda de corte (%)<input id="lossPct" type="number" value="14" min="0" max="45" step="1"></label>
-            <label>Quantidade do lote<input id="lotQty" type="number" value="80" min="1" max="5000"></label>
-            <label>Status da área<select id="areaStatus"><option value="calculado">Calculado por arquivo</option><option value="declarado">Declarado manualmente</option><option value="estimado">Estimado</option></select></label>
-            <label>Tipo de arquivo<select id="fileType"><option>Encaixe com área</option><option>Molde sem área</option><option>Ficha técnica</option><option>Planilha de consumo</option></select></label>
-          </div>
-        </section>
-
-        <section class="trace-form-step" data-panel="produto">
-          <div class="trace-section-head">
-            <div>
-              <span>02 · Produto cadastrado</span>
-              <h2>Especificação vira base do DPP.</h2>
-            </div>
-            <p>O cadastro puxa composição, lote, fornecedor, cuidados e durabilidade para o passaporte.</p>
           </div>
 
           <div class="trace-input-grid">
             <label>Nome da peça<input id="pieceName" type="text" value="Calça conforto de rotina"></label>
             <label>SKU<input id="sku" type="text" value="PH-CC-2601"></label>
+            <label>Origem dos dados<select id="sourceTool"><option>Ficha técnica manual</option><option>Fornecedor informou</option><option>Planilha da marca</option><option>PDF de ficha técnica</option><option>Encaixe exportado como referência</option></select></label>
+            <label>Tipo de evidência<select id="fileType"><option>Ficha técnica</option><option>Laudo ou certificado</option><option>Documento do fornecedor</option><option>Planilha de consumo</option></select></label>
+          </div>
+        </section>
+
+        <section class="trace-form-step" data-panel="material">
+          <div class="trace-section-head">
+            <div>
+              <span>02 · Material</span>
+              <h2>Composição e fatores entram rotulados.</h2>
+            </div>
+            <p>O backend publica indicadores calculados como estimativa, declaração ou documento. Nada vira certificação por inferência.</p>
+          </div>
+
+          <div class="trace-input-grid">
             <label>Material principal<select id="materialName"><option>Crepe stretch reciclado</option><option>Malha premium declarada</option><option>Viscose de origem declarada</option></select></label>
             <label>Composição<input id="composition" type="text" value="78% poliéster reciclado · 22% elastano"></label>
+            <label>Gramatura (g/m²)<input id="gsm" type="number" value="220" min="60" max="800"></label>
+            <label>Água (L/kg)<input id="waterFactor" type="number" value="320" min="0" max="20000"></label>
+            <label>Energia (kWh/kg)<input id="energyFactor" type="number" value="12" min="0" max="300" step="0.1"></label>
+            <label>Carbono (kgCO2e/kg)<input id="carbonFactor" type="number" value="4.8" min="0" max="100" step="0.1"></label>
+            <label>Fonte dos fatores<select id="methodology"><option>Fator declarado pelo fornecedor</option><option>Referência setorial documentada</option><option>Laudo externo</option><option>Proxy de demonstração - não usar em piloto</option></select></label>
+          </div>
+        </section>
+
+        <section class="trace-form-step" data-panel="lote">
+          <div class="trace-section-head">
+            <div>
+              <span>03 · Lote</span>
+              <h2>O passaporte nasce de um lote rastreável.</h2>
+            </div>
+            <p>Lote, fornecedor e durabilidade ficam visíveis como dados declarados ou documentados, sem promessa ambiental automática.</p>
+          </div>
+
+          <div class="trace-input-grid">
             <label>Fornecedor / lote<input id="supplierLot" type="text" value="Fornecedor Alfa · lote CRP-26-041"></label>
+            <label>Quantidade do lote<input id="lotQty" type="number" value="80" min="1" max="5000"></label>
             <label>Durabilidade<input id="durability" type="number" value="80" min="10" max="200"> ciclos de lavagem</label>
+            <label>Sobra reaproveitada (%)<input id="reusePct" type="number" value="35" min="0" max="100"></label>
+          </div>
+        </section>
+
+        <section class="trace-form-step" data-panel="area">
+          <div class="trace-section-head">
+            <div>
+              <span>04 · Área/perda</span>
+              <h2>Área da peça e perda antes dos indicadores.</h2>
+            </div>
+            <p>Esses campos alimentam a calculadora determinística usada no endpoint de publicação.</p>
+          </div>
+
+          <div class="trace-input-grid">
+            <label>Área da peça (m²)<input id="pieceArea" type="number" value="1.42" min="0.1" max="8" step="0.01"></label>
+            <label>Perda de corte (%)<input id="lossPct" type="number" value="14" min="0" max="45" step="1"></label>
+            <label>Status da área<select id="areaStatus"><option value="calculado">Calculada pelo arquivo</option><option value="declarado">Declarada pela marca</option><option value="documentado">Documentada em anexo</option><option value="estimado">Estimativa de trabalho</option></select></label>
+          </div>
+        </section>
+
+        <section class="trace-form-step" data-panel="calculo">
+          <div class="trace-section-head">
+            <div>
+              <span>05 · Cálculo</span>
+              <h2>Consumo, perda e indicadores calculados.</h2>
+            </div>
+            <p>Cada fator precisa informar sua fonte. Indicadores estimados não são ACV oficial nem auditoria ambiental.</p>
+          </div>
+
+          <div class="trace-metrics-grid" id="metricsGrid"></div>
+        </section>
+
+        <section class="trace-form-step" data-panel="evidencias">
+          <div class="trace-section-head">
+            <div>
+              <span>06 · Evidências</span>
+              <h2>Publicável só quando o status é explícito.</h2>
+            </div>
+            <p>O gate anti-greenwashing exige evidência mínima por campo e exibe o badge correspondente na página pública.</p>
           </div>
 
           <div class="trace-material-list">
@@ -142,36 +201,21 @@
               <small>Bloqueia publicação sem revisão.</small>
             </label>
           </div>
+
+          <div class="trace-metrics-grid">
+            <article><span>Obrigatórios</span><strong>Ficha + material + lote</strong><small>Campos ausentes bloqueiam publicação.</small></article>
+            <article><span>Indicadores</span><strong>Calculado</strong><small>Carbono, água e energia aparecem como estimativa calculada.</small></article>
+            <article><span>Certificação</span><strong>Sem inferência</strong><small>Certificação só aparece quando houver documento informado.</small></article>
+          </div>
         </section>
 
-        <section class="trace-form-step" data-panel="calculo">
+        <section class="trace-form-step" data-panel="qr">
           <div class="trace-section-head">
             <div>
-              <span>03 · Indicadores por peça</span>
-              <h2>Área, perda e matéria-prima calculam impacto.</h2>
+              <span>07 · QR/flashcards</span>
+              <h2>Prévia pública com badges de evidência.</h2>
             </div>
-            <p>Os fatores podem vir do material cadastrado, de fornecedor ou de uma base metodológica futura.</p>
-          </div>
-
-          <div class="trace-input-grid">
-            <label>Gramatura (g/m²)<input id="gsm" type="number" value="220" min="60" max="800"></label>
-            <label>Água (L/kg)<input id="waterFactor" type="number" value="320" min="0" max="20000"></label>
-            <label>Energia (kWh/kg)<input id="energyFactor" type="number" value="12" min="0" max="300" step="0.1"></label>
-            <label>Carbono (kgCO2e/kg)<input id="carbonFactor" type="number" value="4.8" min="0" max="100" step="0.1"></label>
-            <label>Sobra reaproveitada (%)<input id="reusePct" type="number" value="35" min="0" max="100"></label>
-            <label>Metodologia<select id="methodology"><option>Fator declarado pelo fornecedor</option><option>Proxy interno PHYLLOS</option><option>Laudo externo</option></select></label>
-          </div>
-
-          <div class="trace-metrics-grid" id="metricsGrid"></div>
-        </section>
-
-        <section class="trace-form-step" data-panel="flashcards">
-          <div class="trace-section-head">
-            <div>
-              <span>04 · QR do consumidor</span>
-              <h2>Flashcards, não ficha técnica crua.</h2>
-            </div>
-            <p>O consumidor escaneia a etiqueta e entende composição, consumo, perda e indicadores em poucos segundos.</p>
+            <p>A publicação real acontece no backend; aqui a prévia mostra como o consumidor lerá os dados rotulados.</p>
           </div>
 
           <div class="trace-output-grid">
@@ -179,15 +223,15 @@
               <div class="trace-label-top"><span>PHYLLOS</span><small id="labelStatus">Rascunho</small></div>
               <div class="trace-qr" id="qrReal" aria-label="QR code do DPP"></div>
               <strong id="labelPiece">Calça conforto de rotina</strong>
-              <p id="labelMaterial">DPP em rascunho · dados calculados por arquivo técnico</p>
+              <p id="labelMaterial">DPP em rascunho · indicadores calculados e rotulados</p>
               <small id="labelUrl">phyllos.com.br/dpp/PH-CC-2601</small>
               <div class="publish-zone">
-                <h4>Publicar passaporte</h4>
-                <p style="font-size:12px;color:var(--muted,#888);line-height:1.5">Ao publicar, o QR ficará ativo e escaneável. Indicadores estimados aparecem com badge de status visível.</p>
-                <button class="btn-publish" id="btnPublish" type="button">Publicar DPP e gerar QR</button>
+                <h4>Prévia do passaporte</h4>
+                <p style="font-size:12px;color:var(--muted,#888);line-height:1.5">A API publica via <code>POST /pecas/{codigo}/dpp/publicar</code>. Esta tela gera apenas a prévia do QR e dos flashcards.</p>
+                <button class="btn-publish" id="btnPublish" type="button">Gerar prévia QR/flashcards</button>
                 <div class="publish-success" id="publishSuccess">
-                  ✓ DPP publicado. QR escaneável acima.<br>
-                  URL pública: <a id="publishedUrl" href="#" target="_blank"></a>
+                  Prévia gerada. Validar no backend antes de imprimir etiqueta.<br>
+                  URL de prévia: <a id="publishedUrl" href="#" target="_blank"></a>
                 </div>
                 <span class="qr-download" id="qrDownload" onclick="downloadQr()">Baixar QR em PNG</span>
               </div>
@@ -209,8 +253,8 @@
 
       <div class="trace-evidence">
         <h3>Estados de evidência</h3>
-        <div class="trace-evidence-row"><span id="fileDot"></span><p id="fileEvidence">Arquivo pendente</p></div>
-        <div class="trace-evidence-row"><span id="areaDot"></span><p id="areaEvidence">Área calculada por arquivo</p></div>
+        <div class="trace-evidence-row"><span id="fileDot"></span><p id="fileEvidence">Anexo opcional pendente</p></div>
+        <div class="trace-evidence-row"><span id="areaDot"></span><p id="areaEvidence">Área declarada pela marca</p></div>
         <div class="trace-evidence-row"><span id="materialDot"></span><p id="materialEvidence">Material documentado</p></div>
         <div class="trace-evidence-row"><span id="publishDot"></span><p id="publishEvidence">Flashcards em rascunho</p></div>
       </div>
@@ -240,8 +284,8 @@
 
 <script src="main.js"></script>
 <script>
-const steps = ['arquivo', 'produto', 'calculo', 'flashcards'];
-let activeStep = 'arquivo';
+const steps = ['ficha', 'material', 'lote', 'area', 'calculo', 'evidencias', 'qr'];
+let activeStep = 'ficha';
 
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
@@ -262,7 +306,7 @@ function setActiveStep(step) {
   activeStep = step;
   $$('.trace-step').forEach(btn => btn.classList.toggle('active', btn.dataset.step === step));
   $$('.trace-form-step').forEach(panel => panel.classList.toggle('visible', panel.dataset.panel === step));
-  $('#projectStatus').textContent = step === 'flashcards' ? 'QR em rascunho' : 'DPP em rascunho';
+  $('#projectStatus').textContent = step === 'qr' ? 'QR em prévia' : 'DPP em rascunho';
 }
 
 function calculations() {
@@ -285,7 +329,7 @@ function coverage() {
   const areaStatus = value('areaStatus');
   let score = 32;
   score += fileLoaded ? 16 : 0;
-  score += areaStatus === 'calculado' ? 16 : areaStatus === 'declarado' ? 10 : 5;
+  score += areaStatus === 'calculado' || areaStatus === 'documentado' ? 16 : areaStatus === 'declarado' ? 10 : 5;
   score += evidence === 'documentado' ? 18 : evidence === 'declarado' ? 10 : 0;
   score += numberValue('durability') > 0 ? 8 : 0;
   score += value('composition').trim().length > 8 ? 8 : 0;
@@ -296,17 +340,19 @@ function money(n, suffix) {
   return `${n.toFixed(2).replace('.', ',')} ${suffix}`;
 }
 
-let qrInstance = null;
 let lastQrUrl = '';
 
-function generateQr(sku) {
-  const url = `https://phyllos-production.up.railway.app/p/${sku}`;
+function passportId() {
+  return `${(value('sku') || 'PH-CC-2601').toLowerCase().replace(/[^a-z0-9]+/g, '-')}-preview`;
+}
+
+function generateQr(url) {
   if (url === lastQrUrl) return;
   lastQrUrl = url;
   const container = $('#qrReal');
   container.innerHTML = '';
   try {
-    qrInstance = new QRCode(container, {
+    new QRCode(container, {
       text: url,
       width: 140,
       height: 140,
@@ -329,7 +375,7 @@ function downloadQr() {
 }
 
 function evidenceLabel(value) {
-  return value === 'documentado' ? 'documentado' : value === 'declarado' ? 'declarado' : 'incompleto';
+  return value === 'documentado' ? 'documentado' : value === 'declarado' ? 'declarado' : value === 'calculado' ? 'calculado' : value === 'estimado' ? 'estimado' : 'incompleto';
 }
 
 function render() {
@@ -337,7 +383,7 @@ function render() {
   const score = coverage();
   const evidence = selectedRadio('evidence')?.value || 'ausente';
   const fileLoaded = $('#techFile').files.length > 0;
-  const fileName = fileLoaded ? $('#techFile').files[0].name : 'Nenhum arquivo enviado';
+  const fileName = fileLoaded ? $('#techFile').files[0].name : 'Nenhum documento anexado';
   const areaStatus = value('areaStatus');
   const status = score >= 82 ? 'Pronto para revisão' : score >= 62 ? 'Rascunho avançado' : 'Rascunho incompleto';
 
@@ -346,23 +392,24 @@ function render() {
   $('#scoreNumber').textContent = score;
   $('#projectStatus').textContent = status;
   $('#scoreArc').style.strokeDashoffset = 302 - (302 * score / 100);
-  $('#fileEvidence').textContent = fileLoaded ? `Arquivo recebido: ${fileName}` : 'Arquivo técnico ainda não enviado';
+  $('#fileEvidence').textContent = fileLoaded ? `Documento anexado: ${fileName}` : 'Sem anexo; piloto usa campos manuais';
   $('#areaEvidence').textContent = `Área ${evidenceLabel(areaStatus)}`;
   $('#materialEvidence').textContent = `Material ${evidenceLabel(evidence)}`;
-  $('#publishEvidence').textContent = score >= 82 ? 'Flashcards prontos para revisão' : 'Flashcards em rascunho';
+  $('#publishEvidence').textContent = score >= 82 ? 'QR e flashcards prontos para revisão' : 'QR e flashcards em prévia';
   $('#fileDot').className = fileLoaded ? 'ok' : 'warn';
-  $('#areaDot').className = areaStatus === 'calculado' ? 'ok' : areaStatus === 'declarado' ? 'warn' : 'bad';
+  $('#areaDot').className = areaStatus === 'calculado' || areaStatus === 'documentado' ? 'ok' : areaStatus === 'declarado' ? 'warn' : 'bad';
   $('#materialDot').className = evidence === 'documentado' ? 'ok' : evidence === 'declarado' ? 'warn' : 'bad';
   $('#publishDot').className = score >= 82 ? 'ok' : 'warn';
   const sku = value('sku') || 'PH-CC-2601';
-  const dppUrl = `https://phyllos-production.up.railway.app/p/${sku}`;
+  const dppUrl = `https://phyllos-production.up.railway.app/p/${passportId()}`;
+  const sourceBlocksPublication = value('methodology').includes('Proxy de demonstração');
   $('#labelStatus').textContent = score >= 82 ? 'Revisão' : 'Rascunho';
   $('#labelPiece').textContent = value('pieceName');
   $('#labelMaterial').textContent = `${sku} · ${value('materialName')} · ${money(calc.carbon, 'kgCO2e estimados')}`;
   $('#labelUrl').textContent = dppUrl;
-  $('#btnPublish').disabled = score < 45;
-  $('#btnPublish').title = score < 45 ? 'Preencha mais campos para publicar' : 'Publicar passaporte digital';
-  generateQr(sku);
+  $('#btnPublish').disabled = score < 45 || sourceBlocksPublication;
+  $('#btnPublish').title = sourceBlocksPublication ? 'Fonte de demonstração não é publicável' : score < 45 ? 'Preencha mais campos para gerar prévia' : 'Gerar prévia do passaporte digital';
+  generateQr(dppUrl);
 
   $$('.trace-material').forEach(label => {
     const input = label.querySelector('input');
@@ -379,23 +426,24 @@ function render() {
   `;
 
   $('#flashcards').innerHTML = `
-    <div class="flashcard"><span>Material</span><strong>${value('composition')}</strong><p>${value('supplierLot')}</p></div>
-    <div class="flashcard"><span>Consumo</span><strong>${money(calc.requiredArea, 'm²')}</strong><p>${money(calc.weight, 'kg')} de matéria-prima por peça.</p></div>
-    <div class="flashcard"><span>Perda de corte</span><strong>${numberValue('lossPct')}%</strong><p>${money(calc.reused, 'm²')} de sobra com reaproveitamento declarado.</p></div>
-    <div class="flashcard"><span>Indicadores</span><strong>${money(calc.carbon, 'kgCO2e')}</strong><p>${money(calc.water, 'L')} de água e ${money(calc.energy, 'kWh')} estimados.</p></div>
-    <div class="flashcard"><span>Durabilidade</span><strong>${numberValue('durability')} ciclos</strong><p>Informação ${evidenceLabel(evidence)} no cadastro do produto.</p></div>
-    <div class="flashcard"><span>Transparência</span><strong>${score}%</strong><p>QR em rascunho até revisão dos campos ausentes.</p></div>
+    <div class="flashcard"><span>Material</span><strong>${value('composition')}</strong><p>${value('supplierLot')}</p><small class="evidence-pill">${evidenceLabel(evidence)}</small></div>
+    <div class="flashcard"><span>Consumo</span><strong>${money(calc.requiredArea, 'm²')}</strong><p>${money(calc.weight, 'kg')} de matéria-prima por peça.</p><small class="evidence-pill">calculado</small></div>
+    <div class="flashcard"><span>Perda de corte</span><strong>${numberValue('lossPct')}%</strong><p>${money(calc.reused, 'm²')} de sobra com reaproveitamento declarado.</p><small class="evidence-pill">${evidenceLabel(areaStatus)}</small></div>
+    <div class="flashcard"><span>Indicadores</span><strong>${money(calc.carbon, 'kgCO2e')}</strong><p>${money(calc.water, 'L')} de água e ${money(calc.energy, 'kWh')} estimados. Fonte: ${value('methodology')}.</p><small class="evidence-pill">estimativa calculada</small></div>
+    <div class="flashcard"><span>Durabilidade</span><strong>${numberValue('durability')} ciclos</strong><p>Informação ${evidenceLabel(evidence)} no cadastro do produto.</p><small class="evidence-pill">${evidenceLabel(evidence)}</small></div>
+    <div class="flashcard"><span>Completude</span><strong>${score}%</strong><p>QR em prévia até revisão dos campos ausentes.</p><small class="evidence-pill">rascunho</small></div>
   `;
 
   const alerts = [];
-  if (!fileLoaded) alerts.push('Arquivo técnico ainda não enviado; protótipo usa campos manuais.');
-  if (areaStatus !== 'calculado') alerts.push('Área não veio diretamente do arquivo técnico.');
+  if (!fileLoaded) alerts.push('Sem anexo de apoio; protótipo usa campos manuais.');
+  if (areaStatus === 'estimado') alerts.push('Área estimada: revisar antes de publicar QR real.');
   if (evidence !== 'documentado') alerts.push('Material sem documento suficiente para publicação plena.');
-  if (value('methodology') !== 'Laudo externo') alerts.push('Indicadores ambientais ainda dependem de fator declarado ou proxy.');
+  if (sourceBlocksPublication) alerts.push('Proxy de demonstração não pode ser usado em piloto publicado.');
+  if (value('methodology') !== 'Laudo externo') alerts.push('Indicadores ambientais são estimativas e precisam manter a fonte visível.');
   if (numberValue('lossPct') > 20) alerts.push('Perda de corte alta: revisar encaixe ou plano de reaproveitamento.');
   $('#alertList').innerHTML = alerts.map(alert => `<li>${alert}</li>`).join('');
 
-  generateQr(score);
+  generateQr(dppUrl);
 }
 
 $$('.trace-step').forEach(btn => btn.addEventListener('click', () => setActiveStep(btn.dataset.step)));
@@ -409,30 +457,28 @@ $('#nextStep').addEventListener('click', () => {
 });
 
 $('#btnPublish').addEventListener('click', () => {
-  const sku = value('sku') || 'PH-CC-2601';
-  const url = `https://phyllos-production.up.railway.app/p/${sku}`;
+  const url = `https://phyllos-production.up.railway.app/p/${passportId()}`;
   const successEl = $('#publishSuccess');
   const downloadEl = $('#qrDownload');
   const publishedUrlEl = $('#publishedUrl');
   const btn = $('#btnPublish');
 
-  btn.textContent = 'Publicando…';
+  btn.textContent = 'Gerando prévia…';
   btn.disabled = true;
 
-  // Regenera QR com a URL final e exibe confirmação
   lastQrUrl = '';
-  generateQr(sku);
+  generateQr(url);
 
   setTimeout(() => {
     publishedUrlEl.textContent = url;
     publishedUrlEl.href = url;
     successEl.style.display = 'block';
     downloadEl.style.display = 'inline';
-    btn.textContent = '✓ Publicado';
-    $('#labelStatus').textContent = 'Publicado';
-    $('#projectStatus').textContent = 'DPP publicado';
+    btn.textContent = 'Prévia gerada';
+    $('#labelStatus').textContent = 'Prévia';
+    $('#projectStatus').textContent = 'Prévia pronta';
     $('#publishDot').className = 'ok';
-    $('#publishEvidence').textContent = 'DPP publicado — QR ativo';
+    $('#publishEvidence').textContent = 'Prévia gerada; publicar pelo endpoint do backend';
   }, 600);
 });
 

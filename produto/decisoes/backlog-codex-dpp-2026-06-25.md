@@ -37,6 +37,7 @@ Decisao operacional recebida em 2026-06-25:
 - `app/api/routes.py` atualizado para publicar DPP somente apos calculo e gate anti-greenwashing.
 - `app/templates/dpp_consumer.html` atualizado para exibir badges de evidencia nos indicadores publicos e remover comparacoes ambientais nao auditadas.
 - Testes unitarios criados em `tests/test_dpp_calculator.py` e `tests/test_dpp_validators.py`.
+- Estrategia operacional de piloto criada em `produto/decisoes/phyllos-dpp-v1-estrategia-piloto.md`.
 
 ## 3. Proxima execucao no Codex
 
@@ -46,6 +47,21 @@ Decisao operacional recebida em 2026-06-25:
 - Instalar dependencias Python de `requirements.txt` ou rodar em ambiente que ja tenha FastAPI/Jinja para validar render do template.
 - Decidir se os arquivos novos em `app/` e `tests/` serao commitados neste branch.
 - Se aprovado, commitar e subir as alteracoes.
+
+### C7 - Preparacao do piloto assistido
+
+Status: definido, em preparacao.
+
+- Usar `produto/decisoes/phyllos-dpp-v1-estrategia-piloto.md` como roteiro do piloto.
+- Usar Railway como ambiente publico inicial, com `DPP_BASE_URL=https://phyllos-production.up.railway.app`.
+- Validar `GET /p/{uuid}` antes de orientar uso fisico do QR.
+- Usar SKU/codigo PHYLLOS como identificador operacional, com GTIN opcional.
+- Permitir publicacao Tier 1 sem indicadores de agua/energia/carbono; Tier 2 entra quando area, gramatura, perda e fatores estiverem disponiveis.
+- Registrar tempo de onboarding, Tier alcancado, campos ausentes, link publico, QR compartilhado e objecao principal em `outputs/piloto-dpp-v1.csv`.
+- Separar 5 marcas independentes com 1 a 3 pecas prontas ou quase prontas.
+- Executar o piloto como servico assistido gratuito para 3 a 5 usuarios.
+- Manter QR ativo por 90 dias mesmo se a marca nao virar cliente.
+- Converter lacunas recorrentes em backlog tecnico ou decisao de oferta concierge.
 
 ### C1 - Backend promovido para `app/`
 

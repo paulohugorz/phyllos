@@ -221,6 +221,7 @@ Objetivo: validar se a PHYLLOS resolve dor real.
 
 Entregas:
 
+- plano operacional de piloto em `produto/decisoes/phyllos-dpp-v1-estrategia-piloto.md`;
 - 3 a 5 produtos reais cadastrados.
 - pelo menos 2 tipos de arquivo/input tecnico usados.
 - matriz de materiais com fatores reais ou declarados.
@@ -239,6 +240,9 @@ Responsaveis:
 Critério de aceite:
 
 - 5 DPPs rascunho gerados com dados reais;
+- onboarding medio abaixo de 60 minutos para dados Tier 1;
+- 2 QRs compartilhados espontaneamente em canal real;
+- 1 marca pede cadastro de segunda peca;
 - usuarios entendem o valor dos flashcards;
 - lacunas recorrentes viram backlog;
 - nenhuma claim ambiental e publicada sem status de evidencia.
@@ -382,20 +386,21 @@ Critério de aceite:
 - changelog.
 - plano de QA.
 - relatorio de piloto.
+- estrategia de piloto.
 
 ---
 
 ## 10. Proxima acao recomendada
 
-PRD v0, contrato de dados, QA anti-greenwashing e backlog Codex ja foram registrados em `produto/decisoes/`.
+PRD v0, contrato de dados, QA anti-greenwashing, backlog Codex e estrategia de piloto ja foram registrados em `produto/decisoes/`.
 
-Proxima acao tecnica: decidir se o backend DPP evolui em `_legado/app` ou se sera promovido para `app/` antes de implementar calculadora, validadores e endpoints novos.
+Proxima acao operacional: preparar um piloto assistido com 3 a 5 marcas reais usando `produto/decisoes/phyllos-dpp-v1-estrategia-piloto.md` como roteiro. A decisao de ambiente e Railway agora, com `DPP_BASE_URL=https://phyllos-production.up.railway.app`; dominio proprio fica para depois do primeiro sinal real.
 
 Ordem:
 
-1. confirmar decisao de backend ativo: `_legado/app` ou `app/`;
-2. atualizar `phyllos/dpp-studio.html` para fluxo de 7 etapas;
-3. criar modulo de calculo deterministico;
-4. criar validadores anti-greenwashing;
-5. criar/ajustar schema e endpoints;
-6. adicionar testes unitarios e fluxo de publicacao/revogacao.
+1. subir o app no Railway e validar `GET /p/{uuid}`;
+2. selecionar 5 marcas independentes com 1 a 3 pecas prontas ou quase prontas;
+3. rodar onboarding assistido de 60 minutos com uma peca por marca;
+4. publicar DPP Tier 1 por SKU/UUID, com GTIN opcional e status de evidencia visivel;
+5. registrar tempo, lacunas, objecoes e uso real do QR em `outputs/piloto-dpp-v1.csv`;
+6. decidir entre produto pago por DPP, concierge DPP ou organizacao tecnica/PLM lite.
