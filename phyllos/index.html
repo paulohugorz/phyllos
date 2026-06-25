@@ -3,219 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PHYLLOS wear — Em desenvolvimento</title>
+<meta name="description" content="PHYLLOS DPP Studio transforma arquivos técnicos de moda, especificações de produto, materiais, área e perda em passaportes digitais com QR e flashcards para consumidor.">
+<title>PHYLLOS DPP Studio - Passaporte digital para moda</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body class="home-development">
+<body class="home-development fashion-os-page">
 
 <div class="cursor" id="cursor"></div>
 
 <nav id="mainNav">
-  <a href="index.html" class="nav-logo">
-    <span class="nav-phi">Φ</span>
-    <div class="nav-rule"></div>
-    <span class="nav-wordmark">Phyllos</span>
-    <span class="nav-sub">wear</span>
-  </a>
-  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="index.html" class="nav-logo"><span class="nav-phi">Φ</span><div class="nav-rule"></div><span class="nav-wordmark">Phyllos</span><span class="nav-sub">DPP</span></a>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none"><span></span><span></span><span></span></button>
   <ul class="nav-links">
-    <li><a href="colecoes.html">Coleções</a></li>
-    <li><a href="essencial.html">Essencial</a></li>
+    <li><a href="dpp-studio.html">DPP Studio</a></li>
     <li><a href="fashion-os.html">Fashion OS</a></li>
-    <li><a href="materiais.html">Materiais</a></li>
-    <li><a href="manifesto.html">Manifesto</a></li>
+    <li><a href="#piloto">Piloto</a></li>
     <li><a href="business-plan.html">Plano</a></li>
+    <li><a href="manifesto.html">Manifesto</a></li>
   </ul>
-  <div class="nav-actions nav-status">
-    <span>Em desenvolvimento</span>
-  </div>
+  <div class="nav-actions nav-status"><span>MVP DPP</span></div>
 </nav>
 
-<section class="dev-hero">
-  <div class="dev-hero-image" role="img" aria-label="Pessoa em rotina urbana entre treino, trabalho e vida real"></div>
-  <div class="dev-hero-content">
-    <div class="hero-season">PHYLLOS wear · tese em construção</div>
-    <h1 class="hero-title">
-      Para quem<br>
-      <em>treina, decide</em><br>
-      e segue inteiro.
-    </h1>
+<section class="fos-hero">
+  <div class="fos-hero-copy">
+    <div class="hero-season">PHYLLOS DPP middleware</div>
+    <h1 class="hero-title">Dados técnicos entram.<br>Passaporte digital <em>sai.</em></h1>
     <p class="hero-body">
-      Estamos desenvolvendo uma marca de roupa híbrida para atravessar treino, trabalho, casa, cuidado, cidade e descanso com presença. Antes de falar de produto, estamos documentando critérios, materiais possíveis, modelagem e contexto real de uso.
+      PHYLLOS transforma ficha técnica, especificações de produto, matéria-prima, área, perda e evidências em DPP interno, QR de etiqueta e flashcards claros para consumidor. A V1 não edita molde, não substitui CAD e não promete ACV oficial.
     </p>
     <div class="hero-actions">
-      <a href="#dossier" class="btn-primary">Acompanhar construção</a>
+      <a href="dpp-studio.html" class="btn-primary">Abrir DPP Studio</a>
+      <a href="#tese" class="btn-text">Ver tese operacional</a>
+      <a href="business-plan.html" class="btn-text">Plano vivo</a>
     </div>
+  </div>
+  <div class="fos-hero-panel" aria-label="Fluxo do PHYLLOS DPP Studio">
+    <div class="fos-panel-bar"><span></span><span></span><span></span></div>
+    <div class="fos-panel-grid">
+      <div><small>Entrada</small><strong>Arquivo técnico</strong></div>
+      <div><small>Produto</small><strong>Material + lote</strong></div>
+      <div><small>Calculo</small><strong>Area + perda</strong></div>
+      <div><small>Saida</small><strong>QR + flashcards</strong></div>
+    </div>
+    <div class="fos-panel-line"></div>
+    <p>O valor imediato esta em organizar dados existentes, calcular indicadores com metodo visivel e mostrar o status de evidencia de cada informacao.</p>
   </div>
 </section>
 
-<div class="marquee">
-  <div class="marquee-track">
-    <span class="marquee-item">Pesquisa de materiais</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Rotina híbrida</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Conforto em movimento</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Presença cotidiana</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Bem-estar sem performance vazia</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Φ Phyllos wear</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Pesquisa de materiais</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Rotina híbrida</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Conforto em movimento</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Presença cotidiana</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Bem-estar sem performance vazia</span><span class="marquee-sep">·</span>
-    <span class="marquee-item">Φ Phyllos wear</span><span class="marquee-sep">·</span>
+<section class="fos-method" id="tese">
+  <div>
+    <div class="section-label">Tese vigente</div>
+    <h2 class="section-title">Software de DPP para moda,<br><em>não uma marca de roupa.</em></h2>
   </div>
-</div>
-
-<section class="context-section">
-  <div class="context-header">
-    <div>
-      <div class="section-label">A vida que guia o produto</div>
-      <h2 class="section-title">Um corpo em <em>múltiplos espaços</em></h2>
-    </div>
-    <p>
-      A PHYLLOS nasce observando a rotina antes de desenhar a peça: a manhã de treino, o deslocamento, o trabalho, a casa, o cuidado, o intervalo de silêncio, o fim do dia. A roupa precisa acompanhar sem anunciar esforço.
-    </p>
+  <div class="fos-method-grid">
+    <article class="fos-card"><span>01</span><h3>Capturar</h3><p>Receber ficha técnica, PDF, planilha, arquivo de encaixe ou input manual sem exigir que o usuário troque sua ferramenta de modelagem.</p></article>
+    <article class="fos-card"><span>02</span><h3>Calcular</h3><p>Transformar área, gramatura, perda e fatores de material em peso, água, energia, carbono, durabilidade e cobertura de dados.</p></article>
+    <article class="fos-card"><span>03</span><h3>Classificar</h3><p>Marcar cada campo como ausente, declarado, calculado, documentado, verificado ou publicável antes de comunicar qualquer claim.</p></article>
+    <article class="fos-card"><span>04</span><h3>Publicar</h3><p>Gerar DPP, QR e flashcards para consumidor com linguagem simples e limite claro entre estimativa, documento e verificação.</p></article>
   </div>
+</section>
 
-  <div class="context-grid">
-    <article class="context-card large">
-      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1400&q=80" alt="Mulher confiante em retrato editorial discreto">
-      <div class="context-copy">
-        <span>Presença</span>
-        <h3>Segurança sem dureza</h3>
-        <p>A expressão que procuramos não é pose de campanha. É a calma de quem sabe entrar em ambientes exigentes sem se adaptar demais a eles.</p>
-      </div>
-    </article>
-
-    <article class="context-card">
-      <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=80" alt="Cenário corporativo contemporâneo com luz natural">
-      <div class="context-copy">
-        <span>Trabalho</span>
-        <h3>Trabalho sem personagem</h3>
-        <p>Chamadas, corredores, cafés, deslocamentos e decisões. O produto precisa pertencer ao cotidiano profissional sem transformar trabalho em símbolo de status.</p>
-      </div>
-    </article>
-
-    <article class="context-card">
-      <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80" alt="Natureza em luz suave e atmosfera de equilíbrio">
-      <div class="context-copy">
-        <span>Natureza</span>
-        <h3>Respiração e origem</h3>
-        <p>A natureza entra como medida de equilíbrio, não como decoração verde. Ela lembra limite, tempo, matéria e responsabilidade.</p>
-      </div>
-    </article>
-
-    <article class="context-card">
-      <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=1000&q=80" alt="Mulher em prática de bem-estar em ambiente claro">
-      <div class="context-copy">
-        <span>Bem-estar</span>
-        <h3>Conforto que sustenta rotina</h3>
-        <p>Não buscamos a exaustão como estética. Buscamos mobilidade, recuperação, autocuidado e continuidade entre os momentos do dia.</p>
-      </div>
-    </article>
-
-    <article class="context-card wide">
-      <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1400&q=80" alt="Pessoas colaborando em mesa de trabalho">
-      <div class="context-copy">
-        <span>Produtividade</span>
-        <h3>A roupa acompanha a vida, não interrompe</h3>
-        <p>Quem veste PHYLLOS treina, trabalha, cuida, conversa, espera, atravessa a cidade e retorna para si. O produto deve ser desenhado para esse trânsito.</p>
-      </div>
-    </article>
+<section class="communication-section" id="piloto">
+  <div class="comm-left">
+    <div class="section-label">Piloto V1</div>
+    <h2 class="section-title">O que vamos validar <em>primeiro</em></h2>
+  </div>
+  <div class="comm-right">
+    <div class="comm-row"><span>ICP</span><p>Pequenas marcas, ateliês estruturados, facções qualificadas, modelistas técnicos e consultorias que já possuem ficha, planilha, arquivo técnico ou dados de material.</p></div>
+    <div class="comm-row"><span>Sucesso</span><p>Gerar um DPP honesto em menos de 60 minutos, com QR publicável e lacunas visíveis, sem vender sustentabilidade como certeza automática.</p></div>
+    <div class="comm-row"><span>Fora da V1</span><p>Editar molde, ajustar desenho, substituir Audaces/Lectra/Gerber/CLO, prometer compliance jurídico, auditoria ambiental ou ACV oficial.</p></div>
   </div>
 </section>
 
 <section class="method-section">
   <div class="method-intro">
-    <div class="section-label">O que podemos dizer agora</div>
-    <h2 class="section-title">Antes do produto, <em>o método</em></h2>
+    <div class="section-label">Anti-greenwashing</div>
+    <h2 class="section-title">Transparência exige <em>status de evidência</em></h2>
     <p>
-      A comunicação nesta fase não deve antecipar certificados, porcentagens, performance ou material final. O que existe agora é uma tese em desenvolvimento e uma disciplina: pesquisar, testar, documentar e só afirmar o que puder ser sustentado.
+      A PHYLLOS não deve publicar impacto como verdade absoluta quando o dado é estimado, declarado ou incompleto. O DPP precisa mostrar origem do dado, método de cálculo, documento associado e lacunas antes de virar comunicação pública.
     </p>
   </div>
   <div class="method-grid">
-    <div class="method-card">
-      <span>01</span>
-      <h3>Pesquisa de rotina</h3>
-      <p>Entender onde a roupa falha: treino antes do expediente, deslocamento, trabalho, casa, cuidado, conforto térmico, aparência e permanência ao longo do dia.</p>
-    </div>
-    <div class="method-card">
-      <span>02</span>
-      <h3>Critérios de material</h3>
-      <p>Avaliar toque, elasticidade, recuperação, durabilidade, respirabilidade e procedência possível antes de transformar qualquer escolha em claim.</p>
-    </div>
-    <div class="method-card">
-      <span>03</span>
-      <h3>Modelagem híbrida</h3>
-      <p>Desenhar peças que se movem com o corpo e ainda preservam presença em contextos reais, sem parecer improviso pós-treino.</p>
-    </div>
-    <div class="method-card">
-      <span>04</span>
-      <h3>Prova antes de promessa</h3>
-      <p>Claims de sustentabilidade, desempenho e rastreabilidade só entram quando existirem documentos, testes ou validações suficientes.</p>
-    </div>
-  </div>
-</section>
-
-<section class="balance-section">
-  <div class="balance-image" role="img" aria-label="Cenário natural de equilíbrio e pausa"></div>
-  <div class="balance-content">
-    <div class="section-label">Equilíbrio de vida</div>
-    <h2 class="section-title">Roupa para dias que <em>não cabem em uma categoria</em></h2>
-    <p>
-      A peça que estamos buscando precisa responder a uma vida que mistura ambição e pausa, precisão e conforto, corpo ativo, cuidado e tomada de decisão. Ela não deve gritar performance. Deve permitir presença.
-    </p>
-    <div class="balance-list">
-      <span>Treino cedo</span>
-      <span>Deslocamento urbano</span>
-      <span>Trabalho</span>
-      <span>Casa e cuidado</span>
-      <span>Família</span>
-      <span>Pausa mental</span>
-      <span>Fim de dia</span>
-    </div>
-  </div>
-</section>
-
-<section class="communication-section">
-  <div class="comm-left">
-    <div class="section-label">Como a marca fala</div>
-    <h2 class="section-title">Falar com precisão <em>é parte da marca</em></h2>
-  </div>
-  <div class="comm-right">
-    <div class="comm-row">
-      <span>Agora</span>
-      <p>Tese, rotina, problema, origem feminina, critérios em pesquisa, visão de produto e bastidores de desenvolvimento.</p>
-    </div>
-    <div class="comm-row">
-      <span>Depois dos testes</span>
-      <p>Protótipos, aprendizados, ajustes de modelagem, limites encontrados e critérios que uma peça precisa cumprir.</p>
-    </div>
-    <div class="comm-row">
-      <span>Depois da validação</span>
-      <p>Material, certificação, rastreabilidade, desempenho e disponibilidade, sempre com evidência e escopo explícito.</p>
-    </div>
+    <div class="method-card"><span>Declarado</span><h3>Informado pelo usuário</h3><p>Composição, fornecedor, lote ou cuidado podem entrar como declaração, desde que o consumidor veja esse limite.</p></div>
+    <div class="method-card"><span>Calculado</span><h3>Derivado por fórmula</h3><p>Área, peso, perda, água, energia e carbono precisam carregar fórmula, fator e versão da metodologia.</p></div>
+    <div class="method-card"><span>Documentado</span><h3>Com arquivo de apoio</h3><p>Ficha, certificado, nota, laudo ou planilha reforçam o campo, mas ainda não significam auditoria independente.</p></div>
+    <div class="method-card"><span>Publicável</span><h3>Aprovado para QR</h3><p>Somente campos revisados entram nos flashcards; lacunas ficam visíveis em vez de escondidas.</p></div>
   </div>
 </section>
 
 <section class="newsletter" id="dossier">
   <div class="newsletter-left">
     <span class="newsletter-phi">Φ</span>
-    <h2 class="newsletter-title">
-      Receba o dossier<br>
-      quando houver <em>prova.</em>
-    </h2>
-    <p class="newsletter-body">Bastidores de pesquisa, critérios de material, decisões de modelagem e evolução do produto. Sem promessa inflada. Sem pressa artificial.</p>
+    <h2 class="newsletter-title">Teste o DPP<br>com uma peca <em>real.</em></h2>
+    <p class="newsletter-body">Estamos priorizando pilotos com marcas que já tenham ficha técnica, composição, fornecedor, área ou consumo por peça. O objetivo é sair com um QR revisável, não com uma narrativa inflada.</p>
   </div>
   <div class="newsletter-right">
     <div class="newsletter-form">
       <input class="newsletter-input" type="email" placeholder="seu@email.com">
-      <button class="newsletter-submit">Acompanhar construção</button>
+      <button class="newsletter-submit">Quero participar do piloto</button>
     </div>
-    <p class="newsletter-note">Conteúdo de desenvolvimento · Sem claims antes da evidência · Cancele quando quiser</p>
+    <p class="newsletter-note">Piloto assistido · Sem ACV oficial · Sem claim sem evidência</p>
   </div>
 </section>
 
@@ -224,42 +112,39 @@
     <div>
       <span class="footer-brand-phi">Φ</span>
       <span class="footer-brand-name">Phyllos</span>
-      <span class="footer-brand-sub">wear</span>
-      <p class="footer-tagline">"Antes de vender uma peça, precisamos saber exatamente o que ela sustenta."</p>
+      <span class="footer-brand-sub">DPP Studio</span>
+      <p class="footer-tagline">"Antes de vender uma promessa, precisamos mostrar que dado a sustenta."</p>
     </div>
     <div class="footer-col">
-      <h4>Explorar</h4>
+      <h4>Produto</h4>
       <ul>
-        <li><a href="#dossier">Dossier</a></li>
-        <li><a href="manifesto.html">Manifesto</a></li>
-    <li><a href="business-plan.html">Plano</a></li>
-        <li><a href="materiais.html">Materiais</a></li>
-        <li><a href="colecoes.html">Coleções</a></li>
+        <li><a href="dpp-studio.html">DPP Studio</a></li>
         <li><a href="fashion-os.html">Fashion OS</a></li>
+        <li><a href="#piloto">Piloto V1</a></li>
+        <li><a href="business-plan.html">Plano vivo</a></li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Construção</h4>
+      <h4>Contexto</h4>
       <ul>
-        <li><a href="manifesto.html">Tese da marca</a></li>
-        <li><a href="materiais.html">Pesquisa material</a></li>
-        <li><a href="colecoes.html">Territórios de uso</a></li>
-        <li><a href="fashion-os.html">Sistema operacional</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+        <li><a href="materiais.html">Materiais como dados</a></li>
+        <li><a href="colecoes.html">Laboratório histórico</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Status</h4>
       <ul>
-        <li><a href="#dossier">Produto em desenvolvimento</a></li>
-        <li><a href="#dossier">Lista de acompanhamento</a></li>
-        <li><a href="#dossier">Sem checkout ativo</a></li>
-        <li><a href="#dossier">Sem claims finais</a></li>
+        <li><a href="#dossier">MVP em piloto</a></li>
+        <li><a href="#tese">DPP middleware</a></li>
+        <li><a href="#piloto">Sem edição de molde na V1</a></li>
+        <li><a href="#dossier">Sem claim sem evidência</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 Phyllos · Em desenvolvimento</span>
-    <span>wear · beauty · tech</span>
+    <span>© 2026 Phyllos · DPP Studio em desenvolvimento</span>
+    <span>technical file intake · evidence · QR</span>
   </div>
 </footer>
 
