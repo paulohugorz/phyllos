@@ -13,5 +13,11 @@
       "runtimeArgs": ["-m", "http.server", "8123"],
       "port": 8123
     }
+  ,{
+      "name": "phyllos-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8081", "--directory", "phyllos"],
+      "port": 8081
+    }
   ]
 }

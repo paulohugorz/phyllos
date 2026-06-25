@@ -3,8 +3,17 @@
 **Projeto:** Fashion OS v1 — PHYLLOS  
 **Versão:** 1.0  
 **Data:** 2026-06-23  
-**Status:** Implementado — aguarda validação em staging  
+**Status:** referencia de implementacao legada — complementar ao PRD v0 de 2026-06-25
 **Owner:** CPO  
+
+> Atualizacao 2026-06-25: esta especificacao descreve a implementacao DPP existente no backend legado (`_legado/app`). Para a V1 vigente de DPP Integrado, usar como fontes principais:
+>
+> - [prd-dpp-integrado-v0.md](prd-dpp-integrado-v0.md)
+> - [dpp-data-contract-v0.md](dpp-data-contract-v0.md)
+> - [dpp-anti-greenwashing-qa-v0.md](dpp-anti-greenwashing-qa-v0.md)
+> - [backlog-codex-dpp-2026-06-25.md](backlog-codex-dpp-2026-06-25.md)
+>
+> Esta pagina continua util como fotografia tecnica do que ja existe, mas nao deve prevalecer sobre os gates de evidencia, anti-greenwashing e escopo sem edicao de molde definidos no PRD v0.
 
 ---
 

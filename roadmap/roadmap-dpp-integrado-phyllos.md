@@ -103,8 +103,11 @@ Entregas:
 
 - Premissa DPP integrada registrada em `.claude/agents/references/dpp-integrado-strategic-premises.md`.
 - Roadmap vigente criado.
-- PRD v0.
-- Criterios de aceite do MVP.
+- PRD v0 registrado em `produto/decisoes/prd-dpp-integrado-v0.md`.
+- Criterios de aceite do MVP registrados em `produto/decisoes/prd-dpp-integrado-v0.md`.
+- Contrato de dados registrado em `produto/decisoes/dpp-data-contract-v0.md`.
+- QA anti-greenwashing registrado em `produto/decisoes/dpp-anti-greenwashing-qa-v0.md`.
+- Backlog Codex registrado em `produto/decisoes/backlog-codex-dpp-2026-06-25.md`.
 - Lista de 5 usuarios/pilotos-alvo.
 
 Responsaveis:
@@ -128,8 +131,8 @@ Entregas:
 
 - `phyllos/dpp-studio.html` refinado.
 - fluxo: upload/input tecnico -> produto -> material -> calculo -> flashcards.
-- schema conceitual em SQL/Markdown.
-- dicionario de dados.
+- schema conceitual em SQL/Markdown, a partir de `produto/decisoes/dpp-data-contract-v0.md`.
+- dicionario de dados, a partir de `produto/decisoes/dpp-data-contract-v0.md`.
 - formulas documentadas.
 - criterios de evidencia por campo.
 
@@ -384,12 +387,15 @@ Critério de aceite:
 
 ## 10. Proxima acao recomendada
 
-Criar o PRD v0 do DPP Integrado e o schema inicial do banco.
+PRD v0, contrato de dados, QA anti-greenwashing e backlog Codex ja foram registrados em `produto/decisoes/`.
+
+Proxima acao tecnica: decidir se o backend DPP evolui em `_legado/app` ou se sera promovido para `app/` antes de implementar calculadora, validadores e endpoints novos.
 
 Ordem:
 
-1. `produto/decisoes/prd-dpp-integrado-v0.md`
-2. `data/phyllos/dpp/schema.sql`
-3. prototipo `phyllos/dpp-studio.html` como referencia de UX
-4. backend FastAPI minimo
-
+1. confirmar decisao de backend ativo: `_legado/app` ou `app/`;
+2. atualizar `phyllos/dpp-studio.html` para fluxo de 7 etapas;
+3. criar modulo de calculo deterministico;
+4. criar validadores anti-greenwashing;
+5. criar/ajustar schema e endpoints;
+6. adicionar testes unitarios e fluxo de publicacao/revogacao.

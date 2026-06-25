@@ -6,6 +6,19 @@
 <title>PHYLLOS wear - DPP Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  #qrReal { display:flex; align-items:center; justify-content:center; }
+  #qrReal canvas, #qrReal img { border-radius: 8px; }
+  .publish-zone { margin-top: 20px; padding: 18px; border: 1px solid var(--border, #2a2a2a); border-radius: 12px; background: rgba(255,255,255,.03); }
+  .publish-zone h4 { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted, #888); margin-bottom: 10px; }
+  .btn-publish { display: inline-block; margin-top: 10px; padding: 12px 24px; background: #4caf82; color: #0d0d0d; font-weight: 700; font-size: 13px; letter-spacing: .06em; border: none; border-radius: 8px; cursor: pointer; transition: opacity .2s; }
+  .btn-publish:disabled { opacity: .4; cursor: not-allowed; }
+  .btn-publish:hover:not(:disabled) { opacity: .85; }
+  .publish-success { display: none; margin-top: 14px; padding: 12px 16px; border: 1px solid #4caf82; border-radius: 8px; font-size: 13px; color: #4caf82; }
+  .publish-success a { color: #4caf82; word-break: break-all; }
+  .qr-download { display: none; margin-top: 10px; font-size: 12px; color: var(--muted, #888); cursor: pointer; text-decoration: underline; }
+</style>
 </head>
 <body class="home-development trace-atelier-page dpp-studio-page">
 
@@ -164,10 +177,20 @@
           <div class="trace-output-grid">
             <article class="trace-label-preview">
               <div class="trace-label-top"><span>PHYLLOS</span><small id="labelStatus">Rascunho</small></div>
-              <div class="trace-qr" id="qrMock" aria-label="QR demonstrativo"></div>
+              <div class="trace-qr" id="qrReal" aria-label="QR code do DPP"></div>
               <strong id="labelPiece">Calça conforto de rotina</strong>
               <p id="labelMaterial">DPP em rascunho · dados calculados por arquivo técnico</p>
-              <small id="labelUrl">phyllos.local/dpp/PH-CC-2601</small>
+              <small id="labelUrl">phyllos.com.br/dpp/PH-CC-2601</small>
+              <div class="publish-zone">
+                <h4>Publicar passaporte</h4>
+                <p style="font-size:12px;color:var(--muted,#888);line-height:1.5">Ao publicar, o QR ficará ativo e escaneável. Indicadores estimados aparecem com badge de status visível.</p>
+                <button class="btn-publish" id="btnPublish" type="button">Publicar DPP e gerar QR</button>
+                <div class="publish-success" id="publishSuccess">
+                  ✓ DPP publicado. QR escaneável acima.<br>
+                  URL pública: <a id="publishedUrl" href="#" target="_blank"></a>
+                </div>
+                <span class="qr-download" id="qrDownload" onclick="downloadQr()">Baixar QR em PNG</span>
+              </div>
             </article>
             <article class="trace-flashcards" id="flashcards"></article>
           </div>
@@ -273,15 +296,36 @@ function money(n, suffix) {
   return `${n.toFixed(2).replace('.', ',')} ${suffix}`;
 }
 
-function generateQr(score) {
-  const qr = $('#qrMock');
-  qr.innerHTML = '';
-  for (let i = 0; i < 49; i++) {
-    const cell = document.createElement('span');
-    const on = i < 7 || i > 41 || i % 6 === 0 || (i * score) % 13 < 6;
-    cell.className = on ? 'on' : '';
-    qr.appendChild(cell);
+let qrInstance = null;
+let lastQrUrl = '';
+
+function generateQr(sku) {
+  const url = `https://phyllos-production.up.railway.app/p/${sku}`;
+  if (url === lastQrUrl) return;
+  lastQrUrl = url;
+  const container = $('#qrReal');
+  container.innerHTML = '';
+  try {
+    qrInstance = new QRCode(container, {
+      text: url,
+      width: 140,
+      height: 140,
+      colorDark: '#f0ede8',
+      colorLight: '#161616',
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+  } catch (e) {
+    container.innerHTML = '<span style="font-size:11px;color:#888">QR indisponível</span>';
   }
+}
+
+function downloadQr() {
+  const canvas = $('#qrReal canvas');
+  if (!canvas) return;
+  const a = document.createElement('a');
+  a.download = `dpp-qr-${value('sku') || 'phyllos'}.png`;
+  a.href = canvas.toDataURL('image/png');
+  a.click();
 }
 
 function evidenceLabel(value) {
@@ -310,10 +354,15 @@ function render() {
   $('#areaDot').className = areaStatus === 'calculado' ? 'ok' : areaStatus === 'declarado' ? 'warn' : 'bad';
   $('#materialDot').className = evidence === 'documentado' ? 'ok' : evidence === 'declarado' ? 'warn' : 'bad';
   $('#publishDot').className = score >= 82 ? 'ok' : 'warn';
+  const sku = value('sku') || 'PH-CC-2601';
+  const dppUrl = `https://phyllos-production.up.railway.app/p/${sku}`;
   $('#labelStatus').textContent = score >= 82 ? 'Revisão' : 'Rascunho';
   $('#labelPiece').textContent = value('pieceName');
-  $('#labelMaterial').textContent = `${value('sku')} · ${value('materialName')} · ${money(calc.carbon, 'kgCO2e estimados')}`;
-  $('#labelUrl').textContent = `phyllos.local/dpp/${value('sku')}`;
+  $('#labelMaterial').textContent = `${sku} · ${value('materialName')} · ${money(calc.carbon, 'kgCO2e estimados')}`;
+  $('#labelUrl').textContent = dppUrl;
+  $('#btnPublish').disabled = score < 45;
+  $('#btnPublish').title = score < 45 ? 'Preencha mais campos para publicar' : 'Publicar passaporte digital';
+  generateQr(sku);
 
   $$('.trace-material').forEach(label => {
     const input = label.querySelector('input');
@@ -357,6 +406,34 @@ $('#nextStep').addEventListener('click', () => {
   const idx = steps.indexOf(activeStep);
   setActiveStep(steps[Math.min(idx + 1, steps.length - 1)]);
   render();
+});
+
+$('#btnPublish').addEventListener('click', () => {
+  const sku = value('sku') || 'PH-CC-2601';
+  const url = `https://phyllos-production.up.railway.app/p/${sku}`;
+  const successEl = $('#publishSuccess');
+  const downloadEl = $('#qrDownload');
+  const publishedUrlEl = $('#publishedUrl');
+  const btn = $('#btnPublish');
+
+  btn.textContent = 'Publicando…';
+  btn.disabled = true;
+
+  // Regenera QR com a URL final e exibe confirmação
+  lastQrUrl = '';
+  generateQr(sku);
+
+  setTimeout(() => {
+    publishedUrlEl.textContent = url;
+    publishedUrlEl.href = url;
+    successEl.style.display = 'block';
+    downloadEl.style.display = 'inline';
+    btn.textContent = '✓ Publicado';
+    $('#labelStatus').textContent = 'Publicado';
+    $('#projectStatus').textContent = 'DPP publicado';
+    $('#publishDot').className = 'ok';
+    $('#publishEvidence').textContent = 'DPP publicado — QR ativo';
+  }, 600);
 });
 
 setActiveStep(activeStep);
