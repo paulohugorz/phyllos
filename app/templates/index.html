@@ -643,6 +643,71 @@
     .pct-total.ok  { color: var(--green); }
     .pct-total.err { color: var(--red); }
 
+    /* ── Cálculo de impacto pelo catálogo ── */
+    .blend-calc-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .btn-calcular-blend {
+      background: none;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      color: var(--green);
+      padding: 6px 14px;
+      transition: border-color 0.15s, opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn-calcular-blend:hover { border-color: var(--green); opacity: 0.85; }
+    .btn-calcular-blend:disabled { opacity: 0.35; cursor: default; }
+    .blend-calc-hint {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .blend-resultado {
+      margin-top: 12px;
+      border: 1px solid var(--border-md);
+      border-radius: 4px;
+      padding: 14px 16px;
+      background: #fafaf8;
+    }
+    .blend-resultado.hidden { display: none; }
+    .blend-resultado-titulo {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .blend-indicadores {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .blend-ind { text-align: center; }
+    .blend-ind-valor { font-size: 17px; font-weight: 600; color: var(--obsidian); }
+    .blend-ind-unidade { font-size: 10px; color: var(--muted); }
+    .blend-ind-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
+    .blend-meta { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
+    .blend-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+    .blend-badge.media  { color: var(--gold);  border-color: var(--gold); }
+    .blend-badge.alta   { color: var(--green); border-color: var(--green); }
+    .blend-badge.baixa  { color: var(--red);   border-color: var(--red); }
+    .blend-aviso { font-size: 11px; color: var(--muted); font-style: italic; flex: 1; }
+
     .col-headers {
       display: grid;
       gap: 8px;
@@ -1338,7 +1403,17 @@
         </div>
         <div class="fibras-list" id="fibras-list"></div>
         <button class="btn-add" onclick="App.addFibra()">+ Adicionar material</button>
+        <datalist id="fibras-catalog-list"></datalist>
         <div class="pct-total" id="pct-total"></div>
+
+        <!-- Calcular impacto pelo catálogo -->
+        <div class="blend-calc-bar" id="blend-calc-bar" style="display:none">
+          <button class="btn-calcular-blend" id="btn-calcular-blend" onclick="App.calcularImpactoCatalogo()">
+            Calcular impacto estimado
+          </button>
+          <span class="blend-calc-hint">pelo catálogo Phyllos</span>
+        </div>
+        <div class="blend-resultado hidden" id="blend-resultado"></div>
       </div>
 
       <hr class="section-sep" />
@@ -1908,6 +1983,8 @@
     pecaAtual:   null,        // objeto peça selecionada
     fichaExiste: false,       // se já existe ficha técnica
     etapas:      [],          // etapas carregadas
+    catalogoFibrasMap: {},    // nome_pt → fibra_id (carregado do catálogo de impacto)
+    ultimoBlend: null,        // último resultado de POST /catalogo/calcular-blend
   };
 
   /* ═══════════════════════════════════════════════════
@@ -2252,6 +2329,7 @@
         document.getElementById('toggle-rec').checked  = false;
         document.getElementById('certs-content').classList.remove('open');
         document.getElementById('rec-content').classList.remove('open');
+        App._limparBlend();
         App.atualizarTotalPct();
       }
     },
@@ -2742,6 +2820,7 @@
         document.getElementById('toggle-rec').checked  = false;
         document.getElementById('certs-content').classList.remove('open');
         document.getElementById('rec-content').classList.remove('open');
+        App._limparBlend();
         App.atualizarTotalPct();
       }
     },
@@ -2811,6 +2890,18 @@
         conteudo_reciclado_pct: recVal,
       };
 
+      // Se o catálogo calculou o blend, incluir fatores de impacto na ficha
+      if (State.ultimoBlend) {
+        const ft = State.ultimoBlend.para_ficha_tecnica;
+        payload.carbono_kgco2e_kg          = ft.carbono_kgco2e_kg;
+        payload.agua_litros_kg             = ft.agua_litros_kg;
+        payload.energia_kwh_kg             = ft.energia_kwh_kg;
+        payload.fonte_carbono_kgco2e_kg    = ft.fonte_carbono_kgco2e_kg;
+        payload.fonte_agua_litros_kg       = ft.fonte_agua_litros_kg;
+        payload.fonte_energia_kwh_kg       = ft.fonte_energia_kwh_kg;
+        payload.metodologia_fatores_impacto = ft.metodologia_fatores_impacto;
+      }
+
       try {
         if (State.fichaExiste) {
           await api('PATCH', `/fichas-tecnicas/${p.id}`, payload);
@@ -2832,9 +2923,9 @@
       const row  = document.createElement('div');
       row.className = 'fibra-row';
       row.innerHTML = `
-        <input type="text" placeholder="ex: algodão orgânico" value="${esc(String(material))}" oninput="App.atualizarTotalPct()" />
-        <input type="number" placeholder="%" min="0" max="100" value="${esc(String(pct))}" oninput="App.atualizarTotalPct()" />
-        <button class="btn-remove" title="Remover" onclick="this.parentElement.remove();App.atualizarTotalPct()">&#215;</button>
+        <input type="text" list="fibras-catalog-list" placeholder="ex: algodão orgânico" value="${esc(String(material))}" oninput="App.atualizarTotalPct();App._limparBlend()" />
+        <input type="number" placeholder="%" min="0" max="100" value="${esc(String(pct))}" oninput="App.atualizarTotalPct();App._limparBlend()" />
+        <button class="btn-remove" title="Remover" onclick="this.parentElement.remove();App.atualizarTotalPct();App._limparBlend()">&#215;</button>
       `;
       list.appendChild(row);
       App.atualizarTotalPct();
@@ -2849,11 +2940,113 @@
 
     atualizarTotalPct() {
       const fibras = App.coletarFibras();
-      const el = document.getElementById('pct-total');
-      if (!fibras.length) { el.textContent = ''; return; }
+      const el     = document.getElementById('pct-total');
+      const bar    = document.getElementById('blend-calc-bar');
+      if (!fibras.length) {
+        el.textContent = '';
+        if (bar) bar.style.display = 'none';
+        return;
+      }
       const total = fibras.reduce((s, f) => s + Number(f.pct || 0), 0);
       el.textContent = `Total: ${total}%`;
       el.className   = 'pct-total ' + (total === 100 ? 'ok' : 'err');
+      if (bar) bar.style.display = total === 100 ? 'flex' : 'none';
+    },
+
+    /* ─── CATÁLOGO DE IMPACTO ─── */
+
+    async carregarCatalogoFibras() {
+      try {
+        const res = await api('GET', '/catalogo/fibras');
+        State.catalogoFibrasMap = {};
+        const dl = document.getElementById('fibras-catalog-list');
+        if (dl) dl.innerHTML = '';
+        (res.fibras || []).forEach(f => {
+          State.catalogoFibrasMap[f.nome_pt] = f.fibra_id;
+          if (dl) {
+            const opt = document.createElement('option');
+            opt.value = f.nome_pt;
+            dl.appendChild(opt);
+          }
+        });
+      } catch (_) {
+        // catálogo não disponível — funciona sem autocomplete
+      }
+    },
+
+    async calcularImpactoCatalogo() {
+      const fibras = App.coletarFibras();
+      const composicao = fibras
+        .map(f => ({ fibra_id: State.catalogoFibrasMap[f.fibra] || null, percentual: Number(f.pct) }))
+        .filter(f => f.fibra_id && f.percentual > 0);
+
+      if (!composicao.length) {
+        toast('Nenhuma fibra reconhecida pelo catálogo. Use os nomes sugeridos na lista.', 'err');
+        return;
+      }
+
+      const total = composicao.reduce((s, f) => s + f.percentual, 0);
+      if (Math.abs(total - 100) > 0.5) {
+        toast(`Soma das fibras reconhecidas é ${total}% — verifique os nomes e tente novamente.`, 'err');
+        return;
+      }
+
+      const btn = document.getElementById('btn-calcular-blend');
+      if (btn) { btn.disabled = true; btn.textContent = 'Calculando…'; }
+
+      try {
+        const res = await api('POST', '/catalogo/calcular-blend', { composicao });
+        State.ultimoBlend = res;
+        App.mostrarResultadoBlend(res);
+      } catch (e) {
+        toast('Erro ao calcular: ' + e.message, 'err');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Calcular impacto estimado'; }
+      }
+    },
+
+    mostrarResultadoBlend(res) {
+      const el = document.getElementById('blend-resultado');
+      if (!el) return;
+      const b = res.fatores_blend;
+      const m = res.meta;
+      const co2   = b.co2eq_kg_por_kg.toFixed(2);
+      const agua  = Math.round(b.agua_l_por_kg).toLocaleString('pt-BR');
+      const kwh   = b.energia_kwh_por_kg.toFixed(2);
+      const conf  = m.confianca || 'media';
+      const confLabel = { media: 'Confiança média', alta: 'Confiança alta', baixa: 'Confiança baixa' }[conf] || conf;
+      const aviso = m.aviso ? `<span class="blend-aviso">${m.aviso}</span>` : '';
+      el.innerHTML = `
+        <div class="blend-resultado-titulo">Impacto estimado por kg de material</div>
+        <div class="blend-indicadores">
+          <div class="blend-ind">
+            <div class="blend-ind-valor">${co2}</div>
+            <div class="blend-ind-unidade">kgCO₂eq/kg</div>
+            <div class="blend-ind-label">Carbono</div>
+          </div>
+          <div class="blend-ind">
+            <div class="blend-ind-valor">${agua}</div>
+            <div class="blend-ind-unidade">L/kg</div>
+            <div class="blend-ind-label">Água</div>
+          </div>
+          <div class="blend-ind">
+            <div class="blend-ind-valor">${kwh}</div>
+            <div class="blend-ind-unidade">kWh/kg</div>
+            <div class="blend-ind-label">Energia</div>
+          </div>
+        </div>
+        <div class="blend-meta">
+          <span class="blend-badge ${conf}">${confLabel}</span>
+          ${aviso}
+        </div>
+      `;
+      el.classList.remove('hidden');
+    },
+
+    _limparBlend() {
+      State.ultimoBlend = null;
+      const el = document.getElementById('blend-resultado');
+      if (el) { el.innerHTML = ''; el.classList.add('hidden'); }
     },
 
     /* ─── CERTIFICADOS ─── */
@@ -3028,6 +3221,8 @@
     App.setNavStage('ns-descrever');
     // Carrega lista em background para quando o usuário navegar
     App.carregarLista();
+    // Pré-carrega catálogo de fibras para autocomplete e cálculo de impacto
+    App.carregarCatalogoFibras();
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
