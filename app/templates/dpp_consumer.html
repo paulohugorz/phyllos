@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>{{ peca_nome }} — Passaporte do Produto</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #0d0d0d;
+      --surface: #161616;
+      --border:  #2a2a2a;
+      --text:    #f0ede8;
+      --muted:   #888;
+      --green:   #4caf82;
+      --amber:   #e8a246;
+      --red:     #e05c5c;
+      --blue:    #6cb4e4;
+
+      --card-w: min(88vw, 340px);
+      --card-h: min(72vw, 460px);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ── */
+    .header {
+      padding: 20px 20px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .brand {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .peca-nome {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.15;
+    }
+    .gtin-tag {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+      letter-spacing: .05em;
+    }
+
+    /* ── Deck label ── */
+    .deck-label {
+      padding: 16px 20px 10px;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── Cards scroll track ── */
+    .cards-track {
+      display: flex;
+      gap: 14px;
+      padding: 0 20px 28px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .cards-track::-webkit-scrollbar { display: none; }
+
+    /* ── Single card ── */
+    .card {
+      flex: 0 0 var(--card-w);
+      height: var(--card-h);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 22px 22px;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-index {
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .card-icon {
+      font-size: 32px;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+
+    .card-title {
+      font-size: 13px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .card-value {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.1;
+      color: var(--text);
+    }
+    .card-value.apuracao {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+
+    .card-unit {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .card-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    /* accent stripe at top of card */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 16px 16px 0 0;
+      background: var(--accent, var(--green));
+    }
+
+    /* ── Cert badges ── */
+    .cert-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .cert-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 20px;
+      border: 1px solid currentColor;
+      letter-spacing: .04em;
+    }
+    .cert-badge.verified   { color: var(--green); }
+    .cert-badge.pending    { color: var(--amber); }
+    .cert-badge.unverified { color: var(--muted); }
+
+    .evidence-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      max-width: 100%;
+      margin-top: 8px;
+      padding: 5px 9px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: .02em;
+    }
+    .evidence-badge.ausente { color: var(--muted); }
+    .evidence-badge.declarado { color: var(--amber); }
+    .evidence-badge.calculado { color: #3a8fc2; }
+    .evidence-badge.documentado,
+    .evidence-badge.verificado { color: var(--green); }
+
+    .metric-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .metric-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 6px 10px;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .metric-row:last-child { border-bottom: 0; }
+    .metric-name {
+      min-width: 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .metric-value {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .metric-row .evidence-badge {
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+
+    /* ── Fornecedor origin pills ── */
+    .origin-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .origin-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+    .nota-dots {
+      display: flex;
+      gap: 3px;
+    }
+    .nota-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+    .nota-dot.on { background: var(--green); }
+
+    /* ── Carbon visual ── */
+    .carbon-bar-wrap {
+      margin-top: 16px;
+    }
+    .carbon-bar-track {
+      height: 6px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .carbon-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--green), var(--amber));
+      transition: width .6s ease;
+    }
+    .carbon-benchmark {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── Durability ── */
+    .durability-number {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .durability-big {
+      font-size: 52px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      line-height: 1;
+      color: var(--text);
+    }
+    .durability-label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── Composição fibras ── */
+    .fibra-bars { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .fibra-row  { display: flex; flex-direction: column; gap: 3px; }
+    .fibra-meta { display: flex; justify-content: space-between; font-size: 12px; }
+    .fibra-name { text-transform: capitalize; color: var(--text); }
+    .fibra-pct  { color: var(--muted); }
+    .fibra-bar-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .fibra-bar-fill  { height: 100%; border-radius: 2px; background: var(--green); }
+
+    /* ── Dot pagination ── */
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 4px 0 24px;
+    }
+    .dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background .2s;
+    }
+    .dot.active { background: var(--text); }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: auto;
+      padding: 16px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer a { color: var(--muted); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="brand">Phyllos — Passaporte do Produto</div>
+    <div class="peca-nome">{{ peca_nome }}</div>
+    <div class="gtin-tag">GTIN {{ peca_gtin }}</div>
+  </div>
+
+  <div class="deck-label">Credenciais de sustentabilidade</div>
+
+  <div class="cards-track" id="track">
+
+    {# ── Card 1: Origem & Certificação (mandatory) ── #}
+    <div class="card" style="--accent: #4caf82">
+      <div class="card-index">01 / {{ total_cards }}</div>
+      <div class="card-icon">🌱</div>
+      <div class="card-body">
+        <div class="card-title">Certificação de Origem</div>
+        {% set cert_status = evidence_statuses.get('certificacoes', 'ausente') %}
+        <span class="evidence-badge {{ cert_status }}">{{ evidence_labels.get(cert_status, cert_status) }}</span>
+
+        {% if certificacoes %}
+          <div class="cert-list">
+            {% for c in certificacoes %}
+              {% set status = c.nivel_confianca | default('baixo') %}
+              {% if status in ['alto', 'verificado'] %}
+                <span class="cert-badge verified">{{ c.tipo | default(c.nome, true) }}</span>
+              {% elif status == 'medio' %}
+                <span class="cert-badge pending">{{ c.tipo | default(c.nome, true) }}</span>
+              {% else %}
+                <span class="cert-badge unverified">{{ c.tipo | default(c.nome, true) }}</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="card-value apuracao">Em apuração</div>
+          <div class="card-sub">Certificações em processo de verificação.</div>
+        {% endif %}
+
+        {% if fornecedores %}
+          <div class="origin-list" style="margin-top: 18px">
+            {% for f in fornecedores %}
+              <div class="origin-item">
+                <div class="nota-dots">
+                  {% for i in range(5) %}
+                    <div class="nota-dot {% if i < f.nota %}on{% endif %}"></div>
+                  {% endfor %}
+                </div>
+                <span style="font-size:12px; color: var(--muted)">{{ f.nome | truncate(28, True, '…') }} · {{ f.estado }}</span>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {# ── Card 2: Impacto calculado (mandatory) ── #}
+    <div class="card" style="--accent: #6cb4e4">
+      <div class="card-index">02 / {{ total_cards }}</div>
+      <div class="card-icon">💨</div>
+      <div class="card-body">
+        <div class="card-title">Impacto Calculado</div>
+
+        <div class="metric-list">
+          {% set carbon_status = evidence_statuses.get('carbono_peca_kgco2e', 'ausente') %}
+          <div class="metric-row">
+            <span class="metric-name">Carbono</span>
+            <strong class="metric-value">{% if carbono_kgco2e is not none %}{{ "%.2f"|format(carbono_kgco2e) }} kg CO₂e{% else %}Em apuração{% endif %}</strong>
+            <span class="evidence-badge {{ carbon_status }}">{{ evidence_labels.get(carbon_status, carbon_status) }}</span>
+          </div>
+
+          {% set agua_status = evidence_statuses.get('agua_peca_litros', 'ausente') %}
+          <div class="metric-row">
+            <span class="metric-name">Água</span>
+            <strong class="metric-value">{% if agua_peca_litros is not none %}{{ "%.1f"|format(agua_peca_litros) }} L{% else %}Em apuração{% endif %}</strong>
+            <span class="evidence-badge {{ agua_status }}">{{ evidence_labels.get(agua_status, agua_status) }}</span>
+          </div>
+
+          {% set energia_status = evidence_statuses.get('energia_peca_kwh', 'ausente') %}
+          <div class="metric-row">
+            <span class="metric-name">Energia</span>
+            <strong class="metric-value">{% if energia_peca_kwh is not none %}{{ "%.2f"|format(energia_peca_kwh) }} kWh{% else %}Em apuração{% endif %}</strong>
+            <span class="evidence-badge {{ energia_status }}">{{ evidence_labels.get(energia_status, energia_status) }}</span>
+          </div>
+
+          {% set perda_status = evidence_statuses.get('perda_corte_pct', 'ausente') %}
+          <div class="metric-row">
+            <span class="metric-name">Perda de corte</span>
+            <strong class="metric-value">
+              {% if area_perdida_m2 is not none and perda_corte_pct is not none %}
+                {{ "%.2f"|format(area_perdida_m2) }} m² · {{ "%.1f"|format(perda_corte_pct) }}%
+              {% else %}
+                Em apuração
+              {% endif %}
+            </strong>
+            <span class="evidence-badge {{ perda_status }}">{{ evidence_labels.get(perda_status, perda_status) }}</span>
+          </div>
+        </div>
+
+        {% if carbono_kgco2e is not none or agua_peca_litros is not none or energia_peca_kwh is not none %}
+          <div class="card-sub" style="margin-top: 14px">
+            Estimativas calculadas a partir da área da peça, perda de corte, gramatura e fatores cadastrados. Não substitui ACV auditada.
+          </div>
+        {% else %}
+          <div class="card-sub">
+            Indicadores aguardam ficha técnica, fatores e evidências mínimas para publicação.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {# ── Card 3: Durabilidade (mandatory) ── #}
+    <div class="card" style="--accent: #e8a246">
+      <div class="card-index">03 / {{ total_cards }}</div>
+      <div class="card-icon">⏳</div>
+      <div class="card-body">
+        <div class="card-title">Durabilidade</div>
+        {% set durabilidade_status = 'declarado' if durabilidade_ciclos else 'ausente' %}
+        <span class="evidence-badge {{ durabilidade_status }}">{{ evidence_labels.get(durabilidade_status, durabilidade_status) }}</span>
+
+        {% if durabilidade_ciclos %}
+          <div class="durability-number">
+            <div class="durability-big">{{ durabilidade_ciclos }}</div>
+            <div class="durability-label">ciclos<br>de lavagem</div>
+          </div>
+          {% set anos = (durabilidade_ciclos / 52) | int %}
+          {% if anos > 0 %}
+            <div class="card-unit" style="margin-top: 8px">≈ {{ anos }} ano{% if anos > 1 %}s{% endif %} de uso regular</div>
+          {% endif %}
+          <div class="card-sub">
+            Dado declarado na ficha técnica. Siga as instruções de cuidado para maximizar a vida útil.
+          </div>
+        {% else %}
+          <div class="card-value apuracao">Em apuração</div>
+          <div class="card-sub">
+            Teste de resistência em andamento. Damos preferência a fibras comprovadamente duráveis.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {# ── Card 4: Composição (conditional — só exibe se tiver dados) ── #}
+    {% if composicao %}
+    <div class="card" style="--accent: #9b8fe8">
+      <div class="card-index">04 / {{ total_cards }}</div>
+      <div class="card-icon">🔬</div>
+      <div class="card-body">
+        <div class="card-title">Composição</div>
+        {% set composicao_status = evidence_statuses.get('composicao_fibras', 'ausente') %}
+        <span class="evidence-badge {{ composicao_status }}">{{ evidence_labels.get(composicao_status, composicao_status) }}</span>
+        <div class="fibra-bars">
+          {% for f in composicao %}
+            <div class="fibra-row">
+              <div class="fibra-meta">
+                <span class="fibra-name">{{ f.fibra }}</span>
+                <span class="fibra-pct">{% if f.pct %}{{ f.pct }}%{% else %}—{% endif %}</span>
+              </div>
+              {% if f.pct %}
+                <div class="fibra-bar-track">
+                  <div class="fibra-bar-fill" style="width: {{ f.pct }}%"></div>
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {# ── Card 5: Cuidados & Fim de Vida (conditional) ── #}
+    {% if instrucoes_reparo or instrucoes_fim_vida %}
+    <div class="card" style="--accent: #e05c5c">
+      <div class="card-index">{% if composicao %}05{% else %}04{% endif %} / {{ total_cards }}</div>
+      <div class="card-icon">♻️</div>
+      <div class="card-body">
+        <div class="card-title">Cuidado & Fim de Vida</div>
+        <span class="evidence-badge declarado">{{ evidence_labels.get('declarado') }}</span>
+        {% if instrucoes_reparo %}
+          <div class="card-sub" style="margin-top: 6px; color: var(--text); font-size: 14px">
+            <strong style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted)">Reparo</strong><br>
+            {{ instrucoes_reparo }}
+          </div>
+        {% endif %}
+        {% if instrucoes_fim_vida %}
+          <div class="card-sub" style="margin-top: 16px; color: var(--text); font-size: 14px">
+            <strong style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted)">Descarte</strong><br>
+            {{ instrucoes_fim_vida }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
+  </div><!-- /cards-track -->
+
+  <div class="dots" id="dots"></div>
+
+  <div class="footer">
+    <span>DPP {{ dpp_version or 'rascunho' }} · evidências rotuladas</span>
+    <a href="/">phyllos.com.br</a>
+  </div>
+
+  <script>
+    // Dot pagination
+    const track = document.getElementById('track');
+    const dotsEl = document.getElementById('dots');
+    const cards = track.querySelectorAll('.card');
+
+    cards.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      dotsEl.appendChild(d);
+    });
+
+    const dots = dotsEl.querySelectorAll('.dot');
+
+    track.addEventListener('scroll', () => {
+      const idx = Math.round(track.scrollLeft / (track.offsetWidth * 0.92));
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    }, { passive: true });
+
+    // Inject total_cards into card-index spans
+    // (Jinja resolves at render time — this block is a no-op safety net)
+  </script>
+</body>
+</html>

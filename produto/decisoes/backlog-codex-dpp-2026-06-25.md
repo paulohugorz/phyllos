@@ -1,7 +1,7 @@
 # Backlog Codex - DPP Integrado
 
 **Data:** 2026-06-25  
-**Status:** plano de execucao a partir do PRD v0  
+**Status:** em execucao local - ciclo Codex C1-C6 iniciado  
 **Relacionado:** [prd-dpp-integrado-v0.md](prd-dpp-integrado-v0.md)
 
 ---
@@ -10,7 +10,7 @@
 
 O briefing recebido cita `app/main.py`, `app/services/dpp_calculator.py`, `app/models/models.py` e `templates/dpp_public.html` como destinos de implementacao.
 
-No checkout atual, a raiz `app/` existe como estrutura, mas esta vazia. A implementacao FastAPI/DPP existente esta em `_legado/app/`, incluindo:
+No checkout original deste ciclo, a raiz `app/` existia como estrutura, mas estava vazia. A implementacao FastAPI/DPP existente estava em `_legado/app/`, incluindo:
 
 - `_legado/app/main.py`;
 - `_legado/app/api/routes.py`;
@@ -18,11 +18,11 @@ No checkout atual, a raiz `app/` existe como estrutura, mas esta vazia. A implem
 - `_legado/app/templates/dpp_consumer.html`;
 - `_legado/app/templates/etiqueta.html`.
 
-Decisao recomendada antes de codar backend:
+Decisao operacional recebida em 2026-06-25:
 
-1. escolher se a V1 continua evoluindo em `_legado/app`; ou
-2. promover/migrar `_legado/app` para `app/` como backend ativo; ou
-3. criar um backend novo e enxuto em `app/`, usando `_legado/app` apenas como referencia.
+1. promover `_legado/app` para `app/` por copia, nao por move;
+2. tratar `_legado/` como referencia historica;
+3. nao migrar `_legado/app/revenda/` para o backend DPP V1.
 
 ## 2. Execucao imediata ja concluida neste ciclo
 
@@ -30,101 +30,80 @@ Decisao recomendada antes de codar backend:
 - Contrato de dados criado em `produto/decisoes/dpp-data-contract-v0.md`.
 - QA anti-greenwashing criado em `produto/decisoes/dpp-anti-greenwashing-qa-v0.md`.
 - Este backlog criou a ponte entre PRD e implementacao.
+- Backend funcional promovido de `_legado/app` para `app/`, sem migrar `revenda`.
+- Modelos, schemas e migracao simples receberam campos DPP: area, perda, lote, versao, datas, gramatura, fatores, indicadores calculados e status de evidencia.
+- `app/services/dpp_calculator.py` criado com formula deterministica para area total, area perdida, peso, agua, energia e carbono.
+- `app/validators/dpp_validators.py` criado com validacao de composicao 100%, evidencias minimas, GTIN/ficha obrigatorios e alertas de certificacao.
+- `app/api/routes.py` atualizado para publicar DPP somente apos calculo e gate anti-greenwashing.
+- `app/templates/dpp_consumer.html` atualizado para exibir badges de evidencia nos indicadores publicos e remover comparacoes ambientais nao auditadas.
+- Testes unitarios criados em `tests/test_dpp_calculator.py` e `tests/test_dpp_validators.py`.
 
 ## 3. Proxima execucao no Codex
 
-### P0 - Fonte de verdade e prototipo
+### C0 - Pendencias antes de push/deploy
 
-- Atualizar `phyllos/dpp-studio.html` de 4 etapas para 7 etapas.
-- Incluir estados: `ausente`, `declarado`, `calculado`, `documentado`, `verificado`.
-- Remover ou renomear qualquer status `estimado` solto para `calculado` com label de estimativa.
-- Adicionar checklist visual de publicacao.
-- Exibir rodape anti-greenwashing no preview publico.
+- Revisar se `phyllos/dpp-studio.html` ja reflete QR real e fluxo de 7 etapas no estado atual do repo.
+- Instalar dependencias Python de `requirements.txt` ou rodar em ambiente que ja tenha FastAPI/Jinja para validar render do template.
+- Decidir se os arquivos novos em `app/` e `tests/` serao commitados neste branch.
+- Se aprovado, commitar e subir as alteracoes.
 
-### P1 - Calculo deterministico
+### C1 - Backend promovido para `app/`
 
-Destino recomendado apos decisao de backend:
+Status: concluido localmente.
 
-- `app/services/dpp_calculator.py` ou `_legado/app/services/dpp_calculator.py`.
+- Copiar `_legado/app` para `app/`.
+- Excluir `revenda` da migracao.
+- Preservar templates, rotas, modelos, schemas e servicos necessarios ao DPP.
 
-Funcoes:
+### C2 - Campos novos em `Peca` e `FichaTecnica`
 
-- validar composicao somando 100%;
-- converter gramatura g/m2 para kg/m2;
-- calcular area total, area perdida, peso, agua, energia e carbono;
-- validar perda menor que 100%;
-- retornar resultado com status `calculado` e label publico.
+Status: concluido localmente.
 
-### P2 - Validadores anti-greenwashing
+- `Peca`: `area_peca_m2`, `perda_corte_pct`, `lote_quantidade`, `dpp_version`, `data_publicacao`, `data_atualizacao`.
+- `FichaTecnica`: `gramatura_g_m2`, fatores de agua/energia/carbono, resultados calculados e `evidencia_statuses`.
 
-Destino recomendado:
+### C3 - Calculo deterministico
 
-- `app/validators/dpp_validators.py` ou `_legado/app/validators/dpp_validators.py`.
+Status: concluido localmente.
 
-Regras:
+- modulo: `app/services/dpp_calculator.py`.
+- teste: `tests/test_dpp_calculator.py`.
 
-- impedir publicacao com obrigatorio ausente;
-- bloquear score verde publico;
-- exigir label para indicador calculado;
-- tratar certificacao expirada;
-- marcar fator declarado como nao auditado;
-- impedir fator fora de limite sem documento.
+### C4 - Validadores anti-greenwashing
 
-### P3 - Schema e modelos
+Status: concluido localmente.
 
-Destino recomendado:
+- modulo: `app/validators/dpp_validators.py`.
+- teste: `tests/test_dpp_validators.py`.
 
-- `app/models/models.py` ou `_legado/app/models/models.py`;
-- `app/schemas/schemas.py` ou `_legado/app/schemas/schemas.py`.
+### C5 - Endpoint de publicacao DPP
 
-Adicionar ou revisar:
+Status: concluido localmente.
 
-- campos de evidencia por campo relevante;
-- `versao_dpp`;
-- `data_publicacao`;
-- `data_atualizacao`;
-- `area_peca_m2`;
-- `perda_corte_pct`;
-- `gramatura_g_m2`;
-- fatores de impacto;
-- status de certificacao.
+- rota: `POST /pecas/{codigo}/dpp/publicar`.
+- retorna `422` com erros, alertas e status de evidencia se faltar dado minimo.
+- salva resultados calculados antes da publicacao quando o gate passa.
 
-### P4 - Endpoints
+### C6 - Badges no passaporte publico
 
-Destino recomendado:
+Status: concluido localmente em `app/templates/dpp_consumer.html`.
 
-- `app/api/routes.py` ou `_legado/app/api/routes.py`.
+- Indicadores publicos exibem badge de evidencia.
+- Texto comparativo nao auditado foi removido.
+- Carbono, agua, energia e perda de corte aparecem como estimativas calculadas quando disponiveis.
 
-Endpoints:
+## 4. Verificacao executada
 
-- criar/atualizar produto com dados DPP;
-- calcular indicadores;
-- publicar DPP com gate de completude;
-- revogar DPP;
-- gerar QR;
-- renderizar pagina publica.
+- `python3 -m compileall app tests` com `PYTHONPYCACHEPREFIX=/private/tmp/codex_pycache`: passou.
+- `python3 -m unittest discover -s tests`: 4 testes passaram.
+- Varredura por textos antigos de promessa ambiental no template publico: sem ocorrencias.
+- Validacao Jinja isolada nao executada porque os runtimes locais nao tinham `jinja2` instalado, embora `requirements.txt` declare `jinja2==3.1.5`.
 
-### P5 - Testes
+## 5. Fora do ciclo Codex atual
 
-Destino recomendado:
-
-- `tests/test_dpp_calculator.py`;
-- `tests/test_dpp_validators.py`.
-
-Casos:
-
-- composicao soma 100%;
-- composicao soma diferente falha;
-- perda 20% gera resultado esperado;
-- perda >= 100 falha;
-- campo ausente bloqueia publicacao;
-- indicador calculado sem label falha;
-- certificacao expirada nao aparece como valida.
-
-## 4. Pergunta de decisao para o founder
-
-Antes da implementacao backend, decidir:
-
-> A V1 tecnica sera evoluida dentro de `_legado/app` para preservar o que ja existe, ou vamos promover esse backend para `app/` e tratar `_legado` apenas como arquivo historico?
-
-Recomendacao: para velocidade e menor risco, evoluir `_legado/app` primeiro se a publicacao Railway atual ainda depende dele. Depois migrar com testes.
+- Parsers DXF/AAMA/ASTM/PDF.
+- ISCM publico como score verde.
+- Integracoes externas.
+- Auth, multi-tenant e faturamento.
+- Revenda.
+- Pattern Engine e edicao de molde.
