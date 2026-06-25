@@ -1,0 +1,325 @@
+{"kind":"deck","id":"pr/lsd0wq","name":"Deck"}
+{"kind":"layout","layoutId":"cb5c6fd0-f3db-45cb-86a5-3180faf98987","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"e1cf8615-6a91-4a9c-a7c5-8d361fa02915","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/8yx089","slide":1,"title":"PHYLLOS DPP Integrado","textShapes":12}
+{"kind":"shape","id":"sh/idonyd0z","slide":1,"name":"cover-block","bbox":[0,440,1280,280]}
+{"kind":"shape","id":"sh/t47y1kre","slide":1,"name":"cover-accent-green","bbox":[56,92,26,26]}
+{"kind":"shape","id":"sh/0je9cvix","slide":1,"name":"cover-accent-clay","bbox":[92,92,26,26]}
+{"kind":"textbox","id":"sh/b6xkf6dc","slide":1,"name":"cover-title","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,148,760,146]}
+{"kind":"textbox","id":"sh/il0rqd4v","slide":1,"name":"cover-subtitle","text":"Roadmap e cronograma interno","textPreview":"Roadmap e cronograma interno","textChars":28,"textLines":1,"bbox":[60,308,700,44]}
+{"kind":"textbox","id":"sh/tcj6tova","slide":1,"name":"cover-meta","text":"DPP middleware para moda | tecnologia interna com Codex, Claude e agentes PHYLLOS | 25 jun. 2026","textPreview":"DPP middleware para moda | tecnologia interna com Codex, Claude e agentes PHYLLOS | 25 jun. 2026","textChars":96,"textLines":1,"bbox":[60,374,790,34]}
+{"kind":"shape","id":"sh/0rqd4vmt","slide":1,"name":"cover-flow-0","bbox":[830,156,342,62]}
+{"kind":"shape","id":"sh/bi9s36hc","slide":1,"name":"cover-flow-mark-0","bbox":[848,175,24,24]}
+{"kind":"textbox","id":"sh/ixczed8v","slide":1,"name":"cover-flow-label-0","text":"Arquivo técnico","textPreview":"Arquivo técnico","textChars":15,"textLines":1,"bbox":[888,174,250,28]}
+{"kind":"textbox","id":"sh/s72x4nap","slide":1,"name":"cover-arrow-0","text":"↓","textPreview":"↓","textChars":1,"textLines":1,"bbox":[984,218,40,28]}
+{"kind":"shape","id":"sh/lszqtcj6","slide":1,"name":"cover-flow-1","bbox":[830,250,342,62]}
+{"kind":"shape","id":"sh/a5gbq1or","slide":1,"name":"cover-flow-mark-1","bbox":[848,269,24,24]}
+{"kind":"textbox","id":"sh/3m94fu18","slide":1,"name":"cover-flow-label-1","text":"Produto + material","textPreview":"Produto + material","textChars":18,"textLines":1,"bbox":[888,268,250,28]}
+{"kind":"textbox","id":"sh/sji5snel","slide":1,"name":"cover-arrow-1","text":"↓","textPreview":"↓","textChars":1,"textLines":1,"bbox":[984,312,40,28]}
+{"kind":"shape","id":"sh/h4byhgn2","slide":1,"name":"cover-flow-2","bbox":[830,344,342,62]}
+{"kind":"shape","id":"sh/adsji5sn","slide":1,"name":"cover-flow-mark-2","bbox":[848,363,24,24]}
+{"kind":"textbox","id":"sh/3ylc7u54","slide":1,"name":"cover-flow-label-2","text":"Cálculo por peça","textPreview":"Cálculo por peça","textChars":16,"textLines":1,"bbox":[888,362,250,28]}
+{"kind":"textbox","id":"sh/svu9knih","slide":1,"name":"cover-arrow-2","text":"↓","textPreview":"↓","textChars":1,"textLines":1,"bbox":[984,406,40,28]}
+{"kind":"shape","id":"sh/hgn29gr2","slide":1,"name":"cover-flow-3","bbox":[830,438,342,62]}
+{"kind":"shape","id":"sh/l87ed8ba","slide":1,"name":"cover-flow-mark-3","bbox":[848,457,24,24]}
+{"kind":"textbox","id":"sh/sneloj2t","slide":1,"name":"cover-flow-label-3","text":"QR + flashcards","textPreview":"QR + flashcards","textChars":15,"textLines":1,"bbox":[888,456,250,28]}
+{"kind":"shape","id":"sh/32lszqtc","slide":1,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/ahoza1gv","slide":1,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/lkjm1cfa","slide":1,"name":"footer-number","text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/8yx089","slide":1,"text":""}
+{"kind":"slide","id":"sl/9ysaia","slide":2,"title":"PRODUTO","textShapes":10}
+{"kind":"textbox","id":"sh/m58z25kb","slide":2,"name":"kicker","text":"PRODUTO","textPreview":"PRODUTO","textChars":7,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/twra5gbq","slide":2,"name":"slide-title","text":"A decisão executiva","textPreview":"A decisão executiva","textChars":19,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"textbox","id":"sh/4byhgn29","slide":2,"name":"decision-hero","text":"A V1 não edita molde. A V1 transforma dados técnicos existentes em DPP publicável.","textPreview":"A V1 não edita molde. A V1 transforma dados técnicos existentes em DPP publicável.","textChars":82,"textLines":1,"bbox":[58,158,910,88]}
+{"kind":"shape","id":"sh/b2hwfyxo","slide":2,"name":"cut-now-panel","bbox":[56,292,550,230]}
+{"kind":"shape","id":"sh/mhk3q5o7","slide":2,"name":"cut-now-mark","bbox":[78,316,18,18]}
+{"kind":"textbox","id":"sh/t83itgfm","slide":2,"name":"cut-now-title","text":"Cortar agora","textPreview":"Cortar agora","textChars":12,"textLines":1,"bbox":[108,310,476,34]}
+{"kind":"textbox","id":"sh/4nap4r65","slide":2,"name":"cut-now-body","text":"Motor de moldes, CAD próprio, edição de desenho e parser universal de DXF/AAMA/ASTM. Esses itens aumentam risco, prazo e necessidade de especialista externo.","textPreview":"Motor de moldes, CAD próprio, edição de desenho e parser universal de DXF/AAMA/ASTM. Esses itens aumentam risco, prazo e necessidade de e...","textChars":157,"textLines":1,"bbox":[80,360,502,146]}
+{"kind":"shape","id":"sh/bat47y1k","slide":2,"name":"focus-now-panel","bbox":[674,292,550,230]}
+{"kind":"shape","id":"sh/mp0bi9s3","slide":2,"name":"focus-now-mark","bbox":[696,316,18,18]}
+{"kind":"textbox","id":"sh/4byhgn29","slide":2,"name":"focus-now-title","text":"Concentrar agora","textPreview":"Concentrar agora","textChars":16,"textLines":1,"bbox":[726,310,476,34]}
+{"kind":"textbox","id":"sh/twra5gbq","slide":2,"name":"focus-now-body","text":"Upload/input técnico, cadastro de produto e material, cálculo de área/perda, indicadores, estados de evidência, QR e flashcards para consumidor.","textPreview":"Upload/input técnico, cadastro de produto e material, cálculo de área/perda, indicadores, estados de evidência, QR e flashcards para cons...","textChars":144,"textLines":1,"bbox":[698,360,502,146]}
+{"kind":"textbox","id":"sh/m58z25kb","slide":2,"name":"decision-why","text":"Por quê: é a fatia que pode ser construída internamente, validada em pilotos e vendida sem prometer conformidade ambiental automática.","textPreview":"Por quê: é a fatia que pode ser construída internamente, validada em pilotos e vendida sem prometer conformidade ambiental automática.","textChars":134,"textLines":1,"bbox":[56,560,1100,52]}
+{"kind":"shape","id":"sh/bq1oryts","slide":2,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/4nap4r65","slide":2,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/t83itgfm","slide":2,"name":"footer-number","text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/9ysaia","slide":2,"text":""}
+{"kind":"slide","id":"sl/0va5qd","slide":3,"title":"NARRATIVA","textShapes":20}
+{"kind":"textbox","id":"sh/xczed8v6","slide":3,"name":"kicker","text":"NARRATIVA","textPreview":"NARRATIVA","textChars":9,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/qpg3ex0n","slide":3,"name":"slide-title","text":"Tese de produto","textPreview":"Tese de produto","textChars":15,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"textbox","id":"sh/fa9w3m94","slide":3,"name":"thesis-lede","text":"PHYLLOS é uma camada de tradução entre modelagem, ficha técnica, matéria-prima e consumidor.","textPreview":"PHYLLOS é uma camada de tradução entre modelagem, ficha técnica, matéria-prima e consumidor.","textChars":92,"textLines":1,"bbox":[56,142,1030,58]}
+{"kind":"shape","id":"sh/8jqh0fep","slide":3,"name":"thesis-step-0","bbox":[56,266,202,190]}
+{"kind":"shape","id":"sh/x4nap4r6","slide":3,"name":"thesis-step-num-0","bbox":[74,286,42,42]}
+{"kind":"textbox","id":"sh/qd4vmtwr","slide":3,"name":"thesis-step-num-text-0","text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[74,292,42,28]}
+{"kind":"textbox","id":"sh/fyxobm58","slide":3,"name":"thesis-step-label-0","text":"Arquivo técnico / ficha / planilha","textPreview":"Arquivo técnico / ficha / planilha","textChars":34,"textLines":1,"bbox":[74,352,166,72]}
+{"kind":"textbox","id":"sh/87ed8bat","slide":3,"name":"thesis-arrow-0","text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[260,335,40,40]}
+{"kind":"shape","id":"sh/xs72x4na","slide":3,"name":"thesis-step-1","bbox":[294,266,202,190]}
+{"kind":"shape","id":"sh/xkf6dcbu","slide":3,"name":"thesis-step-num-1","bbox":[312,286,42,42]}
+{"kind":"textbox","id":"sh/4zidonyd","slide":3,"name":"thesis-step-num-text-1","text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[312,292,42,28]}
+{"kind":"textbox","id":"sh/fepkzupw","slide":3,"name":"thesis-step-label-1","text":"Produto + matéria-prima + lote","textPreview":"Produto + matéria-prima + lote","textChars":30,"textLines":1,"bbox":[312,352,166,72]}
+{"kind":"textbox","id":"sh/mtwra5gb","slide":3,"name":"thesis-arrow-1","text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[498,335,40,40]}
+{"kind":"shape","id":"sh/xc3ylc7u","slide":3,"name":"thesis-step-2","bbox":[532,266,202,190]}
+{"kind":"shape","id":"sh/4r65wjud","slide":3,"name":"thesis-step-num-2","bbox":[550,286,42,42]}
+{"kind":"textbox","id":"sh/f6dcbulw","slide":3,"name":"thesis-step-num-text-2","text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[550,292,42,28]}
+{"kind":"textbox","id":"sh/mlkjm1cf","slide":3,"name":"thesis-step-label-2","text":"Área, consumo e perda","textPreview":"Área, consumo e perda","textChars":21,"textLines":1,"bbox":[550,352,166,72]}
+{"kind":"textbox","id":"sh/x0nuxc3y","slide":3,"name":"thesis-arrow-2","text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[736,335,40,40]}
+{"kind":"shape","id":"sh/4fu18jqh","slide":3,"name":"thesis-step-3","bbox":[770,266,202,190]}
+{"kind":"shape","id":"sh/4nap4r65","slide":3,"name":"thesis-step-num-3","bbox":[788,286,42,42]}
+{"kind":"textbox","id":"sh/t83itgfm","slide":3,"name":"thesis-step-num-text-3","text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[788,292,42,28]}
+{"kind":"textbox","id":"sh/mhk3q5o7","slide":3,"name":"thesis-step-label-3","text":"Indicadores + evidência","textPreview":"Indicadores + evidência","textChars":23,"textLines":1,"bbox":[788,352,166,72]}
+{"kind":"textbox","id":"sh/b2hwfyxo","slide":3,"name":"thesis-arrow-3","text":"→","textPreview":"→","textChars":1,"textLines":1,"bbox":[974,335,40,40]}
+{"kind":"shape","id":"sh/4byhgn29","slide":3,"name":"thesis-step-4","bbox":[1008,266,202,190]}
+{"kind":"shape","id":"sh/twra5gbq","slide":3,"name":"thesis-step-num-4","bbox":[1026,286,42,42]}
+{"kind":"textbox","id":"sh/m58z25kb","slide":3,"name":"thesis-step-num-text-4","text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[1026,292,42,28]}
+{"kind":"textbox","id":"sh/bq1oryts","slide":3,"name":"thesis-step-label-4","text":"DPP, QR e flashcards","textPreview":"DPP, QR e flashcards","textChars":20,"textLines":1,"bbox":[1026,352,166,72]}
+{"kind":"shape","id":"sh/47y1kre1","slide":3,"name":"thesis-quote-panel","bbox":[56,514,1120,78]}
+{"kind":"textbox","id":"sh/tsvu9kni","slide":3,"name":"thesis-hypothesis","text":"Hipótese central: a rastreabilidade falha menos por falta de dados e mais porque os dados técnicos não são normalizados, calculados e traduzidos em uma experiência pública simples.","textPreview":"Hipótese central: a rastreabilidade falha menos por falta de dados e mais porque os dados técnicos não são normalizados, calculados e tra...","textChars":180,"textLines":1,"bbox":[82,532,1060,42]}
+{"kind":"shape","id":"sh/jqh0fepk","slide":3,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/q5o7qpg3","slide":3,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/1w7mp0bi","slide":3,"name":"footer-number","text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/0va5qd","slide":3,"text":""}
+{"kind":"slide","id":"sl/709qr6","slide":4,"title":"CODEX + CLAUDE","textShapes":11}
+{"kind":"textbox","id":"sh/xobm58z2","slide":4,"name":"kicker","text":"CODEX + CLAUDE","textPreview":"CODEX + CLAUDE","textChars":14,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/qxs72x4n","slide":4,"name":"slide-title","text":"Capacidade real de desenvolvimento","textPreview":"Capacidade real de desenvolvimento","textChars":34,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"shape","id":"sh/fil0rqd4","slide":4,"name":"cap-now-panel","bbox":[56,154,360,400]}
+{"kind":"shape","id":"sh/4fu18jqh","slide":4,"name":"cap-now-mark","bbox":[78,178,18,18]}
+{"kind":"textbox","id":"sh/x0nuxc3y","slide":4,"name":"cap-now-title","text":"Agora","textPreview":"Agora","textChars":5,"textLines":1,"bbox":[108,172,286,34]}
+{"kind":"textbox","id":"sh/m94fu18j","slide":4,"name":"cap-now-body","text":"Protótipo HTML/CSS/JS\nFastAPI + SQLite\nCRUD produto/material/DPP\nUpload com metadados\nCálculo determinístico\nQR e página pública\nTestes e documentação","textPreview":"Protótipo HTML/CSS/JS | FastAPI + SQLite | CRUD produto/material/DPP | Upload com metadados | Cálculo determinístico | QR e página públic...","textChars":150,"textLines":7,"bbox":[80,222,312,316]}
+{"kind":"shape","id":"sh/fu18jqh0","slide":4,"name":"cap-later-panel","bbox":[460,154,360,400]}
+{"kind":"shape","id":"sh/4r65wjud","slide":4,"name":"cap-later-mark","bbox":[482,178,18,18]}
+{"kind":"textbox","id":"sh/xc3ylc7u","slide":4,"name":"cap-later-title","text":"Depois","textPreview":"Depois","textChars":6,"textLines":1,"bbox":[512,172,286,34]}
+{"kind":"textbox","id":"sh/9cvixcze","slide":4,"name":"cap-later-body","text":"Parser CSV/XLSX\nPDF estruturado parcial\nExportação JSON/CSV\nDashboard interno\nAPI simples\nAuth, permissões e multiempresa","textPreview":"Parser CSV/XLSX | PDF estruturado parcial | Exportação JSON/CSV | Dashboard interno | API simples | Auth, permissões e multiempresa","textChars":121,"textLines":6,"bbox":[484,222,312,316]}
+{"kind":"shape","id":"sh/gr2p8nqx","slide":4,"name":"cap-no-panel","bbox":[864,154,360,400]}
+{"kind":"shape","id":"sh/r65wjudg","slide":4,"name":"cap-no-mark","bbox":[886,178,18,18]}
+{"kind":"textbox","id":"sh/ylc7u54z","slide":4,"name":"cap-no-title","text":"Fora da V1","textPreview":"Fora da V1","textChars":10,"textLines":1,"bbox":[916,172,286,34]}
+{"kind":"textbox","id":"sh/5o7qpg3e","slide":4,"name":"cap-no-body","text":"Parser universal DXF/AAMA\nACV oficial\nAuditoria ambiental\nCompliance jurídico garantido\nIntegrações nativas com todos os CADs\nEdição de molde/desenho","textPreview":"Parser universal DXF/AAMA | ACV oficial | Auditoria ambiental | Compliance jurídico garantido | Integrações nativas com todos os CADs | E...","textChars":149,"textLines":6,"bbox":[888,222,312,316]}
+{"kind":"textbox","id":"sh/g3ex0nux","slide":4,"name":"cap-guardrail","text":"Guardrail: IA ajuda a especificar, revisar e organizar; cálculo e publicação precisam ser determinísticos, rastreáveis e testáveis.","textPreview":"Guardrail: IA ajuda a especificar, revisar e organizar; cálculo e publicação precisam ser determinísticos, rastreáveis e testáveis.","textChars":131,"textLines":1,"bbox":[56,592,1120,42]}
+{"kind":"shape","id":"sh/nih4byhg","slide":4,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/yxobm58z","slide":4,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/9s36hcrm","slide":4,"name":"footer-number","text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/709qr6","slide":4,"text":""}
+{"kind":"slide","id":"sl/cnjvob","slide":5,"title":"SISTEMA","textShapes":17}
+{"kind":"textbox","id":"sh/mlkjm1cf","slide":5,"name":"kicker","text":"SISTEMA","textPreview":"SISTEMA","textChars":7,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/xc3ylc7u","slide":5,"name":"slide-title","text":"Arquitetura modular do MVP","textPreview":"Arquitetura modular do MVP","textChars":26,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"shape","id":"sh/4r65wjud","slide":5,"name":"arch-core","bbox":[410,218,460,110]}
+{"kind":"textbox","id":"sh/fepkzupw","slide":5,"name":"arch-core-title","text":"DPP Studio","textPreview":"DPP Studio","textChars":10,"textLines":1,"bbox":[432,244,416,36]}
+{"kind":"textbox","id":"sh/mtwra5gb","slide":5,"name":"arch-core-body","text":"camada interna de cadastro, cálculo e publicação","textPreview":"camada interna de cadastro, cálculo e publicação","textChars":48,"textLines":1,"bbox":[432,286,416,28]}
+{"kind":"shape","id":"sh/xkf6dcbu","slide":5,"name":"arch-module-0","bbox":[74,162,260,74]}
+{"kind":"shape","id":"sh/4zidonyd","slide":5,"name":"arch-module-mark-0","bbox":[90,186,22,22]}
+{"kind":"textbox","id":"sh/fil0rqd4","slide":5,"name":"arch-module-label-0","text":"Product Registry","textPreview":"Product Registry","textChars":16,"textLines":1,"bbox":[126,184,184,30]}
+{"kind":"shape","id":"sh/qxs72x4n","slide":5,"name":"arch-module-1","bbox":[74,298,260,74]}
+{"kind":"shape","id":"sh/0bi9s36h","slide":5,"name":"arch-module-mark-1","bbox":[90,322,22,22]}
+{"kind":"textbox","id":"sh/pwb2hwfy","slide":5,"name":"arch-module-label-1","text":"Material Registry","textPreview":"Material Registry","textChars":17,"textLines":1,"bbox":[126,320,184,30]}
+{"kind":"shape","id":"sh/i5sneloj","slide":5,"name":"arch-module-2","bbox":[74,434,260,74]}
+{"kind":"shape","id":"sh/7qpg3ex0","slide":5,"name":"arch-module-mark-2","bbox":[90,458,22,22]}
+{"kind":"textbox","id":"sh/wjudg7ad","slide":5,"name":"arch-module-label-2","text":"Technical File Intake","textPreview":"Technical File Intake","textChars":21,"textLines":1,"bbox":[126,456,184,30]}
+{"kind":"shape","id":"sh/p4r65wju","slide":5,"name":"arch-module-3","bbox":[488,390,260,74]}
+{"kind":"shape","id":"sh/ed8v6psf","slide":5,"name":"arch-module-mark-3","bbox":[504,414,22,22]}
+{"kind":"textbox","id":"sh/7y1kre1w","slide":5,"name":"arch-module-label-3","text":"Area/Loss Calculator","textPreview":"Area/Loss Calculator","textChars":20,"textLines":1,"bbox":[540,412,184,30]}
+{"kind":"shape","id":"sh/0nuxc3yl","slide":5,"name":"arch-module-4","bbox":[726,390,260,74]}
+{"kind":"shape","id":"sh/p8nqxs72","slide":5,"name":"arch-module-mark-4","bbox":[742,414,22,22]}
+{"kind":"textbox","id":"sh/dcbulwva","slide":5,"name":"arch-module-label-4","text":"Indicator Engine","textPreview":"Indicator Engine","textChars":16,"textLines":1,"bbox":[778,412,184,30]}
+{"kind":"shape","id":"sh/kre1w7mp","slide":5,"name":"arch-module-5","bbox":[934,162,260,74]}
+{"kind":"shape","id":"sh/val87ed8","slide":5,"name":"arch-module-mark-5","bbox":[950,186,22,22]}
+{"kind":"textbox","id":"sh/6psfil0r","slide":5,"name":"arch-module-label-5","text":"Evidence Ledger","textPreview":"Evidence Ledger","textChars":15,"textLines":1,"bbox":[986,184,184,30]}
+{"kind":"shape","id":"sh/donyd0z6","slide":5,"name":"arch-module-6","bbox":[934,298,260,74]}
+{"kind":"shape","id":"sh/k3q5o7qp","slide":5,"name":"arch-module-mark-6","bbox":[950,322,22,22]}
+{"kind":"textbox","id":"sh/vixczed8","slide":5,"name":"arch-module-label-6","text":"DPP Publisher","textPreview":"DPP Publisher","textChars":13,"textLines":1,"bbox":[986,320,184,30]}
+{"kind":"shape","id":"sh/2x4nap4r","slide":5,"name":"arch-module-7","bbox":[934,488,260,74]}
+{"kind":"shape","id":"sh/d0z61032","slide":5,"name":"arch-module-mark-7","bbox":[950,512,22,22]}
+{"kind":"textbox","id":"sh/kf6dcbul","slide":5,"name":"arch-module-label-7","text":"QR / Flashcard Viewer","textPreview":"QR / Flashcard Viewer","textChars":21,"textLines":1,"bbox":[986,510,184,30]}
+{"kind":"textbox","id":"sh/y90je9cv","slide":5,"name":"arch-input","text":"Entrada","textPreview":"Entrada","textChars":7,"textLines":1,"bbox":[142,112,150,30]}
+{"kind":"textbox","id":"sh/nuxc3ylc","slide":5,"name":"arch-calc","text":"Cálculo","textPreview":"Cálculo","textChars":7,"textLines":1,"bbox":[548,538,190,30]}
+{"kind":"textbox","id":"sh/gbq1oryt","slide":5,"name":"arch-output","text":"Publicação","textPreview":"Publicação","textChars":10,"textLines":1,"bbox":[990,112,150,30]}
+{"kind":"shape","id":"sh/5wjudg7a","slide":5,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/yhgn29gr","slide":5,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/n29gr2p8","slide":5,"name":"footer-number","text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/cnjvob","slide":5,"text":""}
+{"kind":"slide","id":"sl/l6ktys","slide":6,"title":"ASSUMINDO INÍCIO EM 29/06/2026","textShapes":28}
+{"kind":"textbox","id":"sh/t83itgfm","slide":6,"name":"kicker","text":"ASSUMINDO INÍCIO EM 29/06/2026","textPreview":"ASSUMINDO INÍCIO EM 29/06/2026","textChars":30,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/mhk3q5o7","slide":6,"name":"slide-title","text":"Cronograma 0-12 semanas","textPreview":"Cronograma 0-12 semanas","textChars":23,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"shape","id":"sh/b2hwfyxo","slide":6,"name":"t0-top","bbox":[56,190,202,9]}
+{"kind":"shape","id":"sh/4byhgn29","slide":6,"name":"t0-panel","bbox":[56,199,202,236]}
+{"kind":"textbox","id":"sh/twra5gbq","slide":6,"name":"t0-phase","text":"S1","textPreview":"S1","textChars":2,"textLines":1,"bbox":[72,218,170,34]}
+{"kind":"textbox","id":"sh/m58z25kb","slide":6,"name":"t0-date","text":"29 jun-03 jul","textPreview":"29 jun-03 jul","textChars":13,"textLines":1,"bbox":[72,258,170,24]}
+{"kind":"textbox","id":"sh/bq1oryts","slide":6,"name":"t0-goal","text":"Alinhamento","textPreview":"Alinhamento","textChars":11,"textLines":1,"bbox":[72,294,170,56]}
+{"kind":"textbox","id":"sh/47y1kre1","slide":6,"name":"t0-output","text":"PRD v0, critérios de aceite e 5 pilotos-alvo.","textPreview":"PRD v0, critérios de aceite e 5 pilotos-alvo.","textChars":45,"textLines":1,"bbox":[72,360,170,60]}
+{"kind":"shape","id":"sh/tsvu9kni","slide":6,"name":"t1-top","bbox":[288,190,202,9]}
+{"kind":"shape","id":"sh/90je9cvi","slide":6,"name":"t1-panel","bbox":[288,199,202,236]}
+{"kind":"textbox","id":"sh/gfmlkjm1","slide":6,"name":"t1-phase","text":"S2-3","textPreview":"S2-3","textChars":4,"textLines":1,"bbox":[304,218,170,34]}
+{"kind":"textbox","id":"sh/rytsvu9k","slide":6,"name":"t1-date","text":"06-17 jul","textPreview":"06-17 jul","textChars":9,"textLines":1,"bbox":[304,258,170,24]}
+{"kind":"textbox","id":"sh/yd0z6103","slide":6,"name":"t1-goal","text":"Protótipo + dados","textPreview":"Protótipo + dados","textChars":17,"textLines":1,"bbox":[304,294,170,56]}
+{"kind":"textbox","id":"sh/9s36hcrm","slide":6,"name":"t1-output","text":"Fluxo navegável, schema, fórmulas e estados de evidência.","textPreview":"Fluxo navegável, schema, fórmulas e estados de evidência.","textChars":57,"textLines":1,"bbox":[304,360,170,60]}
+{"kind":"shape","id":"sh/g7adsji5","slide":6,"name":"t2-top","bbox":[520,190,202,9]}
+{"kind":"shape","id":"sh/rmhk3q5o","slide":6,"name":"t2-panel","bbox":[520,199,202,236]}
+{"kind":"textbox","id":"sh/y1kre1w7","slide":6,"name":"t2-phase","text":"S4-6","textPreview":"S4-6","textChars":4,"textLines":1,"bbox":[536,218,170,34]}
+{"kind":"textbox","id":"sh/5o7qpg3e","slide":6,"name":"t2-date","text":"20 jul-07 ago","textPreview":"20 jul-07 ago","textChars":13,"textLines":1,"bbox":[536,258,170,24]}
+{"kind":"textbox","id":"sh/g3ex0nux","slide":6,"name":"t2-goal","text":"Backend MVP","textPreview":"Backend MVP","textChars":11,"textLines":1,"bbox":[536,294,170,56]}
+{"kind":"textbox","id":"sh/cfa9w3m9","slide":6,"name":"t2-output","text":"API, banco, cálculo, upload e DPP rascunho.","textPreview":"API, banco, cálculo, upload e DPP rascunho.","textChars":43,"textLines":1,"bbox":[536,360,170,60]}
+{"kind":"shape","id":"sh/1032lszq","slide":6,"name":"t3-top","bbox":[752,190,202,9]}
+{"kind":"shape","id":"sh/u9knih4b","slide":6,"name":"t3-panel","bbox":[752,199,202,236]}
+{"kind":"textbox","id":"sh/judg7ads","slide":6,"name":"t3-phase","text":"S7-9","textPreview":"S7-9","textChars":4,"textLines":1,"bbox":[768,218,170,34]}
+{"kind":"textbox","id":"sh/c7u54zid","slide":6,"name":"t3-date","text":"10-28 ago","textPreview":"10-28 ago","textChars":9,"textLines":1,"bbox":[768,258,170,24]}
+{"kind":"textbox","id":"sh/1orytsvu","slide":6,"name":"t3-goal","text":"Studio + QR","textPreview":"Studio + QR","textChars":11,"textLines":1,"bbox":[768,294,170,56]}
+{"kind":"textbox","id":"sh/u18jqh0f","slide":6,"name":"t3-output","text":"Interface interna, preview de flashcards, QR e exportação.","textPreview":"Interface interna, preview de flashcards, QR e exportação.","textChars":58,"textLines":1,"bbox":[768,360,170,60]}
+{"kind":"shape","id":"sh/jm1cfa9w","slide":6,"name":"t4-top","bbox":[984,190,202,9]}
+{"kind":"shape","id":"sh/cvixczed","slide":6,"name":"t4-panel","bbox":[984,199,202,236]}
+{"kind":"textbox","id":"sh/5gbq1ory","slide":6,"name":"t4-phase","text":"S10-12","textPreview":"S10-12","textChars":6,"textLines":1,"bbox":[1000,218,170,34]}
+{"kind":"textbox","id":"sh/val87ed8","slide":6,"name":"t4-date","text":"31 ago-18 set","textPreview":"31 ago-18 set","textChars":13,"textLines":1,"bbox":[1000,258,170,24]}
+{"kind":"textbox","id":"sh/6psfil0r","slide":6,"name":"t4-goal","text":"Piloto real","textPreview":"Piloto real","textChars":11,"textLines":1,"bbox":[1000,294,170,56]}
+{"kind":"textbox","id":"sh/dcbulwva","slide":6,"name":"t4-output","text":"3-5 produtos reais, lacunas e decisão go/no-go.","textPreview":"3-5 produtos reais, lacunas e decisão go/no-go.","textChars":47,"textLines":1,"bbox":[1000,360,170,60]}
+{"kind":"textbox","id":"sh/kre1w7mp","slide":6,"name":"timeline-exit","text":"Marco de saída das 12 semanas: 5 DPPs rascunho gerados com dados reais, QR funcional e nenhuma claim ambiental publicada sem status de evidência.","textPreview":"Marco de saída das 12 semanas: 5 DPPs rascunho gerados com dados reais, QR funcional e nenhuma claim ambiental publicada sem status de ev...","textChars":145,"textLines":1,"bbox":[56,518,1080,54]}
+{"kind":"shape","id":"sh/vixczed8","slide":6,"name":"timeline-cadence-1-pill","bbox":[56,596,212,32]}
+{"kind":"textbox","id":"sh/2x4nap4r","slide":6,"name":"timeline-cadence-1-label","text":"segunda: prioridade","textPreview":"segunda: prioridade","textChars":19,"textLines":1,"bbox":[68,602,188,22]}
+{"kind":"shape","id":"sh/donyd0z6","slide":6,"name":"timeline-cadence-2-pill","bbox":[288,596,250,32]}
+{"kind":"textbox","id":"sh/k3q5o7qp","slide":6,"name":"timeline-cadence-2-label","text":"quarta: checkpoint técnico","textPreview":"quarta: checkpoint técnico","textChars":26,"textLines":1,"bbox":[300,602,226,22]}
+{"kind":"shape","id":"sh/vu9knih4","slide":6,"name":"timeline-cadence-3-pill","bbox":[558,596,240,32]}
+{"kind":"textbox","id":"sh/29gr2p8n","slide":6,"name":"timeline-cadence-3-label","text":"sexta: demo + decisão","textPreview":"sexta: demo + decisão","textChars":21,"textLines":1,"bbox":[570,602,216,22]}
+{"kind":"shape","id":"sh/i5sneloj","slide":6,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/7qpg3ex0","slide":6,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/0bi9s36h","slide":6,"name":"footer-number","text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/l6ktys","slide":6,"text":""}
+{"kind":"slide","id":"sl/tt0u2n","slide":7,"title":"APÓS PILOTO","textShapes":11}
+{"kind":"textbox","id":"sh/fa9w3m94","slide":7,"name":"kicker","text":"APÓS PILOTO","textPreview":"APÓS PILOTO","textChars":11,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/8v6psfil","slide":7,"name":"slide-title","text":"Evolução meses 4-8","textPreview":"Evolução meses 4-8","textChars":18,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"shape","id":"sh/xczed8v6","slide":7,"name":"m45-bar","bbox":[76,180,500,8]}
+{"kind":"textbox","id":"sh/qd4vmtwr","slide":7,"name":"m45-label","text":"Meses 4-5 | Beta privado","textPreview":"Meses 4-5 | Beta privado","textChars":24,"textLines":1,"bbox":[76,196,500,28]}
+{"kind":"shape","id":"sh/fyxobm58","slide":7,"name":"m45-panel","bbox":[76,236,500,250]}
+{"kind":"textbox","id":"sh/8jqh0fep","slide":7,"name":"m45-bullets","text":"- Login simples e organização/empresa\n- Permissões básicas e histórico de versões\n- Storage de arquivos e logs de alteração\n- Deploy controlado com 3 marcas/ateliês","textPreview":"- Login simples e organização/empresa | - Permissões básicas e histórico de versões | - Storage de arquivos e logs de alteração | - Deplo...","textChars":164,"textLines":4,"bbox":[104,268,440,150]}
+{"kind":"textbox","id":"sh/x4nap4r6","slide":7,"name":"m45-gate","text":"Critério: 20 DPPs gerados, custo mensal controlado e bugs críticos zerados antes de expandir.","textPreview":"Critério: 20 DPPs gerados, custo mensal controlado e bugs críticos zerados antes de expandir.","textChars":93,"textLines":1,"bbox":[104,430,432,42]}
+{"kind":"shape","id":"sh/q1orytsv","slide":7,"name":"m68-bar","bbox":[704,180,500,8]}
+{"kind":"textbox","id":"sh/fmlkjm1c","slide":7,"name":"m68-label","text":"Meses 6-8 | Parsers e integrações","textPreview":"Meses 6-8 | Parsers e integrações","textChars":33,"textLines":1,"bbox":[704,196,500,28]}
+{"kind":"shape","id":"sh/jqh0fepk","slide":7,"name":"m68-panel","bbox":[704,236,500,250]}
+{"kind":"textbox","id":"sh/q5o7qpg3","slide":7,"name":"m68-bullets","text":"- Parser CSV/XLSX de encaixe\n- Importação padrão de ficha técnica\n- PDF estruturado parcial\n- API externa e conectores documentados","textPreview":"- Parser CSV/XLSX de encaixe | - Importação padrão de ficha técnica | - PDF estruturado parcial | - API externa e conectores documentados","textChars":131,"textLines":4,"bbox":[732,268,440,150]}
+{"kind":"textbox","id":"sh/1w7mp0bi","slide":7,"name":"m68-gate","text":"Critério: importar 2 formatos reais recorrentes e reduzir tempo de criação de DPP em 50%.","textPreview":"Critério: importar 2 formatos reais recorrentes e reduzir tempo de criação de DPP em 50%.","textChars":89,"textLines":1,"bbox":[732,430,432,42]}
+{"kind":"textbox","id":"sh/8bat47y1","slide":7,"name":"months-date-translation","text":"Tradução em datas, se mantido o início de 29/06: beta em out.-nov. 2026; parsers e integrações entre dez. 2026 e fev. 2027.","textPreview":"Tradução em datas, se mantido o início de 29/06: beta em out.-nov. 2026; parsers e integrações entre dez. 2026 e fev. 2027.","textChars":123,"textLines":1,"bbox":[76,548,1040,52]}
+{"kind":"shape","id":"sh/j2t83itg","slide":7,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/qh0fepkz","slide":7,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/18jqh0fe","slide":7,"name":"footer-number","text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/tt0u2n","slide":7,"text":""}
+{"kind":"slide","id":"sl/hc6sd2","slide":8,"title":"LIDERANÇAS","textShapes":32}
+{"kind":"textbox","id":"sh/mlkjm1cf","slide":8,"name":"kicker","text":"LIDERANÇAS","textPreview":"LIDERANÇAS","textChars":10,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/xc3ylc7u","slide":8,"name":"slide-title","text":"Donos e entregáveis","textPreview":"Donos e entregáveis","textChars":19,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"shape","id":"sh/4r65wjud","slide":8,"name":"owner-0","bbox":[56,162,360,104]}
+{"kind":"shape","id":"sh/fepkzupw","slide":8,"name":"owner-mark-0","bbox":[74,182,18,64]}
+{"kind":"textbox","id":"sh/mtwra5gb","slide":8,"name":"owner-leader-0","text":"Founder","textPreview":"Founder","textChars":7,"textLines":1,"bbox":[108,178,280,25]}
+{"kind":"textbox","id":"sh/xkf6dcbu","slide":8,"name":"owner-role-0","text":"Sequência, cortes, go/no-go","textPreview":"Sequência, cortes, go/no-go","textChars":27,"textLines":1,"bbox":[108,206,280,22]}
+{"kind":"textbox","id":"sh/4zidonyd","slide":8,"name":"owner-deliv-0","text":"cadência semanal","textPreview":"cadência semanal","textChars":16,"textLines":1,"bbox":[108,231,280,22]}
+{"kind":"shape","id":"sh/fil0rqd4","slide":8,"name":"owner-1","bbox":[460,162,360,104]}
+{"kind":"shape","id":"sh/qxs72x4n","slide":8,"name":"owner-mark-1","bbox":[478,182,18,64]}
+{"kind":"textbox","id":"sh/0bi9s36h","slide":8,"name":"owner-leader-1","text":"Product","textPreview":"Product","textChars":7,"textLines":1,"bbox":[512,178,280,25]}
+{"kind":"textbox","id":"sh/pwb2hwfy","slide":8,"name":"owner-role-1","text":"ICP, jornada, escopo, aceite","textPreview":"ICP, jornada, escopo, aceite","textChars":28,"textLines":1,"bbox":[512,206,280,22]}
+{"kind":"textbox","id":"sh/i5sneloj","slide":8,"name":"owner-deliv-1","text":"PRD DPP Integrado","textPreview":"PRD DPP Integrado","textChars":17,"textLines":1,"bbox":[512,231,280,22]}
+{"kind":"shape","id":"sh/7qpg3ex0","slide":8,"name":"owner-2","bbox":[864,162,360,104]}
+{"kind":"shape","id":"sh/wjudg7ad","slide":8,"name":"owner-mark-2","bbox":[882,182,18,64]}
+{"kind":"textbox","id":"sh/p4r65wju","slide":8,"name":"owner-leader-2","text":"Technology","textPreview":"Technology","textChars":10,"textLines":1,"bbox":[916,178,280,25]}
+{"kind":"textbox","id":"sh/ed8v6psf","slide":8,"name":"owner-role-2","text":"Stack, segurança, APIs","textPreview":"Stack, segurança, APIs","textChars":22,"textLines":1,"bbox":[916,206,280,22]}
+{"kind":"textbox","id":"sh/7y1kre1w","slide":8,"name":"owner-deliv-2","text":"arquitetura + backlog","textPreview":"arquitetura + backlog","textChars":21,"textLines":1,"bbox":[916,231,280,22]}
+{"kind":"shape","id":"sh/0nuxc3yl","slide":8,"name":"owner-3","bbox":[56,304,360,104]}
+{"kind":"shape","id":"sh/p8nqxs72","slide":8,"name":"owner-mark-3","bbox":[74,324,18,64]}
+{"kind":"textbox","id":"sh/dcbulwva","slide":8,"name":"owner-leader-3","text":"Digital","textPreview":"Digital","textChars":7,"textLines":1,"bbox":[108,320,280,25]}
+{"kind":"textbox","id":"sh/kre1w7mp","slide":8,"name":"owner-role-3","text":"UX do Studio e flashcards","textPreview":"UX do Studio e flashcards","textChars":25,"textLines":1,"bbox":[108,348,280,22]}
+{"kind":"textbox","id":"sh/val87ed8","slide":8,"name":"owner-deliv-3","text":"fluxo navegável","textPreview":"fluxo navegável","textChars":15,"textLines":1,"bbox":[108,373,280,22]}
+{"kind":"shape","id":"sh/6psfil0r","slide":8,"name":"owner-4","bbox":[460,304,360,104]}
+{"kind":"shape","id":"sh/donyd0z6","slide":8,"name":"owner-mark-4","bbox":[478,324,18,64]}
+{"kind":"textbox","id":"sh/k3q5o7qp","slide":8,"name":"owner-leader-4","text":"Data","textPreview":"Data","textChars":4,"textLines":1,"bbox":[512,320,280,25]}
+{"kind":"textbox","id":"sh/vixczed8","slide":8,"name":"owner-role-4","text":"Modelo, dicionário e métricas","textPreview":"Modelo, dicionário e métricas","textChars":29,"textLines":1,"bbox":[512,348,280,22]}
+{"kind":"textbox","id":"sh/2x4nap4r","slide":8,"name":"owner-deliv-4","text":"schema + data dictionary","textPreview":"schema + data dictionary","textChars":24,"textLines":1,"bbox":[512,373,280,22]}
+{"kind":"shape","id":"sh/d0z61032","slide":8,"name":"owner-5","bbox":[864,304,360,104]}
+{"kind":"shape","id":"sh/kf6dcbul","slide":8,"name":"owner-mark-5","bbox":[882,324,18,64]}
+{"kind":"textbox","id":"sh/y90je9cv","slide":8,"name":"owner-leader-5","text":"Materials","textPreview":"Materials","textChars":9,"textLines":1,"bbox":[916,320,280,25]}
+{"kind":"textbox","id":"sh/nuxc3ylc","slide":8,"name":"owner-role-5","text":"Fatores, evidências, método","textPreview":"Fatores, evidências, método","textChars":27,"textLines":1,"bbox":[916,348,280,22]}
+{"kind":"textbox","id":"sh/gbq1oryt","slide":8,"name":"owner-deliv-5","text":"matriz de indicadores","textPreview":"matriz de indicadores","textChars":21,"textLines":1,"bbox":[916,373,280,22]}
+{"kind":"shape","id":"sh/5wjudg7a","slide":8,"name":"owner-6","bbox":[56,446,360,104]}
+{"kind":"shape","id":"sh/yhgn29gr","slide":8,"name":"owner-mark-6","bbox":[74,466,18,64]}
+{"kind":"textbox","id":"sh/n29gr2p8","slide":8,"name":"owner-leader-6","text":"Supply/Ops","textPreview":"Supply/Ops","textChars":10,"textLines":1,"bbox":[108,462,280,25]}
+{"kind":"textbox","id":"sh/gn29gr2p","slide":8,"name":"owner-role-6","text":"Lote, área, perda, processo","textPreview":"Lote, área, perda, processo","textChars":27,"textLines":1,"bbox":[108,490,280,22]}
+{"kind":"textbox","id":"sh/58z25kb6","slide":8,"name":"owner-deliv-6","text":"fluxo operacional","textPreview":"fluxo operacional","textChars":17,"textLines":1,"bbox":[108,515,280,22]}
+{"kind":"shape","id":"sh/ytsvu9kn","slide":8,"name":"owner-7","bbox":[460,446,360,104]}
+{"kind":"shape","id":"sh/neloj2t8","slide":8,"name":"owner-mark-7","bbox":[478,466,18,64]}
+{"kind":"textbox","id":"sh/r65wjudg","slide":8,"name":"owner-leader-7","text":"QA","textPreview":"QA","textChars":2,"textLines":1,"bbox":[512,462,280,25]}
+{"kind":"textbox","id":"sh/ylc7u54z","slide":8,"name":"owner-role-7","text":"Testes, acessibilidade, regressão","textPreview":"Testes, acessibilidade, regressão","textChars":33,"textLines":1,"bbox":[512,490,280,22]}
+{"kind":"textbox","id":"sh/9cvixcze","slide":8,"name":"owner-deliv-7","text":"suite mínima + go/no-go","textPreview":"suite mínima + go/no-go","textChars":23,"textLines":1,"bbox":[512,515,280,22]}
+{"kind":"shape","id":"sh/gr2p8nqx","slide":8,"name":"owner-8","bbox":[864,446,360,104]}
+{"kind":"shape","id":"sh/nih4byhg","slide":8,"name":"owner-mark-8","bbox":[882,466,18,64]}
+{"kind":"textbox","id":"sh/yxobm58z","slide":8,"name":"owner-leader-8","text":"CFO","textPreview":"CFO","textChars":3,"textLines":1,"bbox":[916,462,280,25]}
+{"kind":"textbox","id":"sh/5o7qpg3e","slide":8,"name":"owner-role-8","text":"Custo, runway, payback","textPreview":"Custo, runway, payback","textChars":22,"textLines":1,"bbox":[916,490,280,22]}
+{"kind":"textbox","id":"sh/g3ex0nux","slide":8,"name":"owner-deliv-8","text":"gatilhos financeiros","textPreview":"gatilhos financeiros","textChars":20,"textLines":1,"bbox":[916,515,280,22]}
+{"kind":"textbox","id":"sh/rmhk3q5o","slide":8,"name":"owners-rule","text":"Regra de gestão: cada fase abre com critério de aceite escrito, passa por checkpoint de risco e fecha com demo + decisão de avanço.","textPreview":"Regra de gestão: cada fase abre com critério de aceite escrito, passa por checkpoint de risco e fecha com demo + decisão de avanço.","textChars":131,"textLines":1,"bbox":[56,602,1080,42]}
+{"kind":"shape","id":"sh/y1kre1w7","slide":8,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/sji5snel","slide":8,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/h4byhgn2","slide":8,"name":"footer-number","text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/hc6sd2","slide":8,"text":""}
+{"kind":"slide","id":"sl/5qqxbv","slide":9,"title":"EXECUÇÃO","textShapes":11}
+{"kind":"textbox","id":"sh/vmtwra5g","slide":9,"name":"kicker","text":"EXECUÇÃO","textPreview":"EXECUÇÃO","textChars":8,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/o7qpg3ex","slide":9,"name":"slide-title","text":"Backlog por prioridade","textPreview":"Backlog por prioridade","textChars":22,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"shape","id":"sh/dsji5sne","slide":9,"name":"p0-panel","bbox":[56,156,360,352]}
+{"kind":"shape","id":"sh/6dcbulwv","slide":9,"name":"p0-mark","bbox":[78,180,18,18]}
+{"kind":"textbox","id":"sh/vy90je9c","slide":9,"name":"p0-title","text":"P0 | MVP","textPreview":"P0 | MVP","textChars":8,"textLines":1,"bbox":[108,174,286,34]}
+{"kind":"textbox","id":"sh/oj2t83it","slide":9,"name":"p0-body","text":"Schema produto/material/DPP\nFórmula de indicadores\nUpload de arquivo\nInput área/perda\nCadastro de material\nStatus de evidência\nQR e página pública\nTestes dos cálculos","textPreview":"Schema produto/material/DPP | Fórmula de indicadores | Upload de arquivo | Input área/perda | Cadastro de material | Status de evidência ...","textChars":166,"textLines":8,"bbox":[80,224,312,268]}
+{"kind":"shape","id":"sh/d4vmtwra","slide":9,"name":"p1-panel","bbox":[460,156,360,352]}
+{"kind":"shape","id":"sh/6hcrmhk3","slide":9,"name":"p1-mark","bbox":[482,180,18,18]}
+{"kind":"textbox","id":"sh/z25kb6xk","slide":9,"name":"p1-title","text":"P1 | Piloto","textPreview":"P1 | Piloto","textChars":11,"textLines":1,"bbox":[512,174,286,34]}
+{"kind":"textbox","id":"sh/vy90je9c","slide":9,"name":"p1-body","text":"Exportação JSON/CSV\nHistórico de versão\nDashboard de lacunas\nTemplates de flashcards\nImportação CSV/XLSX\nAutenticação simples","textPreview":"Exportação JSON/CSV | Histórico de versão | Dashboard de lacunas | Templates de flashcards | Importação CSV/XLSX | Autenticação simples","textChars":125,"textLines":6,"bbox":[484,224,312,268]}
+{"kind":"shape","id":"sh/6dcbulwv","slide":9,"name":"p2-panel","bbox":[864,156,360,352]}
+{"kind":"shape","id":"sh/d4vmtwra","slide":9,"name":"p2-mark","bbox":[886,180,18,18]}
+{"kind":"textbox","id":"sh/oj2t83it","slide":9,"name":"p2-title","text":"P2 | Futuro","textPreview":"P2 | Futuro","textChars":11,"textLines":1,"bbox":[916,174,286,34]}
+{"kind":"textbox","id":"sh/vmtwra5g","slide":9,"name":"p2-body","text":"Parser DXF/AAMA/ASTM\nIntegrações nativas\nAssinatura/verificação\nJSON-LD completo\nMultiempresa robusto\nAPI para parceiros","textPreview":"Parser DXF/AAMA/ASTM | Integrações nativas | Assinatura/verificação | JSON-LD completo | Multiempresa robusto | API para parceiros","textChars":120,"textLines":6,"bbox":[888,224,312,268]}
+{"kind":"textbox","id":"sh/61032lsz","slide":9,"name":"backlog-acceptance","text":"Aceite do MVP: criar DPP completo por API, recalcular indicadores com teste determinístico, salvar arquivo/metadados e abrir flashcards em rota pública.","textPreview":"Aceite do MVP: criar DPP completo por API, recalcular indicadores com teste determinístico, salvar arquivo/metadados e abrir flashcards e...","textChars":152,"textLines":1,"bbox":[56,552,1100,52]}
+{"kind":"shape","id":"sh/dsji5sne","slide":9,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/o7qpg3ex","slide":9,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/vahoza1g","slide":9,"name":"footer-number","text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/5qqxbv","slide":9,"text":""}
+{"kind":"slide","id":"sl/45a93p","slide":10,"title":"CONTROLE","textShapes":15}
+{"kind":"textbox","id":"sh/oza1gvy9","slide":10,"name":"kicker","text":"CONTROLE","textPreview":"CONTROLE","textChars":8,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/zed8v6ps","slide":10,"name":"slide-title","text":"Riscos e mitigação","textPreview":"Riscos e mitigação","textChars":18,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"shape","id":"sh/6xkf6dcb","slide":10,"name":"risk-0","bbox":[56,154,1120,62]}
+{"kind":"shape","id":"sh/hwfyxobm","slide":10,"name":"risk-mark-0","bbox":[76,173,24,24]}
+{"kind":"textbox","id":"sh/obm58z25","slide":10,"name":"risk-title-0","text":"Usuário esperar edição de molde","textPreview":"Usuário esperar edição de molde","textChars":31,"textLines":1,"bbox":[118,169,410,30]}
+{"kind":"textbox","id":"sh/zqtcj6to","slide":10,"name":"risk-mitigation-0","text":"Onboarding: importa dados, não edita desenho","textPreview":"Onboarding: importa dados, não edita desenho","textChars":44,"textLines":1,"bbox":[572,169,540,30]}
+{"kind":"shape","id":"sh/65wjudg7","slide":10,"name":"risk-1","bbox":[56,236,1120,62]}
+{"kind":"shape","id":"sh/h0fepkzu","slide":10,"name":"risk-mark-1","bbox":[76,255,24,24]}
+{"kind":"textbox","id":"sh/sfil0rqd","slide":10,"name":"risk-title-1","text":"Indicadores virarem greenwashing","textPreview":"Indicadores virarem greenwashing","textChars":32,"textLines":1,"bbox":[118,251,410,30]}
+{"kind":"textbox","id":"sh/qtcj6tov","slide":10,"name":"risk-mitigation-1","text":"Estados de evidência obrigatórios","textPreview":"Estados de evidência obrigatórios","textChars":33,"textLines":1,"bbox":[572,251,540,30]}
+{"kind":"shape","id":"sh/je9cvixc","slide":10,"name":"risk-2","bbox":[56,318,1120,62]}
+{"kind":"shape","id":"sh/8z25kb6x","slide":10,"name":"risk-mark-2","bbox":[76,337,24,24]}
+{"kind":"textbox","id":"sh/1gvy90je","slide":10,"name":"risk-title-2","text":"Área/perda virarem chute","textPreview":"Área/perda virarem chute","textChars":24,"textLines":1,"bbox":[118,333,410,30]}
+{"kind":"textbox","id":"sh/q1orytsv","slide":10,"name":"risk-mitigation-2","text":"Origem do dado: arquivo, declarado ou estimado","textPreview":"Origem do dado: arquivo, declarado ou estimado","textChars":46,"textLines":1,"bbox":[572,333,540,30]}
+{"kind":"shape","id":"sh/fmlkjm1c","slide":10,"name":"risk-3","bbox":[56,400,1120,62]}
+{"kind":"shape","id":"sh/87ed8bat","slide":10,"name":"risk-mark-3","bbox":[76,419,24,24]}
+{"kind":"textbox","id":"sh/xs72x4na","slide":10,"name":"risk-title-3","text":"Arquivos técnicos variarem demais","textPreview":"Arquivos técnicos variarem demais","textChars":33,"textLines":1,"bbox":[118,415,410,30]}
+{"kind":"textbox","id":"sh/qd4vmtwr","slide":10,"name":"risk-mitigation-3","text":"Input manual + CSV/XLSX antes de parser complexo","textPreview":"Input manual + CSV/XLSX antes de parser complexo","textChars":48,"textLines":1,"bbox":[572,415,540,30]}
+{"kind":"shape","id":"sh/fyxobm58","slide":10,"name":"risk-4","bbox":[56,482,1120,62]}
+{"kind":"shape","id":"sh/7y1kre1w","slide":10,"name":"risk-mark-4","bbox":[76,501,24,24]}
+{"kind":"textbox","id":"sh/ed8v6psf","slide":10,"name":"risk-title-4","text":"Compliance regulatório incerto","textPreview":"Compliance regulatório incerto","textChars":30,"textLines":1,"bbox":[118,497,410,30]}
+{"kind":"textbox","id":"sh/p4r65wju","slide":10,"name":"risk-mitigation-4","text":"Vender DPP-ready e transparência, não garantia jurídica","textPreview":"Vender DPP-ready e transparência, não garantia jurídica","textChars":55,"textLines":1,"bbox":[572,497,540,30]}
+{"kind":"textbox","id":"sh/wjudg7ad","slide":10,"name":"risk-bottom","text":"O risco principal não é tecnologia; é escopo. A V1 precisa provar cálculo, evidência e publicação antes de prometer modelagem, auditoria ou PLM.","textPreview":"O risco principal não é tecnologia; é escopo. A V1 precisa provar cálculo, evidência e publicação antes de prometer modelagem, auditoria ...","textChars":144,"textLines":1,"bbox":[56,590,1080,44]}
+{"kind":"shape","id":"sh/7qpg3ex0","slide":10,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/i5sneloj","slide":10,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/pwb2hwfy","slide":10,"name":"footer-number","text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/45a93p","slide":10,"text":""}
+{"kind":"slide","id":"sl/19t866","slide":11,"title":"PRÓXIMOS 10 DIAS","textShapes":13}
+{"kind":"textbox","id":"sh/8jqh0fep","slide":11,"name":"kicker","text":"PRÓXIMOS 10 DIAS","textPreview":"PRÓXIMOS 10 DIAS","textChars":16,"textLines":1,"bbox":[56,36,520,28]}
+{"kind":"textbox","id":"sh/fyxobm58","slide":11,"name":"slide-title","text":"Próxima ação dos líderes","textPreview":"Próxima ação dos líderes","textChars":24,"textLines":1,"bbox":[56,66,900,78]}
+{"kind":"shape","id":"sh/qd4vmtwr","slide":11,"name":"next-prd-panel","bbox":[56,156,542,116]}
+{"kind":"shape","id":"sh/xczed8v6","slide":11,"name":"next-prd-stripe","bbox":[56,156,8,116]}
+{"kind":"textbox","id":"sh/8v6psfil","slide":11,"name":"next-prd-title","text":"1. PRD v0","textPreview":"1. PRD v0","textChars":9,"textLines":1,"bbox":[78,174,504,26]}
+{"kind":"textbox","id":"sh/fa9w3m94","slide":11,"name":"next-prd-body","text":"Transformar tese em escopo, jornada, critérios de aceite, campos obrigatórios e limites explícitos da V1.","textPreview":"Transformar tese em escopo, jornada, critérios de aceite, campos obrigatórios e limites explícitos da V1.","textChars":105,"textLines":1,"bbox":[78,206,504,50]}
+{"kind":"shape","id":"sh/qpg3ex0n","slide":11,"name":"next-schema-panel","bbox":[682,156,542,116]}
+{"kind":"shape","id":"sh/1gvy90je","slide":11,"name":"next-schema-stripe","bbox":[682,156,8,116]}
+{"kind":"textbox","id":"sh/8z25kb6x","slide":11,"name":"next-schema-title","text":"2. Schema inicial","textPreview":"2. Schema inicial","textChars":17,"textLines":1,"bbox":[704,174,504,26]}
+{"kind":"textbox","id":"sh/a9w3m94f","slide":11,"name":"next-schema-body","text":"Criar produto, material, lote, arquivo técnico, indicador, evidência, DPP e flashcard como entidades testáveis.","textPreview":"Criar produto, material, lote, arquivo técnico, indicador, evidência, DPP e flashcard como entidades testáveis.","textChars":111,"textLines":1,"bbox":[704,206,504,50]}
+{"kind":"shape","id":"sh/zupwb2hw","slide":11,"name":"next-proto-panel","bbox":[56,318,542,116]}
+{"kind":"shape","id":"sh/sfil0rqd","slide":11,"name":"next-proto-stripe","bbox":[56,318,8,116]}
+{"kind":"textbox","id":"sh/h0fepkzu","slide":11,"name":"next-proto-title","text":"3. Protótipo como referência","textPreview":"3. Protótipo como referência","textChars":28,"textLines":1,"bbox":[78,336,504,26]}
+{"kind":"textbox","id":"sh/al87ed8b","slide":11,"name":"next-proto-body","text":"Usar phyllos/dpp-studio.html para validar fluxo, linguagem, status de evidência e experiência de QR.","textPreview":"Usar phyllos/dpp-studio.html para validar fluxo, linguagem, status de evidência e experiência de QR.","textChars":100,"textLines":1,"bbox":[78,368,504,50]}
+{"kind":"shape","id":"sh/z61032ls","slide":11,"name":"next-backend-panel","bbox":[682,318,542,116]}
+{"kind":"shape","id":"sh/orytsvu9","slide":11,"name":"next-backend-stripe","bbox":[682,318,8,116]}
+{"kind":"textbox","id":"sh/hcrmhk3q","slide":11,"name":"next-backend-title","text":"4. Backend mínimo","textPreview":"4. Backend mínimo","textChars":17,"textLines":1,"bbox":[704,336,504,26]}
+{"kind":"textbox","id":"sh/6xkf6dcb","slide":11,"name":"next-backend-body","text":"Implementar cálculo determinístico, upload com metadados, DPP rascunho e rota pública de flashcards.","textPreview":"Implementar cálculo determinístico, upload com metadados, DPP rascunho e rota pública de flashcards.","textChars":100,"textLines":1,"bbox":[704,368,504,50]}
+{"kind":"shape","id":"sh/zed8v6ps","slide":11,"name":"next-decision-panel","bbox":[56,518,1120,86]}
+{"kind":"textbox","id":"sh/nih4byhg","slide":11,"name":"next-decision","text":"Decisão pedida: aprovar o recorte P0 e iniciar a semana 1 sem reabrir edição de molde.","textPreview":"Decisão pedida: aprovar o recorte P0 e iniciar a semana 1 sem reabrir edição de molde.","textChars":86,"textLines":1,"bbox":[84,542,1060,36]}
+{"kind":"shape","id":"sh/yxobm58z","slide":11,"name":"footer-line","bbox":[56,666,1010,1]}
+{"kind":"textbox","id":"sh/5o7qpg3e","slide":11,"name":"footer-brand","text":"PHYLLOS DPP Integrado","textPreview":"PHYLLOS DPP Integrado","textChars":21,"textLines":1,"bbox":[56,676,320,22]}
+{"kind":"textbox","id":"sh/g3ex0nux","slide":11,"name":"footer-number","text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1168,672,56,26]}
+{"kind":"notes","id":"nt/19t866","slide":11,"text":""}
