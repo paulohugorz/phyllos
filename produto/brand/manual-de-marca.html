@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual de Marca — PHYLLOS</title>
+  <style>
+    :root {
+      --bg:         #0f0f0d;
+      --bg2:        #161614;
+      --bg3:        #1e1e1b;
+      --gold:       #B89A6A;
+      --gold-dim:   rgba(184,154,106,0.15);
+      --green:      #4A7C59;
+      --green-dim:  rgba(74,124,89,0.15);
+      --red:        #8B3A3A;
+      --fg:         #e8e8e0;
+      --fg-dim:     #c8c8be;
+      --muted:      #9E9B95;
+      --border:     rgba(255,255,255,0.08);
+      --border-md:  rgba(255,255,255,0.14);
+      --sidebar-w:  260px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Georgia', serif;
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── SIDEBAR ── */
+    #sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 28px 0 40px;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 0 24px 24px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+
+    .sidebar-logo-mark {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--fg);
+      letter-spacing: 0.12em;
+    }
+
+    .sidebar-logo-mark span { color: var(--gold); }
+
+    .sidebar-meta {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    .nav-group {
+      margin-bottom: 6px;
+    }
+
+    .nav-group-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 24px 4px;
+    }
+
+    .nav-item {
+      display: block;
+      padding: 7px 24px;
+      font-family: 'Arial', sans-serif;
+      font-size: 12px;
+      color: var(--fg-dim);
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .nav-item:hover { color: var(--fg); background: rgba(255,255,255,0.03); }
+
+    .nav-item.active {
+      color: var(--gold);
+      border-left-color: var(--gold);
+      background: var(--gold-dim);
+    }
+
+    .nav-item.sub {
+      padding-left: 36px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .nav-item.sub.active { color: var(--gold); }
+
+    /* ── MAIN ── */
+    #main {
+      margin-left: var(--sidebar-w);
+      padding: 56px 64px 120px;
+      max-width: calc(var(--sidebar-w) + 820px);
+    }
+
+    @media (max-width: 900px) {
+      #sidebar { display: none; }
+      #main { margin-left: 0; padding: 32px 24px 80px; }
+    }
+
+    /* ── SECTIONS ── */
+    .chapter {
+      margin-bottom: 80px;
+      scroll-margin-top: 40px;
+    }
+
+    .chapter-tag {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--fg);
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--fg);
+      margin-bottom: 16px;
+      margin-top: 52px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 40px;
+    }
+
+    h3 {
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Arial', sans-serif;
+      letter-spacing: 0.04em;
+      color: var(--fg-dim);
+      margin-top: 36px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--fg);
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+
+    p { margin-bottom: 14px; color: var(--fg-dim); }
+
+    .lead {
+      font-size: 17px;
+      color: var(--fg);
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    hr.sep {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* ── LISTS ── */
+    ul, ol {
+      padding-left: 22px;
+      margin-bottom: 14px;
+      color: var(--fg-dim);
+    }
+
+    li { margin-bottom: 5px; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border-left: 3px solid var(--gold);
+      background: var(--gold-dim);
+      padding: 16px 20px;
+      margin: 24px 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .callout p { color: var(--fg); margin: 0; }
+
+    .callout.green {
+      border-left-color: var(--green);
+      background: var(--green-dim);
+    }
+
+    .callout.red {
+      border-left-color: var(--red);
+      background: rgba(139,58,58,0.12);
+    }
+
+    /* ── QUOTE (copy de interface) ── */
+    blockquote {
+      border-left: 2px solid var(--border-md);
+      padding: 12px 20px;
+      margin: 16px 0;
+      font-style: italic;
+      color: var(--fg);
+      background: var(--bg3);
+      border-radius: 0 4px 4px 0;
+    }
+
+    blockquote strong { font-style: normal; color: var(--gold); }
+
+    /* ── CODE ── */
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      background: var(--bg3);
+      color: var(--gold);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; margin: 20px 0; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+    }
+
+    thead th {
+      text-align: left;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border-md);
+    }
+
+    tbody td {
+      padding: 10px 14px;
+      color: var(--fg-dim);
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+
+    td:first-child { color: var(--fg); }
+
+    /* ── BADGE ── */
+    .badge {
+      display: inline-block;
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 10px;
+      border: 1px solid;
+    }
+
+    .badge.gold   { color: var(--gold);  border-color: var(--gold); }
+    .badge.green  { color: var(--green); border-color: var(--green); }
+    .badge.red    { color: var(--red);   border-color: var(--red); }
+    .badge.muted  { color: var(--muted); border-color: var(--muted); }
+
+    /* ── FASE CARDS ── */
+    .fase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .fase-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    .fase-num {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .fase-title {
+      font-size: 15px;
+      color: var(--fg);
+      margin-bottom: 6px;
+    }
+
+    .fase-momento {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .fase-card p { font-size: 13px; }
+
+    /* ── VOZ PAIR ── */
+    .voz-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin: 20px 0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .voz-col { padding: 18px 20px; }
+    .voz-col:first-child { border-right: 1px solid var(--border); }
+
+    .voz-col-label {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .voz-col:first-child .voz-col-label { color: var(--green); }
+    .voz-col:last-child  .voz-col-label { color: var(--red); }
+
+    .voz-item {
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+      color: var(--fg-dim);
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .voz-item:last-child { border-bottom: none; }
+
+    /* ── MOLDE CARD ── */
+    .moldes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .molde-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 18px 20px;
+    }
+
+    .molde-nome {
+      font-size: 16px;
+      color: var(--fg);
+      margin-bottom: 2px;
+    }
+
+    .molde-tecnico {
+      font-size: 11px;
+      margin-bottom: 10px;
+    }
+
+    .molde-desc {
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    /* ── CENARIO BLOCK ── */
+    .cenario-block {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 12px;
+    }
+
+    .cenario-num {
+      font-family: 'Arial', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .cenario-title { font-size: 15px; color: var(--fg); margin-bottom: 8px; }
+    .cenario-block ul { margin: 0; }
+    .cenario-block li { font-size: 13px; }
+
+    /* ── PROMPT BLOCK ── */
+    .prompt-block {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px;
+      margin-bottom: 16px;
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+    }
+
+    .prompt-label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .prompt-field { margin-bottom: 8px; }
+    .prompt-field-key { color: var(--muted); }
+    .prompt-field-val { color: var(--fg-dim); }
+
+    /* ── AUDITORIA ── */
+    .audit-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-family: 'Arial', sans-serif;
+      font-size: 13px;
+    }
+
+    .audit-item:last-child { border-bottom: none; }
+
+    .audit-flag {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      margin-top: 5px;
+    }
+
+    .audit-claim { color: var(--fg); }
+    .audit-trocar { color: var(--muted); margin-top: 2px; }
+
+    /* ── TOC PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 60px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-version {
+      font-family: 'Arial', sans-serif;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════════════════════ -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark"><span>Φ</span> PHYLLOS</div>
+    <div class="sidebar-meta">Manual de Marca · v1.1 · jun/2026</div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Fundamentos</div>
+    <a class="nav-item" href="#principio">Princípio de coerência</a>
+    <a class="nav-item" href="#posicionamento">Posicionamento</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Identidade Visual</div>
+    <a class="nav-item" href="#pesquisa-visual">Frente 1 — Pesquisa visual</a>
+    <a class="nav-item sub" href="#persona">Persona</a>
+    <a class="nav-item sub" href="#cenarios">Cenários</a>
+    <a class="nav-item sub" href="#estetica">Direção estética</a>
+    <a class="nav-item sub" href="#referencias">Referências</a>
+    <a class="nav-item sub" href="#prompts">Prompts de imagem</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Comunicação</div>
+    <a class="nav-item" href="#faseamento">Frente 2 — Faseamento</a>
+    <a class="nav-item sub" href="#fase0">Fase 0 — Tese</a>
+    <a class="nav-item sub" href="#fase1">Fase 1 — Pesquisa</a>
+    <a class="nav-item sub" href="#fase2">Fase 2 — Protótipo</a>
+    <a class="nav-item sub" href="#fase3">Fase 3 — Validação</a>
+    <a class="nav-item sub" href="#fase4">Fase 4 — Lançamento</a>
+    <a class="nav-item sub" href="#fase5">Fase 5 — Pós-lançamento</a>
+    <a class="nav-item" href="#matriz">Matriz de claims</a>
+    <a class="nav-item" href="#auditoria">Auditoria do site</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Motor de Moldes</div>
+    <a class="nav-item" href="#motor">Voz do motor</a>
+    <a class="nav-item sub" href="#moldes-base">Moldes base</a>
+    <a class="nav-item sub" href="#tom">Tom e mensagens</a>
+    <a class="nav-item sub" href="#nomenclatura">Nomenclatura</a>
+    <a class="nav-item sub" href="#manifesto-motor">Manifesto</a>
+    <a class="nav-item sub" href="#regras-voz">Regras de voz</a>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Entregáveis</div>
+    <a class="nav-item" href="#proximos">Próximos passos</a>
+  </div>
+</nav>
+
+<!-- ══ MAIN ═════════════════════════════════════════════════════════════ -->
+<main id="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="chapter-tag">Manual de Marca</div>
+    <h1>PHYLLOS</h1>
+    <p class="lead">Guia interno de identidade visual, voz, comunicação por fase e motor de moldes.<br>
+    Para uso do time, agentes e parceiros com acesso autorizado.</p>
+    <div class="page-version">
+      Versão 1.1 &nbsp;·&nbsp; Consolidado em junho/2026
+      &nbsp;·&nbsp; Fontes: <code>frentes-identidade-visual-e-comunicacao.md</code> + <code>voz-motor-moldes.md</code>
+    </div>
+  </div>
+
+  <!-- ── PRINCÍPIO ── -->
+  <section class="chapter" id="principio">
+    <div class="chapter-tag">01 · Fundamento</div>
+    <h1>Princípio de coerência</h1>
+    <p class="lead">Sem prova, sem claim. Sem clareza, sem sofisticação.</p>
+
+    <div class="callout">
+      <p>A PHYLLOS ainda não deve comunicar como se tivesse produto acabado, material certificado ou cadeia validada quando isso ainda está em desenvolvimento. A marca pode falar de <strong>tese, intenção, critério, pesquisa, recusa e método</strong>. Claims de produto, material, certificação, durabilidade, performance ou impacto só entram quando houver evidência documentada.</p>
+    </div>
+
+    <p>Essa regra é aplicada a todos os canais — site, redes, pitch, one pager e motor de moldes. O Brand Director tem autoridade para pausar qualquer claim sem evidência, independente de aprovação anterior.</p>
+  </section>
+
+  <hr class="sep" />
+
+  <!-- ── POSICIONAMENTO ── -->
+  <section class="chapter" id="posicionamento">
+    <div class="chapter-tag">02 · Fundamento</div>
+    <h1>Posicionamento vigente</h1>
+
+    <div class="callout green">
+      <p>"A PHYLLOS cria para <strong>quem treina, decide, cuida, trabalha, se desloca e precisa seguir inteiro</strong>."</p>
+    </div>
+
+    <p>A marca nasceu de uma necessidade observada primeiro nas mulheres, mas não deve ser comunicada como exclusiva para mulheres nem como marca para uma elite executiva. Gênero pode aparecer como <em>origem histórica</em>, não como filtro de pertencimento.</p>
+
+    <p>Toda frente visual e verbal deve incluir vida real: treino, trabalho, casa, cuidado com crianças, família, carreira, deslocamento, descanso e presença cotidiana.</p>
+  </section>
+
+  <hr class="sep" />
+
+  <!-- ── PESQUISA VISUAL ── -->
+  <section class="chapter" id="pesquisa-visual">
+    <div class="chapter-tag">03 · Identidade Visual</div>
+    <h1>Frente 1 — Pesquisa visual da vida PHYLLOS</h1>
+
+    <h2 id="persona">Persona representada</h2>
+    <p>Não é uma atleta performática deslocada da vida real, nem uma personagem corporativa fantasiada de esporte. <strong>Treina, decide, se desloca, trabalha, cuida da casa, das crianças, da família, encontra pessoas, viaja, espera, respira, negocia e continua inteira nesses contextos.</strong></p>
+
+    <h3>O visual deve transmitir</h3>
+    <ul>
+      <li>Segurança sem agressividade</li>
+      <li>Conforto sem relaxamento excessivo</li>
+      <li>Elegância sem rigidez</li>
+      <li>Corpo ativo sem sexualização</li>
+      <li>Presença cotidiana sem parecer uniforme corporativo</li>
+      <li>Mobilidade real entre treino, cidade, trabalho, casa, cuidado e vida social</li>
+    </ul>
+
+    <h2 id="cenarios">Cenários prioritários</h2>
+
+    <div class="cenario-block">
+      <div class="cenario-num">Cenário 1</div>
+      <div class="cenario-title">Treino antes do expediente</div>
+      <ul>
+        <li>Luz de início da manhã</li>
+        <li>Movimento contido, real, sem pose fitness exagerada</li>
+        <li>Sensação de rotina própria, disciplina e silêncio</li>
+      </ul>
+    </div>
+
+    <div class="cenario-block">
+      <div class="cenario-num">Cenário 2</div>
+      <div class="cenario-title">Deslocamento urbano</div>
+      <ul>
+        <li>Rua, carro por aplicativo, metrô, elevador, estacionamento, calçada corporativa</li>
+        <li>A roupa precisa parecer confortável em movimento e adequada para seguir para compromissos reais</li>
+      </ul>
+    </div>
+
+    <div class="cenario-block">
+      <div class="cenario-num">Cenário 3</div>
+      <div class="cenario-title">Trabalho e compromisso</div>
+      <ul>
+        <li>Coworking, escritório, chamada, café entre compromissos, deslocamento, mesa de casa, reunião simples</li>
+        <li>O styling deve mostrar que a peça híbrida não pede desculpa por seguir o dia</li>
+      </ul>
+    </div>
+
+    <div class="cenario-block">
+      <div class="cenario-num">Cenário 4</div>
+      <div class="cenario-title">Transição pós-treino</div>
+      <ul>
+        <li>Banheiro de academia, vestiário minimalista, espelho, jaqueta ou camisa sobre top técnico, sneaker limpo, bolsa ou mochila</li>
+        <li>A narrativa é "a rotina continua", não "houve improviso"</li>
+      </ul>
+    </div>
+
+    <div class="cenario-block">
+      <div class="cenario-num">Cenário 5</div>
+      <div class="cenario-title">Casa, cuidado e fim de dia</div>
+      <ul>
+        <li>Mercado, escola, casa, restaurante simples, galeria, evento pequeno, jantar informal</li>
+        <li>A roupa deve parecer parte de uma vida completa, não uma roupa de uma única ocasião</li>
+      </ul>
+    </div>
+
+    <h2 id="estetica">Direção estética</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Elemento</th><th>Diretriz</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Paleta</td><td>obsidian, graphite, cream, linen, sage, gold discreto</td></tr>
+          <tr><td>Luz</td><td>Natural, baixa saturação, contraste elegante, textura real</td></tr>
+          <tr><td>Enquadramento</td><td>Editorial documental, planos médios e detalhes de tecido/corpo em movimento</td></tr>
+          <tr><td>Casting</td><td>Pessoas adultas, com mulheres no centro da origem visual, diversidade real de pele, cabelo, idade e corpo</td></tr>
+          <tr><td>Styling</td><td>Jaqueta leve, camisa, top técnico, legging estruturada, calça ampla técnica, bolsa ou mochila, tênis minimalista</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout red">
+      <p><strong>Evitar:</strong> pose de academia, sorriso publicitário, excesso de luxo ostensivo, sensualização de legging, escritório fake, verde "eco" literal, folhas decorativas como símbolo ambiental.</p>
+    </div>
+
+    <h2 id="referencias">Referências encontradas</h2>
+    <p>Servem como ponto de partida de linguagem visual, não como imagens finais de campanha.</p>
+    <ul>
+      <li><strong>Glamour — city street athleisure:</strong> legging preta, camada estruturada e tênis em contexto urbano. Boa referência para deslocamento e segurança cotidiana.</li>
+      <li><strong>Essence — workout clothes in the office:</strong> roupa ativa elevada por casaco estruturado, acessórios e postura urbana. Boa referência para roupa híbrida com presença.</li>
+      <li><strong>Vogue Business — future of athleisure:</strong> leitura de athleisure mais próxima de workwear e conforto contemporâneo.</li>
+      <li><strong>RW&CO — modern workwear:</strong> não é activewear, mas mapeia a linguagem de trabalho moderno com mobilidade, tênis e cidade.</li>
+    </ul>
+
+    <div class="callout">
+      <p><strong>Lacunas dos bancos de imagem:</strong> Falta pessoa brasileira em rotina real de treino/trabalho/casa/cuidado; roupa tecnicamente híbrida sem parecer "look de influencer"; sensação de produto premium nacional, não street style importado; cenas de transição treino-dia real com sobriedade; close de conforto/mobilidade/estrutura sem sensualização.</p>
+    </div>
+
+    <h2 id="prompts">Prompts de imagem proprietária</h2>
+    <p>Usar quando os bancos não entregarem a combinação certa.</p>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Imagem 1 — Manhã, treino e decisão</div>
+      <div class="prompt-field"><span class="prompt-field-key">Use case: </span><span class="prompt-field-val">photorealistic-natural</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Asset type: </span><span class="prompt-field-val">editorial lifestyle reference for premium activewear brand</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Primary request: </span><span class="prompt-field-val">Pessoa brasileira adulta, segura e serena, saindo de um treino matinal antes do expediente, vestindo legging técnica preta estruturada, top discreto e jaqueta leve em tom graphite sobre os ombros. Segura uma bolsa ou mochila e uma garrafa minimalista, em uma rua ainda calma, luz natural de 6h30, atmosfera silenciosa e sofisticada. A roupa deve parecer confortável, elegante e adequada tanto para movimento quanto para trabalho, casa e compromissos do dia.</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Style: </span><span class="prompt-field-val">fotografia editorial documental, premium, baixa saturação, textura real, sem pose fitness, sem sensualização.</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Avoid: </span><span class="prompt-field-val">logotipos, texto, folhas decorativas, sorriso publicitário, academia colorida, exagero de luxo, corpo hipersexualizado.</span></div>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Imagem 2 — Trabalho sem troca de roupa</div>
+      <div class="prompt-field"><span class="prompt-field-key">Primary request: </span><span class="prompt-field-val">Pessoa adulta em ambiente de trabalho contemporâneo e humano, usando calça/legging técnica de corte limpo, tênis minimalista, blusa técnica e jaqueta estruturada. Está sentada à mesa com notebook e caderno, postura confiante e natural, como alguém que acabou de treinar e seguiu para o trabalho sem perder presença. Ambiente brasileiro, luz diurna suave, materiais quentes e discretos.</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Style: </span><span class="prompt-field-val">editorial realista, foco em presença e conforto, composição limpa.</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Avoid: </span><span class="prompt-field-val">terno tradicional, roupa social rígida, pose artificial, estética de banco de imagem corporativo, símbolos de status.</span></div>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Imagem 3 — Transição no vestiário premium</div>
+      <div class="prompt-field"><span class="prompt-field-key">Primary request: </span><span class="prompt-field-val">Pessoa adulta em vestiário minimalista, ajustando uma jaqueta técnica sobre roupa de treino elegante. Espelho, bancada simples em pedra clara, bolsa ou mochila, tênis limpo, luz natural indireta. A cena comunica preparo, autonomia e conforto em todos os espaços.</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Style: </span><span class="prompt-field-val">fotografia editorial, tons cream, graphite e obsidian, realismo sofisticado.</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Avoid: </span><span class="prompt-field-val">nudez, sensualização, ambiente de academia popular colorida, excesso de produtos de beleza, logotipos.</span></div>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Imagem 4 — Deslocamento urbano</div>
+      <div class="prompt-field"><span class="prompt-field-key">Primary request: </span><span class="prompt-field-val">Pessoa brasileira caminhando em calçada urbana, vestindo activewear híbrido em tons escuros e claros, camada leve, bolsa ou mochila e tênis. Movimento natural, cabelo e roupa com leve dinâmica, expressão calma e determinada. A cena deve comunicar conforto em deslocamento, segurança e adequação a trabalho, casa e compromissos reais.</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Style: </span><span class="prompt-field-val">editorial urbano, luz de manhã, arquitetura contemporânea, baixa saturação.</span></div>
+    </div>
+
+    <div class="prompt-block">
+      <div class="prompt-label">Imagem 5 — Fim de dia</div>
+      <div class="prompt-field"><span class="prompt-field-key">Primary request: </span><span class="prompt-field-val">Pessoa em roupa híbrida técnica e elegante chegando a um restaurante discreto, mercado ou galeria pequena no fim do dia, depois de treino, trabalho e cuidado. Usa peça de base activewear com sobreposição limpa, postura relaxada e segura.</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Style: </span><span class="prompt-field-val">editorial natural, luz de fim de tarde, paleta neutra com detalhe gold discreto.</span></div>
+      <div class="prompt-field"><span class="prompt-field-key">Avoid: </span><span class="prompt-field-val">festa, balada, vestido, salto alto como solução principal, estética glam exagerada.</span></div>
+    </div>
+  </section>
+
+  <hr class="sep" />
+
+  <!-- ── FASEAMENTO ── -->
+  <section class="chapter" id="faseamento">
+    <div class="chapter-tag">04 · Comunicação</div>
+    <h1>Frente 2 — Faseamento do plano de comunicação</h1>
+
+    <div class="callout">
+      <p><strong>Premissa:</strong> Enquanto não existe produto físico validado, a comunicação deve vender a <em>convicção, o critério e o processo</em> — não o produto. O desejo pode ser construído antes do estoque, mas a confiança só se sustenta se a marca for honesta sobre o estágio em que está.</p>
+    </div>
+
+    <!-- FASE 0 -->
+    <h2 id="fase0">Fase 0 — Tese e território</h2>
+    <p class="fase-momento" style="color:var(--gold);font-family:'Arial',sans-serif;font-size:13px;">Momento: agora, antes de protótipo final</p>
+
+    <h3>Pode falar</h3>
+    <ul>
+      <li>"Estamos construindo uma marca para quem treina, decide e precisa seguir inteiro."</li>
+      <li>"Acreditamos que performance, presença e responsabilidade não deveriam competir."</li>
+      <li>"Estamos pesquisando materiais, modelagem, fornecedores e critérios de procedência."</li>
+      <li>"A PHYLLOS nasce para estudar uma roupa que acompanha a vida em mais de um contexto."</li>
+      <li>"Receba o dossiê de desenvolvimento quando ele existir."</li>
+    </ul>
+
+    <h3>Não pode falar</h3>
+    <ul>
+      <li>"100% algodão orgânico."</li>
+      <li>"Procedência certificada."</li>
+      <li>"Elastano reciclado X%."</li>
+      <li>"Produto testado."</li>
+      <li>"Embalagem biodegradável."</li>
+      <li>"Disponível em breve" se não houver prazo real.</li>
+    </ul>
+
+    <h3>Conteúdos</h3>
+    <ul>
+      <li>Manifesto do problema</li>
+      <li>Diário do fundador</li>
+      <li>Pesquisa visual da vida PHYLLOS</li>
+      <li>Enquetes qualitativas sobre rotina, desconfortos e uso híbrido</li>
+      <li>Textos sobre por que o mercado separa treino e trabalho</li>
+    </ul>
+
+    <h3>CTA</h3>
+    <ul>
+      <li>"Acompanhar a construção."</li>
+      <li>"Entrar na lista do dossiê."</li>
+      <li>"Responder pesquisa de rotina."</li>
+    </ul>
+
+    <!-- FASE 1 -->
+    <h2 id="fase1">Fase 1 — Pesquisa e critérios</h2>
+    <p style="color:var(--gold);font-family:'Arial',sans-serif;font-size:13px;">Momento: materiais e fornecedores em avaliação</p>
+
+    <h3>Pode falar</h3>
+    <ul>
+      <li>"Estamos avaliando materiais por durabilidade, toque, recuperação elástica e procedência."</li>
+      <li>"Nem todo tecido técnico é adequado para a rotina híbrida que queremos resolver."</li>
+      <li>"Certificação será critério de decisão, não ornamento de marketing."</li>
+      <li>"O que buscamos em um fornecedor antes de produzir."</li>
+    </ul>
+
+    <h3>Não pode falar</h3>
+    <ul>
+      <li>"Nosso material é certificado" antes da confirmação.</li>
+      <li>"Nossa cadeia é rastreável" antes da estrutura estar ativa.</li>
+      <li>"Sustentável" como adjetivo amplo.</li>
+    </ul>
+
+    <h3>Conteúdos</h3>
+    <ul>
+      <li>Matriz de critérios de material</li>
+      <li>Explicadores: durabilidade, elastano, poliamida, algodão, gramatura, toque, compressão</li>
+      <li>Bastidores de pesquisa com linguagem sóbria</li>
+      <li>"O que ainda não sabemos" como quadro de transparência</li>
+    </ul>
+
+    <!-- FASE 2 -->
+    <h2 id="fase2">Fase 2 — Protótipo e teste</h2>
+    <p style="color:var(--gold);font-family:'Arial',sans-serif;font-size:13px;">Momento: primeira peça em protótipo e testes internos</p>
+
+    <h3>Pode falar</h3>
+    <ul>
+      <li>"Primeiro protótipo em teste."</li>
+      <li>"Estamos observando conforto, caimento, mobilidade e resistência em uso real."</li>
+      <li>"A peça ainda pode mudar."</li>
+      <li>"O que funcionou / o que precisa melhorar."</li>
+    </ul>
+
+    <h3>Não pode falar</h3>
+    <ul>
+      <li>"Produto aprovado" antes do gate de teste.</li>
+      <li>"Durabilidade comprovada" antes de ciclos definidos.</li>
+      <li>"Performance superior" sem benchmark.</li>
+    </ul>
+
+    <h3>Conteúdos</h3>
+    <ul>
+      <li>Diário de protótipo</li>
+      <li>Fotos de detalhe sem parecer campanha de produto final</li>
+      <li>Relatos de fitting e ajustes de modelagem</li>
+      <li>Critérios para aprovar ou descartar uma peça</li>
+    </ul>
+
+    <!-- FASE 3 -->
+    <h2 id="fase3">Fase 3 — Validação e pré-lançamento</h2>
+    <p style="color:var(--gold);font-family:'Arial',sans-serif;font-size:13px;">Momento: protótipo aprovado, fornecedor definido, claims documentados</p>
+
+    <h3>Pode falar</h3>
+    <ul>
+      <li>Claims específicos já comprovados</li>
+      <li>Material aprovado, se houver ficha técnica</li>
+      <li>Certificação, se houver documento</li>
+      <li>Testes realizados, com método e limite</li>
+    </ul>
+
+    <h3>Conteúdos</h3>
+    <ul>
+      <li>Página de produto em modo dossiê</li>
+      <li>Ficha técnica simplificada</li>
+      <li>Código de origem, se já estiver operacional</li>
+      <li>Fotos editoriais com produto real</li>
+    </ul>
+
+    <h3>CTA</h3>
+    <ul>
+      <li>"Entrar na lista de prioridade."</li>
+      <li>"Receber aviso de abertura do primeiro lote."</li>
+    </ul>
+
+    <!-- FASE 4 -->
+    <h2 id="fase4">Fase 4 — Lançamento</h2>
+    <p style="color:var(--gold);font-family:'Arial',sans-serif;font-size:13px;">Momento: produto final, lote produzido, checkout ativo</p>
+
+    <h3>Pode falar</h3>
+    <ul>
+      <li>Benefícios do produto comprovados</li>
+      <li>Claims documentados, quantidade do lote, prazo de envio, política de troca</li>
+      <li>História de desenvolvimento</li>
+    </ul>
+
+    <h3>Não pode falar</h3>
+    <ul>
+      <li>Urgência artificial</li>
+      <li>Desconto como personalidade</li>
+      <li>"Sustentável" sem explicação</li>
+      <li>Exageros de performance</li>
+    </ul>
+
+    <h3>CTA</h3>
+    <ul>
+      <li>"Comprar o primeiro lote."</li>
+      <li>"Ver procedência."</li>
+      <li>"Conhecer a história da peça."</li>
+    </ul>
+
+    <!-- FASE 5 -->
+    <h2 id="fase5">Fase 5 — Pós-lançamento e aprendizagem</h2>
+    <p style="color:var(--gold);font-family:'Arial',sans-serif;font-size:13px;">Momento: primeiras clientes usando</p>
+
+    <h3>Pode falar</h3>
+    <ul>
+      <li>Feedbacks reais autorizados</li>
+      <li>Aprendizados do primeiro lote</li>
+      <li>Ajustes para o segundo ciclo</li>
+    </ul>
+
+    <h3>Não pode falar</h3>
+    <ul>
+      <li>Generalização com poucos casos</li>
+      <li>Depoimento sem autorização</li>
+      <li>Dados de performance sem metodologia</li>
+    </ul>
+
+    <h3>CTA</h3>
+    <ul>
+      <li>"Participar do próximo ciclo."</li>
+      <li>"Enviar feedback de uso."</li>
+      <li>"Acompanhar evolução do produto."</li>
+    </ul>
+  </section>
+
+  <hr class="sep" />
+
+  <!-- ── MATRIZ ── -->
+  <section class="chapter" id="matriz">
+    <div class="chapter-tag">05 · Comunicação</div>
+    <h1>Matriz de claims — dizer agora vs. dizer depois</h1>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Tema</th>
+            <th>Agora <span class="badge green">OK</span></th>
+            <th>Depois de evidência <span class="badge gold">Com prova</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Materiais</td>
+            <td>"Estamos pesquisando materiais com critérios de durabilidade, conforto e procedência."</td>
+            <td>"Esta peça usa [material] com [certificação/documento], aprovado por [método]."</td>
+          </tr>
+          <tr>
+            <td>Sustentabilidade</td>
+            <td>"Responsabilidade é critério de desenvolvimento."</td>
+            <td>"Este lote tem [escopo comprovado]: fornecedor, certificação, embalagem, rastreabilidade."</td>
+          </tr>
+          <tr>
+            <td>Performance</td>
+            <td>"A peça será testada para mobilidade, conforto e uso híbrido."</td>
+            <td>"Testamos [critério] em [condição] e documentamos [resultado]."</td>
+          </tr>
+          <tr>
+            <td>Produto</td>
+            <td>"Estamos desenvolvendo a primeira peça."</td>
+            <td>"A primeira peça aprovada é [nome], disponível em [lote/prazo]."</td>
+          </tr>
+          <tr>
+            <td>Comunidade</td>
+            <td>"Estamos ouvindo mulheres com rotina híbrida."</td>
+            <td>"Clientes do primeiro lote relataram [aprendizado autorizado]."</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="sep" />
+
+  <!-- ── AUDITORIA ── -->
+  <section class="chapter" id="auditoria">
+    <div class="chapter-tag">06 · Comunicação</div>
+    <h1>Auditoria do site atual</h1>
+
+    <div class="callout red">
+      <p>O site já comunica várias afirmações como se o produto estivesse validado. Esses pontos devem ser reescritos antes de qualquer exposição pública ampla.</p>
+    </div>
+
+    <h2>Claims a pausar ou rebaixar para hipótese</h2>
+
+    <div>
+      <div class="audit-item">
+        <div class="audit-flag"></div>
+        <div>
+          <div class="audit-claim">"Procedência certificada"</div>
+          <div class="audit-trocar">→ "Procedência como critério de desenvolvimento"</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-flag"></div>
+        <div>
+          <div class="audit-claim">"100% algodão orgânico"</div>
+          <div class="audit-trocar">→ "Pesquisa de fibras naturais e certificáveis"</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-flag"></div>
+        <div>
+          <div class="audit-claim">"Embalagem biodegradável"</div>
+          <div class="audit-trocar">→ "Embalagem responsável em avaliação"</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-flag"></div>
+        <div>
+          <div class="audit-claim">"Elastano reciclado 78%"</div>
+          <div class="audit-trocar">→ "Estamos avaliando bases elásticas com conteúdo reciclado documentável"</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-flag"></div>
+        <div>
+          <div class="audit-claim">"Shell reciclado" / "Impermeável DWR"</div>
+          <div class="audit-trocar">→ Remover até validação técnica</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-flag"></div>
+        <div>
+          <div class="audit-claim">"Produção nacional rastreável" / "Cadeia rastreável"</div>
+          <div class="audit-trocar">→ "Rastreabilidade será critério antes do lançamento"</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-flag"></div>
+        <div>
+          <div class="audit-claim">"200+ lavagens testado"</div>
+          <div class="audit-trocar">→ Remover até testes documentados</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-flag"></div>
+        <div>
+          <div class="audit-claim">"Cada peça tem um código de origem que você pode consultar"</div>
+          <div class="audit-trocar">→ "A meta é que cada peça tenha código de origem consultável"</div>
+        </div>
+      </div>
+      <div class="audit-item">
+        <div class="audit-flag"></div>
+        <div>
+          <div class="audit-claim">"Cada fornecedor passou por inspeção presencial"</div>
+          <div class="audit-trocar">→ Remover até comprovação</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Arquivos com maior prioridade de revisão</h2>
+    <ul>
+      <li><code>phyllos/index.html</code> — home comunica coleção, produto, porcentagens, algodão orgânico, embalagem biodegradável e estatísticas como fatos.</li>
+      <li><code>phyllos/materiais.html</code> — página inteira escrita como se materiais, certificações, composições e cadeia já estivessem aprovados.</li>
+      <li><code>phyllos/manifesto.html</code> — manifesto mistura tese correta com afirmações operacionais ainda não comprovadas.</li>
+      <li><code>phyllos/essencial.html</code> — descrições de produto apresentam composição e benefícios técnicos como definitivos.</li>
+      <li><code>phyllos/trail.html</code> — comunica materiais avançados, DWR sem PFAS, merino rastreável e procedência como fatos.</li>
+      <li><code>phyllos/presenca.html</code> — descrições de produto já tratam materiais e desempenho como definidos.</li>
+    </ul>
+
+    <h2>Direção para a home enquanto não há produto</h2>
+    <ul>
+      <li>Hero sobre a mulher e a tese, não sobre coleção disponível</li>
+      <li>CTA para acompanhar a construção, não comprar</li>
+      <li>Seção "o problema que estamos resolvendo"</li>
+      <li>Seção "critérios em pesquisa"</li>
+      <li>Seção "diário de desenvolvimento"</li>
+      <li>Captura de e-mail para receber o dossiê quando houver evidências</li>
+      <li>Remover carrinho, preço e simulação de estoque enquanto não houver produto</li>
+    </ul>
+  </section>
+
+  <hr class="sep" />
+
+  <!-- ── MOTOR DE MOLDES ── -->
+  <section class="chapter" id="motor">
+    <div class="chapter-tag">07 · Motor de Moldes</div>
+    <h1>Voz do Motor de Moldes</h1>
+    <p class="lead">O motor de moldes não é um banco de templates. Ele é um ponto de partida construído a partir de um corpo real.</p>
+
+    <div class="callout green">
+      <p><strong>Regra-base:</strong> A palavra "template" está proibida na interface. Alternativas aprovadas: "base", "ponto de partida", "estrutura", "molde base", "forma".</p>
+    </div>
+
+    <p>O ICP — criadores independentes, alfaiates, micro-marcas, estilistas sem ateliê — sabe o que quer construir. Não precisa ser convencido. Precisa de clareza e velocidade. A voz do motor é a de um parceiro técnico que respeita o conhecimento de quem usa, sem ser frio nem tutorial demais.</p>
+
+    <h2 id="moldes-base">Moldes base</h2>
+    <p>Apresentação de cada peça na tela de seleção.</p>
+
+    <div class="moldes-grid">
+      <div class="molde-card">
+        <div class="molde-nome">Calça reta</div>
+        <div class="molde-tecnico"><code>calca-reta-classica</code></div>
+        <div class="molde-desc">Uma calça que fecha bem no quadril, cai direto pela perna e funciona em qualquer composição. O ponto de partida mais solicitado — e o mais adaptável.</div>
+      </div>
+      <div class="molde-card">
+        <div class="molde-nome">Jogger</div>
+        <div class="molde-tecnico"><code>jogger-elastico</code></div>
+        <div class="molde-desc">Construída para quem se move. Cava ampla, cintura ajustada, punho que segura. Funciona no estúdio, na rua e no percurso entre os dois.</div>
+      </div>
+      <div class="molde-card">
+        <div class="molde-nome">Shorts</div>
+        <div class="molde-tecnico"><code>shorts-basico</code></div>
+        <div class="molde-desc">Curto, funcional, sem excesso. A base é neutra o suficiente para virar treino, praia ou editorial — depende do que você adiciona.</div>
+      </div>
+      <div class="molde-card">
+        <div class="molde-nome">Camiseta</div>
+        <div class="molde-tecnico"><code>camiseta-basica</code></div>
+        <div class="molde-desc">O ponto de partida mais democrático da costura. Ajuste o caimento, o comprimento, a manga — e você tem uma peça nova a cada parâmetro.</div>
+      </div>
+      <div class="molde-card">
+        <div class="molde-nome">Camisa</div>
+        <div class="molde-tecnico"><code>camisa-social-base</code></div>
+        <div class="molde-desc">Estrutura clássica, pronta para ser desconstruída. Gola, pala, manga e corpo já parametrizados. Você decide o que fica e o que muda.</div>
+      </div>
+      <div class="molde-card">
+        <div class="molde-nome">Moletom</div>
+        <div class="molde-tecnico"><code>moletom-fechado</code></div>
+        <div class="molde-desc">Tecido pesado, caimento generoso, conforto sem abrir mão de proporção. A base certa para quem trabalha com malha e quer precisão no molde.</div>
+      </div>
+      <div class="molde-card">
+        <div class="molde-nome">Saia</div>
+        <div class="molde-tecnico"><code>saia-reta-base</code></div>
+        <div class="molde-desc">Reta, limpa, ajustável do quadril à barra. Uma das bases com mais variação de resultado a partir do mesmo molde — muda o tecido, muda a peça.</div>
+      </div>
+      <div class="molde-card">
+        <div class="molde-nome">Blazer</div>
+        <div class="molde-tecnico"><code>blazer-estruturado</code></div>
+        <div class="molde-desc">Alfaiataria acessível. O molde base do blazer é o mais exigente em precisão — e o que mais valoriza o trabalho de quem costura bem.</div>
+      </div>
+    </div>
+
+    <h2 id="tom">Tom e mensagens</h2>
+
+    <h3>Tom da interface</h3>
+    <ul>
+      <li><strong>Técnico-acessível:</strong> usa termos corretos de modelagem (gancho, cava, pala, comprimento de tronco) sem explicar o que é gancho para quem já sabe.</li>
+      <li><strong>Direto:</strong> frases curtas. Sem prefácio. O usuário veio para fazer, não para ler.</li>
+      <li><strong>Humano, não assistente:</strong> o motor não é um chatbot prestativo. É um parceiro de construção. Não usa "Olha que legal!" nem "Ótima escolha!".</li>
+      <li><strong>Sem jargão de software:</strong> nada de "clique aqui para prosseguir", "fluxo concluído", "input inválido". Tudo em linguagem de ateliê.</li>
+    </ul>
+
+    <h3>Mensagens de confirmação</h3>
+    <blockquote>"Molde gerado. Confira as vistas, revise as medidas críticas e, se quiser ajustar algum ponto, é só descrever."</blockquote>
+    <blockquote>"Seu molde está pronto para corte."</blockquote>
+    <blockquote>"Molde gerado com as adaptações que você pediu. Revisamos o gancho e a largura de quadril — veja se o resultado é o que você esperava antes de plotar."</blockquote>
+
+    <h3>Mensagens de erro ou dado faltante</h3>
+    <blockquote>"Para gerar o molde desta calça, precisamos do comprimento de tronco. Você tem essa medida?"</blockquote>
+    <blockquote>"Essas medidas resultam em uma cava bem fechada. Isso pode ser intencional — mas se não for, vale checar a medida de busto antes de continuar."</blockquote>
+    <blockquote>"Não entendi bem essa parte. Pode descrever de outra forma? Por exemplo: 'manga 3/4 com punho elasticado' ou 'barra reta, sem bainha'."</blockquote>
+    <blockquote>"Não informou o comprimento da manga. Vou usar o padrão para o seu tamanho de busto — mas você pode ajustar depois."</blockquote>
+
+    <h3>Mensagens de sugestão técnica</h3>
+    <blockquote>"Com esse quadril em relação à cintura, recomendo aumentar o gancho em 1 cm para garantir conforto na cava traseira."</blockquote>
+    <blockquote>"Esse comprimento de tronco é um pouco acima da média para essa tabela. Se quiser, posso ajustar a pala traseira para manter o equilíbrio visual."</blockquote>
+    <blockquote>"Para esse tipo de tecido, uma costura francesa vai exigir uma margem maior. Quer que eu adicione 1,5 cm em vez de 1 cm?"</blockquote>
+
+    <h3>Como o motor se apresenta</h3>
+    <p>O motor não é uma ferramenta. Não é um assistente. Não tem nome próprio. É descrito como <strong>"o motor de modelagem da Phyllos"</strong> — ou simplesmente como <strong>"o motor"</strong> em contexto interno.</p>
+    <p>A primeira tela não diz "Bem-vindo ao motor de moldes da Phyllos". Ela diz:</p>
+    <blockquote>"Por onde você quer começar?"</blockquote>
+
+    <h2 id="nomenclatura">Nomenclatura das peças</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome na interface</th>
+            <th>Nome técnico interno</th>
+            <th>Bloco</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Camiseta</td><td><code>camiseta-basica</code></td><td><span class="badge green">Entrada</span></td></tr>
+          <tr><td>2</td><td>Calça reta</td><td><code>calca-reta-classica</code></td><td><span class="badge green">Entrada</span></td></tr>
+          <tr><td>3</td><td>Shorts</td><td><code>shorts-basico</code></td><td><span class="badge green">Entrada</span></td></tr>
+          <tr><td>4</td><td>Jogger</td><td><code>jogger-elastico</code></td><td><span class="badge gold">Movimento</span></td></tr>
+          <tr><td>5</td><td>Moletom</td><td><code>moletom-fechado</code></td><td><span class="badge gold">Movimento</span></td></tr>
+          <tr><td>6</td><td>Camisa</td><td><code>camisa-social-base</code></td><td><span class="badge muted">Estruturada</span></td></tr>
+          <tr><td>7</td><td>Saia</td><td><code>saia-reta-base</code></td><td><span class="badge muted">Estruturada</span></td></tr>
+          <tr><td>8</td><td>Blazer</td><td><code>blazer-estruturado</code></td><td><span class="badge muted">Estruturada</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>A ordem não é alfabética nem por complexidade técnica. É por frequência de uso e por progressão de aprendizado. <strong>Camiseta, Calça reta e Shorts aparecem primeiro</strong> — reduzem o tempo de primeira conversão.</p>
+
+    <p>O usuário não "seleciona" — ele "escolhe por onde começar". O botão de ação é <strong>"Começar com essa base"</strong>, não "Selecionar" ou "Usar template".</p>
+
+    <h2 id="manifesto-motor">Manifesto do motor de moldes</h2>
+
+    <div class="callout green">
+      <p>Modelagem sempre foi conhecimento guardado. Aprendia quem tinha ateliê, mestre ou tempo. Quem não tinha, terceirizava ou desistia. A Phyllos construiu o motor de moldes para mudar esse cálculo: você descreve o que quer construir — em linguagem simples, com as medidas reais do seu corpo ou do seu cliente — e recebe um molde 2D parametrizado, pronto para corte, sem intermediário e sem CAD. Não é automação de moda. É acesso a precisão técnica para quem já sabe o que quer fazer com ela.</p>
+    </div>
+
+    <h2 id="regras-voz">Regras de voz</h2>
+
+    <div class="voz-pair">
+      <div class="voz-col">
+        <div class="voz-col-label">✓ Dizer</div>
+        <div class="voz-item">Molde base</div>
+        <div class="voz-item">Ponto de partida</div>
+        <div class="voz-item">Começar com essa base</div>
+        <div class="voz-item">Corpo real</div>
+        <div class="voz-item">Precisão técnica</div>
+        <div class="voz-item">Ajustar / adaptar</div>
+        <div class="voz-item">Por onde você quer começar?</div>
+        <div class="voz-item">Medida crítica não informada</div>
+        <div class="voz-item">Recomendo aumentar o gancho</div>
+        <div class="voz-item">Veja se o resultado é o que esperava</div>
+      </div>
+      <div class="voz-col">
+        <div class="voz-col-label">✗ Não dizer</div>
+        <div class="voz-item">Template</div>
+        <div class="voz-item">Modelo pré-definido</div>
+        <div class="voz-item">Selecionar / Usar</div>
+        <div class="voz-item">Manequim padrão</div>
+        <div class="voz-item">Resultado perfeito</div>
+        <div class="voz-item">Customizar (evitar anglicismo excessivo)</div>
+        <div class="voz-item">Bem-vindo! Escolha uma opção abaixo</div>
+        <div class="voz-item">Erro / Campo obrigatório</div>
+        <div class="voz-item">Sugestão automática gerada</div>
+        <div class="voz-item">Confira se está correto</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="sep" />
+
+  <!-- ── PRÓXIMOS PASSOS ── -->
+  <section class="chapter" id="proximos">
+    <div class="chapter-tag">08 · Entregáveis</div>
+    <h1>Próximos entregáveis recomendados</h1>
+
+    <ol>
+      <li>Montar um moodboard visual com 20 a 30 imagens divididas por cenário.</li>
+      <li>Gerar 5 imagens proprietárias usando os prompts da Frente 1 para cobrir lacunas de contexto brasileiro e uso híbrido.</li>
+      <li>Criar uma página "Em desenvolvimento" no site, substituindo claims de produto ainda não provados por linguagem de tese e processo.</li>
+      <li>Revisar todos os textos atuais do site para separar "produto real" de "produto em construção" (ver seção Auditoria do site).</li>
+      <li>Criar calendário editorial de 8 semanas para Fase 0 e Fase 1.</li>
+    </ol>
+
+    <h2>Handoffs recomendados</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Equipe</th><th>Ação</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>UX/Produto</td><td>Aplicar nomenclatura, hierarquia de grade e textos de interface do motor de moldes.</td></tr>
+          <tr><td>Growth/Marketing</td><td>Usar o manifesto do motor na landing page e no pitch deck.</td></tr>
+          <tr><td>Product Agent</td><td>Registrar nomes técnicos internos como padrão de nomenclatura do catálogo de moldes.</td></tr>
+          <tr><td>CMO</td><td>Aprovar antes de publicar qualquer variação do manifesto em canal externo.</td></tr>
+          <tr><td>Brand Director</td><td>Pausar qualquer claim sem evidência, independente de aprovação anterior.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Nav ativa por scroll
+  const navItems = document.querySelectorAll('.nav-item');
+  const sections = document.querySelectorAll('[id]');
+
+  function updateNav() {
+    let current = '';
+    sections.forEach(s => {
+      const top = s.getBoundingClientRect().top;
+      if (top <= 80) current = s.id;
+    });
+    navItems.forEach(item => {
+      const href = item.getAttribute('href')?.slice(1);
+      item.classList.toggle('active', href === current);
+    });
+  }
+
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
+  // Smooth scroll
+  navItems.forEach(item => {
+    item.addEventListener('click', e => {
+      const href = item.getAttribute('href');
+      if (href?.startsWith('#')) {
+        e.preventDefault();
+        document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
