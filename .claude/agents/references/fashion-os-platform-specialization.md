@@ -2,13 +2,15 @@
 
 Este documento orienta todos os agentes da PHYLLOS e do Fashion OS a partir de 2026-06-10. Ele deve ser usado junto com o racional de posicionamento vigente em `positioning-rationale-2026-06.md` e com as premissas estrategicas vigentes em `motor-moldes-strategic-premises.md`.
 
-## 0. Premissa vigente - 2026-06-11
+## 0. Premissa vigente - 2026-06-23
 
-O MVP imediato da PHYLLOS e o **Parametric Pattern Engine** da PHYLLOS Create.
+O MVP imediato da PHYLLOS agora e o **DPP Integrado** descrito em `dpp-integrado-strategic-premises.md`.
 
-O Fashion OS continua sendo a infraestrutura tecnica e operacional mais ampla, mas no curto prazo deve servir a um objetivo estreito: transformar parametros estruturados, medidas corporais, tecido e design em molde 2D parametrizado, validavel e exportavel em SVG/PDF A4.
+O Fashion OS continua sendo a infraestrutura tecnica e operacional mais ampla, mas no curto prazo deve servir a um objetivo estreito: transformar arquivos tecnicos de moda, especificacoes de produto, dados de materia-prima, area, perda e fatores de impacto em um DPP publicavel com QR e flashcards para consumidor.
 
-Tudo que nao ajuda a codificar o playbook, gerar uma base parametrica, validar geometria ou testar fisicamente o primeiro molde fica subordinado: linguagem natural, preview em tempo real, interface completa de gestao de colecao, Motor de Imagens, MRP, marketplace, agentes autonomos, e-commerce e SaaS amplo sao horizontes posteriores, nao escopo de MVP.
+O Parametric Pattern Engine deixa de ser o primeiro produto da V1. Ele permanece como horizonte tecnico futuro ou camada de integracao, mas nao deve bloquear o MVP. A V1 nao edita molde, nao ajusta desenho e nao substitui ferramentas como Audaces, Lectra, Gerber, CLO, Valentina, CAD, PLM ou ERP.
+
+Tudo que nao ajuda a importar/registrar dados tecnicos, calcular indicadores por peca, classificar evidencia e publicar flashcards fica subordinado: edicao de molde, criacao parametrica de desenho, preview de modelagem, MRP amplo, marketplace, agentes autonomos e SaaS completo sao horizontes posteriores, nao escopo de MVP.
 
 ## 1. Visao
 

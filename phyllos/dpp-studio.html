@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYLLOS wear - DPP Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="home-development trace-atelier-page dpp-studio-page">
+
+<div class="cursor" id="cursor"></div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo"><span class="nav-phi">Φ</span><div class="nav-rule"></div><span class="nav-wordmark">Phyllos</span><span class="nav-sub">wear</span></a>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMobileNav()" style="display:none"><span></span><span></span><span></span></button>
+  <ul class="nav-links">
+    <li><a href="colecoes.html">Coleções</a></li>
+    <li><a href="essencial.html">Essencial</a></li>
+    <li><a href="fashion-os.html">Fashion OS</a></li>
+    <li><a href="dpp-studio.html">DPP Studio</a></li>
+    <li><a href="materiais.html">Materiais</a></li>
+    <li><a href="manifesto.html">Manifesto</a></li>
+    <li><a href="business-plan.html">Plano</a></li>
+  </ul>
+  <div class="nav-actions nav-status"><span>Protótipo</span></div>
+</nav>
+
+<main class="trace-shell">
+  <section class="trace-workspace" aria-label="Protótipo do PHYLLOS DPP Studio">
+    <aside class="trace-sidebar">
+      <div class="trace-kicker">DPP Studio · v0</div>
+      <h1>Arquivo técnico entra. Passaporte sai.</h1>
+      <p>A PHYLLOS não edita o molde na V1. Ela lê ou recebe os dados técnicos, calcula consumo, perda e indicadores, e publica flashcards no QR da peça.</p>
+
+      <div class="trace-progress" aria-label="Progresso do DPP">
+        <button class="trace-step active" data-step="arquivo" type="button"><span>01</span> Arquivo</button>
+        <button class="trace-step" data-step="produto" type="button"><span>02</span> Produto</button>
+        <button class="trace-step" data-step="calculo" type="button"><span>03</span> Cálculo</button>
+        <button class="trace-step" data-step="flashcards" type="button"><span>04</span> Flashcards</button>
+      </div>
+
+      <figure class="trace-image-card">
+        <img src="img/calca-conforto-versatilidade.png" alt="Referência visual da peça usada no protótipo de DPP">
+        <figcaption>Imagem de referência para contexto do consumidor; indicadores vêm dos dados técnicos.</figcaption>
+      </figure>
+    </aside>
+
+    <section class="trace-main-panel">
+      <div class="trace-topbar">
+        <div>
+          <span>Produto</span>
+          <strong id="projectCode">PH-DPP-2601</strong>
+        </div>
+        <div>
+          <span>Status</span>
+          <strong id="projectStatus">DPP em rascunho</strong>
+        </div>
+        <div>
+          <span>Cobertura</span>
+          <strong><output id="coverageOut">62%</output></strong>
+        </div>
+      </div>
+
+      <form class="trace-form" id="traceForm">
+        <section class="trace-form-step visible" data-panel="arquivo">
+          <div class="trace-section-head">
+            <div>
+              <span>01 · Integração técnica</span>
+              <h2>Conectar o que a modelagem já produz.</h2>
+            </div>
+            <p>Na V1, o arquivo técnico é entrada para cálculo e evidência. O desenho não é editado aqui.</p>
+          </div>
+
+          <div class="trace-file-card">
+            <label class="trace-upload-zone">
+              <input id="techFile" type="file" accept=".pdf,.dxf,.csv,.xlsx,.xls,.png,.jpg,.jpeg">
+              <span>Upload de ficha, molde, encaixe ou planilha</span>
+              <strong id="fileName">Nenhum arquivo enviado</strong>
+              <small>PDF, DXF, CSV, XLSX ou imagem. Protótipo simula leitura e usa os campos abaixo.</small>
+            </label>
+          </div>
+
+          <div class="trace-input-grid">
+            <label>Ferramenta de origem<select id="sourceTool"><option>Audaces / encaixe exportado</option><option>Lectra / Gerber</option><option>CLO / arquivo técnico</option><option>Valentina / DXF</option><option>Planilha manual</option><option>PDF de ficha técnica</option></select></label>
+            <label>Área da peça (m²)<input id="pieceArea" type="number" value="1.42" min="0.1" max="8" step="0.01"></label>
+            <label>Perda de corte (%)<input id="lossPct" type="number" value="14" min="0" max="45" step="1"></label>
+            <label>Quantidade do lote<input id="lotQty" type="number" value="80" min="1" max="5000"></label>
+            <label>Status da área<select id="areaStatus"><option value="calculado">Calculado por arquivo</option><option value="declarado">Declarado manualmente</option><option value="estimado">Estimado</option></select></label>
+            <label>Tipo de arquivo<select id="fileType"><option>Encaixe com área</option><option>Molde sem área</option><option>Ficha técnica</option><option>Planilha de consumo</option></select></label>
+          </div>
+        </section>
+
+        <section class="trace-form-step" data-panel="produto">
+          <div class="trace-section-head">
+            <div>
+              <span>02 · Produto cadastrado</span>
+              <h2>Especificação vira base do DPP.</h2>
+            </div>
+            <p>O cadastro puxa composição, lote, fornecedor, cuidados e durabilidade para o passaporte.</p>
+          </div>
+
+          <div class="trace-input-grid">
+            <label>Nome da peça<input id="pieceName" type="text" value="Calça conforto de rotina"></label>
+            <label>SKU<input id="sku" type="text" value="PH-CC-2601"></label>
+            <label>Material principal<select id="materialName"><option>Crepe stretch reciclado</option><option>Malha premium declarada</option><option>Viscose de origem declarada</option></select></label>
+            <label>Composição<input id="composition" type="text" value="78% poliéster reciclado · 22% elastano"></label>
+            <label>Fornecedor / lote<input id="supplierLot" type="text" value="Fornecedor Alfa · lote CRP-26-041"></label>
+            <label>Durabilidade<input id="durability" type="number" value="80" min="10" max="200"> ciclos de lavagem</label>
+          </div>
+
+          <div class="trace-material-list">
+            <label class="trace-material selected">
+              <input type="radio" name="evidence" value="documentado" checked>
+              <strong>Documentado</strong>
+              <span>Composição e lote com arquivo de apoio</span>
+              <small>Publicável com status de documento, sem prometer certificação.</small>
+            </label>
+            <label class="trace-material">
+              <input type="radio" name="evidence" value="declarado">
+              <strong>Declarado</strong>
+              <span>Fornecedor informou, mas sem documento anexado</span>
+              <small>Consumidor vê transparência, não verificação.</small>
+            </label>
+            <label class="trace-material">
+              <input type="radio" name="evidence" value="ausente">
+              <strong>Incompleto</strong>
+              <span>Dados insuficientes para QR público</span>
+              <small>Bloqueia publicação sem revisão.</small>
+            </label>
+          </div>
+        </section>
+
+        <section class="trace-form-step" data-panel="calculo">
+          <div class="trace-section-head">
+            <div>
+              <span>03 · Indicadores por peça</span>
+              <h2>Área, perda e matéria-prima calculam impacto.</h2>
+            </div>
+            <p>Os fatores podem vir do material cadastrado, de fornecedor ou de uma base metodológica futura.</p>
+          </div>
+
+          <div class="trace-input-grid">
+            <label>Gramatura (g/m²)<input id="gsm" type="number" value="220" min="60" max="800"></label>
+            <label>Água (L/kg)<input id="waterFactor" type="number" value="320" min="0" max="20000"></label>
+            <label>Energia (kWh/kg)<input id="energyFactor" type="number" value="12" min="0" max="300" step="0.1"></label>
+            <label>Carbono (kgCO2e/kg)<input id="carbonFactor" type="number" value="4.8" min="0" max="100" step="0.1"></label>
+            <label>Sobra reaproveitada (%)<input id="reusePct" type="number" value="35" min="0" max="100"></label>
+            <label>Metodologia<select id="methodology"><option>Fator declarado pelo fornecedor</option><option>Proxy interno PHYLLOS</option><option>Laudo externo</option></select></label>
+          </div>
+
+          <div class="trace-metrics-grid" id="metricsGrid"></div>
+        </section>
+
+        <section class="trace-form-step" data-panel="flashcards">
+          <div class="trace-section-head">
+            <div>
+              <span>04 · QR do consumidor</span>
+              <h2>Flashcards, não ficha técnica crua.</h2>
+            </div>
+            <p>O consumidor escaneia a etiqueta e entende composição, consumo, perda e indicadores em poucos segundos.</p>
+          </div>
+
+          <div class="trace-output-grid">
+            <article class="trace-label-preview">
+              <div class="trace-label-top"><span>PHYLLOS</span><small id="labelStatus">Rascunho</small></div>
+              <div class="trace-qr" id="qrMock" aria-label="QR demonstrativo"></div>
+              <strong id="labelPiece">Calça conforto de rotina</strong>
+              <p id="labelMaterial">DPP em rascunho · dados calculados por arquivo técnico</p>
+              <small id="labelUrl">phyllos.local/dpp/PH-CC-2601</small>
+            </article>
+            <article class="trace-flashcards" id="flashcards"></article>
+          </div>
+        </section>
+      </form>
+    </section>
+
+    <aside class="trace-inspector">
+      <div class="trace-score-ring" aria-label="Cobertura de dados">
+        <svg viewBox="0 0 120 120" role="img">
+          <circle cx="60" cy="60" r="48"></circle>
+          <circle id="scoreArc" cx="60" cy="60" r="48"></circle>
+        </svg>
+        <div><strong id="scoreNumber">62</strong><span>cobertura</span></div>
+      </div>
+
+      <div class="trace-evidence">
+        <h3>Estados de evidência</h3>
+        <div class="trace-evidence-row"><span id="fileDot"></span><p id="fileEvidence">Arquivo pendente</p></div>
+        <div class="trace-evidence-row"><span id="areaDot"></span><p id="areaEvidence">Área calculada por arquivo</p></div>
+        <div class="trace-evidence-row"><span id="materialDot"></span><p id="materialEvidence">Material documentado</p></div>
+        <div class="trace-evidence-row"><span id="publishDot"></span><p id="publishEvidence">Flashcards em rascunho</p></div>
+      </div>
+
+      <div class="trace-alerts">
+        <h3>Alertas</h3>
+        <ul id="alertList"></ul>
+      </div>
+
+      <div class="trace-actions">
+        <button class="btn-primary" id="nextStep" type="button">Próxima etapa</button>
+        <button class="btn-text" id="refreshOutput" type="button">Recalcular</button>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div><span class="footer-brand-phi">Φ</span><span class="footer-brand-name">Phyllos</span><span class="footer-brand-sub">wear</span><p class="footer-tagline">"O DPP nasce dos dados técnicos que a peça já carrega."</p></div>
+    <div class="footer-col"><h4>Explorar</h4><ul><li><a href="index.html#dossier">Dossier</a></li><li><a href="fashion-os.html">Fashion OS</a></li><li><a href="dpp-studio.html">DPP Studio</a></li></ul></div>
+    <div class="footer-col"><h4>Construção</h4><ul><li><a href="business-plan.html">Plano vivo</a></li><li><a href="materiais.html">Pesquisa material</a></li><li><a href="manifesto.html">Manifesto</a></li></ul></div>
+    <div class="footer-col"><h4>Status</h4><ul><li><a href="dpp-studio.html">Protótipo local</a></li><li><a href="fashion-os.html">Laboratório</a></li><li><a href="index.html#dossier">Produto em desenvolvimento</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><span>© 2026 Phyllos · Em desenvolvimento</span><span>wear · beauty · tech</span></div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+const steps = ['arquivo', 'produto', 'calculo', 'flashcards'];
+let activeStep = 'arquivo';
+
+const $ = selector => document.querySelector(selector);
+const $$ = selector => [...document.querySelectorAll(selector)];
+
+function value(id) {
+  return document.getElementById(id).value;
+}
+
+function numberValue(id) {
+  return Number(value(id) || 0);
+}
+
+function selectedRadio(name) {
+  return document.querySelector(`input[name="${name}"]:checked`);
+}
+
+function setActiveStep(step) {
+  activeStep = step;
+  $$('.trace-step').forEach(btn => btn.classList.toggle('active', btn.dataset.step === step));
+  $$('.trace-form-step').forEach(panel => panel.classList.toggle('visible', panel.dataset.panel === step));
+  $('#projectStatus').textContent = step === 'flashcards' ? 'QR em rascunho' : 'DPP em rascunho';
+}
+
+function calculations() {
+  const area = numberValue('pieceArea');
+  const loss = numberValue('lossPct') / 100;
+  const gsmKg = numberValue('gsm') / 1000;
+  const requiredArea = loss >= 1 ? area : area / (1 - loss);
+  const lostArea = Math.max(0, requiredArea - area);
+  const weight = requiredArea * gsmKg;
+  const water = weight * numberValue('waterFactor');
+  const energy = weight * numberValue('energyFactor');
+  const carbon = weight * numberValue('carbonFactor');
+  const reused = lostArea * (numberValue('reusePct') / 100);
+  return { area, loss, requiredArea, lostArea, weight, water, energy, carbon, reused };
+}
+
+function coverage() {
+  const fileLoaded = $('#techFile').files.length > 0;
+  const evidence = selectedRadio('evidence')?.value || 'ausente';
+  const areaStatus = value('areaStatus');
+  let score = 32;
+  score += fileLoaded ? 16 : 0;
+  score += areaStatus === 'calculado' ? 16 : areaStatus === 'declarado' ? 10 : 5;
+  score += evidence === 'documentado' ? 18 : evidence === 'declarado' ? 10 : 0;
+  score += numberValue('durability') > 0 ? 8 : 0;
+  score += value('composition').trim().length > 8 ? 8 : 0;
+  return Math.min(score, 98);
+}
+
+function money(n, suffix) {
+  return `${n.toFixed(2).replace('.', ',')} ${suffix}`;
+}
+
+function generateQr(score) {
+  const qr = $('#qrMock');
+  qr.innerHTML = '';
+  for (let i = 0; i < 49; i++) {
+    const cell = document.createElement('span');
+    const on = i < 7 || i > 41 || i % 6 === 0 || (i * score) % 13 < 6;
+    cell.className = on ? 'on' : '';
+    qr.appendChild(cell);
+  }
+}
+
+function evidenceLabel(value) {
+  return value === 'documentado' ? 'documentado' : value === 'declarado' ? 'declarado' : 'incompleto';
+}
+
+function render() {
+  const calc = calculations();
+  const score = coverage();
+  const evidence = selectedRadio('evidence')?.value || 'ausente';
+  const fileLoaded = $('#techFile').files.length > 0;
+  const fileName = fileLoaded ? $('#techFile').files[0].name : 'Nenhum arquivo enviado';
+  const areaStatus = value('areaStatus');
+  const status = score >= 82 ? 'Pronto para revisão' : score >= 62 ? 'Rascunho avançado' : 'Rascunho incompleto';
+
+  $('#fileName').textContent = fileName;
+  $('#coverageOut').textContent = score + '%';
+  $('#scoreNumber').textContent = score;
+  $('#projectStatus').textContent = status;
+  $('#scoreArc').style.strokeDashoffset = 302 - (302 * score / 100);
+  $('#fileEvidence').textContent = fileLoaded ? `Arquivo recebido: ${fileName}` : 'Arquivo técnico ainda não enviado';
+  $('#areaEvidence').textContent = `Área ${evidenceLabel(areaStatus)}`;
+  $('#materialEvidence').textContent = `Material ${evidenceLabel(evidence)}`;
+  $('#publishEvidence').textContent = score >= 82 ? 'Flashcards prontos para revisão' : 'Flashcards em rascunho';
+  $('#fileDot').className = fileLoaded ? 'ok' : 'warn';
+  $('#areaDot').className = areaStatus === 'calculado' ? 'ok' : areaStatus === 'declarado' ? 'warn' : 'bad';
+  $('#materialDot').className = evidence === 'documentado' ? 'ok' : evidence === 'declarado' ? 'warn' : 'bad';
+  $('#publishDot').className = score >= 82 ? 'ok' : 'warn';
+  $('#labelStatus').textContent = score >= 82 ? 'Revisão' : 'Rascunho';
+  $('#labelPiece').textContent = value('pieceName');
+  $('#labelMaterial').textContent = `${value('sku')} · ${value('materialName')} · ${money(calc.carbon, 'kgCO2e estimados')}`;
+  $('#labelUrl').textContent = `phyllos.local/dpp/${value('sku')}`;
+
+  $$('.trace-material').forEach(label => {
+    const input = label.querySelector('input');
+    label.classList.toggle('selected', input.checked);
+  });
+
+  $('#metricsGrid').innerHTML = `
+    <article><span>Área requerida</span><strong>${money(calc.requiredArea, 'm²')}</strong><small>inclui perda de corte</small></article>
+    <article><span>Perda</span><strong>${money(calc.lostArea, 'm²')}</strong><small>${numberValue('lossPct')}% no encaixe</small></article>
+    <article><span>Peso por peça</span><strong>${money(calc.weight, 'kg')}</strong><small>área × gramatura</small></article>
+    <article><span>Água</span><strong>${money(calc.water, 'L')}</strong><small>estimado por kg</small></article>
+    <article><span>Energia</span><strong>${money(calc.energy, 'kWh')}</strong><small>estimado por kg</small></article>
+    <article><span>Carbono</span><strong>${money(calc.carbon, 'kgCO2e')}</strong><small>${value('methodology')}</small></article>
+  `;
+
+  $('#flashcards').innerHTML = `
+    <div class="flashcard"><span>Material</span><strong>${value('composition')}</strong><p>${value('supplierLot')}</p></div>
+    <div class="flashcard"><span>Consumo</span><strong>${money(calc.requiredArea, 'm²')}</strong><p>${money(calc.weight, 'kg')} de matéria-prima por peça.</p></div>
+    <div class="flashcard"><span>Perda de corte</span><strong>${numberValue('lossPct')}%</strong><p>${money(calc.reused, 'm²')} de sobra com reaproveitamento declarado.</p></div>
+    <div class="flashcard"><span>Indicadores</span><strong>${money(calc.carbon, 'kgCO2e')}</strong><p>${money(calc.water, 'L')} de água e ${money(calc.energy, 'kWh')} estimados.</p></div>
+    <div class="flashcard"><span>Durabilidade</span><strong>${numberValue('durability')} ciclos</strong><p>Informação ${evidenceLabel(evidence)} no cadastro do produto.</p></div>
+    <div class="flashcard"><span>Transparência</span><strong>${score}%</strong><p>QR em rascunho até revisão dos campos ausentes.</p></div>
+  `;
+
+  const alerts = [];
+  if (!fileLoaded) alerts.push('Arquivo técnico ainda não enviado; protótipo usa campos manuais.');
+  if (areaStatus !== 'calculado') alerts.push('Área não veio diretamente do arquivo técnico.');
+  if (evidence !== 'documentado') alerts.push('Material sem documento suficiente para publicação plena.');
+  if (value('methodology') !== 'Laudo externo') alerts.push('Indicadores ambientais ainda dependem de fator declarado ou proxy.');
+  if (numberValue('lossPct') > 20) alerts.push('Perda de corte alta: revisar encaixe ou plano de reaproveitamento.');
+  $('#alertList').innerHTML = alerts.map(alert => `<li>${alert}</li>`).join('');
+
+  generateQr(score);
+}
+
+$$('.trace-step').forEach(btn => btn.addEventListener('click', () => setActiveStep(btn.dataset.step)));
+$$('input, select, textarea').forEach(input => input.addEventListener('input', render));
+$$('input[type="radio"], input[type="checkbox"], input[type="file"]').forEach(input => input.addEventListener('change', render));
+$('#refreshOutput').addEventListener('click', render);
+$('#nextStep').addEventListener('click', () => {
+  const idx = steps.indexOf(activeStep);
+  setActiveStep(steps[Math.min(idx + 1, steps.length - 1)]);
+  render();
+});
+
+setActiveStep(activeStep);
+render();
+</script>
+</body>
+</html>

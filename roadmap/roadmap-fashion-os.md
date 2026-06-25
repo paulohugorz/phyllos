@@ -1,7 +1,10 @@
 # Roadmap PHYLLOS Create / Fashion OS
 
 **Atualizado em:** 2026-06-11
-**Premissa vigente:** V1 e Parametric Pattern Engine, nao CAD industrial.
+**Status em 2026-06-23:** roadmap historico substituido no curto prazo por `roadmap/roadmap-dpp-integrado-phyllos.md`.
+**Premissa historica:** V1 e Parametric Pattern Engine, nao CAD industrial.
+
+> Nota: este roadmap permanece como registro da tese anterior de Motor de Moldes. A prioridade vigente de desenvolvimento interno passa a ser PHYLLOS DPP Integrado: importacao/input de arquivos tecnicos, calculo de area/perda/indicadores, estados de evidencia, QR e flashcards para consumidor.
 
 O Fashion OS continua como infraestrutura tecnica da PHYLLOS. O produto a validar agora e mais estreito: transformar parametros estruturados, medidas e tecido em molde 2D parametrizado, validavel, imprimivel e evolutivo.
 
