@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Text, DateTime, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Float, Text, DateTime, Boolean, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.database import Base
@@ -341,3 +341,273 @@ class PecaMaterial(Base):
 
     peca = relationship("Peca", back_populates="materiais")
     produto = relationship("ProdutoFornecedor", back_populates="usos_em_pecas")
+
+
+# ---------------------------------------------------------------------------
+# Banco de Modelagens — Pattern Library
+# Fonte primária: Marlene Mukai, "Modelagem Prática para Confecção de Roupas
+# em Tecido Plano", 3ª ed. 2015.
+# ModelagemSpec (acima) é 1:1 com Peca; MoldeBase é a fonte canônica de
+# padrões de corte referenciados por ModelagemSpec.base_id.
+# ---------------------------------------------------------------------------
+
+class MoldeBase(Base):
+    """Catálogo de moldes base — padrões de corte reutilizáveis."""
+    __tablename__ = "moldes_base"
+
+    id = Column(Integer, primary_key=True, index=True)
+    # ex: "base-saia-reta", "base-blusa-basica" — valor usado em ModelagemSpec.base_id
+    codigo = Column(String, unique=True, nullable=False, index=True)
+    nome = Column(String, nullable=False)
+    # saia | blusa | calca | vestido | manga | camisa | casaco | infantil
+    categoria = Column(String, nullable=False, index=True)
+    # reta | lapis | gode | evase | basica | raglan | pantalona | ...
+    subcategoria = Column(String)
+    # mukai_2015 | outro
+    fonte = Column(String, default="mukai_2015")
+    # feminino | masculino | infantil | unissex
+    genero = Column(String, default="feminino", index=True)
+    # plano | malha | ambos
+    tipo_tecido = Column(String, default="plano")
+    descricao = Column(Text)
+    # notas de construção: linhas de fio, número de partes, ordem de montagem
+    notas_construcao = Column(Text)
+    # referência à página no livro fonte
+    pagina_fonte = Column(Integer)
+    observacoes = Column(Text)
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+
+    partes = relationship("MoldeParte", back_populates="molde_base", cascade="all, delete-orphan")
+    derivacoes_origem = relationship(
+        "MoldeDerivacao",
+        foreign_keys="MoldeDerivacao.molde_origem_id",
+        back_populates="molde_origem",
+        cascade="all, delete-orphan",
+    )
+    derivacoes_destino = relationship(
+        "MoldeDerivacao",
+        foreign_keys="MoldeDerivacao.molde_derivado_id",
+        back_populates="molde_derivado",
+    )
+    tecidos_indicados = relationship("TecidoIndicadoMolde", back_populates="molde_base", cascade="all, delete-orphan")
+
+
+class MoldeParte(Base):
+    """Peça de molde dentro de um molde base (frente, costas, manga, cós, etc.)."""
+    __tablename__ = "moldes_partes"
+
+    id = Column(Integer, primary_key=True, index=True)
+    molde_base_id = Column(Integer, ForeignKey("moldes_base.id"), nullable=False)
+    # frente | costas | manga | gola | cos | bolso | carcela | punho | forro
+    nome = Column(String, nullable=False)
+    # marcações e pontos de referência: JSON com entalhes, pences, linhas de dobra
+    marcacoes = Column(Text)
+    # qty — número de partes a cortar (1 dobrado = 2 peças, ex: frente com pala)
+    quantidade_corte = Column(Integer, default=1)
+    observacoes = Column(Text)
+
+    molde_base = relationship("MoldeBase", back_populates="partes")
+
+
+class MoldeDerivacao(Base):
+    """Relação de derivação entre moldes: base → variação com descrição da transformação."""
+    __tablename__ = "moldes_derivacoes"
+    __table_args__ = (
+        UniqueConstraint("molde_origem_id", "molde_derivado_id"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    molde_origem_id = Column(Integer, ForeignKey("moldes_base.id"), nullable=False)
+    molde_derivado_id = Column(Integer, ForeignKey("moldes_base.id"), nullable=False)
+    # alargamento | encurtamento | pence | recorte | franzido | abertura | sobreposicao
+    tipo_transformacao = Column(String)
+    descricao = Column(Text)
+
+    molde_origem = relationship("MoldeBase", foreign_keys=[molde_origem_id], back_populates="derivacoes_origem")
+    molde_derivado = relationship("MoldeBase", foreign_keys=[molde_derivado_id], back_populates="derivacoes_destino")
+
+
+class TabelaMedidasPadrao(Base):
+    """Medidas corporais de referência por gênero, tipo de tecido, elasticidade e tamanho.
+    Fonte primária: Mukai 2015. Um registro por (genero, tipo_tecido, elasticidade, tamanho, ponto_medida)."""
+    __tablename__ = "tabela_medidas_padrao"
+    __table_args__ = (
+        UniqueConstraint("genero", "tipo_tecido", "elasticidade", "tamanho", "ponto_medida"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    # feminino | masculino | infantil
+    genero = Column(String, nullable=False, index=True)
+    # plano | malha
+    tipo_tecido = Column(String, nullable=False, index=True)
+    # plano | baixa | media | alta  (elasticidade da malha; "plano" para tecido plano)
+    elasticidade = Column(String, nullable=False, default="plano")
+    # 36 | 38 | PP | P | M | G | GG | EGG | 2 | 4 | 6 (infantil por anos)
+    tamanho = Column(String, nullable=False, index=True)
+    # busto | cintura | quadril | ombro | costas | altura_corpo | largura_braco |
+    # altura_cava | altura_busto | separacao_busto | comp_manga_comprida |
+    # comp_manga_curta | punho_camisa | punho_blazer | altura_quadril |
+    # altura_gancho | comp_joelho | comp_calca | largura_joelho | largura_tornozelo
+    ponto_medida = Column(String, nullable=False, index=True)
+    valor_cm = Column(Float, nullable=False)
+    fonte = Column(String, default="mukai_2015")
+
+
+class ReducaoMalha(Base):
+    """Percentuais e valores de redução de medida por elasticidade do tecido.
+    Mukai 2015, p.14. Aplicar antes de construir o molde para malha."""
+    __tablename__ = "reducao_malha"
+    __table_args__ = (
+        UniqueConstraint("elasticidade", "ponto_medida"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    # baixa | media | alta
+    elasticidade = Column(String, nullable=False)
+    ponto_medida = Column(String, nullable=False)
+    # percentual de redução (quando a redução é proporcional à medida)
+    reducao_pct = Column(Float, nullable=True)
+    # redução absoluta em cm (quando é valor fixo independente da medida)
+    reducao_cm = Column(Float, nullable=True)
+    observacoes = Column(Text)
+
+
+class TecidoIndicadoMolde(Base):
+    """Tecidos indicados por molde base ou categoria de peça (Mukai 2015, p.8)."""
+    __tablename__ = "tecidos_indicados_molde"
+
+    id = Column(Integer, primary_key=True, index=True)
+    # NULL quando a indicação é por categoria (não por molde específico)
+    molde_base_id = Column(Integer, ForeignKey("moldes_base.id"), nullable=True)
+    # usado quando molde_base_id é NULL — indicação geral por categoria
+    categoria_peca = Column(String, nullable=True)
+    nome_tecido = Column(String, nullable=False)
+    # ideal | adequado | condicional | evitar
+    adequacao = Column(String, default="ideal")
+    observacoes = Column(Text)
+
+    molde_base = relationship("MoldeBase", back_populates="tecidos_indicados")
+
+
+class FolgaVestibilidade(Base):
+    """Folgas de vestibilidade recomendadas por grau de ajuste e ponto de medida.
+    A folga é adicionada após dividir a medida corporal por 4 (método Mukai)."""
+    __tablename__ = "folgas_vestibilidade"
+    __table_args__ = (
+        UniqueConstraint("grau_ajuste", "categoria_peca", "ponto_medida"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    # compression | fitted | semi | relaxed | oversized
+    grau_ajuste = Column(String, nullable=False)
+    # blusa | calca | vestido | saia | casaco (NULL = universal)
+    categoria_peca = Column(String, nullable=True)
+    # busto | cintura | quadril | cava | gancho
+    ponto_medida = Column(String, nullable=False)
+    # folga total em cm (dividida por 4 ao aplicar em 1/4 do molde)
+    folga_total_cm = Column(Float, nullable=False)
+    observacoes = Column(Text)
+
+
+# ---------------------------------------------------------------------------
+# Impact Collector — banco de dados de impacto de matérias-primas
+# Alimentado pelo módulo impact_collector/ a partir de fontes abertas.
+# Sprint 2: SQLite local. Sprint 3: migra para Supabase Postgres.
+# ---------------------------------------------------------------------------
+
+class ImpactSource(Base):
+    """Cada fonte consultada pelo pipeline de coleta."""
+    __tablename__ = "impact_sources"
+
+    id = Column(Integer, primary_key=True, index=True)
+    # api | pdf | bulk_dump | scraping | oai_pmh | manual
+    tipo = Column(String, nullable=False)
+    nome = Column(String, nullable=False)
+    doi = Column(String, unique=True, nullable=True, index=True)
+    url = Column(Text)
+    titulo = Column(Text)
+    autores = Column(Text)  # JSON array
+    ano_publicacao = Column(Integer)
+    journal = Column(String)
+    acesso_aberto = Column(Boolean, default=True)
+    licenca = Column(String)
+    raw_storage_path = Column(Text)
+    # coletado | parseado | extraido | validado | rejeitado
+    status = Column(String, default="coletado")
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+
+    evidencias = relationship("ImpactEvidence", back_populates="source", cascade="all, delete-orphan")
+
+
+class ImpactEvidence(Base):
+    """Cada valor de impacto coletado de uma fonte específica."""
+    __tablename__ = "impact_evidences"
+
+    id = Column(Integer, primary_key=True, index=True)
+    source_id = Column(Integer, ForeignKey("impact_sources.id"), nullable=False)
+    fibra_id = Column(String, nullable=False, index=True)
+    fingerprint = Column(String, unique=True, nullable=True, index=True)
+
+    # Valores medidos
+    co2eq_kg_por_kg = Column(Float)
+    agua_l_por_kg = Column(Float)
+    energia_mj_por_kg = Column(Float)
+
+    # Metadados do estudo
+    # cradle-to-gate | cradle-to-grave | gate-to-gate | outro
+    escopo_lca = Column(String)
+    metodologia_acv = Column(String)
+    regiao_origem = Column(String)
+    ano_referencia = Column(Integer)
+
+    # Rastreabilidade
+    pagina_referencia = Column(String)
+    trecho_original = Column(Text)
+    nota_curadoria = Column(Text)
+
+    # Qualidade
+    # alta | media | baixa
+    confianca = Column(String, default="baixa")
+    validado_humano = Column(Boolean, default=False)
+    validado_em = Column(DateTime(timezone=True))
+    validado_por = Column(String)
+
+    # Extração
+    # claude-haiku-4-5 | manual | regex
+    extraction_model = Column(String)
+    extraction_cost_usd = Column(Float)
+
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+
+    source = relationship("ImpactSource", back_populates="evidencias")
+
+
+class ImpactMaterial(Base):
+    """Valor agregado por fibra — calculado a partir das evidências coletadas."""
+    __tablename__ = "impact_materials"
+
+    id = Column(Integer, primary_key=True, index=True)
+    fibra_id = Column(String, unique=True, nullable=False, index=True)
+    nome_pt = Column(String, nullable=False)
+    categoria = Column(String)  # natural_vegetal | sintetica_petroleo | mmcf | etc.
+    aliases_json = Column(Text)  # JSON array de aliases
+
+    # Valor agregado (mediana das evidências com confiança >= media)
+    co2eq_kg_por_kg_agg = Column(Float)
+    agua_l_por_kg_agg = Column(Float)
+    energia_mj_por_kg_agg = Column(Float)
+
+    # Ranges
+    co2eq_range_min = Column(Float)
+    co2eq_range_max = Column(Float)
+    agua_range_min = Column(Float)
+    agua_range_max = Column(Float)
+
+    # Qualidade do agregado
+    # alta | media | baixa
+    confianca_agg = Column(String)
+    n_evidencias = Column(Integer, default=0)
+    regra_agregacao = Column(String)  # "mediana cradle-to-gate global"
+
+    atualizado_em = Column(DateTime(timezone=True), onupdate=func.now())
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())

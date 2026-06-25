@@ -85,6 +85,11 @@ def _migrate(conn):
     add_if_missing("peca_materiais", "quantidade_m", "FLOAT")
     add_if_missing("peca_materiais", "peso_kg",      "FLOAT")
 
+    # impact_evidences — colunas adicionadas no Sprint 2
+    add_if_missing("impact_evidences", "fingerprint",       "VARCHAR")
+    add_if_missing("impact_evidences", "nota_curadoria",    "TEXT")
+    add_if_missing("impact_evidences", "energia_mj_por_kg", "FLOAT")
+
 
 def _table_exists(conn, name: str) -> bool:
     row = conn.execute(
