@@ -25,5 +25,11 @@
       "runtimeArgs": ["-m", "http.server", "8082", "--directory", "outputs"],
       "port": 8082
     }
+  ,{
+      "name": "manual-de-marca",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8083", "--directory", "produto/brand"],
+      "port": 8083
+    }
   ]
 }
