@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,6 +29,8 @@ app.add_middleware(
 )
 
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
+repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+phyllos_site_dir = os.path.join(repo_root, "phyllos")
 
 images_dir = os.path.join(os.path.dirname(__file__), "../data/images")
 os.makedirs(images_dir, exist_ok=True)
@@ -42,6 +44,9 @@ app.include_router(router_catalogo)
 
 @app.get("/", response_class=HTMLResponse)
 async def frontend(request: Request):
+    dpp_studio_path = os.path.join(phyllos_site_dir, "dpp-studio.html")
+    if os.path.exists(dpp_studio_path):
+        return FileResponse(dpp_studio_path, media_type="text/html")
     return templates.TemplateResponse("index.html", {"request": request})
 
 
@@ -153,3 +158,7 @@ async def etiqueta_peca(request: Request, codigo: str):
     finally:
         db.close()
     return templates.TemplateResponse("etiqueta.html", ctx)
+
+
+if os.path.isdir(phyllos_site_dir):
+    app.mount("/", StaticFiles(directory=phyllos_site_dir, html=True), name="phyllos_site")
