@@ -1,0 +1,3046 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PHYLLOS — Ateliê</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --obsidian:  #0F0F0D;
+      --cream:     #F5F2EB;
+      --gold:      #B89A6A;
+      --muted:     #9E9B95;
+      --border:    rgba(15,15,13,0.12);
+      --border-md: rgba(15,15,13,0.22);
+      --green:     #4A7C59;
+      --red:       #8B3A3A;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      background: var(--cream);
+      color: var(--obsidian);
+      font-family: 'Jost', system-ui, sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Navbar de etapas ── */
+    .atelier-nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--obsidian);
+      display: flex;
+      align-items: stretch;
+      border-bottom: 1px solid #2a2a26;
+    }
+
+    .nav-brand {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 18px;
+      border-right: 1px solid #2a2a26;
+      white-space: nowrap;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 15px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #f0ede8;
+    }
+    .nav-logo-sep { color: #3a3a36; font-size: 14px; }
+    .nav-logo-sub {
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #666;
+    }
+
+    .nav-stages {
+      display: flex;
+      align-items: stretch;
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex: 1;
+    }
+    .nav-stages::-webkit-scrollbar { display: none; }
+
+    .nav-stage {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 16px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: #555;
+      cursor: pointer;
+      border-right: 1px solid #1e1e1b;
+      white-space: nowrap;
+      transition: color .15s, background .15s;
+      position: relative;
+      user-select: none;
+      min-height: 46px;
+    }
+    .nav-stage:hover { color: #ccc; background: rgba(255,255,255,.04); }
+    .nav-stage.active {
+      color: #f0ede8;
+      background: rgba(255,255,255,.06);
+    }
+    .nav-stage.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+    }
+    .nav-stage-num {
+      font-size: 9px;
+      opacity: .4;
+      font-variant-numeric: tabular-nums;
+    }
+    .nav-stage.locked { cursor: default; }
+    .nav-stage.locked:hover { color: #555; background: none; }
+
+    /* ── Breadcrumb de tela (mantido para compat.) ── */
+    .screen-nav {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .screen-nav span.active { color: var(--obsidian); font-weight: 400; }
+
+    /* ── Placeholder de tela em construção ── */
+    .placeholder-wrap {
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .placeholder-icon { font-size: 48px; margin-bottom: 20px; opacity: .5; }
+    .placeholder-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+    .placeholder-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Desenho técnico ── */
+    .technical-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+    .technical-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .technical-sheet,
+    .technical-panel,
+    .technical-upload {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .technical-sheet { padding: 18px; }
+    .technical-sheet-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .technical-drawing {
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(rgba(15,15,13,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,15,13,.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+      border-radius: 4px;
+      padding: 16px;
+    }
+    .technical-drawing svg {
+      width: min(100%, 520px);
+      height: auto;
+      display: block;
+    }
+    .technical-panel { padding: 16px; }
+    .technical-panel + .technical-upload { margin-top: 14px; }
+    .technical-block { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .technical-block:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+    .technical-label {
+      font-size: 10px;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .technical-value { font-size: 14px; color: var(--obsidian); line-height: 1.5; }
+    .technical-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .technical-pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--obsidian);
+      background: #fafaf8;
+    }
+    .technical-warning {
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--muted);
+      background: #f5f2eb;
+      border-radius: 4px;
+      padding: 12px;
+    }
+    .technical-upload { padding: 16px; }
+    .technical-upload-area {
+      border: 1.5px dashed var(--border-md);
+      border-radius: 5px;
+      padding: 22px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      background: #fafaf8;
+    }
+    .technical-upload-area:hover { border-color: var(--gold); background: #fff; }
+    .technical-upload-icon { font-size: 26px; margin-bottom: 8px; opacity: .35; }
+    .technical-upload-title { font-size: 13px; color: var(--obsidian); }
+    .technical-upload-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .technical-preview { margin-top: 12px; display: none; }
+    .technical-preview img {
+      max-width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: block;
+    }
+    @media (max-width: 760px) {
+      .technical-intro { display: block; }
+      .technical-grid { grid-template-columns: 1fr; }
+      .technical-drawing { min-height: 300px; }
+    }
+
+    /* ── Painel de sustentabilidade ── */
+    .painel-wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 60px; }
+    .painel-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .painel-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 32px; }
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 16px;
+    }
+    .stat-card-val { font-size: 28px; font-weight: 600; letter-spacing: -.02em; color: var(--obsidian); }
+    .stat-card-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    .painel-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .painel-table th { text-align: left; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 8px 12px; border-bottom: 1px solid var(--border-md); font-weight: 400; }
+    .painel-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .painel-table tr:hover td { background: rgba(184,154,106,.04); }
+    .painel-table a { color: var(--gold); text-decoration: none; font-size: 11px; }
+    .painel-table a:hover { text-decoration: underline; }
+    .badge-status { font-size: 10px; padding: 2px 8px; border-radius: 20px; letter-spacing: .05em; }
+    .badge-publicado { background: rgba(74,124,89,.12); color: var(--green); border: 1px solid rgba(74,124,89,.2); }
+    .badge-rascunho  { background: rgba(184,154,106,.12); color: var(--gold); border: 1px solid rgba(184,154,106,.2); }
+
+    /* ── Chips de seleção (Descrever / Ajustes) ── */
+    .desc-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+    .desc-chip {
+      font-size: 12px;
+      padding: 5px 13px;
+      border: 1px solid var(--border-md);
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--muted);
+      background: #fff;
+      transition: border-color .12s, color .12s, background .12s;
+      user-select: none;
+    }
+    .desc-chip:hover { border-color: var(--gold); color: var(--obsidian); }
+    .desc-chip.sel { border-color: var(--obsidian); background: var(--obsidian); color: var(--cream); }
+
+    /* back-bar título */
+    .back-bar-titulo {
+      font-size: 13px;
+      color: var(--muted);
+      margin-left: 4px;
+    }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: 3px;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+      max-width: 300px;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.ok  { background: var(--obsidian); color: var(--cream); }
+    #toast.err { background: var(--red); color: #fff; }
+
+    /* ── Telas ── */
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* ══════════════════════════════════════
+       TELA 1 — BUSCA / LISTA
+    ══════════════════════════════════════ */
+    .list-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    .list-heading {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .list-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* Barra de busca + botão nova peça */
+    .list-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .search-input {
+      flex: 1;
+      background: #fff;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      padding: 11px 14px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--obsidian);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: var(--gold); }
+    .search-input::placeholder { color: var(--muted); }
+
+    /* Lista de peças */
+    .pecas-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .peca-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .peca-item:hover {
+      border-color: var(--border-md);
+      box-shadow: 0 2px 10px rgba(15,15,13,0.06);
+    }
+    .peca-item-main { flex: 1; min-width: 0; }
+    .peca-item-nome {
+      font-size: 15px;
+      font-weight: 400;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .peca-item-cod {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 2px;
+    }
+    .peca-item-arrow { color: var(--muted); font-size: 18px; flex-shrink: 0; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .badge-ideia        { background: rgba(158,155,149,0.15); color: var(--muted); border: 1px solid var(--border); }
+    .badge-desenvolvimento { background: rgba(184,154,106,0.15); color: #8a6e3a; border: 1px solid rgba(184,154,106,0.3); }
+    .badge-finalizado   { background: rgba(74,124,89,0.12); color: var(--green); border: 1px solid rgba(74,124,89,0.25); }
+    .badge-produzindo   { background: rgba(74,124,89,0.08); color: #3a6b4a; border: 1px solid rgba(74,124,89,0.2); }
+    .badge-entregue     { background: rgba(15,15,13,0.07); color: var(--obsidian); border: 1px solid var(--border-md); }
+
+    .empty-msg {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      padding: 48px 0;
+    }
+
+    /* Modal nova peça */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,15,13,0.4);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--cream);
+      border-radius: 4px;
+      padding: 32px 28px;
+      width: 100%;
+      max-width: 420px;
+      position: relative;
+    }
+    .modal-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .modal-close:hover { color: var(--obsidian); }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    /* ══════════════════════════════════════
+       TELA 2 — MATERIAL
+       TELA 3 — ETAPAS
+    ══════════════════════════════════════ */
+    .screen-wrap {
+      max-width: 660px;
+      margin: 0 auto;
+      padding: 28px 20px 80px;
+    }
+
+    .back-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .btn-back {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+      transition: color 0.15s;
+    }
+    .btn-back:hover { color: var(--obsidian); }
+    .back-sep { color: var(--border-md); }
+
+    .screen-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+    .screen-peca-codigo {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+
+    /* Campos */
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block;
+      font-size: 13px;
+      color: var(--obsidian);
+      margin-bottom: 7px;
+      font-weight: 400;
+    }
+    .field label .hint {
+      font-weight: 300;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .field input[type="text"],
+    .field input[type="number"],
+    .field select,
+    .field textarea {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      padding: 11px 13px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--obsidian);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus { border-color: var(--gold); }
+    .field textarea { resize: vertical; min-height: 86px; line-height: 1.7; }
+    .field select { cursor: pointer; }
+
+    /* ── Toggle sim/não ── */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .toggle-label { font-size: 13px; font-weight: 400; }
+    .toggle-switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--border-md);
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.2s;
+    }
+    .toggle-switch input:checked + .toggle-track { background: var(--gold); }
+    .toggle-switch input:checked + .toggle-track::after { transform: translateX(18px); }
+    .toggle-content { display: none; }
+    .toggle-content.open { display: block; }
+
+    /* ── Linhas de fibra ── */
+    .fibras-list, .certs-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+
+    .fibra-row {
+      display: grid;
+      grid-template-columns: 1fr 72px auto;
+      gap: 8px;
+      align-items: center;
+    }
+    .fibra-row input { margin: 0; }
+
+    .cert-row {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr auto;
+      gap: 8px;
+      align-items: center;
+    }
+    .cert-row input { margin: 0; }
+
+    @media (max-width: 520px) {
+      .fibra-row { grid-template-columns: 1fr 64px auto; }
+      .cert-row  { grid-template-columns: 1fr 1fr; }
+      .cert-row .btn-remove { grid-column: span 2; justify-self: end; }
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 20px;
+      line-height: 1;
+      padding: 4px;
+      transition: color 0.15s;
+      align-self: center;
+    }
+    .btn-remove:hover { color: var(--red); }
+
+    .pct-total {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .pct-total.ok  { color: var(--green); }
+    .pct-total.err { color: var(--red); }
+
+    .col-headers {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .col-headers.fibra-headers { grid-template-columns: 1fr 72px auto; }
+    .col-headers.cert-headers  { grid-template-columns: 1.6fr 1fr 1fr auto; }
+    .col-headers span {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    @media (max-width: 520px) {
+      .col-headers.fibra-headers { grid-template-columns: 1fr 64px auto; }
+      .col-headers.cert-headers  { display: none; }
+    }
+
+    .btn-add {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      color: var(--gold);
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: opacity 0.15s;
+    }
+    .btn-add:hover { opacity: 0.7; }
+
+    /* Separador de seção */
+    .section-sep {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 28px 0;
+    }
+
+    /* ── Catálogo de matérias-primas ── */
+    .catalog-wrap { position: relative; }
+
+    .catalog-input {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      padding: 11px 13px 11px 36px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--obsidian);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .catalog-input:focus { border-color: var(--gold); }
+    .catalog-input::placeholder { color: var(--muted); }
+
+    .catalog-icon {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      pointer-events: none;
+      font-size: 15px;
+    }
+
+    .catalog-results {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      box-shadow: 0 6px 20px rgba(15,15,13,0.1);
+      z-index: 200;
+      max-height: 320px;
+      overflow-y: auto;
+    }
+    .catalog-results.hidden { display: none; }
+
+    .catalog-item {
+      padding: 12px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+    .catalog-item:last-child { border-bottom: none; }
+    .catalog-item:hover { background: rgba(184,154,106,0.06); }
+
+    .catalog-item-nome {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--obsidian);
+    }
+    .catalog-item-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .catalog-item-forn {
+      color: var(--gold);
+    }
+    .catalog-nota {
+      display: inline-flex;
+      gap: 1px;
+    }
+    .catalog-nota-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border-md);
+      margin-top: 3px;
+    }
+    .catalog-nota-dot.ativo { background: var(--gold); }
+
+    .catalog-empty {
+      padding: 16px 14px;
+      font-size: 13px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* ── Chips de materiais vinculados ── */
+    .materiais-vinculados {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .mat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(184,154,106,0.1);
+      border: 1px solid rgba(184,154,106,0.3);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12px;
+      color: var(--obsidian);
+    }
+    .mat-chip-funcao {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .mat-chip-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      transition: color 0.12s;
+    }
+    .mat-chip-remove:hover { color: var(--red); }
+
+    .catalog-importing {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ── Painel de grupos do catálogo ── */
+    .grupo-toggle {
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      user-select: none;
+      transition: color 0.12s;
+    }
+    .grupo-toggle:hover { color: var(--gold); }
+    .grupo-toggle-arrow { transition: transform 0.2s; display: inline-block; }
+    .grupo-toggle.open .grupo-toggle-arrow { transform: rotate(90deg); }
+
+    .grupo-panel {
+      display: none;
+      margin-top: 10px;
+      border: 1px solid var(--border-md);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .grupo-panel.open { display: block; }
+
+    .grupo-pills {
+      display: flex;
+      border-bottom: 1px solid var(--border-md);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .grupo-pills::-webkit-scrollbar { display: none; }
+
+    .grupo-pill {
+      flex: 0 0 auto;
+      padding: 9px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      color: var(--muted);
+      border-right: 1px solid var(--border-md);
+      white-space: nowrap;
+      transition: background 0.12s, color 0.12s;
+    }
+    .grupo-pill:last-child { border-right: none; }
+    .grupo-pill:hover { color: var(--obsidian); background: rgba(0,0,0,0.03); }
+    .grupo-pill.ativo { color: var(--gold); background: rgba(184,154,106,0.07); }
+
+    .grupo-resultados {
+      max-height: 240px;
+      overflow-y: auto;
+    }
+    .grupo-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-lt);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .grupo-item:last-child { border-bottom: none; }
+    .grupo-item:hover { background: rgba(184,154,106,0.06); }
+    .grupo-item-nome { font-size: 13px; font-weight: 500; color: var(--obsidian); }
+    .grupo-item-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .grupo-empty { padding: 14px; font-size: 13px; color: var(--muted); text-align: center; }
+    .catalog-importing .spinner { border-top-color: var(--gold); border-color: rgba(184,154,106,0.2); }
+
+    /* ── Etapas registradas ── */
+    .etapas-registradas { margin-bottom: 24px; }
+    .etapa-card {
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 12px 16px;
+      background: #fff;
+      margin-bottom: 6px;
+    }
+    .etapa-card-titulo { font-size: 14px; font-weight: 400; }
+    .etapa-card-detalhe { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .etapas-vazio { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+
+    /* ── Rodapé de ações ── */
+    .screen-footer {
+      display: flex;
+      gap: 10px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Botões ── */
+    .btn {
+      padding: 12px 22px;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.16s;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .btn-primary {
+      background: var(--obsidian);
+      color: var(--cream);
+      border: 1px solid var(--obsidian);
+    }
+    .btn-primary:hover:not(:disabled) { background: #2a2a26; }
+    .btn-primary:disabled { opacity: 0.4; cursor: default; }
+    .btn-outline {
+      background: transparent;
+      color: var(--obsidian);
+      border: 1px solid var(--border-md);
+    }
+    .btn-outline:hover:not(:disabled) { border-color: var(--obsidian); }
+    .btn-outline:disabled { opacity: 0.4; cursor: default; }
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: none;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .btn-ghost:hover { color: var(--obsidian); }
+
+    /* ── Barra DPP / Etiqueta ── */
+    .dpp-bar {
+      margin-top: 28px;
+      padding: 16px;
+      border: 1px solid var(--border-md);
+      border-radius: 4px;
+      background: #fafaf8;
+    }
+    .dpp-bar-label {
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .dpp-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn-dpp {
+      font-size: 12px;
+      padding: 9px 14px;
+      background: transparent;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      color: var(--obsidian);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: border-color .14s, background .14s;
+    }
+    .btn-dpp:hover { border-color: var(--obsidian); background: rgba(0,0,0,.03); }
+    .dpp-qr-preview {
+      margin-top: 12px;
+      display: none;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .dpp-qr-preview.visible { display: flex; }
+    .dpp-qr-preview img { width: 96px; height: 96px; border: 1px solid var(--border-lt); border-radius: 4px; }
+    .dpp-qr-url { font-size: 10px; color: var(--muted); word-break: break-all; max-width: 260px; }
+
+    /* Spinner inline */
+    .spinner {
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+    .spinner-dark {
+      border-color: rgba(15,15,13,0.15);
+      border-top-color: var(--obsidian);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Input inline para pct reciclado */
+    .inline-pct {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .inline-pct input {
+      width: 80px;
+      background: #fff;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      padding: 9px 12px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--obsidian);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    .inline-pct input:focus { border-color: var(--gold); }
+    .inline-pct span { font-size: 14px; color: var(--muted); }
+
+    ::selection { background: rgba(184,154,106,0.15); }
+  </style>
+</head>
+<body>
+
+  <nav class="atelier-nav" id="atelier-nav">
+    <div class="nav-brand">
+      <span class="nav-logo">Phyllos</span>
+      <span class="nav-logo-sep">·</span>
+      <span class="nav-logo-sub">Ateliê</span>
+    </div>
+    <div class="nav-stages" id="nav-stages">
+      <div class="nav-stage active" id="ns-descrever" onclick="App.irParaDescrever()">
+        <span class="nav-stage-num">01</span> Descrever
+      </div>
+      <div class="nav-stage locked" id="ns-selecionar" onclick="App.irParaBusca()">
+        <span class="nav-stage-num">02</span> Selecionar
+      </div>
+      <div class="nav-stage locked" id="ns-ajustes" onclick="App.irParaAjustes()">
+        <span class="nav-stage-num">03</span> Ajustes
+      </div>
+      <div class="nav-stage locked" id="ns-tecnico" onclick="App.irParaTecnico()">
+        <span class="nav-stage-num">04</span> Técnico
+      </div>
+      <div class="nav-stage locked" id="ns-ficha" onclick="App.irParaFicha()">
+        <span class="nav-stage-num">05</span> Ficha Técnica
+      </div>
+      <div class="nav-stage locked" id="ns-material" onclick="App.irParaMaterial()">
+        <span class="nav-stage-num">06</span> Material
+      </div>
+      <div class="nav-stage locked" id="ns-corte" onclick="App.irParaEtapas()">
+        <span class="nav-stage-num">07</span> Plano de Corte
+      </div>
+      <div class="nav-stage locked" id="ns-validar" onclick="App.irParaValidar()">
+        <span class="nav-stage-num">08</span> Validar
+      </div>
+      <div class="nav-stage" id="ns-painel" onclick="App.irParaPainel()">
+        <span class="nav-stage-num">09</span> Painel
+      </div>
+    </div>
+  </nav>
+
+  <div id="toast"></div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA 1 — BUSCA / LISTA
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-busca" class="screen">
+    <div class="list-wrap">
+      <div class="list-heading">Qual peça você está trabalhando?</div>
+      <div class="list-sub">Selecione uma peça existente ou crie uma nova.</div>
+
+      <div class="list-controls">
+        <input
+          id="search-input"
+          class="search-input"
+          type="search"
+          placeholder="Buscar por nome ou código..."
+          autocomplete="off"
+          oninput="App.filtrarLista(this.value)"
+        />
+        <button class="btn btn-primary" onclick="App.abrirModalNovaPeca()">+ Nova peça</button>
+      </div>
+
+      <div class="pecas-list" id="pecas-list">
+        <div class="empty-msg">Carregando...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — FICHA TÉCNICA
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-ficha" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaTecnico()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Desenho Técnico
+        </button>
+        <span id="ficha-titulo" class="back-bar-titulo"></span>
+      </div>
+
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:400;margin-bottom:4px">Ficha Técnica</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">O que define esta peça como produto — identidade, estrutura e intenção.</div>
+
+      <!-- Identidade da peça -->
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">Identidade</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Categoria</label>
+          <select id="ficha-categoria" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Calça</option>
+            <option>Saia</option>
+            <option>Vestido</option>
+            <option>Blusa</option>
+            <option>Camisa</option>
+            <option>Casaco / Sobretudo</option>
+            <option>Jaqueta</option>
+            <option>Macacão</option>
+            <option>Conjunto</option>
+            <option>Bermuda / Short</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Silhueta</label>
+          <select id="ficha-silhueta" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Reta / Tubinho</option>
+            <option>A-line</option>
+            <option>Ampla / Oversized</option>
+            <option>Ajustada / Slim</option>
+            <option>Evasê</option>
+            <option>Wrap / Cruzado</option>
+            <option>Cargo / Funcional</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Comprimento</label>
+          <select id="ficha-comprimento" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Curto (acima do joelho)</option>
+            <option>Midi (joelho)</option>
+            <option>Longo (tornozelo)</option>
+            <option>Cropped</option>
+            <option>Maxi</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Ocasião de uso</label>
+          <select id="ficha-ocasiao" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Casual / Dia a dia</option>
+            <option>Trabalho / Corporativo</option>
+            <option>Treino / Esporte</option>
+            <option>Social / Festa</option>
+            <option>Praia / Piscina</option>
+            <option>Outdoor / Aventura</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Construção -->
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">Construção</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Tipo de modelagem</label>
+          <select id="ficha-modelagem" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Plana / Industrial</option>
+            <option>Moulage</option>
+            <option>Mista</option>
+            <option>Paramétrica</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Tipo de costura</label>
+          <select id="ficha-costura" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Overloque + Pespoint</option>
+            <option>Flatlock</option>
+            <option>Overlock + Caseado</option>
+            <option>Francesa</option>
+            <option>Inglesa</option>
+            <option>Invisível</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Fechamento</label>
+          <select id="ficha-fechamento" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Elástico</option>
+            <option>Zíper invisível</option>
+            <option>Zíper aparente</option>
+            <option>Botões</option>
+            <option>Cordão</option>
+            <option>Velcro</option>
+            <option>Sem fechamento</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Cós / Acabamento</label>
+          <select id="ficha-cos" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Cós inteiro</option>
+            <option>Cós embutido</option>
+            <option>Sem cós / Elástico nu</option>
+            <option>Gola / Decote específico</option>
+            <option>Não se aplica</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Aviamentos -->
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">Aviamentos obrigatórios</div>
+      <div class="field" style="margin-bottom:20px">
+        <div class="desc-chips" id="ficha-aviamentos-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Zíper</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Botões</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Elástico</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Entretela</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Forro</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Viés</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Cordão</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Ilhós</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Rebite</span>
+        </div>
+      </div>
+
+      <!-- Observações -->
+      <div class="field" style="margin-bottom:24px">
+        <label>Observações para a costureira</label>
+        <textarea id="ficha-obs" rows="3"
+          placeholder="ex: Atenção ao sentido do fio na frente. Costurar bolso antes do forro."
+          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn btn-primary" onclick="App.salvarFicha()">Salvar ficha</button>
+        <button class="btn btn-outline" onclick="App.irParaMaterial()">Próximo: material →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA 2 — MATERIAL
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-material" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaFicha()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+            <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Ficha Técnica
+        </button>
+      </div>
+
+      <div class="screen-title" id="mat-titulo">Material da peça</div>
+      <div class="screen-peca-codigo" id="mat-codigo"></div>
+
+      <!-- 0. Importar do catálogo -->
+      <div class="field">
+        <label>
+          Importar do catálogo de fornecedores
+          <span class="hint"> — busque por malha, tecido, fio, algodão…</span>
+        </label>
+        <div class="catalog-wrap">
+          <span class="catalog-icon">⌕</span>
+          <input
+            type="search"
+            id="catalog-search"
+            class="catalog-input"
+            placeholder="ex: jersey orgânico, sarja, ribana…"
+            autocomplete="off"
+            oninput="App.onCatalogInput(this.value)"
+            onfocus="App.onCatalogFocus()"
+          />
+          <div id="catalog-results" class="catalog-results hidden"></div>
+        </div>
+        <div id="catalog-importing" style="display:none" class="catalog-importing">
+          <span class="spinner"></span> Vinculando material…
+        </div>
+        <div id="materiais-vinculados" class="materiais-vinculados"></div>
+
+        <!-- Explorar por grupo -->
+        <span class="grupo-toggle" id="grupo-toggle" onclick="App.toggleGrupoPanel()">
+          <span class="grupo-toggle-arrow">›</span> Explorar por grupo
+        </span>
+        <div class="grupo-panel" id="grupo-panel">
+          <div class="grupo-pills" id="grupo-pills">
+            <div class="grupo-pill" data-grupo="fibra"          onclick="App.selecionarGrupo('fibra')">🌱 Fibra / Pluma</div>
+            <div class="grupo-pill" data-grupo="fios"           onclick="App.selecionarGrupo('fios')">🧵 Fios</div>
+            <div class="grupo-pill" data-grupo="tecidos"        onclick="App.selecionarGrupo('tecidos')">🪡 Tecidos / Malhas</div>
+            <div class="grupo-pill" data-grupo="beneficiamento" onclick="App.selecionarGrupo('beneficiamento')">✂️ Beneficiamento</div>
+          </div>
+          <div class="grupo-resultados" id="grupo-resultados">
+            <div class="grupo-empty">Selecione um grupo acima</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-sep" />
+
+      <!-- 1. De que é feita -->
+      <div class="field">
+        <label>
+          De que é feita?
+          <span class="hint"> — descreva livremente o tecido ou material</span>
+        </label>
+        <input type="text" id="mat-descricao" placeholder="ex: Malha 95% algodão 5% elastano, origem Brasil" />
+      </div>
+
+      <!-- 2. Composição detalhada -->
+      <div class="field">
+        <label>Composição detalhada <span class="hint">(opcional)</span></label>
+        <div class="col-headers fibra-headers">
+          <span>Material</span>
+          <span>%</span>
+          <span></span>
+        </div>
+        <div class="fibras-list" id="fibras-list"></div>
+        <button class="btn-add" onclick="App.addFibra()">+ Adicionar material</button>
+        <div class="pct-total" id="pct-total"></div>
+      </div>
+
+      <hr class="section-sep" />
+
+      <!-- 3. Certificados -->
+      <div class="field">
+        <div class="toggle-row">
+          <label class="toggle-switch" for="toggle-cert">
+            <input type="checkbox" id="toggle-cert" onchange="App.toggleCerts(this.checked)" />
+            <span class="toggle-track"></span>
+          </label>
+          <span class="toggle-label">Tem algum certificado que veio com o material?</span>
+        </div>
+        <div class="toggle-content" id="certs-content">
+          <div class="col-headers cert-headers">
+            <span>Nome do certificado</span>
+            <span>Número</span>
+            <span>Válido até</span>
+            <span></span>
+          </div>
+          <div class="certs-list" id="certs-list"></div>
+          <button class="btn-add" onclick="App.addCert()">+ Adicionar certificado</button>
+        </div>
+      </div>
+
+      <hr class="section-sep" />
+
+      <!-- 4. Material reciclado -->
+      <div class="field">
+        <div class="toggle-row">
+          <label class="toggle-switch" for="toggle-rec">
+            <input type="checkbox" id="toggle-rec" onchange="App.toggleReciclado(this.checked)" />
+            <span class="toggle-track"></span>
+          </label>
+          <span class="toggle-label">O material tem parte reciclada?</span>
+        </div>
+        <div class="toggle-content" id="rec-content">
+          <div class="inline-pct">
+            <span>Quanto?</span>
+            <input type="number" id="mat-reciclado" min="0" max="100" placeholder="0" />
+            <span>%</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="section-sep" />
+
+      <!-- 5. Como cuidar -->
+      <div class="field">
+        <label>Como cuidar dessa peça?</label>
+        <textarea id="mat-cuidados" placeholder="ex: Lavar à mão em água fria. Não usar alvejante. Secar à sombra."></textarea>
+      </div>
+
+      <!-- Rodapé -->
+      <div class="screen-footer">
+        <button class="btn btn-primary" id="btn-salvar-mat" onclick="App.salvarMaterial()">Salvar material</button>
+        <button class="btn btn-outline" onclick="App.irParaEtapas()">Próximo: registrar etapa →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA 3 — ETAPAS DE PRODUÇÃO
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-etapas" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaBusca()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+            <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Busca
+        </button>
+        <span class="back-sep">›</span>
+        <button class="btn-back" onclick="App.irParaMaterial()">Material</button>
+      </div>
+
+      <div class="screen-title" id="etapa-titulo">Registrar etapa</div>
+      <div class="screen-peca-codigo" id="etapa-codigo"></div>
+
+      <!-- Etapas já registradas -->
+      <div id="etapas-registradas" class="etapas-registradas">
+        <div class="etapas-vazio" id="etapas-vazio">Nenhuma etapa registrada ainda.</div>
+      </div>
+
+      <!-- Formulário de nova etapa -->
+      <div class="field">
+        <label>O que foi feito?</label>
+        <select id="nef-etapa">
+          <option value="fiacao">Fiação do fio</option>
+          <option value="tecelagem">Tecelagem / Malharia</option>
+          <option value="corte">Corte</option>
+          <option value="costura" selected>Costura</option>
+          <option value="tingimento">Tingimento</option>
+          <option value="acabamento">Acabamento</option>
+          <option value="lavanderia">Lavanderia</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Em qual país?</label>
+        <input type="text" id="nef-pais" placeholder="Brasil" value="Brasil" />
+      </div>
+
+      <div class="field">
+        <label>
+          Nome do fornecedor ou local
+          <span class="hint"> — opcional</span>
+        </label>
+        <input type="text" id="nef-inst" placeholder="ex: Ateliê Central SP, Tinturaria Alfa" />
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn btn-primary" id="btn-registrar-etapa" onclick="App.registrarEtapa()">Registrar</button>
+        <button class="btn btn-ghost" onclick="App.irParaMaterial()">← Voltar para o material</button>
+      </div>
+
+      <!-- Barra DPP & Etiqueta -->
+      <div class="dpp-bar" id="dpp-bar">
+        <div class="dpp-bar-label">Passaporte & Etiqueta</div>
+        <div class="dpp-actions">
+          <button class="btn-dpp" onclick="App.abrirPassaporte()">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" stroke-width="1.4"/><path d="M5 8h6M5 5.5h6M5 10.5h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Ver passaporte
+          </button>
+          <button class="btn-dpp" onclick="App.toggleQrPreview()">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1.5" y="1.5" width="5" height="5" rx=".8" stroke="currentColor" stroke-width="1.3"/><rect x="9.5" y="1.5" width="5" height="5" rx=".8" stroke="currentColor" stroke-width="1.3"/><rect x="1.5" y="9.5" width="5" height="5" rx=".8" stroke="currentColor" stroke-width="1.3"/><rect x="10" y="10" width="3" height="3" rx=".4" fill="currentColor"/><path d="M10 13.5h3M13 10v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            QR code
+          </button>
+          <button class="btn-dpp" onclick="App.imprimirEtiqueta()">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="3" y="1.5" width="10" height="7" rx="1" stroke="currentColor" stroke-width="1.3"/><path d="M3 8.5H1.5A.5.5 0 0 0 1 9v4.5A.5.5 0 0 0 1.5 14h13a.5.5 0 0 0 .5-.5V9a.5.5 0 0 0-.5-.5H13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><rect x="4.5" y="10" width="7" height="4.5" rx=".6" stroke="currentColor" stroke-width="1.2"/><circle cx="12.5" cy="10.5" r=".6" fill="currentColor"/></svg>
+            Imprimir etiqueta
+          </button>
+        </div>
+        <div class="dpp-qr-preview" id="dpp-qr-preview">
+          <img id="dpp-qr-img" src="" alt="QR code" />
+          <span class="dpp-qr-url" id="dpp-qr-url"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA 0 — DESCREVER
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-descrever" class="screen active">
+    <div class="list-wrap">
+      <div class="list-heading">O que você quer criar?</div>
+      <div class="list-sub">Descreva a peça antes de escolher ou criar. Isso alimenta a ficha técnica.</div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Descrição livre</label>
+        <textarea id="desc-texto" rows="4"
+          placeholder="ex: Camiseta feminina ampla, manga raglan, caimento fluido, para treino e rua. Tecido respirável, preferencialmente orgânico."
+          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Tipo de peça</label>
+        <div class="desc-chips" id="desc-tipo-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Camiseta</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Calça</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Shorts</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Vestido</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Jaqueta</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Top</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Macacão</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Legging</span>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Silhueta</label>
+        <div class="desc-chips" id="desc-silhueta-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Ampla</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Justa</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Cropped</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Oversized</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Midi</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Maxi</span>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:16px">
+        <label>Preferência de fibra</label>
+        <div class="desc-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Algodão orgânico</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Linho</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Malha</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Tecido plano</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Misto</span>
+        </div>
+      </div>
+
+      <div class="screen-footer" style="margin-top:24px">
+        <button class="btn btn-primary" onclick="App.irParaBusca()">Selecionar ou criar peça →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — AJUSTES
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-ajustes" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaBusca()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Selecionar
+        </button>
+        <span id="ajustes-titulo" class="back-bar-titulo"></span>
+      </div>
+
+      <!-- Medidas sobre o molde -->
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:400;margin-bottom:4px">Medidas do corpo</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Preencha as medidas reais da cliente para ajustar o molde base.</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Altura (cm)</label>
+          <input id="med-altura" type="number" placeholder="168" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Busto (cm)</label>
+          <input id="med-busto" type="number" placeholder="90" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Cintura (cm)</label>
+          <input id="med-cintura" type="number" placeholder="72" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Quadril (cm)</label>
+          <input id="med-quadril" type="number" placeholder="98" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Ombro (cm)</label>
+          <input id="med-ombro" type="number" placeholder="38" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Comprimento torso (cm)</label>
+          <input id="med-torso" type="number" placeholder="42" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Manga (cm)</label>
+          <input id="med-manga" type="number" placeholder="60" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Entrepernas (cm)</label>
+          <input id="med-entrepernas" type="number" placeholder="75" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+      </div>
+
+      <!-- Visualização do molde com medidas sobrepostas -->
+      <div style="background:#f8f7f5;border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:20px;text-align:center">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Referência visual do molde</div>
+        <svg viewBox="0 0 240 320" style="max-width:180px;width:100%;" xmlns="http://www.w3.org/2000/svg">
+          <!-- silhueta frontal simplificada -->
+          <g stroke="#333" stroke-width="1.2" fill="none">
+            <!-- cabeça -->
+            <ellipse cx="120" cy="28" rx="18" ry="22" fill="#e8e4de" stroke="#bbb"/>
+            <!-- pescoço -->
+            <rect x="113" y="48" width="14" height="12" rx="2" fill="#e8e4de" stroke="#bbb"/>
+            <!-- tronco -->
+            <path d="M88 60 Q72 68 70 100 Q68 130 75 160 L165 160 Q172 130 170 100 Q168 68 152 60 Z" fill="#ede9e2" stroke="#bbb"/>
+            <!-- ombros -->
+            <line x1="88" y1="62" x2="70" y2="75" stroke="#999" stroke-dasharray="3,2"/>
+            <line x1="152" y1="62" x2="170" y2="75" stroke="#999" stroke-dasharray="3,2"/>
+            <!-- busto -->
+            <line x1="72" y1="90" x2="168" y2="90" stroke="#c8a97a" stroke-width="1" stroke-dasharray="4,2"/>
+            <!-- cintura -->
+            <line x1="74" y1="128" x2="166" y2="128" stroke="#c8a97a" stroke-width="1" stroke-dasharray="4,2"/>
+            <!-- quadril -->
+            <line x1="70" y1="155" x2="170" y2="155" stroke="#c8a97a" stroke-width="1" stroke-dasharray="4,2"/>
+            <!-- pernas -->
+            <path d="M75 160 Q72 200 70 260 L100 260 Q105 220 120 200 Q135 220 140 260 L170 260 Q168 200 165 160 Z" fill="#ede9e2" stroke="#bbb"/>
+          </g>
+          <!-- labels -->
+          <text x="174" y="93" font-size="8" fill="#c8a97a" font-family="Jost,sans-serif">busto</text>
+          <text x="170" y="131" font-size="8" fill="#c8a97a" font-family="Jost,sans-serif">cintura</text>
+          <text x="172" y="158" font-size="8" fill="#c8a97a" font-family="Jost,sans-serif">quadril</text>
+          <text x="30" y="70" font-size="8" fill="#888" font-family="Jost,sans-serif">ombro</text>
+          <line x1="56" y1="68" x2="72" y2="68" stroke="#888" stroke-width=".8"/>
+        </svg>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px">As medidas preenchidas ajustam o molde base automaticamente.</div>
+      </div>
+
+      <div class="field" style="margin-bottom:20px">
+        <label>Graduação / Tamanhos</label>
+        <div class="desc-chips" id="ajustes-tam-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">PP</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">P</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">M</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">G</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">GG</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">XGG</span>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:20px">
+        <label>Observações adicionais</label>
+        <textarea id="ajustes-notas" rows="3"
+          placeholder="ex: Reduzir 2cm na lateral. Cliente prefere abertura lateral no lugar de zíper."
+          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn btn-primary" onclick="App.salvarAjustes()">Salvar medidas</button>
+        <button class="btn btn-outline" onclick="App.irParaTecnico()">Próximo: desenho técnico →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — DESENHO TÉCNICO
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-tecnico" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaAjustes()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Ajustes
+        </button>
+        <span id="tecnico-titulo" class="back-bar-titulo"></span>
+      </div>
+
+      <div class="technical-intro">
+        <div>
+          <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:400;margin-bottom:6px">Desenho Técnico</div>
+          <div style="font-size:13px;color:var(--muted);max-width:560px">Revise a frente, costas, linhas de construção e componentes básicos antes de seguir para a ficha técnica.</div>
+        </div>
+        <button class="btn btn-outline" onclick="App.renderDesenhoTecnico()">Atualizar desenho</button>
+      </div>
+
+      <div class="technical-grid">
+        <div class="technical-sheet">
+          <div class="technical-sheet-top">
+            <span id="tecnico-sheet-label">Peça selecionada</span>
+            <span>Frente + costas</span>
+          </div>
+          <div id="tecnico-drawing" class="technical-drawing"></div>
+        </div>
+
+        <div>
+          <div class="technical-panel">
+            <div class="technical-block">
+              <div class="technical-label">Base técnica</div>
+              <div id="tecnico-base" class="technical-value">—</div>
+            </div>
+            <div class="technical-block">
+              <div class="technical-label">Medidas usadas</div>
+              <div id="tecnico-medidas" class="technical-value">—</div>
+            </div>
+            <div class="technical-block">
+              <div class="technical-label">Componentes visíveis</div>
+              <div id="tecnico-componentes" class="technical-list"></div>
+            </div>
+            <div class="technical-block">
+              <div class="technical-label">Conferência</div>
+              <div id="tecnico-alerta" class="technical-warning">—</div>
+            </div>
+          </div>
+
+          <div class="technical-upload">
+            <div class="technical-label">Referência complementar</div>
+            <div id="tecnico-upload-area"
+              class="technical-upload-area"
+              onclick="document.getElementById('tecnico-file-input').click()"
+              ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
+              ondragleave="this.style.borderColor=''"
+              ondrop="App.handleTecnicoDrop(event)">
+              <div class="technical-upload-icon">+</div>
+              <div class="technical-upload-title">Anexar esboço, imagem ou SVG</div>
+              <div class="technical-upload-sub">PNG, JPG, SVG ou PDF · máx. 10 MB</div>
+            </div>
+            <input type="file" id="tecnico-file-input" accept="image/*,.pdf,.svg" style="display:none" onchange="App.handleTecnicoFile(this)" />
+
+            <div id="tecnico-preview" class="technical-preview">
+              <img id="tecnico-img" />
+              <div style="margin-top:8px;display:flex;gap:8px">
+                <button class="btn btn-ghost" onclick="App.limparTecnico()">Remover referência</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn btn-primary" onclick="App.irParaFicha()">Próximo: ficha técnica →</button>
+        <button class="btn btn-ghost" onclick="App.irParaAjustes()">← Voltar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — VALIDAR
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-validar" class="screen">
+    <div class="list-wrap">
+      <div class="list-heading">Validar peças</div>
+      <div class="list-sub">Revise as peças prontas e aprove para publicar o passaporte digital.</div>
+
+      <div id="validar-list" class="pecas-list">
+        <div class="empty-msg">Carregando…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — PAINEL DE SUSTENTABILIDADE
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-painel" class="screen">
+    <div class="painel-wrap">
+      <div class="painel-heading">Painel de Sustentabilidade</div>
+      <div class="painel-sub">Registro virtual de indicadores de todas as peças criadas no ateliê.</div>
+
+      <div class="stat-grid" id="painel-stats">
+        <div class="stat-card"><div class="stat-card-val" id="stat-total">—</div><div class="stat-card-label">Peças no ateliê</div></div>
+        <div class="stat-card"><div class="stat-card-val" id="stat-publicadas">—</div><div class="stat-card-label">Com passaporte ativo</div></div>
+        <div class="stat-card"><div class="stat-card-val" id="stat-fornecedores">—</div><div class="stat-card-label">Fornecedores vinculados</div></div>
+        <div class="stat-card"><div class="stat-card-val" id="stat-nota-media">—</div><div class="stat-card-label">Nota média de confiança</div></div>
+      </div>
+
+      <table class="painel-table" id="painel-table">
+        <thead>
+          <tr>
+            <th>Peça</th>
+            <th>Status</th>
+            <th>Material principal</th>
+            <th>Nota</th>
+            <th>Passaporte</th>
+          </tr>
+        </thead>
+        <tbody id="painel-tbody">
+          <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Carregando…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — PASSAPORTE PUBLICADO (sucesso)
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-passaporte" class="screen">
+    <div class="list-wrap" style="max-width:480px;text-align:center;padding-top:56px">
+
+      <div style="font-size:42px;margin-bottom:16px">✓</div>
+      <div class="list-heading" id="pass-nome" style="margin-bottom:8px">Passaporte publicado</div>
+      <div class="list-sub" id="pass-codigo" style="margin-bottom:32px"></div>
+
+      <div style="display:inline-block;background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px;margin-bottom:24px">
+        <img id="pass-qr" src="" alt="QR Code" style="width:180px;height:180px;display:block" />
+      </div>
+
+      <div style="margin-bottom:28px">
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Link público do passaporte</div>
+        <div style="display:flex;gap:8px;justify-content:center;align-items:center">
+          <a id="pass-link" href="#" target="_blank" style="font-size:13px;color:var(--gold);word-break:break-all;text-decoration:none;border-bottom:1px solid rgba(184,154,106,.3)"></a>
+          <button onclick="App.copiarLinkPassaporte()" style="font-size:11px;padding:4px 10px;border:1px solid var(--border-md);border-radius:3px;cursor:pointer;background:#fff;white-space:nowrap">Copiar</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a id="pass-etiqueta" href="#" target="_blank" class="btn btn-ghost" style="font-size:13px;padding:10px 18px">Imprimir etiqueta</a>
+        <button onclick="App.irParaPainel()" class="btn btn-ghost" style="font-size:13px;padding:10px 18px">Ver painel</button>
+        <button onclick="App.abrirModalNovaPeca()" class="btn btn-primary" style="font-size:13px;padding:10px 18px">Nova peça</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       MODAL — NOVA PEÇA
+  ══════════════════════════════════════════════════════ -->
+  <div id="modal-nova-peca" class="modal-overlay" onclick="App.fecharModalSePano(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="App.fecharModalNovaPeca()">&#215;</button>
+      <div class="modal-title">Nova peça</div>
+      <div class="field">
+        <label>Nome da peça</label>
+        <input type="text" id="nova-nome" placeholder="ex: Calça Wide Leg Alfaiataria" />
+      </div>
+      <div class="field">
+        <label>Código</label>
+        <input type="text" id="nova-codigo" placeholder="ex: PH-CAL-001" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="btn-criar-peca" onclick="App.criarPeca()">Criar peça</button>
+        <button class="btn btn-ghost" onclick="App.fecharModalNovaPeca()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  'use strict';
+
+  /* ═══════════════════════════════════════════════════
+     UTILITÁRIOS
+  ═══════════════════════════════════════════════════ */
+
+  let _toastTimer = null;
+  function toast(msg, tipo = 'ok') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'show ' + tipo;
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(() => { el.className = ''; }, 3200);
+  }
+
+  function setLoading(btn, loading, label) {
+    if (!btn) return;
+    if (loading) {
+      btn._orig = btn.innerHTML;
+      const spinClass = btn.classList.contains('btn-outline') || btn.classList.contains('btn-ghost')
+        ? 'spinner spinner-dark' : 'spinner';
+      btn.innerHTML = `<span class="${spinClass}"></span>${label || 'Salvando…'}`;
+      btn.disabled = true;
+    } else {
+      btn.innerHTML = btn._orig || label || 'Salvar';
+      btn.disabled = false;
+    }
+  }
+
+  async function api(method, path, body) {
+    const opts = { method, headers: { 'Content-Type': 'application/json' } };
+    if (body !== undefined) opts.body = JSON.stringify(body);
+    const res = await fetch(path, opts);
+    let data;
+    try { data = await res.json(); } catch (_) { data = {}; }
+    if (!res.ok) throw new Error(data.detail || data.message || `Erro ${res.status}`);
+    return data;
+  }
+
+  const ETAPA_LABEL = {
+    fiacao:     'Fiação do fio',
+    tecelagem:  'Tecelagem / Malharia',
+    corte:      'Corte',
+    costura:    'Costura',
+    tingimento: 'Tingimento',
+    acabamento: 'Acabamento',
+    lavanderia: 'Lavanderia',
+  };
+
+  const STATUS_LABEL = {
+    ideia:          'Em ideia',
+    desenvolvimento:'Em desenvolvimento',
+    finalizado:     'Finalizada',
+    produzindo:     'Produzindo',
+    entregue:       'Entregue',
+  };
+
+  function badgeClass(status) {
+    return {
+      ideia:          'badge-ideia',
+      desenvolvimento:'badge-desenvolvimento',
+      finalizado:     'badge-finalizado',
+      produzindo:     'badge-produzindo',
+      entregue:       'badge-entregue',
+    }[status] || 'badge-ideia';
+  }
+
+  /* ═══════════════════════════════════════════════════
+     ESTADO
+  ═══════════════════════════════════════════════════ */
+
+  const State = {
+    pecas:       [],          // todas as peças
+    pecaAtual:   null,        // objeto peça selecionada
+    fichaExiste: false,       // se já existe ficha técnica
+    etapas:      [],          // etapas carregadas
+  };
+
+  /* ═══════════════════════════════════════════════════
+     NAVEGAÇÃO DE TELAS
+  ═══════════════════════════════════════════════════ */
+
+  function mostrarTela(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+    atualizarNav(id);
+  }
+
+  function atualizarNav(tela) {
+    const nav = document.getElementById('header-nav');
+    if (!nav) return;
+    const steps = [
+      { id: 'screen-busca',    label: 'Busca'    },
+      { id: 'screen-material', label: 'Material' },
+      { id: 'screen-etapas',   label: 'Etapa'    },
+    ];
+    const idx = steps.findIndex(s => s.id === tela);
+    if (idx <= 0) { nav.innerHTML = ''; return; }
+    nav.innerHTML = steps.slice(0, idx + 1).map((s, i) => {
+      const cls = s.id === tela ? 'active' : '';
+      return (i > 0 ? '<span>›</span>' : '') + `<span class="${cls}">${s.label}</span>`;
+    }).join('');
+  }
+
+  /* ═══════════════════════════════════════════════════
+     APP
+  ═══════════════════════════════════════════════════ */
+
+  const App = {
+
+    /* ─── TELA 1 — LISTA ─── */
+
+    async carregarLista() {
+      try {
+        State.pecas = await api('GET', '/pecas');
+        App.renderLista(State.pecas);
+      } catch (e) {
+        document.getElementById('pecas-list').innerHTML =
+          '<div class="empty-msg">Não foi possível carregar as peças. Verifique se a API está rodando.</div>';
+      }
+    },
+
+    renderLista(pecas) {
+      const el = document.getElementById('pecas-list');
+      if (!pecas.length) {
+        el.innerHTML = '<div class="empty-msg">Nenhuma peça encontrada.</div>';
+        return;
+      }
+      el.innerHTML = pecas.map(p => `
+        <div class="peca-item" onclick="App.selecionarPeca(${JSON.stringify(String(p.codigo)).replace(/"/g,'&quot;')})">
+          <div class="peca-item-main">
+            <div class="peca-item-nome">${esc(p.nome || '—')}</div>
+            <div class="peca-item-cod">${esc(p.codigo || '')}</div>
+          </div>
+          <span class="badge ${badgeClass(p.status)}">${STATUS_LABEL[p.status] || p.status || 'Em ideia'}</span>
+          <span class="peca-item-arrow">›</span>
+        </div>
+      `).join('');
+    },
+
+    filtrarLista(q) {
+      const termo = q.trim().toLowerCase();
+      if (!termo) { App.renderLista(State.pecas); return; }
+      const filtradas = State.pecas.filter(p =>
+        (p.nome   || '').toLowerCase().includes(termo) ||
+        (p.codigo || '').toLowerCase().includes(termo)
+      );
+      App.renderLista(filtradas);
+    },
+
+    async selecionarPeca(codigo) {
+      const peca = State.pecas.find(p => String(p.codigo) === String(codigo));
+      if (!peca) { toast('Peça não encontrada.', 'err'); return; }
+      State.pecaAtual = peca;
+      await Promise.all([
+        App.carregarFicha(peca.id),
+        App.carregarEtapas(peca.codigo),
+        App._carregarMateriaisVinculados(peca.codigo),
+      ]);
+      App.preencherTelaMaterial();
+      App.irParaAjustes();
+    },
+
+    /* ── Navegação de estágios ── */
+
+    setNavStage(stageId) {
+      document.querySelectorAll('.nav-stage').forEach(el => el.classList.remove('active'));
+      const el = document.getElementById(stageId);
+      if (el) el.classList.add('active');
+      // Desbloqueia etapas 03-07 quando há peça selecionada
+      const temPeca = !!State.pecaAtual;
+      ['ns-ajustes','ns-tecnico','ns-ficha','ns-material','ns-corte','ns-validar'].forEach(id => {
+        const s = document.getElementById(id);
+        if (s) s.classList.toggle('locked', !temPeca);
+      });
+    },
+
+    irParaDescrever() {
+      mostrarTela('screen-descrever');
+      App.setNavStage('ns-descrever');
+    },
+
+    irParaBusca() {
+      mostrarTela('screen-busca');
+      App.setNavStage('ns-selecionar');
+      App.carregarLista();
+    },
+
+    /* ─── MODAL NOVA PEÇA ─── */
+
+    abrirModalNovaPeca() {
+      document.getElementById('nova-nome').value   = '';
+      document.getElementById('nova-codigo').value = '';
+      document.getElementById('modal-nova-peca').classList.add('open');
+      setTimeout(() => document.getElementById('nova-nome').focus(), 80);
+    },
+
+    fecharModalNovaPeca() {
+      document.getElementById('modal-nova-peca').classList.remove('open');
+    },
+
+    fecharModalSePano(e) {
+      if (e.target === document.getElementById('modal-nova-peca')) App.fecharModalNovaPeca();
+    },
+
+    async criarPeca() {
+      const nome   = document.getElementById('nova-nome').value.trim();
+      const codigo = document.getElementById('nova-codigo').value.trim();
+      if (!nome)   { toast('Informe o nome da peça.', 'err'); return; }
+      if (!codigo) { toast('Informe o código da peça.', 'err'); return; }
+      const btn = document.getElementById('btn-criar-peca');
+      setLoading(btn, true, 'Criando…');
+      try {
+        const nova = await api('POST', '/pecas', { codigo, nome });
+        State.pecas.push(nova);
+        State.pecaAtual   = nova;
+        State.fichaExiste = false;
+        State.etapas      = [];
+        App._materiaisVinculados = [];
+        App._renderChips();
+        App.fecharModalNovaPeca();
+        App.preencherTelaMaterial(true);
+        App.limparTecnico();
+        App.irParaAjustes();
+        toast('Peça criada!');
+      } catch (e) {
+        toast('Erro ao criar peça: ' + e.message, 'err');
+      }
+      setLoading(btn, false, 'Criar peça');
+    },
+
+    /* ─── CATÁLOGO DE MATÉRIAS-PRIMAS ─── */
+
+    _catalogTimer: null,
+    _catalogProdutos: [],   // cache da última busca
+    _materiaisVinculados: [], // [{id, funcao, produto}]
+
+    onCatalogInput(val) {
+      clearTimeout(App._catalogTimer);
+      const q = val.trim();
+      if (!q) { App._fecharCatalog(); return; }
+      App._catalogTimer = setTimeout(() => App._buscarCatalogo(q), 320);
+    },
+
+    onCatalogFocus() {
+      const q = document.getElementById('catalog-search').value.trim();
+      if (q && App._catalogProdutos.length) App._renderResultados(App._catalogProdutos);
+    },
+
+    async _buscarCatalogo(q) {
+      const res = document.getElementById('catalog-results');
+      res.classList.remove('hidden');
+      res.innerHTML = '<div class="catalog-empty"><span class="spinner spinner-dark"></span></div>';
+      try {
+        const dados = await api('GET', `/fornecedores/materias-primas?q=${encodeURIComponent(q)}&nota_min=2`);
+        App._catalogProdutos = dados;
+        App._renderResultados(dados);
+      } catch (_) {
+        res.innerHTML = '<div class="catalog-empty">Erro ao buscar no catálogo.</div>';
+      }
+    },
+
+    _renderResultados(produtos) {
+      const res = document.getElementById('catalog-results');
+      if (!produtos.length) {
+        res.innerHTML = '<div class="catalog-empty">Nenhum material encontrado.</div>';
+        res.classList.remove('hidden');
+        return;
+      }
+      res.innerHTML = produtos.map(p => {
+        const notas = Array.from({length: 5}, (_, i) =>
+          `<span class="catalog-nota-dot${i < (p.nota_confianca || 0) ? ' ativo' : ''}"></span>`
+        ).join('');
+        const tipo  = p.tipo ? p.tipo.replace('_', ' ') : '';
+        const comp  = p.composicao ? ` · ${p.composicao}` : '';
+        return `
+          <div class="catalog-item" onclick="App._selecionarMaterial(${p.id}, event)">
+            <div class="catalog-item-nome">${esc(p.nome)}</div>
+            <div class="catalog-item-meta">
+              <span class="catalog-item-forn">${esc(p.fornecedor_nome)}</span>
+              ${tipo ? `<span>${esc(tipo)}</span>` : ''}
+              ${comp ? `<span>${esc(comp)}</span>` : ''}
+              <span class="catalog-nota">${notas}</span>
+            </div>
+          </div>`;
+      }).join('');
+      res.classList.remove('hidden');
+    },
+
+    async _selecionarMaterial(produtoId, e) {
+      e && e.stopPropagation();
+      App._fecharCatalog();
+      document.getElementById('catalog-search').value = '';
+
+      const p = State.pecaAtual;
+      if (!p) return;
+
+      document.getElementById('catalog-importing').style.display = 'flex';
+      try {
+        const mat = await api('POST', `/pecas/${p.codigo}/materiais`, {
+          produto_fornecedor_id: produtoId,
+          funcao: 'principal',
+        });
+        App._materiaisVinculados.push(mat);
+        App._renderChips();
+        // Preenche campos da ficha técnica com o que voltou do servidor
+        await App.carregarFicha(p.id);
+        toast(`Material vinculado: ${mat.produto.nome}`);
+      } catch (err) {
+        toast(err.message || 'Erro ao vincular material.', 'err');
+      }
+      document.getElementById('catalog-importing').style.display = 'none';
+    },
+
+    async _removerMaterial(materialId) {
+      const p = State.pecaAtual;
+      if (!p) return;
+      try {
+        await api('DELETE', `/pecas/${p.codigo}/materiais/${materialId}`);
+        App._materiaisVinculados = App._materiaisVinculados.filter(m => m.id !== materialId);
+        App._renderChips();
+        await App.carregarFicha(p.id);
+        toast('Material removido.');
+      } catch (err) {
+        toast(err.message || 'Erro ao remover.', 'err');
+      }
+    },
+
+    _renderChips() {
+      const el = document.getElementById('materiais-vinculados');
+      if (!App._materiaisVinculados.length) { el.innerHTML = ''; return; }
+      el.innerHTML = App._materiaisVinculados.map(m => `
+        <span class="mat-chip">
+          <span class="mat-chip-funcao">${esc(m.funcao || 'principal')}</span>
+          ${esc(m.produto.nome)}
+          <button class="mat-chip-remove" title="Remover" onclick="App._removerMaterial(${m.id})">&#215;</button>
+        </span>
+      `).join('');
+    },
+
+    async _carregarMateriaisVinculados(codigo) {
+      App._materiaisVinculados = [];
+      try {
+        App._materiaisVinculados = await api('GET', `/pecas/${codigo}/materiais`);
+      } catch (_) {}
+      App._renderChips();
+    },
+
+    _fecharCatalog() {
+      const res = document.getElementById('catalog-results');
+      if (res) res.classList.add('hidden');
+    },
+
+    /* ─── Painel de grupos ─── */
+
+    toggleGrupoPanel() {
+      const toggle = document.getElementById('grupo-toggle');
+      const panel  = document.getElementById('grupo-panel');
+      const isOpen = panel.classList.contains('open');
+      toggle.classList.toggle('open', !isOpen);
+      panel.classList.toggle('open', !isOpen);
+    },
+
+    _grupoAtivo: null,
+
+    async selecionarGrupo(grupo) {
+      // pill ativo
+      document.querySelectorAll('.grupo-pill').forEach(p => p.classList.toggle('ativo', p.dataset.grupo === grupo));
+      App._grupoAtivo = grupo;
+
+      const res = document.getElementById('grupo-resultados');
+      res.innerHTML = '<div class="grupo-empty"><span class="spinner spinner-dark"></span></div>';
+
+      try {
+        const items = await api('GET', `/fornecedores/materias-primas?grupo=${grupo}&nota_min=1`);
+        if (!items.length) {
+          res.innerHTML = '<div class="grupo-empty">Nenhum material encontrado neste grupo.</div>';
+          return;
+        }
+        res.innerHTML = items.map(p => {
+          const dots = Array.from({length: 5}, (_, i) =>
+            `<span class="catalog-nota-dot${i < (p.nota_confianca || 0) ? ' ativo' : ''}"></span>`
+          ).join('');
+          const meta = [p.composicao, p.gramatura_gm2 ? p.gramatura_gm2 + ' g/m²' : null]
+            .filter(Boolean).join(' · ');
+          return `
+            <div class="grupo-item" onclick="App._selecionarMaterial(${p.id}, event)">
+              <div class="grupo-item-nome">${p.nome}</div>
+              <div class="grupo-item-meta">
+                <span class="catalog-nota">${dots}</span>
+                ${p.fornecedor_nome} · ${p.fornecedor_cidade || ''}
+                ${meta ? ' · ' + meta : ''}
+              </div>
+            </div>`;
+        }).join('');
+      } catch (e) {
+        res.innerHTML = '<div class="grupo-empty">Erro ao carregar grupo.</div>';
+      }
+    },
+
+    /* ─── TELA 2 — MATERIAL ─── */
+
+    preencherTelaMaterial(nova = false) {
+      const p = State.pecaAtual;
+      document.getElementById('mat-titulo').textContent  = 'Material de ' + (p.nome || 'peça');
+      document.getElementById('mat-codigo').textContent  = p.codigo || '';
+
+      if (nova) {
+        // Limpar campos
+        document.getElementById('mat-descricao').value = '';
+        document.getElementById('mat-cuidados').value  = '';
+        document.getElementById('mat-reciclado').value = '';
+        document.getElementById('fibras-list').innerHTML = '';
+        document.getElementById('certs-list').innerHTML  = '';
+        document.getElementById('pct-total').textContent = '';
+        document.getElementById('toggle-cert').checked = false;
+        document.getElementById('toggle-rec').checked  = false;
+        document.getElementById('certs-content').classList.remove('open');
+        document.getElementById('rec-content').classList.remove('open');
+        App.atualizarTotalPct();
+      }
+    },
+
+    irParaAjustes() {
+      if (!State.pecaAtual) { App.irParaBusca(); return; }
+      const p = State.pecaAtual;
+      document.getElementById('ajustes-titulo').textContent = p.nome || p.codigo;
+      mostrarTela('screen-ajustes');
+      App.setNavStage('ns-ajustes');
+    },
+
+    salvarAjustes() {
+      toast('Ajustes registrados.');
+      setTimeout(() => App.irParaTecnico(), 600);
+    },
+
+    _medidasTecnicas() {
+      return {
+        altura:      document.getElementById('med-altura')?.value || '',
+        busto:       document.getElementById('med-busto')?.value || '',
+        cintura:     document.getElementById('med-cintura')?.value || '',
+        quadril:     document.getElementById('med-quadril')?.value || '',
+        ombro:       document.getElementById('med-ombro')?.value || '',
+        torso:       document.getElementById('med-torso')?.value || '',
+        manga:       document.getElementById('med-manga')?.value || '',
+        entrepernas: document.getElementById('med-entrepernas')?.value || '',
+      };
+    },
+
+    _observacoesPeca(peca) {
+      if (!peca?.observacoes) return {};
+      try {
+        const parsed = JSON.parse(peca.observacoes);
+        return parsed && typeof parsed === 'object' ? parsed : {};
+      } catch (_) {
+        return {};
+      }
+    },
+
+    _normalizarTexto(str) {
+      return String(str || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    },
+
+    _resolverTipoTecnico(peca) {
+      const obs = App._observacoesPeca(peca);
+      const texto = App._normalizarTexto([
+        peca?.nome,
+        peca?.codigo,
+        obs.categoria,
+        obs.silhueta,
+        obs.comprimento,
+      ].filter(Boolean).join(' '));
+
+      if (texto.match(/calca|legging|bermuda|short/)) return 'calca';
+      if (texto.match(/saia/)) return 'saia';
+      if (texto.match(/vestido|macacao/)) return 'vestido';
+      if (texto.match(/jaqueta|casaco|blazer|sobretudo/)) return 'casaco';
+      if (texto.match(/camisa|camiseta|blusa|top/)) return 'top';
+      return 'top';
+    },
+
+    _specDesenhoTecnico(peca) {
+      const tipo = App._resolverTipoTecnico(peca);
+      const obs = App._observacoesPeca(peca);
+      const medidas = App._medidasTecnicas();
+      const faltantes = Object.entries(medidas)
+        .filter(([, valor]) => !valor)
+        .map(([k]) => k);
+      const resumoMedidas = Object.entries(medidas)
+        .filter(([, valor]) => valor)
+        .map(([k, valor]) => `${k}: ${valor} cm`)
+        .join(' · ') || 'Sem medidas preenchidas nesta sessão.';
+
+      const specs = {
+        calca: {
+          base: 'Base inferior: calça / legging / short',
+          componentes: ['cós', 'gancho', 'entrepernas', 'lateral', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir gancho, entrepernas, cintura/quadril e linha de fio antes de transformar este desenho em molde.',
+        },
+        saia: {
+          base: 'Base inferior: saia',
+          componentes: ['cintura', 'pences', 'quadril', 'lateral', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir cintura, quadril, altura de quadril, comprimento e abertura antes de seguir para modelagem.',
+        },
+        vestido: {
+          base: 'Base corpo inteiro: vestido / macacão',
+          componentes: ['decote', 'ombro', 'cava', 'cintura', 'saia', 'frente', 'costas'],
+          alerta: 'Conferir busto, cintura, quadril, torso, comprimento e mobilidade do corpo inteiro.',
+        },
+        casaco: {
+          base: 'Base superior estruturada: jaqueta / casaco / blazer',
+          componentes: ['gola', 'ombro', 'cava', 'manga', 'abertura', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir ombro, busto, manga, folga de sobreposição e fechamento antes de aprovar a ficha.',
+        },
+        top: {
+          base: 'Base superior: blusa / camisa / camiseta / top',
+          componentes: ['decote', 'ombro', 'cava', 'manga', 'lateral', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir busto, ombro, torso, manga, cava e folga de mobilidade antes da ficha técnica.',
+        },
+      };
+
+      const spec = specs[tipo] || specs.top;
+      const detalheObs = [obs.categoria, obs.silhueta, obs.comprimento, obs.fechamento]
+        .filter(Boolean)
+        .join(' · ');
+
+      return {
+        tipo,
+        base: detalheObs ? `${spec.base} · ${detalheObs}` : spec.base,
+        componentes: spec.componentes,
+        medidas: resumoMedidas,
+        alerta: faltantes.length
+          ? `${spec.alerta} Medidas pendentes: ${faltantes.join(', ')}.`
+          : `${spec.alerta} Medidas mínimas preenchidas para conferência visual.`,
+      };
+    },
+
+    renderDesenhoTecnico() {
+      if (!State.pecaAtual) return;
+      const p = State.pecaAtual;
+      const spec = App._specDesenhoTecnico(p);
+
+      document.getElementById('tecnico-sheet-label').textContent = p.codigo || 'Peça sem código';
+      document.getElementById('tecnico-base').textContent = spec.base;
+      document.getElementById('tecnico-medidas').textContent = spec.medidas;
+      document.getElementById('tecnico-alerta').textContent = spec.alerta;
+      document.getElementById('tecnico-componentes').innerHTML = spec.componentes
+        .map(c => `<span class="technical-pill">${esc(c)}</span>`)
+        .join('');
+      document.getElementById('tecnico-drawing').innerHTML = App._svgDesenhoTecnico(spec.tipo, p);
+    },
+
+    _svgBaseStart(titulo, codigo) {
+      return `
+        <svg viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Desenho técnico da peça">
+          <defs>
+            <style>
+              .tech-line{fill:none;stroke:#141410;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+              .tech-thin{fill:none;stroke:#5e5a52;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+              .tech-dash{fill:none;stroke:#b89a6a;stroke-width:1.2;stroke-linecap:round;stroke-dasharray:6 5}
+              .tech-fill{fill:#f7f4ee;stroke:#141410;stroke-width:2;stroke-linejoin:round}
+              .tech-note{font:12px Jost,Arial,sans-serif;fill:#77736c}
+              .tech-title{font:17px Cormorant Garamond,Georgia,serif;fill:#141410}
+              .tech-small{font:10px Jost,Arial,sans-serif;fill:#9e9b95;letter-spacing:.08em}
+            </style>
+          </defs>
+          <text x="28" y="34" class="tech-title">${esc(titulo || 'Peça PHYLLOS')}</text>
+          <text x="28" y="53" class="tech-small">${esc(codigo || 'sem código')} · desenho técnico de conferência</text>
+          <text x="170" y="80" class="tech-small">FRENTE</text>
+          <text x="432" y="80" class="tech-small">COSTAS</text>`;
+    },
+
+    _svgBaseEnd() {
+      return `
+          <line x1="28" y1="384" x2="592" y2="384" class="tech-thin"/>
+          <text x="28" y="404" class="tech-note">Uso interno: conferir proporções, partes visíveis e pontos críticos antes da ficha técnica e do molde cortável.</text>
+        </svg>`;
+    },
+
+    _svgDesenhoTecnico(tipo, peca) {
+      const titulo = peca?.nome || 'Peça PHYLLOS';
+      const codigo = peca?.codigo || '';
+      const start = App._svgBaseStart(titulo, codigo);
+      const end = App._svgBaseEnd();
+      const desenhos = {
+        calca: `
+          <path class="tech-fill" d="M130 98 L232 98 L224 360 L188 360 L178 198 L158 360 L122 360 Z"/>
+          <path class="tech-dash" d="M130 132 H232"/>
+          <path class="tech-thin" d="M181 104 C174 132 171 160 178 198"/>
+          <path class="tech-thin" d="M178 198 L188 360"/>
+          <path class="tech-thin" d="M158 360 L178 198"/>
+          <path class="tech-fill" d="M390 98 L492 98 L500 360 L464 360 L442 198 L420 360 L384 360 Z"/>
+          <path class="tech-dash" d="M390 132 H492"/>
+          <path class="tech-thin" d="M441 104 C448 132 449 160 442 198"/>
+          <path class="tech-thin" d="M442 198 L464 360"/>
+          <path class="tech-thin" d="M420 360 L442 198"/>
+          <text x="242" y="136" class="tech-note">cós</text>
+          <text x="236" y="206" class="tech-note">gancho</text>
+          <text x="236" y="358" class="tech-note">barra</text>`,
+        saia: `
+          <path class="tech-fill" d="M142 102 H222 L252 358 H112 Z"/>
+          <path class="tech-dash" d="M142 134 H222"/>
+          <path class="tech-thin" d="M164 112 L154 184"/>
+          <path class="tech-thin" d="M200 112 L210 184"/>
+          <path class="tech-dash" d="M128 218 H236"/>
+          <path class="tech-fill" d="M402 102 H482 L512 358 H372 Z"/>
+          <path class="tech-dash" d="M402 134 H482"/>
+          <path class="tech-thin" d="M424 112 L414 184"/>
+          <path class="tech-thin" d="M460 112 L470 184"/>
+          <path class="tech-dash" d="M388 218 H496"/>
+          <text x="256" y="136" class="tech-note">cintura</text>
+          <text x="256" y="221" class="tech-note">quadril</text>
+          <text x="256" y="358" class="tech-note">barra</text>`,
+        vestido: `
+          <path class="tech-fill" d="M150 98 L214 98 L236 176 L270 358 H94 L128 176 Z"/>
+          <path class="tech-thin" d="M150 98 Q182 126 214 98"/>
+          <path class="tech-dash" d="M126 184 H238"/>
+          <path class="tech-dash" d="M112 250 H254"/>
+          <path class="tech-thin" d="M156 116 L150 176"/>
+          <path class="tech-thin" d="M208 116 L214 176"/>
+          <path class="tech-fill" d="M410 98 L474 98 L496 176 L530 358 H354 L388 176 Z"/>
+          <path class="tech-thin" d="M410 98 Q442 116 474 98"/>
+          <path class="tech-dash" d="M386 184 H498"/>
+          <path class="tech-dash" d="M372 250 H514"/>
+          <path class="tech-thin" d="M442 100 V358"/>
+          <text x="274" y="186" class="tech-note">cintura</text>
+          <text x="274" y="252" class="tech-note">quadril</text>
+          <text x="274" y="358" class="tech-note">barra</text>`,
+        casaco: `
+          <path class="tech-fill" d="M134 104 L226 104 L250 352 H112 Z"/>
+          <path class="tech-fill" d="M134 108 L86 178 L102 214 L132 158 Z"/>
+          <path class="tech-fill" d="M226 108 L274 178 L258 214 L228 158 Z"/>
+          <path class="tech-thin" d="M160 106 L182 146 L204 106"/>
+          <path class="tech-thin" d="M182 146 V352"/>
+          <path class="tech-dash" d="M124 206 H240"/>
+          <path class="tech-fill" d="M394 104 L486 104 L510 352 H372 Z"/>
+          <path class="tech-fill" d="M394 108 L346 178 L362 214 L392 158 Z"/>
+          <path class="tech-fill" d="M486 108 L534 178 L518 214 L488 158 Z"/>
+          <path class="tech-thin" d="M440 104 V352"/>
+          <path class="tech-dash" d="M384 206 H500"/>
+          <text x="282" y="146" class="tech-note">gola</text>
+          <text x="282" y="208" class="tech-note">linha busto</text>
+          <text x="282" y="352" class="tech-note">barra</text>`,
+        top: `
+          <path class="tech-fill" d="M138 102 L226 102 L246 178 L232 344 H132 L118 178 Z"/>
+          <path class="tech-fill" d="M138 106 L88 170 L104 202 L128 156 Z"/>
+          <path class="tech-fill" d="M226 106 L276 170 L260 202 L236 156 Z"/>
+          <path class="tech-thin" d="M154 104 Q182 132 210 104"/>
+          <path class="tech-dash" d="M122 196 H242"/>
+          <path class="tech-dash" d="M132 286 H232"/>
+          <path class="tech-fill" d="M398 102 L486 102 L506 178 L492 344 H392 L378 178 Z"/>
+          <path class="tech-fill" d="M398 106 L348 170 L364 202 L388 156 Z"/>
+          <path class="tech-fill" d="M486 106 L536 170 L520 202 L496 156 Z"/>
+          <path class="tech-thin" d="M416 104 Q442 120 468 104"/>
+          <path class="tech-dash" d="M382 196 H502"/>
+          <path class="tech-dash" d="M392 286 H492"/>
+          <text x="282" y="128" class="tech-note">decote</text>
+          <text x="282" y="198" class="tech-note">busto</text>
+          <text x="282" y="286" class="tech-note">cintura</text>`,
+      };
+      return start + (desenhos[tipo] || desenhos.top) + end;
+    },
+
+    irParaTecnico() {
+      if (!State.pecaAtual) { App.irParaBusca(); return; }
+      const p = State.pecaAtual;
+      document.getElementById('tecnico-titulo').textContent = p.nome || p.codigo;
+      App.renderDesenhoTecnico();
+      mostrarTela('screen-tecnico');
+      App.setNavStage('ns-tecnico');
+    },
+
+    handleTecnicoFile(input) {
+      const file = input.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.getElementById('tecnico-img');
+        const preview = document.getElementById('tecnico-preview');
+        if (file.type.startsWith('image/')) {
+          img.src = e.target.result;
+          img.style.display = 'block';
+        } else {
+          img.style.display = 'none';
+        }
+        preview.style.display = 'block';
+        document.getElementById('tecnico-upload-area').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    },
+
+    handleTecnicoDrop(e) {
+      e.preventDefault();
+      e.currentTarget.style.borderColor = '';
+      const file = e.dataTransfer.files[0];
+      if (!file) return;
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      const input = document.getElementById('tecnico-file-input');
+      input.files = dt.files;
+      App.handleTecnicoFile(input);
+    },
+
+    limparTecnico() {
+      document.getElementById('tecnico-img').src = '';
+      document.getElementById('tecnico-preview').style.display = 'none';
+      document.getElementById('tecnico-upload-area').style.display = 'block';
+      document.getElementById('tecnico-file-input').value = '';
+    },
+
+    irParaFicha() {
+      if (!State.pecaAtual) { App.irParaBusca(); return; }
+      const p = State.pecaAtual;
+      document.getElementById('ficha-titulo').textContent = p.nome || p.codigo;
+      mostrarTela('screen-ficha');
+      App.setNavStage('ns-ficha');
+    },
+
+    salvarFicha() {
+      if (!State.pecaAtual) return;
+      const dados = {
+        categoria:   document.getElementById('ficha-categoria').value,
+        silhueta:    document.getElementById('ficha-silhueta').value,
+        comprimento: document.getElementById('ficha-comprimento').value,
+        ocasiao:     document.getElementById('ficha-ocasiao').value,
+        modelagem:   document.getElementById('ficha-modelagem').value,
+        costura:     document.getElementById('ficha-costura').value,
+        fechamento:  document.getElementById('ficha-fechamento').value,
+        cos:         document.getElementById('ficha-cos').value,
+        obs_costureira: document.getElementById('ficha-obs').value,
+      };
+      const aviamentos = [...document.querySelectorAll('#ficha-aviamentos-chips .desc-chip.sel')]
+                          .map(el => el.textContent).join(', ');
+      dados.aviamentos = aviamentos;
+      fetch(`/pecas/${State.pecaAtual.codigo}`, {
+        method: 'PATCH',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ observacoes: JSON.stringify(dados) })
+      }).then(() => App.irParaMaterial());
+    },
+
+    toggleDescChip(el) {
+      el.classList.toggle('sel');
+    },
+
+    irParaValidar() {
+      if (!State.pecaAtual && !confirm('Ver validação de todas as peças?')) return;
+      mostrarTela('screen-validar');
+      App.setNavStage('ns-validar');
+      App.carregarValidar();
+    },
+
+    async carregarValidar() {
+      const list = document.getElementById('validar-list');
+      list.innerHTML = '<div class="empty-msg">Carregando…</div>';
+      try {
+        const pecas = await api('GET', '/pecas');
+        if (!pecas.length) { list.innerHTML = '<div class="empty-msg">Nenhuma peça no ateliê ainda.</div>'; return; }
+        list.innerHTML = pecas.map(p => {
+          const status = p.dpp_status || 'rascunho';
+          const badge = status === 'publicado'
+            ? '<span class="badge-status badge-publicado">Passaporte ativo</span>'
+            : '<span class="badge-status badge-rascunho">Rascunho</span>';
+          const passBtn = p.dpp_uuid
+            ? `<a href="/p/${p.dpp_uuid}" target="_blank" style="font-size:11px;color:var(--gold);text-decoration:none">Ver →</a>`
+            : '<span style="font-size:11px;color:var(--muted)">—</span>';
+          const pubBtn = status !== 'publicado' && p.dpp_uuid
+            ? `<button onclick="App._publicarDPP('${p.codigo}', this)" style="font-size:11px;padding:4px 10px;border:1px solid var(--border-md);border-radius:3px;cursor:pointer;background:#fff;margin-left:8px">Publicar DPP</button>`
+            : '';
+          return `<div class="peca-item" style="flex-direction:column;align-items:flex-start;gap:8px">
+            <div style="display:flex;align-items:center;gap:10px;width:100%">
+              <div class="peca-item-main">
+                <div class="peca-item-nome">${p.nome}</div>
+                <div class="peca-item-cod">${p.codigo}</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
+                ${badge}${pubBtn}
+                ${passBtn}
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+      } catch(e) {
+        list.innerHTML = '<div class="empty-msg">Erro ao carregar peças.</div>';
+      }
+    },
+
+    async _publicarDPP(codigo, btn) {
+      btn.disabled = true; btn.textContent = '…';
+      try {
+        const peca = await api('POST', `/pecas/${codigo}/dpp/publicar`);
+        App.irParaPassaporte(peca);
+      } catch(e) {
+        const detail = e?.detail;
+        const msg = Array.isArray(detail?.errors)
+          ? detail.errors.join(' ')
+          : 'Para publicar: ficha técnica com composição e instruções de cuidado são obrigatórias.';
+        toast(msg, 'err');
+        btn.disabled = false; btn.textContent = 'Publicar DPP';
+      }
+    },
+
+    irParaPassaporte(peca) {
+      const uuid = peca.dpp_uuid;
+      const publicUrl = `/p/${uuid}`;
+      document.getElementById('pass-nome').textContent = peca.nome || 'Passaporte publicado';
+      document.getElementById('pass-codigo').textContent = peca.codigo || '';
+      document.getElementById('pass-qr').src = `/pecas/${peca.codigo}/qr`;
+      const linkEl = document.getElementById('pass-link');
+      linkEl.href = publicUrl;
+      linkEl.textContent = window.location.origin + publicUrl;
+      document.getElementById('pass-etiqueta').href = `/pecas/${peca.codigo}/etiqueta`;
+      mostrarTela('screen-passaporte');
+      App.setNavStage('ns-validar');
+    },
+
+    copiarLinkPassaporte() {
+      const linkEl = document.getElementById('pass-link');
+      navigator.clipboard.writeText(linkEl.href).then(() => toast('Link copiado.'));
+    },
+
+    irParaPainel() {
+      mostrarTela('screen-painel');
+      App.setNavStage('ns-painel');
+      App.carregarPainel();
+    },
+
+    async carregarPainel() {
+      try {
+        const [pecas, fornecedores] = await Promise.all([
+          api('GET', '/pecas'),
+          api('GET', '/fornecedores'),
+        ]);
+
+        const publicadas = pecas.filter(p => p.dpp_status === 'publicado').length;
+        document.getElementById('stat-total').textContent = pecas.length;
+        document.getElementById('stat-publicadas').textContent = publicadas;
+        document.getElementById('stat-fornecedores').textContent = fornecedores.length;
+
+        const notas = fornecedores.map(f => f.nota_confianca).filter(Boolean);
+        const media = notas.length ? (notas.reduce((a,b) => a+b,0) / notas.length).toFixed(1) : '—';
+        document.getElementById('stat-nota-media').textContent = media;
+
+        const tbody = document.getElementById('painel-tbody');
+        if (!pecas.length) {
+          tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Nenhuma peça ainda.</td></tr>';
+          return;
+        }
+
+        const rows = await Promise.all(pecas.map(async p => {
+          let mat = '—', nota = '—';
+          try {
+            const mats = await api('GET', `/pecas/${p.codigo}/materiais`);
+            if (mats.length) {
+              const principal = mats.find(m => m.funcao === 'principal') || mats[0];
+              mat = principal.produto?.nome || '—';
+              nota = principal.produto?.fornecedor_nota || '—';
+            }
+          } catch(_) {}
+          const status = p.dpp_status || 'rascunho';
+          const badge = status === 'publicado'
+            ? '<span class="badge-status badge-publicado">Ativo</span>'
+            : '<span class="badge-status badge-rascunho">Rascunho</span>';
+          const passLink = p.dpp_uuid
+            ? `<a href="/p/${p.dpp_uuid}" target="_blank">Ver passaporte</a>`
+            : '—';
+          return `<tr>
+            <td><strong style="font-weight:500">${p.nome}</strong><br><span style="font-size:11px;color:var(--muted)">${p.codigo}</span></td>
+            <td>${badge}</td>
+            <td style="font-size:12px">${mat}</td>
+            <td style="font-size:13px">${nota}</td>
+            <td>${passLink}</td>
+          </tr>`;
+        }));
+        tbody.innerHTML = rows.join('');
+      } catch(e) {
+        document.getElementById('painel-tbody').innerHTML =
+          '<tr><td colspan="5" style="text-align:center;color:var(--muted)">Erro ao carregar dados.</td></tr>';
+      }
+    },
+
+    irParaMaterial() {
+      if (!State.pecaAtual) { App.irParaBusca(); return; }
+      App.preencherTelaMaterial();
+      mostrarTela('screen-material');
+      App.setNavStage('ns-material');
+    },
+
+    async carregarFicha(pecaId) {
+      State.fichaExiste = false;
+      try {
+        const ficha = await api('GET', `/fichas-tecnicas/${pecaId}`);
+        State.fichaExiste = true;
+        App.preencherCamposFicha(ficha);
+      } catch (_) {
+        // 404 — ficha ainda não existe, ok
+        document.getElementById('mat-descricao').value = '';
+        document.getElementById('mat-cuidados').value  = '';
+        document.getElementById('mat-reciclado').value = '';
+        document.getElementById('fibras-list').innerHTML = '';
+        document.getElementById('certs-list').innerHTML  = '';
+        document.getElementById('pct-total').textContent = '';
+        document.getElementById('toggle-cert').checked = false;
+        document.getElementById('toggle-rec').checked  = false;
+        document.getElementById('certs-content').classList.remove('open');
+        document.getElementById('rec-content').classList.remove('open');
+        App.atualizarTotalPct();
+      }
+    },
+
+    preencherCamposFicha(ficha) {
+      document.getElementById('mat-descricao').value = ficha.materiais || '';
+      document.getElementById('mat-cuidados').value  = '';  // campo de cuidados não mapeado separado
+
+      // Reciclado
+      const rec = ficha.conteudo_reciclado_pct;
+      if (rec !== null && rec !== undefined) {
+        document.getElementById('toggle-rec').checked = true;
+        document.getElementById('rec-content').classList.add('open');
+        document.getElementById('mat-reciclado').value = rec;
+      } else {
+        document.getElementById('toggle-rec').checked = false;
+        document.getElementById('rec-content').classList.remove('open');
+        document.getElementById('mat-reciclado').value = '';
+      }
+
+      // Fibras
+      let fibras = [];
+      try { fibras = JSON.parse(ficha.composicao_fibras || '[]'); } catch (_) {}
+      document.getElementById('fibras-list').innerHTML = '';
+      fibras.forEach(f => App.addFibra(f.fibra, f.pct));
+      App.atualizarTotalPct();
+
+      // Certificados
+      let certs = [];
+      try { certs = JSON.parse(ficha.certificacoes || '[]'); } catch (_) {}
+      document.getElementById('certs-list').innerHTML = '';
+      if (certs.length) {
+        document.getElementById('toggle-cert').checked = true;
+        document.getElementById('certs-content').classList.add('open');
+        certs.forEach(c => App.addCert(c.nome, c.numero, c.validade));
+      } else {
+        document.getElementById('toggle-cert').checked = false;
+        document.getElementById('certs-content').classList.remove('open');
+      }
+    },
+
+    async salvarMaterial() {
+      const p = State.pecaAtual;
+      if (!p) { toast('Selecione uma peça primeiro.', 'err'); return; }
+
+      const fibras = App.coletarFibras();
+      if (fibras.length) {
+        const total = fibras.reduce((s, f) => s + Number(f.pct || 0), 0);
+        if (total !== 100) {
+          toast('A soma dos materiais deve ser 100%. Corrija antes de salvar.', 'err');
+          return;
+        }
+      }
+
+      const btn = document.getElementById('btn-salvar-mat');
+      setLoading(btn, true);
+
+      const recEl  = document.getElementById('mat-reciclado');
+      const recVal = document.getElementById('toggle-rec').checked && recEl.value !== ''
+        ? Number(recEl.value) : null;
+
+      const payload = {
+        peca_id:               p.id,
+        materiais:             document.getElementById('mat-descricao').value.trim() || null,
+        composicao_fibras:     fibras.length ? JSON.stringify(fibras) : null,
+        certificacoes:         App.coletarCerts().length ? JSON.stringify(App.coletarCerts()) : null,
+        conteudo_reciclado_pct: recVal,
+      };
+
+      try {
+        if (State.fichaExiste) {
+          await api('PATCH', `/fichas-tecnicas/${p.id}`, payload);
+        } else {
+          await api('POST', '/fichas-tecnicas', payload);
+          State.fichaExiste = true;
+        }
+        toast('Material salvo.');
+      } catch (e) {
+        toast('Erro ao salvar: ' + e.message, 'err');
+      }
+      setLoading(btn, false);
+    },
+
+    /* ─── FIBRAS ─── */
+
+    addFibra(material = '', pct = '') {
+      const list = document.getElementById('fibras-list');
+      const row  = document.createElement('div');
+      row.className = 'fibra-row';
+      row.innerHTML = `
+        <input type="text" placeholder="ex: algodão orgânico" value="${esc(String(material))}" oninput="App.atualizarTotalPct()" />
+        <input type="number" placeholder="%" min="0" max="100" value="${esc(String(pct))}" oninput="App.atualizarTotalPct()" />
+        <button class="btn-remove" title="Remover" onclick="this.parentElement.remove();App.atualizarTotalPct()">&#215;</button>
+      `;
+      list.appendChild(row);
+      App.atualizarTotalPct();
+    },
+
+    coletarFibras() {
+      return [...document.getElementById('fibras-list').querySelectorAll('.fibra-row')].map(row => {
+        const [inp1, inp2] = row.querySelectorAll('input');
+        return { fibra: inp1.value.trim(), pct: Number(inp2.value) };
+      }).filter(f => f.fibra);
+    },
+
+    atualizarTotalPct() {
+      const fibras = App.coletarFibras();
+      const el = document.getElementById('pct-total');
+      if (!fibras.length) { el.textContent = ''; return; }
+      const total = fibras.reduce((s, f) => s + Number(f.pct || 0), 0);
+      el.textContent = `Total: ${total}%`;
+      el.className   = 'pct-total ' + (total === 100 ? 'ok' : 'err');
+    },
+
+    /* ─── CERTIFICADOS ─── */
+
+    toggleCerts(checked) {
+      const cont = document.getElementById('certs-content');
+      if (checked) {
+        cont.classList.add('open');
+        if (!document.getElementById('certs-list').children.length) App.addCert();
+      } else {
+        cont.classList.remove('open');
+      }
+    },
+
+    addCert(nome = '', numero = '', validade = '') {
+      const list = document.getElementById('certs-list');
+      const row  = document.createElement('div');
+      row.className = 'cert-row';
+      row.innerHTML = `
+        <input type="text" placeholder="ex: OEKO-TEX, GOTS" value="${esc(String(nome))}" />
+        <input type="text" placeholder="Número" value="${esc(String(numero))}" />
+        <input type="text" placeholder="2027-06" value="${esc(String(validade))}" />
+        <button class="btn-remove" title="Remover" onclick="this.parentElement.remove()">&#215;</button>
+      `;
+      list.appendChild(row);
+    },
+
+    coletarCerts() {
+      return [...document.getElementById('certs-list').querySelectorAll('.cert-row')].map(row => {
+        const [i1, i2, i3] = row.querySelectorAll('input');
+        return { nome: i1.value.trim(), numero: i2.value.trim(), validade: i3.value.trim() };
+      }).filter(c => c.nome);
+    },
+
+    /* ─── RECICLADO TOGGLE ─── */
+
+    toggleReciclado(checked) {
+      const cont = document.getElementById('rec-content');
+      if (checked) {
+        cont.classList.add('open');
+        document.getElementById('mat-reciclado').focus();
+      } else {
+        cont.classList.remove('open');
+        document.getElementById('mat-reciclado').value = '';
+      }
+    },
+
+    /* ─── TELA 3 — ETAPAS ─── */
+
+    async carregarEtapas(codigo) {
+      State.etapas = [];
+      try {
+        State.etapas = await api('GET', `/pecas/${codigo}/etapas-producao`);
+      } catch (_) {}
+    },
+
+    irParaEtapas() {
+      if (!State.pecaAtual) { toast('Selecione uma peça primeiro.', 'err'); return; }
+      App.preencherTelaEtapas();
+      mostrarTela('screen-etapas');
+      App.setNavStage('ns-corte');
+    },
+
+    preencherTelaEtapas() {
+      const p = State.pecaAtual;
+      document.getElementById('etapa-titulo').textContent = 'Registrar etapa — ' + (p.nome || 'peça');
+      document.getElementById('etapa-codigo').textContent = p.codigo || '';
+      document.getElementById('nef-pais').value = 'Brasil';
+      document.getElementById('nef-inst').value = '';
+      App.renderEtapas();
+    },
+
+    renderEtapas() {
+      const container = document.getElementById('etapas-registradas');
+      const vazio     = document.getElementById('etapas-vazio');
+      // Remover cards antigos
+      container.querySelectorAll('.etapa-card').forEach(c => c.remove());
+
+      if (!State.etapas.length) {
+        if (vazio) vazio.style.display = 'block';
+        return;
+      }
+      if (vazio) vazio.style.display = 'none';
+      State.etapas.forEach(e => {
+        const card = document.createElement('div');
+        card.className = 'etapa-card';
+        const detalhe = [e.pais, e.instalacao_nome].filter(Boolean).join(' — ');
+        card.innerHTML = `
+          <div class="etapa-card-titulo">${ETAPA_LABEL[e.etapa] || e.etapa}</div>
+          ${detalhe ? `<div class="etapa-card-detalhe">${esc(detalhe)}</div>` : ''}
+        `;
+        container.insertBefore(card, vazio);
+      });
+    },
+
+    async registrarEtapa() {
+      const p = State.pecaAtual;
+      if (!p) { toast('Nenhuma peça selecionada.', 'err'); return; }
+
+      const btn = document.getElementById('btn-registrar-etapa');
+      setLoading(btn, true, 'Registrando…');
+
+      const payload = {
+        etapa:           document.getElementById('nef-etapa').value,
+        pais:            document.getElementById('nef-pais').value.trim() || null,
+        instalacao_nome: document.getElementById('nef-inst').value.trim() || null,
+      };
+
+      try {
+        await api('POST', `/pecas/${p.codigo}/etapas-producao`, payload);
+        await App.carregarEtapas(p.codigo);
+        App.renderEtapas();
+        document.getElementById('nef-pais').value = 'Brasil';
+        document.getElementById('nef-inst').value = '';
+        toast('Etapa registrada.');
+      } catch (e) {
+        toast('Erro ao registrar etapa: ' + e.message, 'err');
+      }
+      setLoading(btn, false, 'Registrar');
+    },
+
+    /* ─── DPP & Etiqueta ─── */
+
+    abrirPassaporte() {
+      const p = State.pecaAtual;
+      if (!p?.dpp_uuid) { toast('Peça sem UUID — salve a peça primeiro.', 'err'); return; }
+      window.open(`/p/${p.dpp_uuid}`, '_blank');
+    },
+
+    _qrVisible: false,
+
+    async toggleQrPreview() {
+      const p = State.pecaAtual;
+      if (!p) return;
+      const wrap = document.getElementById('dpp-qr-preview');
+      if (App._qrVisible) {
+        wrap.classList.remove('visible');
+        App._qrVisible = false;
+        return;
+      }
+      const img = document.getElementById('dpp-qr-img');
+      const urlEl = document.getElementById('dpp-qr-url');
+      img.src = `/pecas/${p.codigo}/qr?t=${Date.now()}`;
+      urlEl.textContent = `phyllos.com.br/p/${p.dpp_uuid || '…'}`;
+      wrap.classList.add('visible');
+      App._qrVisible = true;
+    },
+
+    imprimirEtiqueta() {
+      const p = State.pecaAtual;
+      if (!p) return;
+      window.open(`/pecas/${p.codigo}/etiqueta`, '_blank');
+    },
+
+  };
+
+  /* ─── helper escape html ─── */
+  function esc(str) {
+    return String(str)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;');
+  }
+
+  /* ═══════════════════════════════════════════════════
+     INIT
+  ═══════════════════════════════════════════════════ */
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Inicia na tela Descrever e configura nav
+    App.setNavStage('ns-descrever');
+    // Carrega lista em background para quando o usuário navegar
+    App.carregarLista();
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        App.fecharModalNovaPeca();
+        App._fecharCatalog();
+      }
+    });
+
+    document.addEventListener('click', e => {
+      const wrap = document.getElementById('catalog-search')?.closest('.catalog-wrap');
+      if (wrap && !wrap.contains(e.target)) App._fecharCatalog();
+    });
+  });
+  </script>
+</body>
+</html>

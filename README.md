@@ -1,3 +1,5 @@
+A PHYLLOS V1 é um estúdio web que recebe dados técnicos de uma peça de moda, calcula indicadores por unidade e publica um passaporte digital com QR e flashcards para o consumidor — sem editar molde, sem fazer ACV oficial e sem prometer conformidade regulatória.
+
 # Phyllos — Base de Conhecimento e Estratégia
 
 Repositório de documentos estratégicos, estudos e referências operacionais da **Phyllos**. Independente de ambiente técnico — serve como memória de longo prazo para o founder e o futuro time.

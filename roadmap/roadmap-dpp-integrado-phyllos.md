@@ -103,8 +103,11 @@ Entregas:
 
 - Premissa DPP integrada registrada em `.claude/agents/references/dpp-integrado-strategic-premises.md`.
 - Roadmap vigente criado.
-- PRD v0.
-- Criterios de aceite do MVP.
+- PRD v0 registrado em `produto/decisoes/prd-dpp-integrado-v0.md`.
+- Criterios de aceite do MVP registrados em `produto/decisoes/prd-dpp-integrado-v0.md`.
+- Contrato de dados registrado em `produto/decisoes/dpp-data-contract-v0.md`.
+- QA anti-greenwashing registrado em `produto/decisoes/dpp-anti-greenwashing-qa-v0.md`.
+- Backlog Codex registrado em `produto/decisoes/backlog-codex-dpp-2026-06-25.md`.
 - Lista de 5 usuarios/pilotos-alvo.
 
 Responsaveis:
@@ -128,8 +131,8 @@ Entregas:
 
 - `phyllos/dpp-studio.html` refinado.
 - fluxo: upload/input tecnico -> produto -> material -> calculo -> flashcards.
-- schema conceitual em SQL/Markdown.
-- dicionario de dados.
+- schema conceitual em SQL/Markdown, a partir de `produto/decisoes/dpp-data-contract-v0.md`.
+- dicionario de dados, a partir de `produto/decisoes/dpp-data-contract-v0.md`.
 - formulas documentadas.
 - criterios de evidencia por campo.
 
@@ -218,6 +221,7 @@ Objetivo: validar se a PHYLLOS resolve dor real.
 
 Entregas:
 
+- plano operacional de piloto em `produto/decisoes/phyllos-dpp-v1-estrategia-piloto.md`;
 - 3 a 5 produtos reais cadastrados.
 - pelo menos 2 tipos de arquivo/input tecnico usados.
 - matriz de materiais com fatores reais ou declarados.
@@ -236,6 +240,9 @@ Responsaveis:
 Critério de aceite:
 
 - 5 DPPs rascunho gerados com dados reais;
+- onboarding medio abaixo de 60 minutos para dados Tier 1;
+- 2 QRs compartilhados espontaneamente em canal real;
+- 1 marca pede cadastro de segunda peca;
 - usuarios entendem o valor dos flashcards;
 - lacunas recorrentes viram backlog;
 - nenhuma claim ambiental e publicada sem status de evidencia.
@@ -379,17 +386,21 @@ Critério de aceite:
 - changelog.
 - plano de QA.
 - relatorio de piloto.
+- estrategia de piloto.
 
 ---
 
 ## 10. Proxima acao recomendada
 
-Criar o PRD v0 do DPP Integrado e o schema inicial do banco.
+PRD v0, contrato de dados, QA anti-greenwashing, backlog Codex e estrategia de piloto ja foram registrados em `produto/decisoes/`.
+
+Proxima acao operacional: preparar um piloto assistido com 3 a 5 marcas reais usando `produto/decisoes/phyllos-dpp-v1-estrategia-piloto.md` como roteiro. A decisao de ambiente e Railway agora, com `DPP_BASE_URL=https://phyllos-production.up.railway.app`; dominio proprio fica para depois do primeiro sinal real.
 
 Ordem:
 
-1. `produto/decisoes/prd-dpp-integrado-v0.md`
-2. `data/phyllos/dpp/schema.sql`
-3. prototipo `phyllos/dpp-studio.html` como referencia de UX
-4. backend FastAPI minimo
-
+1. subir o app no Railway e validar `GET /p/{uuid}`;
+2. selecionar 5 marcas independentes com 1 a 3 pecas prontas ou quase prontas;
+3. rodar onboarding assistido de 60 minutos com uma peca por marca;
+4. publicar DPP Tier 1 por SKU/UUID, com GTIN opcional e status de evidencia visivel;
+5. registrar tempo, lacunas, objecoes e uso real do QR em `outputs/piloto-dpp-v1.csv`;
+6. decidir entre produto pago por DPP, concierge DPP ou organizacao tecnica/PLM lite.
