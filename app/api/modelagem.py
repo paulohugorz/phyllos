@@ -15,9 +15,78 @@ from app.schemas.schemas import (
     ModelagemSpecRevisao,
     ModelagemSpecUpdate,
 )
+from app.services.modelagem_matcher import (
+    build_molde_intent_spec,
+    measurement_strategy,
+    rank_variations,
+    resolve_semantic_profile,
+    select_representative_recommendations,
+)
 
 router = APIRouter(prefix="/modelagem-specs", tags=["MIE — Modelagem"])
 router_banco = APIRouter(prefix="/modelagem", tags=["Banco de Modelagens"])
+
+
+def _serializar_variacao(v: MoldeVariacao, match=None):
+    payload = {
+        "id": v.id,
+        "codigo": v.codigo,
+        "molde_nome": v.molde_base.nome,
+        "molde_categoria": v.molde_base.categoria,
+        "molde_subcategoria": v.molde_base.subcategoria,
+        "tamanho": v.tamanho,
+        "tipo_tecido": v.tipo_tecido,
+        "elasticidade": v.elasticidade,
+        "grau_ajuste": v.grau_ajuste,
+        "genero": v.genero,
+        "comprimento": v.comprimento,
+        "decote": v.decote,
+        "manga": v.manga,
+        "fechamento": v.fechamento,
+        "cos": v.cos,
+        "descricao_natural": v.descricao_natural,
+        "tags": v.tags,
+        "medidas": {
+            "busto": v.busto_molde,
+            "cintura": v.cintura_molde,
+            "quadril": v.quadril_molde,
+            "ombro": v.ombro_molde,
+            "costas": v.costas_molde,
+            "comprimento_total": v.comprimento_total_molde,
+            "gancho": v.gancho_molde,
+            "joelho": v.largura_joelho_molde,
+            "tornozelo": v.largura_tornozelo_molde,
+        },
+    }
+    if match:
+        payload["match"] = {
+            "score": match.score,
+            "papel_referencia": match.papel_referencia,
+            "motivos": list(match.motivos),
+        }
+    return payload
+
+
+def _query_variacoes_filtradas(
+    db: Session,
+    categoria: Optional[str] = None,
+    genero: Optional[str] = None,
+    tamanho: Optional[str] = None,
+    grau_ajuste: Optional[str] = None,
+    tipo_tecido: Optional[str] = None,
+):
+    q_obj = db.query(MoldeVariacao).join(MoldeBase)
+    if categoria:
+        q_obj = q_obj.filter(MoldeBase.categoria == categoria)
+    if genero:
+        q_obj = q_obj.filter(MoldeVariacao.genero == genero)
+    if tamanho:
+        q_obj = q_obj.filter(MoldeVariacao.tamanho == tamanho)
+    if grau_ajuste:
+        q_obj = q_obj.filter(MoldeVariacao.grau_ajuste == grau_ajuste)
+    if tipo_tecido:
+        q_obj = q_obj.filter(MoldeVariacao.tipo_tecido == tipo_tecido)
+    return q_obj
 
 
 @router_banco.get("/variacoes/buscar")
@@ -32,8 +101,16 @@ def buscar_variacoes(
     db: Session = Depends(get_db),
 ):
     """Busca variações do banco de modelagens por texto e filtros."""
-    q_obj = db.query(MoldeVariacao).join(MoldeBase)
+    q_obj = _query_variacoes_filtradas(db, categoria, genero, tamanho, grau_ajuste, tipo_tecido)
     if q:
+        variacoes = q_obj.all()
+        ranking_limit = len(variacoes)
+        perfil, ranked = rank_variations(q, variacoes, ranking_limit)
+        ranked = select_representative_recommendations(perfil, ranked, limit)
+        has_semantic_signal = bool(perfil.categoria_input or perfil.grau_ajuste or perfil.tipo_tecido)
+        if ranked and (has_semantic_signal or ranked[0].score > 0):
+            return [_serializar_variacao(item.variacao, item) for item in ranked if item.score > -10]
+
         for word in q.lower().split():
             pattern = f"%{word}%"
             q_obj = q_obj.filter(
@@ -44,46 +121,53 @@ def buscar_variacoes(
                     func.lower(MoldeBase.categoria).like(pattern),
                 )
             )
-    if categoria:
-        q_obj = q_obj.filter(MoldeBase.categoria == categoria)
-    if genero:
-        q_obj = q_obj.filter(MoldeVariacao.genero == genero)
-    if tamanho:
-        q_obj = q_obj.filter(MoldeVariacao.tamanho == tamanho)
-    if grau_ajuste:
-        q_obj = q_obj.filter(MoldeVariacao.grau_ajuste == grau_ajuste)
-    if tipo_tecido:
-        q_obj = q_obj.filter(MoldeVariacao.tipo_tecido == tipo_tecido)
 
     variacoes = q_obj.limit(limit).all()
-    return [
-        {
-            "id": v.id,
-            "codigo": v.codigo,
-            "molde_nome": v.molde_base.nome,
-            "molde_categoria": v.molde_base.categoria,
-            "tamanho": v.tamanho,
-            "tipo_tecido": v.tipo_tecido,
-            "elasticidade": v.elasticidade,
-            "grau_ajuste": v.grau_ajuste,
-            "genero": v.genero,
-            "comprimento": v.comprimento,
-            "decote": v.decote,
-            "manga": v.manga,
-            "descricao_natural": v.descricao_natural,
-            "tags": v.tags,
-            "medidas": {
-                "busto": v.busto_molde,
-                "cintura": v.cintura_molde,
-                "quadril": v.quadril_molde,
-                "ombro": v.ombro_molde,
-                "costas": v.costas_molde,
-                "comprimento_total": v.comprimento_total_molde,
-                "gancho": v.gancho_molde,
-            },
-        }
-        for v in variacoes
-    ]
+    return [_serializar_variacao(v) for v in variacoes]
+
+
+@router_banco.get("/referencias/recomendar")
+def recomendar_referencias_modelagem(
+    q: str = Query(..., min_length=2),
+    categoria: Optional[str] = Query(None),
+    genero: Optional[str] = Query(None),
+    tamanho: Optional[str] = Query(None),
+    grau_ajuste: Optional[str] = Query(None),
+    tipo_tecido: Optional[str] = Query(None),
+    limit: int = Query(8, le=50),
+    db: Session = Depends(get_db),
+):
+    """Recomenda referências de modelagem para uma descrição natural.
+
+    Diferente da busca textual simples, este endpoint explicita a interpretação:
+    categoria aproximada, grau de folga, preferência de tecido/construção e a
+    estratégia de medidas quando a peça pede uma base composta, como macacão.
+    """
+    perfil = resolve_semantic_profile(q)
+    q_obj = _query_variacoes_filtradas(
+        db,
+        categoria=categoria,
+        genero=genero,
+        tamanho=tamanho,
+        grau_ajuste=grau_ajuste,
+        tipo_tecido=tipo_tecido or perfil.tipo_tecido,
+    )
+    variacoes = q_obj.all()
+    ranking_limit = len(variacoes)
+    perfil, ranked = rank_variations(q, variacoes, ranking_limit)
+    ranked = select_representative_recommendations(perfil, ranked, limit)
+
+    return {
+        "query": q,
+        "perfil": perfil.as_dict(),
+        "especificacao_texto_molde": build_molde_intent_spec(q),
+        "estrategia_medidas": measurement_strategy(perfil),
+        "recomendacoes": [
+            _serializar_variacao(item.variacao, item)
+            for item in ranked
+            if item.score > -10
+        ],
+    }
 
 
 @router_banco.get("/bases/categorias")
