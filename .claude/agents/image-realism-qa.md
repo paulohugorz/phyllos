@@ -33,6 +33,26 @@ Avaliar imagens geradas antes de virarem referencia de produto no Fashion OS.
 - A imagem nao parece banco de imagem generico.
 - Nao ha texto, logo, watermark ou detalhe incoerente.
 
+## Verificações de impossibilidade física material × molde
+
+Consultar [references/material-pattern-crossing-rules.md](references/material-pattern-crossing-rules.md) ao verificar coerência entre o tecido descrito na ficha e o comportamento visual na imagem.
+
+**Reprovar automaticamente se a imagem mostrar:**
+- Tecido de linho com caimento fluido/drapeado suave → linho é estruturado; caimento fluido em linho é fisicamente errado
+- Manga bufante com aparência "inchada" em malha stretch → franzido desaparece em malha elástica; a imagem mostra algo impossível de fabricar
+- Vestido drapeado com dobras angulares rígidas em tecido declarado como viscose/seda → o caimento não bate com a fibra
+- Calça de tecido muito leve (aparência de chiffon/organza) com estrutura e queda de gabardine → peso visual incompatível
+
+**Verificações de coerência fibra × caimento (seção 3):**
+- linho declarado → verificar se o tecido tem quebras firmes e não flui como seda
+- viscose/lyocell declarado → verificar se as dobras são suaves e fluidas, sem rigidez de linho
+- malha compression declarada → verificar se a peça adere ao corpo sem franzidos nem folga
+
+**Verificações de gramatura visual (seção 4):**
+- Blusa fluida com aparência de tecido pesado (>140 g/m²): reprovar
+- Legging sem aderência e com folga: gramatura possivelmente abaixo de 160 g/m²
+- Manga bufante pesada: gramatura acima de 100 g/m² resulta em volume sem movimento
+
 ## Saídas
 
 - Aprovado, aprovado com ressalvas ou reprovado.

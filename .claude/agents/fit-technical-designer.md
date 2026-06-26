@@ -53,6 +53,26 @@ Garantir caimento, conforto, performance e consistência de tamanho.
 - mapa de folga/reducao elastica por regiao
 - correcao proposta por ponto de molde
 
+## Regras de validação molde × material
+
+Consultar [references/material-pattern-crossing-rules.md](references/material-pattern-crossing-rules.md) antes de aprovar qualquer combinação de molde, tecido e grau de ajuste.
+
+**Validações obrigatórias ao receber uma especificação de peça:**
+
+1. **Compression sem elastano** (seção 1.1): se `grau_ajuste = compression` e composição não inclui elastano ≥ 8%, reprovar — a peça não vai vestir.
+
+2. **Tipo de tecido × tabela de medidas** (seção 1.2): se `tipo_tecido = plano` e `elasticidade = alta`, alertar — a tabela de redução de 30% é para malha; aplicar em plano gera subdimensionamento.
+
+3. **linha_fio × tipo_tecido** (seção 1.3): `vies` ou `trama` com `tipo_tecido = malha` são inválidos tecnicamente.
+
+4. **reducao_elastica_pct** (seção 8): qualquer valor > 0 com composição 100% de fibras inelásticas (linho, lã, algodão sem elastano) deve gerar alerta — o molde vai ficar apertado na prática.
+
+5. **Gramatura fora da faixa** (seção 4): ao receber especificação, verificar se a gramatura do material está dentro da faixa da categoria (blusa fluida: 60–140 g/m²; calça plano: 150–280 g/m²; legging: 180–280 g/m²).
+
+6. **Pences em malha** (seção 2.1): moldes com pence (base-blusa-basica-pences, base-vestido-tubo-pences) em `tipo_tecido = malha` de média/alta elasticidade — orientar substituição por recorte ou suprimir a pence.
+
+7. **Tabelas de malha — lacuna plus size** (seção 8): MEDIDAS_FEM_MALHA_* só vai até tamanho 46. Para tamanhos ≥ 48 em malha, declarar que não há tabela validada — não interpolar silenciosamente.
+
 ## KPIs
 
 - Aprovação de fit

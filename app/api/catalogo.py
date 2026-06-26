@@ -9,10 +9,12 @@ POST /catalogo/calcular-peca            — indicadores por peça (blend + grama
 
 from __future__ import annotations
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field, model_validator
 from typing import Optional
+from sqlalchemy.orm import Session
 
+from app.core.database import get_db
 from app.services.catalogo_impacto import (
     CatalogoImpactoError,
     calcular_blend,
@@ -31,7 +33,14 @@ router = APIRouter(prefix="/catalogo", tags=["Catálogo de Impacto"])
 # ── Schemas ────────────────────────────────────────────────────────────
 
 class FibraItem(BaseModel):
-    fibra_id: str = Field(..., example="algodao_convencional")
+    fibra_id: str = Field(
+        ...,
+        example="algodao_convencional",
+        description=(
+            "ID canônico ou qualquer alias: 'cotton', 'rPET', 'TENCEL™', "
+            "'lã merino', 'Recycled Polyester', etc."
+        ),
+    )
     percentual: float = Field(..., ge=0, le=100, example=95.0)
 
 
@@ -149,6 +158,21 @@ def calcular_fatores_blend(body: BlendRequest):
             "fonte_energia_kwh_kg":    blend.fonte,
             "metodologia_fatores_impacto": blend.metodologia,
         },
+        "detalhes_por_fibra": [
+            {
+                "fibra_id":           d.fibra_id,
+                "nome_pt":            d.nome_pt,
+                "percentual":         d.percentual,
+                "co2eq_kg_por_kg":    d.co2eq_kg_por_kg,
+                "agua_l_por_kg":      d.agua_l_por_kg,
+                "energia_mj_por_kg":  d.energia_mj_por_kg,
+                "co2_contribuicao":   round(d.co2eq_kg_por_kg * d.percentual / 100, 4),
+                "confianca":          d.confianca,
+                "fonte":              d.fonte,
+                "origem_dado":        d.origem_dado,
+            }
+            for d in blend.detalhes
+        ],
         "meta": {
             "fibras_usadas": blend.fibras_usadas,
             "confianca": blend.confianca,
@@ -156,6 +180,112 @@ def calcular_fatores_blend(body: BlendRequest):
             "fonte": blend.fonte,
             "aviso": blend.aviso,
         },
+    }
+
+
+@router.get("/fibras/{fibra_id}/evidencias")
+def listar_evidencias(fibra_id: str, db: Session = Depends(get_db)):
+    """
+    Lista as evidências de impacto coletadas para uma fibra específica.
+
+    Retorna todos os valores com rastreabilidade completa:
+    fonte, metodologia, escopo, região, confiança e trecho original.
+    Endpoint-chave para o DPP e para futuros clientes B2B do catálogo.
+    """
+    from app.models.models import ImpactEvidence, ImpactMaterial, ImpactSource
+
+    material = db.query(ImpactMaterial).filter_by(fibra_id=fibra_id).first()
+    evidences = (
+        db.query(ImpactEvidence)
+        .filter_by(fibra_id=fibra_id)
+        .order_by(ImpactEvidence.confianca.desc(), ImpactEvidence.ano_referencia.desc())
+        .all()
+    )
+
+    if not material and not evidences:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Nenhuma evidência de impacto coletada para fibra '{fibra_id}'. "
+                   "Execute o seed: python3 -m impact_collector.flows.seed_reference_data",
+        )
+
+    return {
+        "fibra_id": fibra_id,
+        "agregado": {
+            "co2eq_kg_por_kg":     material.co2eq_kg_por_kg_agg  if material else None,
+            "agua_l_por_kg":       material.agua_l_por_kg_agg    if material else None,
+            "energia_mj_por_kg":   material.energia_mj_por_kg_agg if material else None,
+            "co2eq_range":         [material.co2eq_range_min, material.co2eq_range_max] if material else None,
+            "agua_range":          [material.agua_range_min,  material.agua_range_max]  if material else None,
+            "confianca":           material.confianca_agg         if material else None,
+            "n_evidencias":        material.n_evidencias          if material else len(evidences),
+            "regra_agregacao":     material.regra_agregacao       if material else None,
+            "atualizado_em":       material.atualizado_em.isoformat() if material and material.atualizado_em else None,
+        },
+        "evidencias": [
+            {
+                "id": ev.id,
+                "co2eq_kg_por_kg":   ev.co2eq_kg_por_kg,
+                "agua_l_por_kg":     ev.agua_l_por_kg,
+                "energia_mj_por_kg": ev.energia_mj_por_kg,
+                "escopo_lca":        ev.escopo_lca,
+                "metodologia_acv":   ev.metodologia_acv,
+                "regiao_origem":     ev.regiao_origem,
+                "ano_referencia":    ev.ano_referencia,
+                "confianca":         ev.confianca,
+                "validado_humano":   ev.validado_humano,
+                "extraction_model":  ev.extraction_model,
+                "trecho_original":   ev.trecho_original,
+                "nota_curadoria":    ev.nota_curadoria,
+                "fonte": {
+                    "nome":     ev.source.nome if ev.source else None,
+                    "doi":      ev.source.doi  if ev.source else None,
+                    "url":      ev.source.url  if ev.source else None,
+                    "titulo":   ev.source.titulo if ev.source else None,
+                    "journal":  ev.source.journal if ev.source else None,
+                    "ano":      ev.source.ano_publicacao if ev.source else None,
+                },
+                "coletado_em": ev.criado_em.isoformat() if ev.criado_em else None,
+            }
+            for ev in evidences
+        ],
+        "meta": {
+            "aviso": (
+                "Valores com confiança 'media' são estimativas de síntese. "
+                "Para claims legais no DPP, use apenas fontes com confiança 'alta' (EPD verificada ou LCA primário)."
+            ) if any(ev.confianca == "media" for ev in evidences) else None,
+        },
+    }
+
+
+@router.get("/impacto/resumo")
+def resumo_banco_impacto(db: Session = Depends(get_db)):
+    """
+    Resumo do banco de dados de impacto — quantas fibras cobertas, distribuição de confiança.
+    """
+    from app.models.models import ImpactEvidence, ImpactMaterial
+
+    materials = db.query(ImpactMaterial).all()
+    total_ev = db.query(ImpactEvidence).count()
+    alta = db.query(ImpactEvidence).filter_by(confianca="alta").count()
+    media = db.query(ImpactEvidence).filter_by(confianca="media").count()
+    baixa = db.query(ImpactEvidence).filter_by(confianca="baixa").count()
+
+    return {
+        "total_evidencias": total_ev,
+        "fibras_cobertas": len(materials),
+        "distribuicao_confianca": {"alta": alta, "media": media, "baixa": baixa},
+        "fibras": [
+            {
+                "fibra_id":        m.fibra_id,
+                "nome_pt":         m.nome_pt,
+                "co2eq_agg":       m.co2eq_kg_por_kg_agg,
+                "agua_agg":        m.agua_l_por_kg_agg,
+                "n_evidencias":    m.n_evidencias,
+                "confianca":       m.confianca_agg,
+            }
+            for m in sorted(materials, key=lambda x: x.fibra_id)
+        ],
     }
 
 

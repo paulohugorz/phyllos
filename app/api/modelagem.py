@@ -4,10 +4,11 @@ from datetime import datetime, timezone
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import func, or_, distinct
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
-from app.models.models import ModelagemSpec, Peca
+from app.models.models import ModelagemSpec, Peca, MoldeBase, MoldeVariacao
 from app.schemas.schemas import (
     ModelagemSpecCreate,
     ModelagemSpecOut,
@@ -16,6 +17,80 @@ from app.schemas.schemas import (
 )
 
 router = APIRouter(prefix="/modelagem-specs", tags=["MIE — Modelagem"])
+router_banco = APIRouter(prefix="/modelagem", tags=["Banco de Modelagens"])
+
+
+@router_banco.get("/variacoes/buscar")
+def buscar_variacoes(
+    q: Optional[str] = Query(None),
+    categoria: Optional[str] = Query(None),
+    genero: Optional[str] = Query(None),
+    tamanho: Optional[str] = Query(None),
+    grau_ajuste: Optional[str] = Query(None),
+    tipo_tecido: Optional[str] = Query(None),
+    limit: int = Query(12, le=50),
+    db: Session = Depends(get_db),
+):
+    """Busca variações do banco de modelagens por texto e filtros."""
+    q_obj = db.query(MoldeVariacao).join(MoldeBase)
+    if q:
+        for word in q.lower().split():
+            pattern = f"%{word}%"
+            q_obj = q_obj.filter(
+                or_(
+                    func.lower(MoldeVariacao.descricao_natural).like(pattern),
+                    func.lower(MoldeVariacao.tags).like(pattern),
+                    func.lower(MoldeBase.nome).like(pattern),
+                    func.lower(MoldeBase.categoria).like(pattern),
+                )
+            )
+    if categoria:
+        q_obj = q_obj.filter(MoldeBase.categoria == categoria)
+    if genero:
+        q_obj = q_obj.filter(MoldeVariacao.genero == genero)
+    if tamanho:
+        q_obj = q_obj.filter(MoldeVariacao.tamanho == tamanho)
+    if grau_ajuste:
+        q_obj = q_obj.filter(MoldeVariacao.grau_ajuste == grau_ajuste)
+    if tipo_tecido:
+        q_obj = q_obj.filter(MoldeVariacao.tipo_tecido == tipo_tecido)
+
+    variacoes = q_obj.limit(limit).all()
+    return [
+        {
+            "id": v.id,
+            "codigo": v.codigo,
+            "molde_nome": v.molde_base.nome,
+            "molde_categoria": v.molde_base.categoria,
+            "tamanho": v.tamanho,
+            "tipo_tecido": v.tipo_tecido,
+            "elasticidade": v.elasticidade,
+            "grau_ajuste": v.grau_ajuste,
+            "genero": v.genero,
+            "comprimento": v.comprimento,
+            "decote": v.decote,
+            "manga": v.manga,
+            "descricao_natural": v.descricao_natural,
+            "tags": v.tags,
+            "medidas": {
+                "busto": v.busto_molde,
+                "cintura": v.cintura_molde,
+                "quadril": v.quadril_molde,
+                "ombro": v.ombro_molde,
+                "costas": v.costas_molde,
+                "comprimento_total": v.comprimento_total_molde,
+                "gancho": v.gancho_molde,
+            },
+        }
+        for v in variacoes
+    ]
+
+
+@router_banco.get("/bases/categorias")
+def listar_categorias(db: Session = Depends(get_db)):
+    """Lista categorias distintas de moldes base disponíveis."""
+    cats = db.query(distinct(MoldeBase.categoria)).all()
+    return [c[0] for c in cats if c[0]]
 
 
 def _get_spec_or_404(peca_id: int, db: Session) -> ModelagemSpec:
