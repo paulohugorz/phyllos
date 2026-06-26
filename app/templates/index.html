@@ -140,6 +140,119 @@
     }
     .placeholder-sub { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
+    /* ── Desenho técnico ── */
+    .technical-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+    .technical-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr);
+      gap: 18px;
+      align-items: start;
+    }
+    .technical-sheet,
+    .technical-panel,
+    .technical-upload {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .technical-sheet { padding: 18px; }
+    .technical-sheet-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .technical-drawing {
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        linear-gradient(rgba(15,15,13,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15,15,13,.035) 1px, transparent 1px);
+      background-size: 24px 24px;
+      border-radius: 4px;
+      padding: 16px;
+    }
+    .technical-drawing svg {
+      width: min(100%, 520px);
+      height: auto;
+      display: block;
+    }
+    .technical-panel { padding: 16px; }
+    .technical-panel + .technical-upload { margin-top: 14px; }
+    .technical-block { padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .technical-block:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+    .technical-label {
+      font-size: 10px;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .technical-value { font-size: 14px; color: var(--obsidian); line-height: 1.5; }
+    .technical-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .technical-pill {
+      font-size: 11px;
+      padding: 4px 9px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      color: var(--obsidian);
+      background: #fafaf8;
+    }
+    .technical-warning {
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--muted);
+      background: #f5f2eb;
+      border-radius: 4px;
+      padding: 12px;
+    }
+    .technical-upload { padding: 16px; }
+    .technical-upload-area {
+      border: 1.5px dashed var(--border-md);
+      border-radius: 5px;
+      padding: 22px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      background: #fafaf8;
+    }
+    .technical-upload-area:hover { border-color: var(--gold); background: #fff; }
+    .technical-upload-icon { font-size: 26px; margin-bottom: 8px; opacity: .35; }
+    .technical-upload-title { font-size: 13px; color: var(--obsidian); }
+    .technical-upload-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .technical-preview { margin-top: 12px; display: none; }
+    .technical-preview img {
+      max-width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: block;
+    }
+    @media (max-width: 760px) {
+      .technical-intro { display: block; }
+      .technical-grid { grid-template-columns: 1fr; }
+      .technical-drawing { min-height: 300px; }
+    }
+
     /* ── Painel de sustentabilidade ── */
     .painel-wrap { max-width: 680px; margin: 0 auto; padding: 32px 20px 60px; }
     .painel-heading {
@@ -530,6 +643,71 @@
     .pct-total.ok  { color: var(--green); }
     .pct-total.err { color: var(--red); }
 
+    /* ── Cálculo de impacto pelo catálogo ── */
+    .blend-calc-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .btn-calcular-blend {
+      background: none;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      color: var(--green);
+      padding: 6px 14px;
+      transition: border-color 0.15s, opacity 0.15s;
+      white-space: nowrap;
+    }
+    .btn-calcular-blend:hover { border-color: var(--green); opacity: 0.85; }
+    .btn-calcular-blend:disabled { opacity: 0.35; cursor: default; }
+    .blend-calc-hint {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .blend-resultado {
+      margin-top: 12px;
+      border: 1px solid var(--border-md);
+      border-radius: 4px;
+      padding: 14px 16px;
+      background: #fafaf8;
+    }
+    .blend-resultado.hidden { display: none; }
+    .blend-resultado-titulo {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .blend-indicadores {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .blend-ind { text-align: center; }
+    .blend-ind-valor { font-size: 17px; font-weight: 600; color: var(--obsidian); }
+    .blend-ind-unidade { font-size: 10px; color: var(--muted); }
+    .blend-ind-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
+    .blend-meta { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
+    .blend-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+    .blend-badge.media  { color: var(--gold);  border-color: var(--gold); }
+    .blend-badge.alta   { color: var(--green); border-color: var(--green); }
+    .blend-badge.baixa  { color: var(--red);   border-color: var(--red); }
+    .blend-aviso { font-size: 11px; color: var(--muted); font-style: italic; flex: 1; }
+
     .col-headers {
       display: grid;
       gap: 8px;
@@ -919,6 +1097,150 @@
     .inline-pct span { font-size: 14px; color: var(--muted); }
 
     ::selection { background: rgba(184,154,106,0.15); }
+
+    /* ── Banco de Modelagens ── */
+    .molde-secao {
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+    .molde-secao-titulo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--obsidian);
+      margin-bottom: 4px;
+    }
+    .molde-secao-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .molde-busca-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .molde-busca-row input {
+      flex: 1;
+      padding: 10px 13px;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      outline: none;
+      background: #fff;
+      transition: border-color 0.15s;
+    }
+    .molde-busca-row input:focus { border-color: var(--gold); }
+    .molde-filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .molde-filtros select {
+      padding: 7px 10px;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      background: #fff;
+      color: var(--obsidian);
+      outline: none;
+      cursor: pointer;
+    }
+    .molde-resultados {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .molde-card {
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 13px 15px;
+      cursor: pointer;
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .molde-card:hover { border-color: var(--gold); }
+    .molde-card.ativo {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(184,154,106,0.18);
+      background: #fdfaf5;
+    }
+    .molde-card-nome {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--obsidian);
+      margin-bottom: 3px;
+    }
+    .molde-card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .molde-card-medidas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .molde-medida {
+      font-size: 11px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 7px;
+      color: var(--obsidian);
+    }
+    .molde-card-footer {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .molde-codigo {
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .molde-usar-btn {
+      font-size: 11px;
+      padding: 4px 10px;
+      border: 1px solid var(--gold);
+      border-radius: 3px;
+      color: var(--gold);
+      background: transparent;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      transition: background 0.15s, color 0.15s;
+    }
+    .molde-usar-btn:hover, .molde-card.ativo .molde-usar-btn {
+      background: var(--gold);
+      color: #fff;
+    }
+    .molde-selecionado-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(184,154,106,0.12);
+      border: 1px solid rgba(184,154,106,0.35);
+      border-radius: 3px;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: var(--obsidian);
+      margin-top: 10px;
+    }
+    .molde-selecionado-badge button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      padding: 0 0 0 4px;
+    }
+    .molde-empty { font-size: 13px; color: var(--muted); padding: 12px 0; text-align: center; }
   </style>
 </head>
 <body>
@@ -942,17 +1264,20 @@
       <div class="nav-stage locked" id="ns-tecnico" onclick="App.irParaTecnico()">
         <span class="nav-stage-num">04</span> Técnico
       </div>
-      <div class="nav-stage locked" id="ns-ficha" onclick="App.irParaMaterial()">
-        <span class="nav-stage-num">05</span> Ficha & Material
+      <div class="nav-stage locked" id="ns-ficha" onclick="App.irParaFicha()">
+        <span class="nav-stage-num">05</span> Ficha Técnica
+      </div>
+      <div class="nav-stage locked" id="ns-material" onclick="App.irParaMaterial()">
+        <span class="nav-stage-num">06</span> Material
       </div>
       <div class="nav-stage locked" id="ns-corte" onclick="App.irParaEtapas()">
-        <span class="nav-stage-num">06</span> Plano de Corte
+        <span class="nav-stage-num">07</span> Plano de Corte
       </div>
       <div class="nav-stage locked" id="ns-validar" onclick="App.irParaValidar()">
-        <span class="nav-stage-num">07</span> Validar
+        <span class="nav-stage-num">08</span> Validar
       </div>
       <div class="nav-stage" id="ns-painel" onclick="App.irParaPainel()">
-        <span class="nav-stage-num">08</span> Painel
+        <span class="nav-stage-num">09</span> Painel
       </div>
     </div>
   </nav>
@@ -986,16 +1311,174 @@
   </div>
 
   <!-- ══════════════════════════════════════════════════════
+       TELA — FICHA TÉCNICA
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-ficha" class="screen">
+    <div class="screen-wrap">
+      <div class="back-bar">
+        <button class="btn-back" onclick="App.irParaTecnico()">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Desenho Técnico
+        </button>
+        <span id="ficha-titulo" class="back-bar-titulo"></span>
+      </div>
+
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:400;margin-bottom:4px">Ficha Técnica</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">O que define esta peça como produto — identidade, estrutura e intenção.</div>
+
+      <!-- Identidade da peça -->
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">Identidade</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Categoria</label>
+          <select id="ficha-categoria" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Calça</option>
+            <option>Saia</option>
+            <option>Vestido</option>
+            <option>Blusa</option>
+            <option>Camisa</option>
+            <option>Casaco / Sobretudo</option>
+            <option>Jaqueta</option>
+            <option>Macacão</option>
+            <option>Conjunto</option>
+            <option>Bermuda / Short</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Silhueta</label>
+          <select id="ficha-silhueta" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Reta / Tubinho</option>
+            <option>A-line</option>
+            <option>Ampla / Oversized</option>
+            <option>Ajustada / Slim</option>
+            <option>Evasê</option>
+            <option>Wrap / Cruzado</option>
+            <option>Cargo / Funcional</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Comprimento</label>
+          <select id="ficha-comprimento" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Curto (acima do joelho)</option>
+            <option>Midi (joelho)</option>
+            <option>Longo (tornozelo)</option>
+            <option>Cropped</option>
+            <option>Maxi</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Ocasião de uso</label>
+          <select id="ficha-ocasiao" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Casual / Dia a dia</option>
+            <option>Trabalho / Corporativo</option>
+            <option>Treino / Esporte</option>
+            <option>Social / Festa</option>
+            <option>Praia / Piscina</option>
+            <option>Outdoor / Aventura</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Construção -->
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">Construção</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Tipo de modelagem</label>
+          <select id="ficha-modelagem" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Plana / Industrial</option>
+            <option>Moulage</option>
+            <option>Mista</option>
+            <option>Paramétrica</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Tipo de costura</label>
+          <select id="ficha-costura" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Overloque + Pespoint</option>
+            <option>Flatlock</option>
+            <option>Overlock + Caseado</option>
+            <option>Francesa</option>
+            <option>Inglesa</option>
+            <option>Invisível</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Fechamento</label>
+          <select id="ficha-fechamento" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Elástico</option>
+            <option>Zíper invisível</option>
+            <option>Zíper aparente</option>
+            <option>Botões</option>
+            <option>Cordão</option>
+            <option>Velcro</option>
+            <option>Sem fechamento</option>
+          </select>
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Cós / Acabamento</label>
+          <select id="ficha-cos" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:13px;outline:none;background:#fff;color:var(--obsidian)">
+            <option value="">Selecione</option>
+            <option>Cós inteiro</option>
+            <option>Cós embutido</option>
+            <option>Sem cós / Elástico nu</option>
+            <option>Gola / Decote específico</option>
+            <option>Não se aplica</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Aviamentos -->
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">Aviamentos obrigatórios</div>
+      <div class="field" style="margin-bottom:20px">
+        <div class="desc-chips" id="ficha-aviamentos-chips">
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Zíper</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Botões</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Elástico</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Entretela</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Forro</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Viés</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Cordão</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Ilhós</span>
+          <span class="desc-chip" onclick="App.toggleDescChip(this)">Rebite</span>
+        </div>
+      </div>
+
+      <!-- Observações -->
+      <div class="field" style="margin-bottom:24px">
+        <label>Observações para a costureira</label>
+        <textarea id="ficha-obs" rows="3"
+          placeholder="ex: Atenção ao sentido do fio na frente. Costurar bolso antes do forro."
+          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
+      </div>
+
+      <div class="screen-footer">
+        <button class="btn btn-primary" onclick="App.salvarFicha()">Salvar ficha</button>
+        <button class="btn btn-outline" onclick="App.irParaMaterial()">Próximo: material →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
        TELA 2 — MATERIAL
   ══════════════════════════════════════════════════════ -->
   <div id="screen-material" class="screen">
     <div class="screen-wrap">
       <div class="back-bar">
-        <button class="btn-back" onclick="App.irParaBusca()">
+        <button class="btn-back" onclick="App.irParaFicha()">
           <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
             <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Busca
+          Ficha Técnica
         </button>
       </div>
 
@@ -1064,7 +1547,17 @@
         </div>
         <div class="fibras-list" id="fibras-list"></div>
         <button class="btn-add" onclick="App.addFibra()">+ Adicionar material</button>
+        <datalist id="fibras-catalog-list"></datalist>
         <div class="pct-total" id="pct-total"></div>
+
+        <!-- Calcular impacto pelo catálogo -->
+        <div class="blend-calc-bar" id="blend-calc-bar" style="display:none">
+          <button class="btn-calcular-blend" id="btn-calcular-blend" onclick="App.calcularImpactoCatalogo()">
+            Calcular impacto estimado
+          </button>
+          <span class="blend-calc-hint">pelo catálogo Phyllos</span>
+        </div>
+        <div class="blend-resultado hidden" id="blend-resultado"></div>
       </div>
 
       <hr class="section-sep" />
@@ -1259,6 +1752,65 @@
         </div>
       </div>
 
+      <!-- ── Banco de Modelagens ── -->
+      <div class="molde-secao">
+        <div class="molde-secao-titulo">Banco de modelagens</div>
+        <div class="molde-secao-sub">Encontre o molde base e a variação de tamanho e caimento para esta peça.</div>
+
+        <div class="molde-busca-row">
+          <input id="molde-q" type="text" placeholder="ex: saia midi semi-ajustada, calça folgada, blusa raglan…"
+            onkeydown="if(event.key==='Enter') App.buscarMoldes()" />
+          <button class="btn btn-outline" onclick="App.buscarMoldes()" style="white-space:nowrap;padding:0 16px">Buscar</button>
+        </div>
+
+        <div class="molde-filtros">
+          <select id="molde-genero" onchange="App.buscarMoldes()">
+            <option value="">Gênero</option>
+            <option value="feminino">Feminino</option>
+            <option value="masculino">Masculino</option>
+            <option value="infantil">Infantil</option>
+            <option value="unissex">Unissex</option>
+          </select>
+          <select id="molde-tamanho" onchange="App.buscarMoldes()">
+            <option value="">Tamanho</option>
+            <option value="PP">PP</option>
+            <option value="P">P</option>
+            <option value="M">M</option>
+            <option value="G">G</option>
+            <option value="GG">GG</option>
+            <option value="EGG">EGG</option>
+            <option value="36">36</option><option value="38">38</option>
+            <option value="40">40</option><option value="42">42</option>
+            <option value="44">44</option><option value="46">46</option>
+            <option value="48">48</option><option value="50">50</option>
+            <option value="52">52</option><option value="54">54</option>
+          </select>
+          <select id="molde-ajuste" onchange="App.buscarMoldes()">
+            <option value="">Caimento</option>
+            <option value="compressao">Compressão</option>
+            <option value="fitted">Ajustado</option>
+            <option value="semi">Semi-ajustado</option>
+            <option value="relaxed">Folgado</option>
+            <option value="oversized">Oversized</option>
+          </select>
+          <select id="molde-tecido" onchange="App.buscarMoldes()">
+            <option value="">Tecido</option>
+            <option value="plano">Plano</option>
+            <option value="malha">Malha</option>
+          </select>
+        </div>
+
+        <div id="molde-resultados" class="molde-resultados"></div>
+
+        <div id="molde-selecionado" style="display:none">
+          <div class="molde-selecionado-badge">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span id="molde-selecionado-label"></span>
+            <button onclick="App.limparMolde()" title="Remover seleção">&#215;</button>
+          </div>
+        </div>
+      </div>
+
       <div class="screen-footer" style="margin-top:24px">
         <button class="btn btn-primary" onclick="App.irParaBusca()">Selecionar ou criar peça →</button>
       </div>
@@ -1278,11 +1830,77 @@
         <span id="ajustes-titulo" class="back-bar-titulo"></span>
       </div>
 
-      <div class="field" style="margin-bottom:20px">
-        <label>Observações e ajustes da peça</label>
-        <textarea id="ajustes-notas" rows="5"
-          placeholder="ex: Aumentar 2cm na lateral. Reduzir largura do ombro. Cliente prefere abertura lateral no lugar de zíper."
-          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
+      <!-- Medidas sobre o molde -->
+      <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:18px;font-weight:400;margin-bottom:4px">Medidas do corpo</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Preencha as medidas reais da cliente para ajustar o molde base.</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Altura (cm)</label>
+          <input id="med-altura" type="number" placeholder="168" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Busto (cm)</label>
+          <input id="med-busto" type="number" placeholder="90" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Cintura (cm)</label>
+          <input id="med-cintura" type="number" placeholder="72" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Quadril (cm)</label>
+          <input id="med-quadril" type="number" placeholder="98" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Ombro (cm)</label>
+          <input id="med-ombro" type="number" placeholder="38" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Comprimento torso (cm)</label>
+          <input id="med-torso" type="number" placeholder="42" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Manga (cm)</label>
+          <input id="med-manga" type="number" placeholder="60" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+        <div class="field">
+          <label style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)">Entrepernas (cm)</label>
+          <input id="med-entrepernas" type="number" placeholder="75" style="width:100%;padding:10px 12px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;outline:none;background:#fff">
+        </div>
+      </div>
+
+      <!-- Visualização do molde com medidas sobrepostas -->
+      <div style="background:#f8f7f5;border:1px solid var(--border);border-radius:6px;padding:20px;margin-bottom:20px;text-align:center">
+        <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Referência visual do molde</div>
+        <svg viewBox="0 0 240 320" style="max-width:180px;width:100%;" xmlns="http://www.w3.org/2000/svg">
+          <!-- silhueta frontal simplificada -->
+          <g stroke="#333" stroke-width="1.2" fill="none">
+            <!-- cabeça -->
+            <ellipse cx="120" cy="28" rx="18" ry="22" fill="#e8e4de" stroke="#bbb"/>
+            <!-- pescoço -->
+            <rect x="113" y="48" width="14" height="12" rx="2" fill="#e8e4de" stroke="#bbb"/>
+            <!-- tronco -->
+            <path d="M88 60 Q72 68 70 100 Q68 130 75 160 L165 160 Q172 130 170 100 Q168 68 152 60 Z" fill="#ede9e2" stroke="#bbb"/>
+            <!-- ombros -->
+            <line x1="88" y1="62" x2="70" y2="75" stroke="#999" stroke-dasharray="3,2"/>
+            <line x1="152" y1="62" x2="170" y2="75" stroke="#999" stroke-dasharray="3,2"/>
+            <!-- busto -->
+            <line x1="72" y1="90" x2="168" y2="90" stroke="#c8a97a" stroke-width="1" stroke-dasharray="4,2"/>
+            <!-- cintura -->
+            <line x1="74" y1="128" x2="166" y2="128" stroke="#c8a97a" stroke-width="1" stroke-dasharray="4,2"/>
+            <!-- quadril -->
+            <line x1="70" y1="155" x2="170" y2="155" stroke="#c8a97a" stroke-width="1" stroke-dasharray="4,2"/>
+            <!-- pernas -->
+            <path d="M75 160 Q72 200 70 260 L100 260 Q105 220 120 200 Q135 220 140 260 L170 260 Q168 200 165 160 Z" fill="#ede9e2" stroke="#bbb"/>
+          </g>
+          <!-- labels -->
+          <text x="174" y="93" font-size="8" fill="#c8a97a" font-family="Jost,sans-serif">busto</text>
+          <text x="170" y="131" font-size="8" fill="#c8a97a" font-family="Jost,sans-serif">cintura</text>
+          <text x="172" y="158" font-size="8" fill="#c8a97a" font-family="Jost,sans-serif">quadril</text>
+          <text x="30" y="70" font-size="8" fill="#888" font-family="Jost,sans-serif">ombro</text>
+          <line x1="56" y1="68" x2="72" y2="68" stroke="#888" stroke-width=".8"/>
+        </svg>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px">As medidas preenchidas ajustam o molde base automaticamente.</div>
       </div>
 
       <div class="field" style="margin-bottom:20px">
@@ -1298,17 +1916,14 @@
       </div>
 
       <div class="field" style="margin-bottom:20px">
-        <label>Prioridade</label>
-        <div class="desc-chips">
-          <span class="desc-chip" onclick="App.toggleDescChip(this)">Urgente</span>
-          <span class="desc-chip" onclick="App.toggleDescChip(this)">Normal</span>
-          <span class="desc-chip" onclick="App.toggleDescChip(this)">Aguardando insumo</span>
-          <span class="desc-chip" onclick="App.toggleDescChip(this)">Em revisão</span>
-        </div>
+        <label>Observações adicionais</label>
+        <textarea id="ajustes-notas" rows="3"
+          placeholder="ex: Reduzir 2cm na lateral. Cliente prefere abertura lateral no lugar de zíper."
+          style="width:100%;padding:11px 13px;border:1px solid var(--border-md);border-radius:3px;font-family:'Jost',sans-serif;font-size:14px;font-weight:300;resize:vertical;outline:none;background:#fff"></textarea>
       </div>
 
       <div class="screen-footer">
-        <button class="btn btn-primary" onclick="App.salvarAjustes()">Salvar ajustes</button>
+        <button class="btn btn-primary" onclick="App.salvarAjustes()">Salvar medidas</button>
         <button class="btn btn-outline" onclick="App.irParaTecnico()">Próximo: desenho técnico →</button>
       </div>
     </div>
@@ -1327,36 +1942,69 @@
         <span id="tecnico-titulo" class="back-bar-titulo"></span>
       </div>
 
-      <div class="placeholder-wrap" style="padding-top:40px;text-align:left;max-width:100%">
-        <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:400;margin-bottom:6px">Desenho Técnico</div>
-        <div style="font-size:13px;color:var(--muted);margin-bottom:28px">Anexe o esboço ou o arquivo de modelagem da peça.</div>
-
-        <div id="tecnico-upload-area"
-          style="border:2px dashed var(--border-md);border-radius:6px;padding:40px;text-align:center;cursor:pointer;transition:border-color .15s;background:#fff"
-          onclick="document.getElementById('tecnico-file-input').click()"
-          ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
-          ondragleave="this.style.borderColor=''"
-          ondrop="App.handleTecnicoDrop(event)">
-          <div style="font-size:32px;margin-bottom:12px;opacity:.4">📐</div>
-          <div style="font-size:14px;color:var(--muted)">Arraste uma imagem ou clique para selecionar</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:4px">PNG, JPG, SVG ou PDF · máx. 10 MB</div>
+      <div class="technical-intro">
+        <div>
+          <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-weight:400;margin-bottom:6px">Desenho Técnico</div>
+          <div style="font-size:13px;color:var(--muted);max-width:560px">Revise a frente, costas, linhas de construção e componentes básicos antes de seguir para a ficha técnica.</div>
         </div>
-        <input type="file" id="tecnico-file-input" accept="image/*,.pdf,.svg" style="display:none" onchange="App.handleTecnicoFile(this)" />
+        <button class="btn btn-outline" onclick="App.renderDesenhoTecnico()">Atualizar desenho</button>
+      </div>
 
-        <div id="tecnico-preview" style="margin-top:16px;display:none">
-          <img id="tecnico-img" style="max-width:100%;border:1px solid var(--border);border-radius:4px" />
-          <div style="margin-top:8px;display:flex;gap:8px">
-            <button class="btn btn-ghost" onclick="App.limparTecnico()">Remover</button>
+      <div class="technical-grid">
+        <div class="technical-sheet">
+          <div class="technical-sheet-top">
+            <span id="tecnico-sheet-label">Peça selecionada</span>
+            <span>Frente + costas</span>
           </div>
+          <div id="tecnico-drawing" class="technical-drawing"></div>
         </div>
 
-        <div style="margin-top:24px;padding:14px;background:#f5f2eb;border-radius:4px;font-size:12px;color:var(--muted);line-height:1.6">
-          <strong style="color:var(--obsidian)">Em breve:</strong> integração com Valentina Project para modelagem paramétrica e exportação de moldes em DXF.
+        <div>
+          <div class="technical-panel">
+            <div class="technical-block">
+              <div class="technical-label">Base técnica</div>
+              <div id="tecnico-base" class="technical-value">—</div>
+            </div>
+            <div class="technical-block">
+              <div class="technical-label">Medidas usadas</div>
+              <div id="tecnico-medidas" class="technical-value">—</div>
+            </div>
+            <div class="technical-block">
+              <div class="technical-label">Componentes visíveis</div>
+              <div id="tecnico-componentes" class="technical-list"></div>
+            </div>
+            <div class="technical-block">
+              <div class="technical-label">Conferência</div>
+              <div id="tecnico-alerta" class="technical-warning">—</div>
+            </div>
+          </div>
+
+          <div class="technical-upload">
+            <div class="technical-label">Referência complementar</div>
+            <div id="tecnico-upload-area"
+              class="technical-upload-area"
+              onclick="document.getElementById('tecnico-file-input').click()"
+              ondragover="event.preventDefault();this.style.borderColor='var(--gold)'"
+              ondragleave="this.style.borderColor=''"
+              ondrop="App.handleTecnicoDrop(event)">
+              <div class="technical-upload-icon">+</div>
+              <div class="technical-upload-title">Anexar esboço, imagem ou SVG</div>
+              <div class="technical-upload-sub">PNG, JPG, SVG ou PDF · máx. 10 MB</div>
+            </div>
+            <input type="file" id="tecnico-file-input" accept="image/*,.pdf,.svg" style="display:none" onchange="App.handleTecnicoFile(this)" />
+
+            <div id="tecnico-preview" class="technical-preview">
+              <img id="tecnico-img" />
+              <div style="margin-top:8px;display:flex;gap:8px">
+                <button class="btn btn-ghost" onclick="App.limparTecnico()">Remover referência</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="screen-footer">
-        <button class="btn btn-primary" onclick="App.irParaMaterial()">Próximo: ficha & material →</button>
+        <button class="btn btn-primary" onclick="App.irParaFicha()">Próximo: ficha técnica →</button>
         <button class="btn btn-ghost" onclick="App.irParaAjustes()">← Voltar</button>
       </div>
     </div>
@@ -1405,6 +2053,37 @@
           <tr><td colspan="5" style="text-align:center;color:var(--muted);padding:24px">Carregando…</td></tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       TELA — PASSAPORTE PUBLICADO (sucesso)
+  ══════════════════════════════════════════════════════ -->
+  <div id="screen-passaporte" class="screen">
+    <div class="list-wrap" style="max-width:480px;text-align:center;padding-top:56px">
+
+      <div style="font-size:42px;margin-bottom:16px">✓</div>
+      <div class="list-heading" id="pass-nome" style="margin-bottom:8px">Passaporte publicado</div>
+      <div class="list-sub" id="pass-codigo" style="margin-bottom:32px"></div>
+
+      <div style="display:inline-block;background:#fff;border:1px solid var(--border);border-radius:6px;padding:16px;margin-bottom:24px">
+        <img id="pass-qr" src="" alt="QR Code" style="width:180px;height:180px;display:block" />
+      </div>
+
+      <div style="margin-bottom:28px">
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Link público do passaporte</div>
+        <div style="display:flex;gap:8px;justify-content:center;align-items:center">
+          <a id="pass-link" href="#" target="_blank" style="font-size:13px;color:var(--gold);word-break:break-all;text-decoration:none;border-bottom:1px solid rgba(184,154,106,.3)"></a>
+          <button onclick="App.copiarLinkPassaporte()" style="font-size:11px;padding:4px 10px;border:1px solid var(--border-md);border-radius:3px;cursor:pointer;background:#fff;white-space:nowrap">Copiar</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a id="pass-etiqueta" href="#" target="_blank" class="btn btn-ghost" style="font-size:13px;padding:10px 18px">Imprimir etiqueta</a>
+        <button onclick="App.irParaPainel()" class="btn btn-ghost" style="font-size:13px;padding:10px 18px">Ver painel</button>
+        <button onclick="App.abrirModalNovaPeca()" class="btn btn-primary" style="font-size:13px;padding:10px 18px">Nova peça</button>
+      </div>
+
     </div>
   </div>
 
@@ -1507,6 +2186,9 @@
     pecaAtual:   null,        // objeto peça selecionada
     fichaExiste: false,       // se já existe ficha técnica
     etapas:      [],          // etapas carregadas
+    catalogoFibrasMap: {},    // nome_pt → fibra_id (carregado do catálogo de impacto)
+    ultimoBlend: null,        // último resultado de POST /catalogo/calcular-blend
+    moldeVariacao: null,      // variação de molde selecionada no banco de modelagens
   };
 
   /* ═══════════════════════════════════════════════════
@@ -1522,6 +2204,7 @@
 
   function atualizarNav(tela) {
     const nav = document.getElementById('header-nav');
+    if (!nav) return;
     const steps = [
       { id: 'screen-busca',    label: 'Busca'    },
       { id: 'screen-material', label: 'Material' },
@@ -1591,8 +2274,7 @@
         App._carregarMateriaisVinculados(peca.codigo),
       ]);
       App.preencherTelaMaterial();
-      mostrarTela('screen-material');
-      App.setNavStage('ns-ficha');
+      App.irParaAjustes();
     },
 
     /* ── Navegação de estágios ── */
@@ -1603,7 +2285,7 @@
       if (el) el.classList.add('active');
       // Desbloqueia etapas 03-07 quando há peça selecionada
       const temPeca = !!State.pecaAtual;
-      ['ns-ajustes','ns-tecnico','ns-ficha','ns-corte','ns-validar'].forEach(id => {
+      ['ns-ajustes','ns-tecnico','ns-ficha','ns-material','ns-corte','ns-validar'].forEach(id => {
         const s = document.getElementById(id);
         if (s) s.classList.toggle('locked', !temPeca);
       });
@@ -1654,8 +2336,8 @@
         App._renderChips();
         App.fecharModalNovaPeca();
         App.preencherTelaMaterial(true);
-        mostrarTela('screen-material');
-        App.setNavStage('ns-ficha');
+        App.limparTecnico();
+        App.irParaAjustes();
         toast('Peça criada!');
       } catch (e) {
         toast('Erro ao criar peça: ' + e.message, 'err');
@@ -1851,6 +2533,7 @@
         document.getElementById('toggle-rec').checked  = false;
         document.getElementById('certs-content').classList.remove('open');
         document.getElementById('rec-content').classList.remove('open');
+        App._limparBlend();
         App.atualizarTotalPct();
       }
     },
@@ -1859,6 +2542,7 @@
       if (!State.pecaAtual) { App.irParaBusca(); return; }
       const p = State.pecaAtual;
       document.getElementById('ajustes-titulo').textContent = p.nome || p.codigo;
+      if (State.moldeVariacao) App._moldesMedidasParaAjustes(State.moldeVariacao);
       mostrarTela('screen-ajustes');
       App.setNavStage('ns-ajustes');
     },
@@ -1868,10 +2552,241 @@
       setTimeout(() => App.irParaTecnico(), 600);
     },
 
+    _medidasTecnicas() {
+      return {
+        altura:      document.getElementById('med-altura')?.value || '',
+        busto:       document.getElementById('med-busto')?.value || '',
+        cintura:     document.getElementById('med-cintura')?.value || '',
+        quadril:     document.getElementById('med-quadril')?.value || '',
+        ombro:       document.getElementById('med-ombro')?.value || '',
+        torso:       document.getElementById('med-torso')?.value || '',
+        manga:       document.getElementById('med-manga')?.value || '',
+        entrepernas: document.getElementById('med-entrepernas')?.value || '',
+      };
+    },
+
+    _observacoesPeca(peca) {
+      if (!peca?.observacoes) return {};
+      try {
+        const parsed = JSON.parse(peca.observacoes);
+        return parsed && typeof parsed === 'object' ? parsed : {};
+      } catch (_) {
+        return {};
+      }
+    },
+
+    _normalizarTexto(str) {
+      return String(str || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+    },
+
+    _resolverTipoTecnico(peca) {
+      const obs = App._observacoesPeca(peca);
+      const texto = App._normalizarTexto([
+        peca?.nome,
+        peca?.codigo,
+        obs.categoria,
+        obs.silhueta,
+        obs.comprimento,
+      ].filter(Boolean).join(' '));
+
+      if (texto.match(/calca|legging|bermuda|short/)) return 'calca';
+      if (texto.match(/saia/)) return 'saia';
+      if (texto.match(/vestido|macacao/)) return 'vestido';
+      if (texto.match(/jaqueta|casaco|blazer|sobretudo/)) return 'casaco';
+      if (texto.match(/camisa|camiseta|blusa|top/)) return 'top';
+      return 'top';
+    },
+
+    _specDesenhoTecnico(peca) {
+      const tipo = App._resolverTipoTecnico(peca);
+      const obs = App._observacoesPeca(peca);
+      const medidas = App._medidasTecnicas();
+      const faltantes = Object.entries(medidas)
+        .filter(([, valor]) => !valor)
+        .map(([k]) => k);
+      const resumoMedidas = Object.entries(medidas)
+        .filter(([, valor]) => valor)
+        .map(([k, valor]) => `${k}: ${valor} cm`)
+        .join(' · ') || 'Sem medidas preenchidas nesta sessão.';
+
+      const specs = {
+        calca: {
+          base: 'Base inferior: calça / legging / short',
+          componentes: ['cós', 'gancho', 'entrepernas', 'lateral', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir gancho, entrepernas, cintura/quadril e linha de fio antes de transformar este desenho em molde.',
+        },
+        saia: {
+          base: 'Base inferior: saia',
+          componentes: ['cintura', 'pences', 'quadril', 'lateral', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir cintura, quadril, altura de quadril, comprimento e abertura antes de seguir para modelagem.',
+        },
+        vestido: {
+          base: 'Base corpo inteiro: vestido / macacão',
+          componentes: ['decote', 'ombro', 'cava', 'cintura', 'saia', 'frente', 'costas'],
+          alerta: 'Conferir busto, cintura, quadril, torso, comprimento e mobilidade do corpo inteiro.',
+        },
+        casaco: {
+          base: 'Base superior estruturada: jaqueta / casaco / blazer',
+          componentes: ['gola', 'ombro', 'cava', 'manga', 'abertura', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir ombro, busto, manga, folga de sobreposição e fechamento antes de aprovar a ficha.',
+        },
+        top: {
+          base: 'Base superior: blusa / camisa / camiseta / top',
+          componentes: ['decote', 'ombro', 'cava', 'manga', 'lateral', 'barra', 'frente', 'costas'],
+          alerta: 'Conferir busto, ombro, torso, manga, cava e folga de mobilidade antes da ficha técnica.',
+        },
+      };
+
+      const spec = specs[tipo] || specs.top;
+      const detalheObs = [obs.categoria, obs.silhueta, obs.comprimento, obs.fechamento]
+        .filter(Boolean)
+        .join(' · ');
+
+      return {
+        tipo,
+        base: detalheObs ? `${spec.base} · ${detalheObs}` : spec.base,
+        componentes: spec.componentes,
+        medidas: resumoMedidas,
+        alerta: faltantes.length
+          ? `${spec.alerta} Medidas pendentes: ${faltantes.join(', ')}.`
+          : `${spec.alerta} Medidas mínimas preenchidas para conferência visual.`,
+      };
+    },
+
+    renderDesenhoTecnico() {
+      if (!State.pecaAtual) return;
+      const p = State.pecaAtual;
+      const spec = App._specDesenhoTecnico(p);
+
+      document.getElementById('tecnico-sheet-label').textContent = p.codigo || 'Peça sem código';
+      document.getElementById('tecnico-base').textContent = spec.base;
+      document.getElementById('tecnico-medidas').textContent = spec.medidas;
+      document.getElementById('tecnico-alerta').textContent = spec.alerta;
+      document.getElementById('tecnico-componentes').innerHTML = spec.componentes
+        .map(c => `<span class="technical-pill">${esc(c)}</span>`)
+        .join('');
+      document.getElementById('tecnico-drawing').innerHTML = App._svgDesenhoTecnico(spec.tipo, p);
+    },
+
+    _svgBaseStart(titulo, codigo) {
+      return `
+        <svg viewBox="0 0 620 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Desenho técnico da peça">
+          <defs>
+            <style>
+              .tech-line{fill:none;stroke:#141410;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+              .tech-thin{fill:none;stroke:#5e5a52;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+              .tech-dash{fill:none;stroke:#b89a6a;stroke-width:1.2;stroke-linecap:round;stroke-dasharray:6 5}
+              .tech-fill{fill:#f7f4ee;stroke:#141410;stroke-width:2;stroke-linejoin:round}
+              .tech-note{font:12px Jost,Arial,sans-serif;fill:#77736c}
+              .tech-title{font:17px Cormorant Garamond,Georgia,serif;fill:#141410}
+              .tech-small{font:10px Jost,Arial,sans-serif;fill:#9e9b95;letter-spacing:.08em}
+            </style>
+          </defs>
+          <text x="28" y="34" class="tech-title">${esc(titulo || 'Peça PHYLLOS')}</text>
+          <text x="28" y="53" class="tech-small">${esc(codigo || 'sem código')} · desenho técnico de conferência</text>
+          <text x="170" y="80" class="tech-small">FRENTE</text>
+          <text x="432" y="80" class="tech-small">COSTAS</text>`;
+    },
+
+    _svgBaseEnd() {
+      return `
+          <line x1="28" y1="384" x2="592" y2="384" class="tech-thin"/>
+          <text x="28" y="404" class="tech-note">Uso interno: conferir proporções, partes visíveis e pontos críticos antes da ficha técnica e do molde cortável.</text>
+        </svg>`;
+    },
+
+    _svgDesenhoTecnico(tipo, peca) {
+      const titulo = peca?.nome || 'Peça PHYLLOS';
+      const codigo = peca?.codigo || '';
+      const start = App._svgBaseStart(titulo, codigo);
+      const end = App._svgBaseEnd();
+      const desenhos = {
+        calca: `
+          <path class="tech-fill" d="M130 98 L232 98 L224 360 L188 360 L178 198 L158 360 L122 360 Z"/>
+          <path class="tech-dash" d="M130 132 H232"/>
+          <path class="tech-thin" d="M181 104 C174 132 171 160 178 198"/>
+          <path class="tech-thin" d="M178 198 L188 360"/>
+          <path class="tech-thin" d="M158 360 L178 198"/>
+          <path class="tech-fill" d="M390 98 L492 98 L500 360 L464 360 L442 198 L420 360 L384 360 Z"/>
+          <path class="tech-dash" d="M390 132 H492"/>
+          <path class="tech-thin" d="M441 104 C448 132 449 160 442 198"/>
+          <path class="tech-thin" d="M442 198 L464 360"/>
+          <path class="tech-thin" d="M420 360 L442 198"/>
+          <text x="242" y="136" class="tech-note">cós</text>
+          <text x="236" y="206" class="tech-note">gancho</text>
+          <text x="236" y="358" class="tech-note">barra</text>`,
+        saia: `
+          <path class="tech-fill" d="M142 102 H222 L252 358 H112 Z"/>
+          <path class="tech-dash" d="M142 134 H222"/>
+          <path class="tech-thin" d="M164 112 L154 184"/>
+          <path class="tech-thin" d="M200 112 L210 184"/>
+          <path class="tech-dash" d="M128 218 H236"/>
+          <path class="tech-fill" d="M402 102 H482 L512 358 H372 Z"/>
+          <path class="tech-dash" d="M402 134 H482"/>
+          <path class="tech-thin" d="M424 112 L414 184"/>
+          <path class="tech-thin" d="M460 112 L470 184"/>
+          <path class="tech-dash" d="M388 218 H496"/>
+          <text x="256" y="136" class="tech-note">cintura</text>
+          <text x="256" y="221" class="tech-note">quadril</text>
+          <text x="256" y="358" class="tech-note">barra</text>`,
+        vestido: `
+          <path class="tech-fill" d="M150 98 L214 98 L236 176 L270 358 H94 L128 176 Z"/>
+          <path class="tech-thin" d="M150 98 Q182 126 214 98"/>
+          <path class="tech-dash" d="M126 184 H238"/>
+          <path class="tech-dash" d="M112 250 H254"/>
+          <path class="tech-thin" d="M156 116 L150 176"/>
+          <path class="tech-thin" d="M208 116 L214 176"/>
+          <path class="tech-fill" d="M410 98 L474 98 L496 176 L530 358 H354 L388 176 Z"/>
+          <path class="tech-thin" d="M410 98 Q442 116 474 98"/>
+          <path class="tech-dash" d="M386 184 H498"/>
+          <path class="tech-dash" d="M372 250 H514"/>
+          <path class="tech-thin" d="M442 100 V358"/>
+          <text x="274" y="186" class="tech-note">cintura</text>
+          <text x="274" y="252" class="tech-note">quadril</text>
+          <text x="274" y="358" class="tech-note">barra</text>`,
+        casaco: `
+          <path class="tech-fill" d="M134 104 L226 104 L250 352 H112 Z"/>
+          <path class="tech-fill" d="M134 108 L86 178 L102 214 L132 158 Z"/>
+          <path class="tech-fill" d="M226 108 L274 178 L258 214 L228 158 Z"/>
+          <path class="tech-thin" d="M160 106 L182 146 L204 106"/>
+          <path class="tech-thin" d="M182 146 V352"/>
+          <path class="tech-dash" d="M124 206 H240"/>
+          <path class="tech-fill" d="M394 104 L486 104 L510 352 H372 Z"/>
+          <path class="tech-fill" d="M394 108 L346 178 L362 214 L392 158 Z"/>
+          <path class="tech-fill" d="M486 108 L534 178 L518 214 L488 158 Z"/>
+          <path class="tech-thin" d="M440 104 V352"/>
+          <path class="tech-dash" d="M384 206 H500"/>
+          <text x="282" y="146" class="tech-note">gola</text>
+          <text x="282" y="208" class="tech-note">linha busto</text>
+          <text x="282" y="352" class="tech-note">barra</text>`,
+        top: `
+          <path class="tech-fill" d="M138 102 L226 102 L246 178 L232 344 H132 L118 178 Z"/>
+          <path class="tech-fill" d="M138 106 L88 170 L104 202 L128 156 Z"/>
+          <path class="tech-fill" d="M226 106 L276 170 L260 202 L236 156 Z"/>
+          <path class="tech-thin" d="M154 104 Q182 132 210 104"/>
+          <path class="tech-dash" d="M122 196 H242"/>
+          <path class="tech-dash" d="M132 286 H232"/>
+          <path class="tech-fill" d="M398 102 L486 102 L506 178 L492 344 H392 L378 178 Z"/>
+          <path class="tech-fill" d="M398 106 L348 170 L364 202 L388 156 Z"/>
+          <path class="tech-fill" d="M486 106 L536 170 L520 202 L496 156 Z"/>
+          <path class="tech-thin" d="M416 104 Q442 120 468 104"/>
+          <path class="tech-dash" d="M382 196 H502"/>
+          <path class="tech-dash" d="M392 286 H492"/>
+          <text x="282" y="128" class="tech-note">decote</text>
+          <text x="282" y="198" class="tech-note">busto</text>
+          <text x="282" y="286" class="tech-note">cintura</text>`,
+      };
+      return start + (desenhos[tipo] || desenhos.top) + end;
+    },
+
     irParaTecnico() {
       if (!State.pecaAtual) { App.irParaBusca(); return; }
       const p = State.pecaAtual;
       document.getElementById('tecnico-titulo').textContent = p.nome || p.codigo;
+      App.renderDesenhoTecnico();
       mostrarTela('screen-tecnico');
       App.setNavStage('ns-tecnico');
     },
@@ -1912,6 +2827,37 @@
       document.getElementById('tecnico-preview').style.display = 'none';
       document.getElementById('tecnico-upload-area').style.display = 'block';
       document.getElementById('tecnico-file-input').value = '';
+    },
+
+    irParaFicha() {
+      if (!State.pecaAtual) { App.irParaBusca(); return; }
+      const p = State.pecaAtual;
+      document.getElementById('ficha-titulo').textContent = p.nome || p.codigo;
+      mostrarTela('screen-ficha');
+      App.setNavStage('ns-ficha');
+    },
+
+    salvarFicha() {
+      if (!State.pecaAtual) return;
+      const dados = {
+        categoria:   document.getElementById('ficha-categoria').value,
+        silhueta:    document.getElementById('ficha-silhueta').value,
+        comprimento: document.getElementById('ficha-comprimento').value,
+        ocasiao:     document.getElementById('ficha-ocasiao').value,
+        modelagem:   document.getElementById('ficha-modelagem').value,
+        costura:     document.getElementById('ficha-costura').value,
+        fechamento:  document.getElementById('ficha-fechamento').value,
+        cos:         document.getElementById('ficha-cos').value,
+        obs_costureira: document.getElementById('ficha-obs').value,
+      };
+      const aviamentos = [...document.querySelectorAll('#ficha-aviamentos-chips .desc-chip.sel')]
+                          .map(el => el.textContent).join(', ');
+      dados.aviamentos = aviamentos;
+      fetch(`/pecas/${State.pecaAtual.codigo}`, {
+        method: 'PATCH',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ observacoes: JSON.stringify(dados) })
+      }).then(() => App.irParaMaterial());
     },
 
     toggleDescChip(el) {
@@ -1963,13 +2909,35 @@
     async _publicarDPP(codigo, btn) {
       btn.disabled = true; btn.textContent = '…';
       try {
-        await api('POST', `/pecas/${codigo}/dpp/publicar`);
-        toast('Passaporte publicado.');
-        App.carregarValidar();
+        const peca = await api('POST', `/pecas/${codigo}/dpp/publicar`);
+        App.irParaPassaporte(peca);
       } catch(e) {
-        toast('Para publicar: peça precisa de GTIN e composição de fibras preenchidos.', 'err');
+        const detail = e?.detail;
+        const msg = Array.isArray(detail?.errors)
+          ? detail.errors.join(' ')
+          : 'Para publicar: ficha técnica com composição e instruções de cuidado são obrigatórias.';
+        toast(msg, 'err');
         btn.disabled = false; btn.textContent = 'Publicar DPP';
       }
+    },
+
+    irParaPassaporte(peca) {
+      const uuid = peca.dpp_uuid;
+      const publicUrl = `/p/${uuid}`;
+      document.getElementById('pass-nome').textContent = peca.nome || 'Passaporte publicado';
+      document.getElementById('pass-codigo').textContent = peca.codigo || '';
+      document.getElementById('pass-qr').src = `/pecas/${peca.codigo}/qr`;
+      const linkEl = document.getElementById('pass-link');
+      linkEl.href = publicUrl;
+      linkEl.textContent = window.location.origin + publicUrl;
+      document.getElementById('pass-etiqueta').href = `/pecas/${peca.codigo}/etiqueta`;
+      mostrarTela('screen-passaporte');
+      App.setNavStage('ns-validar');
+    },
+
+    copiarLinkPassaporte() {
+      const linkEl = document.getElementById('pass-link');
+      navigator.clipboard.writeText(linkEl.href).then(() => toast('Link copiado.'));
     },
 
     irParaPainel() {
@@ -2036,7 +3004,7 @@
       if (!State.pecaAtual) { App.irParaBusca(); return; }
       App.preencherTelaMaterial();
       mostrarTela('screen-material');
-      App.setNavStage('ns-ficha');
+      App.setNavStage('ns-material');
     },
 
     async carregarFicha(pecaId) {
@@ -2057,6 +3025,7 @@
         document.getElementById('toggle-rec').checked  = false;
         document.getElementById('certs-content').classList.remove('open');
         document.getElementById('rec-content').classList.remove('open');
+        App._limparBlend();
         App.atualizarTotalPct();
       }
     },
@@ -2126,6 +3095,18 @@
         conteudo_reciclado_pct: recVal,
       };
 
+      // Se o catálogo calculou o blend, incluir fatores de impacto na ficha
+      if (State.ultimoBlend) {
+        const ft = State.ultimoBlend.para_ficha_tecnica;
+        payload.carbono_kgco2e_kg          = ft.carbono_kgco2e_kg;
+        payload.agua_litros_kg             = ft.agua_litros_kg;
+        payload.energia_kwh_kg             = ft.energia_kwh_kg;
+        payload.fonte_carbono_kgco2e_kg    = ft.fonte_carbono_kgco2e_kg;
+        payload.fonte_agua_litros_kg       = ft.fonte_agua_litros_kg;
+        payload.fonte_energia_kwh_kg       = ft.fonte_energia_kwh_kg;
+        payload.metodologia_fatores_impacto = ft.metodologia_fatores_impacto;
+      }
+
       try {
         if (State.fichaExiste) {
           await api('PATCH', `/fichas-tecnicas/${p.id}`, payload);
@@ -2147,9 +3128,9 @@
       const row  = document.createElement('div');
       row.className = 'fibra-row';
       row.innerHTML = `
-        <input type="text" placeholder="ex: algodão orgânico" value="${esc(String(material))}" oninput="App.atualizarTotalPct()" />
-        <input type="number" placeholder="%" min="0" max="100" value="${esc(String(pct))}" oninput="App.atualizarTotalPct()" />
-        <button class="btn-remove" title="Remover" onclick="this.parentElement.remove();App.atualizarTotalPct()">&#215;</button>
+        <input type="text" list="fibras-catalog-list" placeholder="ex: algodão orgânico" value="${esc(String(material))}" oninput="App.atualizarTotalPct();App._limparBlend()" />
+        <input type="number" placeholder="%" min="0" max="100" value="${esc(String(pct))}" oninput="App.atualizarTotalPct();App._limparBlend()" />
+        <button class="btn-remove" title="Remover" onclick="this.parentElement.remove();App.atualizarTotalPct();App._limparBlend()">&#215;</button>
       `;
       list.appendChild(row);
       App.atualizarTotalPct();
@@ -2164,11 +3145,113 @@
 
     atualizarTotalPct() {
       const fibras = App.coletarFibras();
-      const el = document.getElementById('pct-total');
-      if (!fibras.length) { el.textContent = ''; return; }
+      const el     = document.getElementById('pct-total');
+      const bar    = document.getElementById('blend-calc-bar');
+      if (!fibras.length) {
+        el.textContent = '';
+        if (bar) bar.style.display = 'none';
+        return;
+      }
       const total = fibras.reduce((s, f) => s + Number(f.pct || 0), 0);
       el.textContent = `Total: ${total}%`;
       el.className   = 'pct-total ' + (total === 100 ? 'ok' : 'err');
+      if (bar) bar.style.display = total === 100 ? 'flex' : 'none';
+    },
+
+    /* ─── CATÁLOGO DE IMPACTO ─── */
+
+    async carregarCatalogoFibras() {
+      try {
+        const res = await api('GET', '/catalogo/fibras');
+        State.catalogoFibrasMap = {};
+        const dl = document.getElementById('fibras-catalog-list');
+        if (dl) dl.innerHTML = '';
+        (res.fibras || []).forEach(f => {
+          State.catalogoFibrasMap[f.nome_pt] = f.fibra_id;
+          if (dl) {
+            const opt = document.createElement('option');
+            opt.value = f.nome_pt;
+            dl.appendChild(opt);
+          }
+        });
+      } catch (_) {
+        // catálogo não disponível — funciona sem autocomplete
+      }
+    },
+
+    async calcularImpactoCatalogo() {
+      const fibras = App.coletarFibras();
+      const composicao = fibras
+        .map(f => ({ fibra_id: State.catalogoFibrasMap[f.fibra] || null, percentual: Number(f.pct) }))
+        .filter(f => f.fibra_id && f.percentual > 0);
+
+      if (!composicao.length) {
+        toast('Nenhuma fibra reconhecida pelo catálogo. Use os nomes sugeridos na lista.', 'err');
+        return;
+      }
+
+      const total = composicao.reduce((s, f) => s + f.percentual, 0);
+      if (Math.abs(total - 100) > 0.5) {
+        toast(`Soma das fibras reconhecidas é ${total}% — verifique os nomes e tente novamente.`, 'err');
+        return;
+      }
+
+      const btn = document.getElementById('btn-calcular-blend');
+      if (btn) { btn.disabled = true; btn.textContent = 'Calculando…'; }
+
+      try {
+        const res = await api('POST', '/catalogo/calcular-blend', { composicao });
+        State.ultimoBlend = res;
+        App.mostrarResultadoBlend(res);
+      } catch (e) {
+        toast('Erro ao calcular: ' + e.message, 'err');
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Calcular impacto estimado'; }
+      }
+    },
+
+    mostrarResultadoBlend(res) {
+      const el = document.getElementById('blend-resultado');
+      if (!el) return;
+      const b = res.fatores_blend;
+      const m = res.meta;
+      const co2   = b.co2eq_kg_por_kg.toFixed(2);
+      const agua  = Math.round(b.agua_l_por_kg).toLocaleString('pt-BR');
+      const kwh   = b.energia_kwh_por_kg.toFixed(2);
+      const conf  = m.confianca || 'media';
+      const confLabel = { media: 'Confiança média', alta: 'Confiança alta', baixa: 'Confiança baixa' }[conf] || conf;
+      const aviso = m.aviso ? `<span class="blend-aviso">${m.aviso}</span>` : '';
+      el.innerHTML = `
+        <div class="blend-resultado-titulo">Impacto estimado por kg de material</div>
+        <div class="blend-indicadores">
+          <div class="blend-ind">
+            <div class="blend-ind-valor">${co2}</div>
+            <div class="blend-ind-unidade">kgCO₂eq/kg</div>
+            <div class="blend-ind-label">Carbono</div>
+          </div>
+          <div class="blend-ind">
+            <div class="blend-ind-valor">${agua}</div>
+            <div class="blend-ind-unidade">L/kg</div>
+            <div class="blend-ind-label">Água</div>
+          </div>
+          <div class="blend-ind">
+            <div class="blend-ind-valor">${kwh}</div>
+            <div class="blend-ind-unidade">kWh/kg</div>
+            <div class="blend-ind-label">Energia</div>
+          </div>
+        </div>
+        <div class="blend-meta">
+          <span class="blend-badge ${conf}">${confLabel}</span>
+          ${aviso}
+        </div>
+      `;
+      el.classList.remove('hidden');
+    },
+
+    _limparBlend() {
+      State.ultimoBlend = null;
+      const el = document.getElementById('blend-resultado');
+      if (el) { el.innerHTML = ''; el.classList.add('hidden'); }
     },
 
     /* ─── CERTIFICADOS ─── */
@@ -2290,6 +3373,118 @@
       setLoading(btn, false, 'Registrar');
     },
 
+    /* ─── BANCO DE MODELAGENS ─── */
+
+    _moldeTimer: null,
+    _moldesResultados: [],
+
+    async buscarMoldes() {
+      const q          = document.getElementById('molde-q')?.value.trim();
+      const genero     = document.getElementById('molde-genero')?.value;
+      const tamanho    = document.getElementById('molde-tamanho')?.value;
+      const grau_ajuste= document.getElementById('molde-ajuste')?.value;
+      const tipo_tecido= document.getElementById('molde-tecido')?.value;
+
+      if (!q && !genero && !tamanho && !grau_ajuste && !tipo_tecido) return;
+
+      const res = document.getElementById('molde-resultados');
+      res.innerHTML = '<div class="molde-empty"><span class="spinner spinner-dark"></span></div>';
+
+      const params = new URLSearchParams();
+      if (q)           params.set('q', q);
+      if (genero)      params.set('genero', genero);
+      if (tamanho)     params.set('tamanho', tamanho);
+      if (grau_ajuste) params.set('grau_ajuste', grau_ajuste);
+      if (tipo_tecido) params.set('tipo_tecido', tipo_tecido);
+      params.set('limit', '8');
+
+      try {
+        const variacoes = await api('GET', `/modelagem/variacoes/buscar?${params}`);
+        App.renderMoldes(variacoes);
+      } catch (e) {
+        res.innerHTML = '<div class="molde-empty">Erro ao buscar moldes. Verifique se o banco de modelagens foi populado.</div>';
+      }
+    },
+
+    renderMoldes(variacoes) {
+      App._moldesResultados = variacoes;
+      const res = document.getElementById('molde-resultados');
+      if (!variacoes.length) {
+        res.innerHTML = '<div class="molde-empty">Nenhum molde encontrado. Tente outros termos ou filtros.</div>';
+        return;
+      }
+      const ativoId = State.moldeVariacao?.id;
+      res.innerHTML = variacoes.map((v, i) => {
+        const medidas = v.medidas || {};
+        const chips = [
+          medidas.busto              ? `Busto ${medidas.busto}cm` : null,
+          medidas.cintura            ? `Cintura ${medidas.cintura}cm` : null,
+          medidas.quadril            ? `Quadril ${medidas.quadril}cm` : null,
+          medidas.ombro              ? `Ombro ${medidas.ombro}cm` : null,
+          medidas.comprimento_total  ? `Comp. ${medidas.comprimento_total}cm` : null,
+          medidas.gancho             ? `Gancho ${medidas.gancho}cm` : null,
+        ].filter(Boolean).map(m => `<span class="molde-medida">${esc(m)}</span>`).join('');
+
+        const detalhe = [v.grau_ajuste, v.tipo_tecido, v.comprimento, v.manga]
+          .filter(Boolean).join(' · ');
+
+        const ativo = v.id === ativoId ? ' ativo' : '';
+        const btnLabel = v.id === ativoId ? 'Selecionado ✓' : 'Usar este molde';
+        return `
+          <div class="molde-card${ativo}" onclick="App.selecionarMolde(${i})">
+            <div class="molde-card-nome">${esc(v.molde_nome)} — ${esc(v.tamanho)}</div>
+            <div class="molde-card-desc">${esc(detalhe || v.molde_categoria || '')}</div>
+            ${chips ? `<div class="molde-card-medidas">${chips}</div>` : ''}
+            <div class="molde-card-footer">
+              <span class="molde-codigo">${esc(v.codigo)}</span>
+              <button class="molde-usar-btn" onclick="event.stopPropagation();App.selecionarMolde(${i})">${esc(btnLabel)}</button>
+            </div>
+          </div>`;
+      }).join('');
+    },
+
+    selecionarMolde(idx) {
+      const v = App._moldesResultados[idx];
+      if (!v) return;
+      State.moldeVariacao = v;
+
+      const badge = document.getElementById('molde-selecionado');
+      const label = document.getElementById('molde-selecionado-label');
+      if (badge && label) {
+        label.textContent = `${v.molde_nome} · ${v.tamanho} · ${v.grau_ajuste || ''} · ${v.tipo_tecido || ''}`;
+        badge.style.display = 'block';
+      }
+
+      // Atualiza visual dos cards sem re-fazer a busca
+      document.querySelectorAll('#molde-resultados .molde-card').forEach((card, i) => {
+        const sel = i === idx;
+        card.classList.toggle('ativo', sel);
+        const btn = card.querySelector('.molde-usar-btn');
+        if (btn) btn.textContent = sel ? 'Selecionado ✓' : 'Usar este molde';
+      });
+
+      toast(`Molde: ${v.molde_nome} ${v.tamanho}`);
+    },
+
+    limparMolde() {
+      State.moldeVariacao = null;
+      const badge = document.getElementById('molde-selecionado');
+      if (badge) badge.style.display = 'none';
+      document.getElementById('molde-resultados').innerHTML = '';
+    },
+
+    _moldesMedidasParaAjustes(v) {
+      const m = v?.medidas || {};
+      const set = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && val) el.value = val;
+      };
+      set('med-busto',   m.busto);
+      set('med-cintura', m.cintura);
+      set('med-quadril', m.quadril);
+      set('med-ombro',   m.ombro);
+    },
+
     /* ─── DPP & Etiqueta ─── */
 
     abrirPassaporte() {
@@ -2343,6 +3538,8 @@
     App.setNavStage('ns-descrever');
     // Carrega lista em background para quando o usuário navegar
     App.carregarLista();
+    // Pré-carrega catálogo de fibras para autocomplete e cálculo de impacto
+    App.carregarCatalogoFibras();
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {

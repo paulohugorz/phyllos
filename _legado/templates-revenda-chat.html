@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F2F2F7" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Revenda AI</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #E8EDF2;
+      --glass:    rgba(249,249,251,0.9);
+      --user-bg:  #007AFF;
+      --ai-bg:    #fff;
+      --ai-text:  #1C1C1E;
+      --meta:     rgba(60,60,67,0.42);
+      --green:    #34C759;
+      --orange:   #FF9500;
+      --divider:  rgba(60,60,67,0.12);
+      --font:     -apple-system,'SF Pro Text',BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+    }
+    html, body { height: 100%; height: 100dvh; font-family: var(--font); -webkit-font-smoothing: antialiased; background: var(--bg); overflow: hidden; }
+    body::before { content:''; position:fixed; inset:0; z-index:0; background: radial-gradient(ellipse 80% 50% at 20% 20%, rgba(120,180,255,.13) 0%, transparent 60%), radial-gradient(ellipse 60% 60% at 80% 80%, rgba(190,120,255,.10) 0%, transparent 60%); pointer-events:none; }
+
+    /* ── Frame ── */
+    .frame { position:relative; z-index:1; display:flex; flex-direction:column; height:100dvh; max-width:430px; margin:0 auto; background:var(--bg); box-shadow:0 0 0 1px rgba(0,0,0,.06),0 24px 80px rgba(0,0,0,.18); }
+
+    /* ── Header ── */
+    header { flex-shrink:0; padding-top:env(safe-area-inset-top,0); background:var(--glass); backdrop-filter:blur(24px) saturate(200%); -webkit-backdrop-filter:blur(24px) saturate(200%); border-bottom:.5px solid var(--divider); z-index:10; }
+    .header-bar { display:flex; align-items:center; padding:10px 14px 12px; gap:10px; }
+    .back { display:flex; align-items:center; color:#007AFF; font-size:17px; gap:2px; flex-shrink:0; cursor:pointer; user-select:none; }
+    .back svg { width:11px; height:18px; }
+    .profile-wrap { flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; }
+    .avatar-ring { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,#BF5AF2,#007AFF); padding:2px; flex-shrink:0; }
+    .avatar-inner { width:100%; height:100%; border-radius:50%; background:linear-gradient(135deg,#BF5AF2,#5E5CE6); display:flex; align-items:center; justify-content:center; font-size:17px; }
+    .contact-name { font-size:16px; font-weight:600; color:#1C1C1E; letter-spacing:-.3px; }
+    .contact-status { display:flex; align-items:center; gap:4px; font-size:11.5px; color:var(--meta); }
+    .status-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.5} }
+    .header-actions { display:flex; gap:18px; flex-shrink:0; color:#007AFF; }
+    .header-actions svg { width:20px; height:20px; cursor:pointer; }
+
+    /* ── Onboarding progress bar ── */
+    .progress-bar { height:2px; background:rgba(0,122,255,.12); }
+    .progress-fill { height:100%; background:linear-gradient(90deg,#007AFF,#34C759); border-radius:1px; transition:width .4s ease; }
+
+    /* ── Messages ── */
+    .messages { flex:1; overflow-y:auto; overflow-x:hidden; padding:12px 14px 8px; display:flex; flex-direction:column; gap:3px; scroll-behavior:smooth; -webkit-overflow-scrolling:touch; }
+    .messages::-webkit-scrollbar { width:3px; }
+    .messages::-webkit-scrollbar-thumb { background:rgba(0,0,0,.15); border-radius:3px; }
+
+    .date-sep { display:flex; align-items:center; justify-content:center; margin:10px 0 6px; }
+    .date-sep span { background:rgba(0,0,0,.12); backdrop-filter:blur(8px); color:#fff; font-size:11.5px; font-weight:500; padding:3px 10px; border-radius:10px; }
+
+    .row { display:flex; flex-direction:column; gap:1px; }
+    .row.user { align-items:flex-end; }
+    .row.ai   { align-items:flex-start; }
+    .row + .row { margin-top:8px; }
+    .row.user + .row.ai, .row.ai + .row.user { margin-top:10px; }
+
+    .bubble { max-width:78%; padding:9px 12px 7px; font-size:15px; line-height:1.45; white-space:pre-wrap; word-break:break-word; position:relative; animation:pop-in .18s cubic-bezier(.34,1.56,.64,1) both; }
+    @keyframes pop-in { from{opacity:0;transform:scale(.92) translateY(4px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
+    .row.ai .bubble { background:var(--ai-bg); color:var(--ai-text); border-radius:18px 18px 18px 10px; box-shadow:0 1px 3px rgba(0,0,0,.1),0 0 0 .5px rgba(0,0,0,.04); }
+    .row.ai .bubble.tail { border-bottom-left-radius:4px; }
+    .row.ai .bubble.tail::before { content:''; position:absolute; bottom:0; left:-7px; width:10px; height:14px; background:var(--ai-bg); clip-path:polygon(100% 0,100% 100%,0 100%); filter:drop-shadow(-1px 1px 1px rgba(0,0,0,.06)); }
+
+    .row.user .bubble { background:var(--user-bg); color:#fff; border-radius:18px 18px 10px 18px; box-shadow:0 1px 4px rgba(0,122,255,.25); }
+    .row.user .bubble.tail { border-bottom-right-radius:4px; }
+    .row.user .bubble.tail::after { content:''; position:absolute; bottom:0; right:-7px; width:10px; height:14px; background:var(--user-bg); clip-path:polygon(0 0,0 100%,100% 100%); }
+
+    .meta { display:flex; align-items:center; justify-content:flex-end; gap:3px; margin-top:3px; font-size:10.5px; color:rgba(255,255,255,.65); user-select:none; }
+    .row.ai .meta { color:var(--meta); justify-content:flex-start; }
+    .meta svg { width:14px; height:10px; }
+
+    /* ── Capability cards (onboarding) ── */
+    .caps-row { display:flex; flex-wrap:wrap; gap:7px; padding:4px 0 2px; max-width:300px; }
+    .cap-card { display:flex; align-items:center; gap:6px; background:#fff; border-radius:12px; padding:7px 11px; font-size:13px; color:#1C1C1E; box-shadow:0 1px 3px rgba(0,0,0,.08); animation:pop-in .2s cubic-bezier(.34,1.56,.64,1) both; }
+    .cap-card span { font-size:15px; }
+
+    /* ── Photo preview bubble ── */
+    .photo-bubble { max-width:200px; border-radius:14px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,.15); }
+    .photo-bubble img { width:100%; display:block; }
+
+    /* ── Typing indicator ── */
+    .typing-row { display:flex; align-items:flex-end; margin-top:8px; }
+    .typing-bubble { background:var(--ai-bg); border-radius:18px 18px 18px 4px; box-shadow:0 1px 3px rgba(0,0,0,.1); padding:12px 16px; display:flex; align-items:center; gap:4px; }
+    .typing-bubble span { width:7px; height:7px; background:#C7C7CC; border-radius:50%; animation:tdot 1.3s ease-in-out infinite; }
+    .typing-bubble span:nth-child(2){animation-delay:.16s}
+    .typing-bubble span:nth-child(3){animation-delay:.32s}
+    @keyframes tdot { 0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1} }
+
+    /* ── Completion card ── */
+    .done-card { background:linear-gradient(135deg,#34C759,#007AFF); color:#fff; border-radius:18px; padding:14px 16px; font-size:14px; line-height:1.5; animation:pop-in .25s cubic-bezier(.34,1.56,.64,1) both; }
+    .done-card strong { font-size:16px; display:block; margin-bottom:6px; }
+
+    /* ── Footer ── */
+    footer { flex-shrink:0; padding-bottom:env(safe-area-inset-bottom,0); background:var(--glass); backdrop-filter:blur(24px) saturate(200%); -webkit-backdrop-filter:blur(24px) saturate(200%); border-top:.5px solid var(--divider); z-index:10; }
+
+    .quick-wrap { display:flex; gap:7px; overflow-x:auto; padding:10px 14px 4px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+    .quick-wrap::-webkit-scrollbar { display:none; }
+    .chip { flex-shrink:0; font-size:13px; font-family:var(--font); padding:6px 14px; border-radius:20px; border:1px solid rgba(0,122,255,.3); background:rgba(0,122,255,.07); color:#007AFF; cursor:pointer; white-space:nowrap; transition:background .15s,transform .1s; -webkit-tap-highlight-color:transparent; }
+    .chip:active { background:rgba(0,122,255,.16); transform:scale(.96); }
+
+    .input-row { display:flex; align-items:flex-end; gap:8px; padding:8px 14px 10px; }
+    .icon-btn { width:34px; height:34px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#8E8E93; cursor:pointer; -webkit-tap-highlight-color:transparent; border:none; background:none; }
+    .icon-btn svg { width:22px; height:22px; }
+    .input-field { flex:1; min-height:36px; max-height:110px; background:#fff; border:1px solid rgba(60,60,67,.15); border-radius:20px; padding:8px 14px; font-size:15px; font-family:var(--font); color:#1C1C1E; resize:none; outline:none; line-height:1.4; transition:border-color .2s; }
+    .input-field::placeholder { color:#C7C7CC; }
+    .input-field:focus { border-color:rgba(0,122,255,.4); }
+    .send-btn { width:34px; height:34px; flex-shrink:0; background:#007AFF; border:none; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s,transform .1s; -webkit-tap-highlight-color:transparent; }
+    .send-btn:disabled { background:#C7C7CC; }
+    .send-btn:not(:disabled):active { transform:scale(.9); }
+    .send-btn svg { width:16px; height:16px; fill:#fff; margin-bottom:1px; }
+
+    /* ── Hidden file input ── */
+    #photoInput { display:none; }
+
+    /* ── Settings ── */
+    .settings-wrap { padding:0 14px 4px; display:flex; align-items:center; gap:6px; }
+    .settings-label { font-size:11.5px; color:var(--meta); }
+    .settings-input { font-size:11.5px; font-family:var(--font); border:1px solid var(--divider); border-radius:8px; padding:3px 8px; width:130px; outline:none; background:transparent; color:#3A3A3C; }
+
+    @media (min-width:500px) {
+      body { display:flex; align-items:center; justify-content:center; }
+      .frame { height:min(90dvh,820px); border-radius:44px; overflow:hidden; }
+    }
+  </style>
+</head>
+<body>
+<div class="frame">
+
+  <header>
+    <div class="header-bar">
+      <div class="back">
+        <svg viewBox="0 0 11 18" fill="none"><path d="M9.5 1.5L2 9l7.5 7.5" stroke="#007AFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:17px;font-weight:400;margin-left:2px">Voltar</span>
+      </div>
+      <div class="profile-wrap">
+        <div class="avatar-ring"><div class="avatar-inner">✨</div></div>
+        <div class="contact-name">Revenda AI</div>
+        <div class="contact-status"><span class="status-dot"></span><span>Online agora</span></div>
+      </div>
+      <div class="header-actions">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 10l4.553-2.528A1 1 0 0121 8.382v7.236a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" stroke="#007AFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 5.5C3 14.06 9.94 21 18.5 21c.386 0 .77-.014 1.148-.042.435-.033.753-.408.753-.845V16.87a.855.855 0 00-.712-.848l-3.766-.627a.855.855 0 00-.896.437l-.837 1.535a13.18 13.18 0 01-5.91-5.91l1.535-.837a.855.855 0 00.437-.896l-.627-3.766A.855.855 0 009.777 5H6.055c-.46 0-.843.34-.852.803C5.069 6.52 5 7.27 5 8" stroke="#007AFF" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  </header>
+
+  <div class="messages" id="messages"></div>
+
+  <footer>
+    <div class="quick-wrap" id="quickWrap" style="display:none">
+      <button class="chip" onclick="fill('Vendi 2 Malbec para Ana por R$240 via Pix')">💄 Registrar venda</button>
+      <button class="chip" onclick="fill('Chegaram 5 hidratantes Tododia')">📦 Entrada estoque</button>
+      <button class="chip" onclick="fill('Quanto vendi esse mês?')">💰 Financeiro</button>
+      <button class="chip" onclick="fill('Crie um post para vender perfumes masculinos')">📱 Criar post</button>
+      <button class="chip" onclick="fill('Resumo do dia')">📊 Meu dia</button>
+      <button class="chip" onclick="fill('Qual perfume doce até R$80?')">🌸 Produto</button>
+      <button class="chip" onclick="fill('Quem devo reativar essa semana?')">🔔 Pós-venda</button>
+    </div>
+    <div class="settings-wrap">
+      <span class="settings-label">Revendedora:</span>
+      <input class="settings-input" id="userId" type="text" placeholder="ID" />
+    </div>
+    <div class="input-row">
+      <!-- Camera button (visible during onboarding stock step) -->
+      <button class="icon-btn" id="cameraBtn" onclick="document.getElementById('photoInput').click()" title="Enviar foto do estoque">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="#007AFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="13" r="4" stroke="#007AFF" stroke-width="1.6"/>
+        </svg>
+      </button>
+      <input type="file" id="photoInput" accept="image/*" capture="environment" onchange="sendPhoto(event)" />
+
+      <textarea class="input-field" id="input" rows="1" placeholder="Mensagem" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </button>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // ── State ─────────────────────────────────────────────────────────────────
+  let conversaId        = null;
+  let lastSender        = null;
+  let lastDate          = null;
+  let onboardingStep    = 0;
+  let onboardingComplete= false;
+
+  const $ = id => document.getElementById(id);
+
+  // Persist user ID
+  const stored = localStorage.getItem('revenda_user_id');
+  if (stored) $('userId').value = stored;
+  $('userId').addEventListener('change', () => {
+    localStorage.setItem('revenda_user_id', $('userId').value.trim());
+    location.reload();
+  });
+  function userId() { return $('userId').value.trim() || 'revendedora_1'; }
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+  function now() { return new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+  function todayStr() { return new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}); }
+  function fill(t) { const ta=$('input'); ta.value=t; ta.focus(); autoResize(ta); }
+  function autoResize(el) { el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,110)+'px'; }
+  function handleKey(e) { if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();} }
+  function scroll() { const m=$('messages'); m.scrollTop=m.scrollHeight; }
+
+  // ── Progress bar ──────────────────────────────────────────────────────────
+  function updateProgress(step) {
+    const pct = step >= 99 ? 100 : Math.min((step / 5) * 100, 100);
+    $('progressFill').style.width = pct + '%';
+  }
+
+  // ── Date separator ────────────────────────────────────────────────────────
+  function maybeDate() {
+    const d = new Date().toDateString();
+    if (lastDate === d) return;
+    lastDate = d;
+    const sep = document.createElement('div'); sep.className = 'date-sep';
+    sep.innerHTML = `<span>${todayStr()}</span>`;
+    $('messages').appendChild(sep);
+  }
+
+  // ── Render bubbles ────────────────────────────────────────────────────────
+  function addBubble(role, text, time) {
+    maybeDate();
+    const msgs = $('messages');
+    const tail = lastSender !== role;
+    lastSender = role;
+
+    const row = document.createElement('div'); row.className = `row ${role}`;
+    const bub = document.createElement('div'); bub.className = `bubble${tail?' tail':''}`;
+    bub.textContent = text;
+
+    const meta = document.createElement('div'); meta.className = 'meta';
+    if (role === 'user') {
+      meta.innerHTML = `<span>${time||now()}</span><svg viewBox="0 0 14 10" fill="none"><path d="M1 5l3 3 5-7" stroke="rgba(255,255,255,.7)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 5l3 3 5-7" stroke="rgba(255,255,255,.7)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    } else {
+      meta.innerHTML = `<span>${time||now()}</span>`;
+    }
+    bub.appendChild(meta);
+    row.appendChild(bub);
+    msgs.appendChild(row);
+    scroll();
+    return row;
+  }
+
+  function addCapabilityCards() {
+    maybeDate();
+    const msgs = $('messages');
+    lastSender = 'ai';
+    const row = document.createElement('div'); row.className = 'row ai';
+    const caps = [
+      ['💄','Registrar vendas'],['📦','Controlar estoque'],['📱','Criar posts'],
+      ['💰','Ver financeiro'],['🔔','Pós-venda'],['📅','Agenda'],
+    ];
+    const grid = document.createElement('div'); grid.className = 'caps-row';
+    caps.forEach(([icon, label], i) => {
+      const card = document.createElement('div');
+      card.className = 'cap-card';
+      card.style.animationDelay = (i * 0.07) + 's';
+      card.innerHTML = `<span>${icon}</span>${label}`;
+      grid.appendChild(card);
+    });
+    row.appendChild(grid);
+    msgs.appendChild(row);
+    scroll();
+  }
+
+  function addPhotoBubble(src) {
+    maybeDate();
+    const msgs = $('messages');
+    const tail = lastSender !== 'user';
+    lastSender = 'user';
+    const row = document.createElement('div'); row.className = 'row user';
+    const wrap = document.createElement('div'); wrap.className = `photo-bubble${tail?' tail':''}`;
+    const img = document.createElement('img'); img.src = src; img.alt = 'Foto do estoque';
+    const meta = document.createElement('div'); meta.className = 'meta';
+    meta.style.padding = '4px 8px';
+    meta.innerHTML = `<span>${now()}</span><svg viewBox="0 0 14 10" fill="none"><path d="M1 5l3 3 5-7" stroke="rgba(255,255,255,.7)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 5l3 3 5-7" stroke="rgba(255,255,255,.7)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    wrap.appendChild(img);
+    wrap.appendChild(meta);
+    row.appendChild(wrap);
+    msgs.appendChild(row);
+    scroll();
+  }
+
+  function addDoneCard(text) {
+    maybeDate();
+    const msgs = $('messages');
+    lastSender = 'ai';
+    const row = document.createElement('div'); row.className = 'row ai';
+    const card = document.createElement('div'); card.className = 'done-card';
+    card.innerHTML = `<strong>Tudo pronto! 🚀</strong>${text.replace(/\n/g,'<br>')}`;
+    row.appendChild(card);
+    msgs.appendChild(row);
+    scroll();
+  }
+
+  function showTyping() {
+    const msgs = $('messages');
+    const w = document.createElement('div'); w.id = 'typing'; w.className = 'typing-row';
+    w.innerHTML = '<div class="typing-bubble"><span></span><span></span><span></span></div>';
+    msgs.appendChild(w); scroll();
+  }
+  function hideTyping() { const t = $('typing'); if(t) t.remove(); }
+
+  // ── Onboarding state UI ───────────────────────────────────────────────────
+  function applyOnboardingState(step, complete) {
+    onboardingStep = step;
+    onboardingComplete = complete;
+    updateProgress(step);
+
+    // Camera button: visible during stock step (4) or always when onboarding
+    const cameraVisible = !complete && step <= 5;
+    $('cameraBtn').style.opacity = cameraVisible ? '1' : '0.3';
+    $('cameraBtn').style.pointerEvents = cameraVisible ? 'auto' : 'none';
+
+    // Quick chips: show after onboarding complete
+    $('quickWrap').style.display = complete ? 'flex' : 'none';
+  }
+
+  // ── Send text message ─────────────────────────────────────────────────────
+  async function sendMessage() {
+    const input = $('input');
+    const btn   = $('sendBtn');
+    const msg   = input.value.trim();
+    if (!msg || btn.disabled) return;
+
+    addBubble('user', msg, now());
+    input.value = ''; autoResize(input);
+    btn.disabled = true;
+    lastSender = 'user';
+    showTyping();
+
+    try {
+      const res = await fetch('/revenda/chat', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ user_id: userId(), message: msg, conversa_id: conversaId }),
+      });
+      const data = await res.json();
+      hideTyping();
+      if (data.conversa_id) conversaId = data.conversa_id;
+
+      applyOnboardingState(data.onboarding_step ?? onboardingStep, data.onboarding_complete ?? false);
+
+      lastSender = 'user';
+      if (data.onboarding_complete && onboardingStep < 99) {
+        addDoneCard(data.message);
+      } else {
+        addBubble('ai', data.message, now());
+      }
+    } catch {
+      hideTyping();
+      addBubble('ai', 'Ops, algo deu errado. Tenta de novo 🙏', now());
+    } finally {
+      btn.disabled = false;
+      input.focus();
+    }
+  }
+
+  // ── Send photo ────────────────────────────────────────────────────────────
+  async function sendPhoto(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async e => {
+      addPhotoBubble(e.target.result);
+      $('sendBtn').disabled = true;
+      showTyping();
+
+      try {
+        const fd = new FormData();
+        fd.append('user_id', userId());
+        fd.append('file', file);
+
+        const res = await fetch('/revenda/upload-stock', { method: 'POST', body: fd });
+        const data = await res.json();
+        hideTyping();
+        lastSender = 'user';
+        addBubble('ai', data.message, now());
+
+        if (data.added && data.added.length > 0) {
+          applyOnboardingState(Math.max(onboardingStep, 5), false);
+          updateProgress(Math.max(onboardingStep, 5));
+        }
+      } catch {
+        hideTyping();
+        addBubble('ai', 'Não consegui analisar a foto. Pode me mandar a lista por texto? 😊', now());
+      } finally {
+        $('sendBtn').disabled = false;
+        $('photoInput').value = '';
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  window.addEventListener('DOMContentLoaded', async () => {
+    // Check onboarding status
+    let status = { onboarding_step: 0, onboarding_complete: false };
+    try {
+      const r = await fetch(`/revenda/onboarding-status/${userId()}`);
+      status = await r.json();
+    } catch {}
+
+    applyOnboardingState(status.onboarding_step, status.onboarding_complete);
+
+    if (status.onboarding_complete) {
+      // Returning user
+      const name = status.seller_name || '';
+      addBubble('ai', `Oi${name ? ', ' + name : ''}! 😊 Boa ver você por aqui.\n\nMe conta o que aconteceu — pode começar!`, now());
+    } else if (status.onboarding_step === 0) {
+      // Brand new user — show intro
+      addBubble('ai', 'Oi! Sou a Revenda AI — sua assistente de vendas 😊\n\nCom o que posso te ajudar:', now());
+      await sleep(300);
+      addCapabilityCards();
+      await sleep(600);
+      addBubble('ai', 'Para começar, me diz: qual é o seu nome? 🌟', now());
+    } else {
+      // Resuming onboarding
+      addBubble('ai', 'Oi, de volta! 😊 Vamos continuar o seu cadastro rapidinho.', now());
+    }
+  });
+
+  function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+</script>
+</body>
+</html>

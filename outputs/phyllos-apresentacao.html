@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHYLLOS — DPP Studio · Apresentação para Diretoria</title>
+<style>
+:root{
+  --bg:#0d0d0d;--card:#1a1a1a;--border:#2a2a2a;
+  --green:#4caf82;--text:#e8e8e0;--muted:#888888;
+  --accent:#c9a96e;--white:#f5f5f0;--red:#c04040;
+  --dg:#0f1a12;--dgb:#2d4a36;
+  --sidebar:200px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Calibri','Segoe UI',Arial,sans-serif;
+  display:flex;min-height:100vh;
+}
+nav{
+  width:var(--sidebar);min-width:var(--sidebar);
+  background:#111;border-right:1px solid var(--border);
+  position:fixed;top:0;left:0;height:100vh;
+  overflow-y:auto;z-index:100;padding:20px 0 40px;
+}
+.nav-logo{padding:0 16px 16px;border-bottom:1px solid var(--border);margin-bottom:12px}
+.nav-logo .phi{color:var(--green);font-size:18px;font-weight:700;font-family:Georgia,serif}
+.nav-logo .brand{color:var(--white);font-size:11px;letter-spacing:2px}
+.nav-logo .sub{color:var(--muted);font-size:9px}
+nav a{
+  display:block;padding:7px 16px;color:var(--muted);text-decoration:none;
+  font-size:11px;border-left:2px solid transparent;transition:.2s;line-height:1.3;
+}
+nav a:hover{color:var(--text);background:#1a1a1a}
+nav a.active{color:var(--green);border-left-color:var(--green);background:#0a150d}
+nav a .num{color:var(--green);font-weight:700;font-size:10px;display:block;margin-bottom:1px}
+#progress{position:fixed;top:0;left:0;height:2px;background:var(--green);z-index:200;transition:width .2s}
+main{margin-left:var(--sidebar);flex:1;padding:0}
+section{
+  min-height:100vh;padding:44px 56px 60px;
+  display:flex;flex-direction:column;
+  border-bottom:1px solid var(--border);
+}
+.slide-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.kicker{font-size:10px;letter-spacing:3px;color:var(--green);text-transform:uppercase;font-weight:700}
+.slide-num{color:var(--muted);font-size:11px}
+.slide-logo .phi{color:var(--green);font-weight:700;font-family:Georgia,serif;font-size:13px}
+.slide-logo .brand{color:var(--white);font-size:11px}
+.slide-logo .sub{color:var(--muted);font-size:9px}
+h1{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(19px,2.4vw,28px);color:var(--white);
+  line-height:1.25;font-weight:700;margin-bottom:24px;
+}
+.cards{display:grid;gap:14px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px}
+.card .label{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.card .val{font-size:clamp(18px,1.8vw,24px);font-family:Georgia,serif;color:var(--white);font-weight:700;margin-bottom:5px}
+.card .desc{font-size:11px;color:var(--muted);line-height:1.5}
+.hl{background:var(--dg);border:1px solid var(--dgb);border-radius:8px;padding:14px 18px;margin-bottom:18px;font-size:12.5px;line-height:1.6}
+.hl b{color:var(--green)}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{background:#1e1e1e;color:var(--muted);text-align:left;padding:8px 12px;font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--border);font-weight:700}
+.tbl td{padding:9px 12px;border:1px solid var(--border);color:var(--text);line-height:1.4;vertical-align:top}
+.tbl tr:nth-child(odd) td{background:#161616}
+.tbl tr:nth-child(even) td{background:#131313}
+.tbl td.b{color:var(--white);font-weight:700}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:#1e1e1e;border:1px solid var(--border)}
+.bg{color:var(--green);border-color:var(--green)}
+.ba{color:var(--accent);border-color:var(--accent)}
+.bm{color:var(--muted)}
+.br{color:var(--red);border-color:var(--red)}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.tag{padding:4px 12px;border-radius:20px;font-size:9.5px;font-weight:700;background:#101a12;color:var(--green);border:1px solid var(--dgb);letter-spacing:1px}
+.checklist{list-style:none;font-size:12.5px;line-height:1.6}
+.checklist li{padding:4px 0;display:flex;gap:8px;align-items:flex-start}
+.ci{color:var(--green);font-weight:700;flex-shrink:0}
+.cx{color:var(--red);font-weight:700;flex-shrink:0}
+.ca{color:var(--accent);font-weight:700;flex-shrink:0}
+.flow{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin:14px 0}
+.flow-step{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:11px;text-align:center;min-width:80px;flex:1}
+.flow-step .sn{color:var(--green);font-weight:700;font-size:9px;display:block;margin-bottom:2px}
+.flow-step.active{background:#0f2018;border-color:var(--green);color:var(--green)}
+.flow-arrow{color:var(--border);font-size:16px;flex-shrink:0}
+.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.sc{border-radius:10px;padding:18px;border:1px solid}
+.sc-cons{background:#14100a;border-color:#4a3a1a}
+.sc-base{background:#0a150d;border-color:var(--dgb)}
+.sc-opt{background:#0a1814;border-color:#1d6e56}
+.sc .sc-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.sc .sc-val{font-family:Georgia,serif;font-size:clamp(22px,2vw,28px);font-weight:700;margin-bottom:5px}
+.sc .sc-desc{font-size:11px;color:var(--muted);line-height:1.5}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.kpi .kl{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.kpi .kv{font-family:Georgia,serif;font-size:clamp(18px,1.8vw,24px);font-weight:700;margin-bottom:3px}
+.kpi .kd{font-size:10px;color:var(--muted);line-height:1.4}
+.val-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.vt{border-radius:10px;padding:18px;border:1px solid}
+.tl-item{display:flex;gap:12px;padding:7px 0}
+.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.tl-done{background:var(--green)}
+.tl-now{background:var(--accent)}
+.tl-future{background:var(--border)}
+.tl-date{font-size:9.5px;color:var(--muted);margin-bottom:1px}
+.tl-title{font-size:13px;font-weight:700;color:var(--white);margin-bottom:1px}
+.tl-desc{font-size:11px;color:var(--muted)}
+.bar-row{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:12px}
+.bar-lbl{width:100px;color:var(--muted);text-align:right;flex-shrink:0}
+.bar-track{height:10px;background:#1e1e1e;border-radius:5px;flex:1;overflow:hidden}
+.bar-fill{height:100%;background:var(--green);border-radius:5px}
+.bar-val{width:160px;color:var(--text);flex-shrink:0}
+.ip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.ipc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px}
+.ipc .ipt{font-size:12.5px;font-weight:700;color:var(--white);margin-bottom:5px}
+.ipc .ipd{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.ipc .ipf{display:flex;align-items:center;gap:8px}
+.ipbadge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:#1e1e1e}
+.ipt-prazo{font-size:10px;color:var(--muted)}
+.frentes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+.frente{border-radius:10px;padding:18px;border:1px solid}
+.fr-prod{background:#0a150d;border-color:var(--dgb)}
+.fr-legal{background:#140a0a;border-color:#4a2020}
+.fr-fin{background:#14100a;border-color:#4a3a1a}
+.frente .fr-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:12px}
+.frente ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.frente ul li{font-size:12px;color:var(--text);line-height:1.5;display:flex;gap:8px}
+.fr-arrow{flex-shrink:0;font-weight:700}
+.alert{border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:12px;line-height:1.6}
+.alert-red{background:#140a0a;border:1px solid #4a2020}
+.al-lbl{font-weight:700}
+.board-grid{display:flex;flex-direction:column;gap:8px}
+.bd-item{background:#0a150d;border:1px solid var(--dgb);border-radius:8px;padding:11px 14px}
+.bd-title{font-size:12.5px;font-weight:700;color:var(--white);margin-bottom:3px}
+.bd-desc{font-size:11px;color:var(--muted);line-height:1.4}
+.bd-num{color:var(--green);font-weight:700}
+.quote{background:#0f2018;border:1px solid var(--dgb);border-radius:8px;padding:14px 22px;font-style:italic;font-family:Georgia,serif;font-size:clamp(13px,1.2vw,16px);color:var(--white);text-align:center;max-width:780px}
+.budget-bar{background:var(--dg);border:1px solid var(--dgb);border-radius:8px;padding:11px 18px;font-size:12.5px;line-height:1.6;margin-top:14px}
+@media(max-width:900px){
+  nav{transform:translateX(-100%)}
+  main{margin-left:0}
+  .g3,.g4,.scenarios,.val-tiers,.ip-grid,.kpis,.frentes{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<nav id="sidebar">
+  <div class="nav-logo">
+    <div class="phi">Φ</div>
+    <div class="brand">PHYLLOS</div>
+    <div class="sub">DPP Studio · Jun/2026</div>
+  </div>
+  <a href="#s1"><span class="num">01</span>O Que É</a>
+  <a href="#s2"><span class="num">02</span>O Problema</a>
+  <a href="#s3"><span class="num">03</span>A Solução</a>
+  <a href="#s4"><span class="num">04</span>Como Funciona</a>
+  <a href="#s5"><span class="num">05</span>Mercado</a>
+  <a href="#s6"><span class="num">06</span>Modelo de Negócio</a>
+  <a href="#s7"><span class="num">07</span>Análise Financeira</a>
+  <a href="#s8"><span class="num">08</span>Valuation &amp; Captação</a>
+  <a href="#s9"><span class="num">09</span>Proteção de PI</a>
+  <a href="#s10"><span class="num">10</span>Estágio Atual</a>
+  <a href="#s11"><span class="num">11</span>Próximos Passos</a>
+</nav>
+
+<main>
+
+<!-- ══ S1 — O QUE É ══════════════════════════════════════════ -->
+<section id="s1">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">01 · O QUE É A PHYLLOS</div>
+    <div class="slide-num">01 / 11</div>
+  </div>
+  <h1>Uma startup de tecnologia para a moda<br>que resolve um problema regulatório global.</h1>
+  <div class="hl">
+    A <b>PHYLLOS</b> cria o <b>passaporte digital</b> das roupas. Cada peça ganha um QR que conta
+    de onde vem, o que tem dentro e quanto impacta o planeta.
+  </div>
+  <div class="tags">
+    <span class="tag">SaaS B2B</span>
+    <span class="tag">Moda + Regulação</span>
+    <span class="tag">Brasil → Europa</span>
+    <span class="tag">2026</span>
+  </div>
+  <div class="cards g3" style="margin-top:10px">
+    <div class="card">
+      <div class="label">Quem Paga</div>
+      <div class="val">Marcas de Moda</div>
+      <div class="desc">Independentes, ateliês, pequenas e médias que precisam responder sobre suas peças.</div>
+    </div>
+    <div class="card">
+      <div class="label">O Que Entregamos</div>
+      <div class="val">QR + Passaporte</div>
+      <div class="desc">Página pública com dados verificáveis por peça. Um link por SKU.</div>
+    </div>
+    <div class="card">
+      <div class="label">Por Que Agora</div>
+      <div class="val">Lei em vigor</div>
+      <div class="desc">UE exige DPP têxtil obrigatório ~2028. INMETRO regulamenta 31/07/2026.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S2 — PROBLEMA ══════════════════════════════════════════ -->
+<section id="s2">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">02 · O PROBLEMA</div>
+    <div class="slide-num">02 / 11</div>
+  </div>
+  <h1>A moda é opaca por padrão.<br>Isso está virando problema de negócio.</h1>
+  <div class="hl">
+    <b>Regulação EU ESPR (~2028):</b> toda peça têxtil vendida na Europa precisará ter passaporte digital
+    com composição, origem e rastreabilidade. Quem não tiver fica fora do mercado europeu.
+  </div>
+  <div class="cards g2">
+    <div class="card" style="background:#1a0a0a;border-color:#4a2020">
+      <div class="label" style="color:var(--red)">Hoje</div>
+      <ul class="checklist" style="margin-top:8px">
+        <li><span class="cx">✗</span> Ficha técnica no Excel ou papel</li>
+        <li><span class="cx">✗</span> Composição na cabeça do fornecedor</li>
+        <li><span class="cx">✗</span> Consumidor pergunta, marca não sabe responder</li>
+        <li><span class="cx">✗</span> Buyer europeu exige, marca perde o contrato</li>
+        <li><span class="cx">✗</span> Certificação convencional custa R$20–60k</li>
+      </ul>
+    </div>
+    <div class="card" style="background:#0a150d;border-color:var(--dgb)">
+      <div class="label" style="color:var(--green)">Com PHYLLOS</div>
+      <ul class="checklist" style="margin-top:8px">
+        <li><span class="ci">✓</span> Dados organizados em sistema único</li>
+        <li><span class="ci">✓</span> QR na etiqueta responde o que a marca sabe</li>
+        <li><span class="ci">✓</span> Status claro: declarado, calculado, verificado</li>
+        <li><span class="ci">✓</span> Buyer lê o link e fecha o pedido</li>
+        <li><span class="ci">✓</span> Começa em R$149 por peça</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S3 — SOLUÇÃO ══════════════════════════════════════════ -->
+<section id="s3">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">03 · A SOLUÇÃO</div>
+    <div class="slide-num">03 / 11</div>
+  </div>
+  <h1>PHYLLOS DPP Studio: arquivo técnico entra,<br>passaporte sai.</h1>
+  <p style="color:var(--muted);font-size:12px;margin-top:-18px;margin-bottom:16px">DPP = Digital Product Passport</p>
+  <div class="hl" style="font-style:italic">
+    Não é auditoria. Não é consultoria. É software que organiza o que a marca já sabe
+    e publica com QR — sem prometer mais do que está documentado.
+  </div>
+  <table class="tbl">
+    <thead>
+      <tr><th>O que a marca traz</th><th>O que a PHYLLOS entrega</th><th style="width:130px">Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Composição dos tecidos</td><td>Campo verificável no passaporte</td><td><span class="badge ba">Declarado</span></td></tr>
+      <tr><td>Fornecedor + nota fiscal</td><td>Rastreabilidade básica</td><td><span class="badge ba">Documentado</span></td></tr>
+      <tr><td>Peso da peça + gramatura</td><td>Cálculo de água, carbono, energia</td><td><span class="badge bg">Calculado</span></td></tr>
+      <tr><td>Certificado GOTS / OEKO-TEX</td><td>Selo de verificação independente</td><td><span class="badge bg">Verificado</span></td></tr>
+      <tr><td>Nada ainda</td><td>Campo aparece como ausente — sem greenwashing</td><td><span class="badge bm">Ausente</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ S4 — COMO FUNCIONA ════════════════════════════════════ -->
+<section id="s4">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">04 · COMO FUNCIONA</div>
+    <div class="slide-num">04 / 11</div>
+  </div>
+  <h1>Sete passos. Uma sessão de 60 minutos.<br>Um passaporte digital pronto.</h1>
+  <div class="flow">
+    <div class="flow-step"><span class="sn">01</span>Ficha técnica</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="sn">02</span>Material</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="sn">03</span>Lote</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="sn">04</span>Área / perda</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="sn">05</span>Cálculo</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="sn">06</span>Evidências</div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step active"><span class="sn">07</span>QR / Passaporte</div>
+  </div>
+  <div class="cards g2" style="margin-top:14px">
+    <div class="card">
+      <div class="label">Dados mínimos — Tier 1</div>
+      <ul class="checklist" style="margin-top:8px">
+        <li><span class="ci">✓</span> Nome e código da peça</li>
+        <li><span class="ci">✓</span> Composição de fibras (%)</li>
+        <li><span class="ci">✓</span> País de fabricação</li>
+        <li><span class="ci">✓</span> Instruções de lavagem</li>
+        <li><span class="ci">✓</span> Orientação de descarte</li>
+      </ul>
+      <p style="color:var(--green);font-size:12px;font-weight:700;margin-top:10px">→ QR gerado em ~45 min</p>
+    </div>
+    <div class="card">
+      <div class="label">Com mais dados — Tier 2 / 3</div>
+      <ul class="checklist" style="margin-top:8px">
+        <li><span class="ca">+</span> Gramatura + área → carbono calculado</li>
+        <li><span class="ca">+</span> Fornecedor + NF → documentado</li>
+        <li><span class="ca">+</span> Certificado GOTS → verificado</li>
+      </ul>
+      <p style="color:var(--muted);font-size:11px;margin-top:12px;font-style:italic">Diferencial competitivo frente a quem só declara.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S5 — MERCADO ══════════════════════════════════════════ -->
+<section id="s5">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">05 · MERCADO</div>
+    <div class="slide-num">05 / 11</div>
+  </div>
+  <h1>Um mercado global que vai ter que se adaptar de qualquer jeito.</h1>
+  <div class="cards g3">
+    <div class="card">
+      <div class="label">Marcas independentes BR</div>
+      <div class="val">~12.000</div>
+      <div class="desc">Com 1–5 SKUs ativas. As maiores já sentem pressão de buyers internacionais.</div>
+    </div>
+    <div class="card">
+      <div class="label">Regulação EU obrigatória</div>
+      <div class="val">~2028</div>
+      <div class="desc">DPP têxtil exigido para vender na Europa. CAGR de mercado DPP: 45,7% até 2030.</div>
+    </div>
+    <div class="card">
+      <div class="label">Potencial SaaS B2B — Fase 3</div>
+      <div class="val">USD 2,5M</div>
+      <div class="desc">ARR estimado. Comparable: Retraced (DPP moda, EU) captou EUR 15M Série A a ~15× ARR.</div>
+    </div>
+  </div>
+  <div style="margin-top:20px">
+    <p style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-weight:700;margin-bottom:10px">Projeção de ARR por fase</p>
+    <div class="bar-row"><span class="bar-lbl">Piloto</span><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><span class="bar-val">Gratuito</span></div>
+    <div class="bar-row"><span class="bar-lbl">Fase 1</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">R$149–299 / DPP</span></div>
+    <div class="bar-row"><span class="bar-lbl">Fase 2</span><div class="bar-track"><div class="bar-fill" style="width:30%"></div></div><span class="bar-val">R$490/mês / marca</span></div>
+    <div class="bar-row"><span class="bar-lbl">Fase 3</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-val">USD 400K–2,5M ARR</span></div>
+  </div>
+  <div class="hl" style="margin-top:18px">
+    <b>Analogia:</b> Pense como o sistema de NF-e para o varejo. Antes da lei, ninguém usava.
+    Quando a lei chegou, todo mundo precisou.
+    <strong style="color:var(--white)"> A PHYLLOS quer ser a empresa que já está operando quando a lei apertar.</strong>
+  </div>
+</section>
+
+<!-- ══ S6 — MODELO DE NEGÓCIO ════════════════════════════════ -->
+<section id="s6">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">06 · MODELO DE NEGÓCIO</div>
+    <div class="slide-num">06 / 11</div>
+  </div>
+  <h1>Três rotas de receita. Margens de software puro.</h1>
+  <table class="tbl" style="margin-bottom:18px">
+    <thead>
+      <tr><th>Modelo</th><th>Para quem</th><th>Preço</th><th>Quando</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="b">Por passaporte</td>
+        <td>Marca com 1–3 SKUs testando</td>
+        <td style="color:var(--green);font-weight:700">R$149–299 / DPP</td>
+        <td style="color:var(--green)">Pós-piloto</td>
+      </tr>
+      <tr>
+        <td class="b">Assinatura mensal</td>
+        <td>Marca ativa, múltiplos SKUs</td>
+        <td style="color:var(--accent);font-weight:700">R$490/mês (até 10 SKUs)</td>
+        <td style="color:var(--accent)">Fase 2</td>
+      </tr>
+      <tr>
+        <td class="b">API / Plataforma</td>
+        <td>Marketplace, buyer, B2B</td>
+        <td style="color:var(--muted);font-weight:700">Contrato anual USD 20–200K</td>
+        <td style="color:var(--muted)">Fase 3</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="cards g4">
+    <div class="card">
+      <div class="label">Custo infra — piloto</div>
+      <div class="val" style="color:var(--green)">R$27,50/mês</div>
+      <div class="desc">Railway Hobby: crédito de uso cobre workloads leves. Confirmado pela análise de infra.</div>
+    </div>
+    <div class="card">
+      <div class="label">Step-function out/2026</div>
+      <div class="val" style="color:var(--accent)">R$253/mês</div>
+      <div class="desc">Railway Pro + Supabase Pro ao ativar 1º cliente pagante.</div>
+    </div>
+    <div class="card">
+      <div class="label">Margem bruta por DPP</div>
+      <div class="val" style="color:var(--green)">99,9%</div>
+      <div class="desc">COGS: R$0,01 / passaporte. Infra nunca comprime margem.</div>
+    </div>
+    <div class="card">
+      <div class="label">EBITDA 2027 (revisado)</div>
+      <div class="val" style="color:var(--green)">65,5%</div>
+      <div class="desc">Revisado com custo de infra real. Era 62% na estimativa anterior.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S7 — ANÁLISE FINANCEIRA ═══════════════════════════════ -->
+<section id="s7">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">07 · ANÁLISE FINANCEIRA</div>
+    <div class="slide-num">07 / 11</div>
+  </div>
+  <h1>Investimento mínimo. Retorno assimétrico.<br>Breakeven em 9 meses.</h1>
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kl">Investimento direto total</div>
+      <div class="kv" style="color:var(--accent)">R$4.440</div>
+      <div class="kd">Até 1º cliente pagante (Claude Code + infra + domínio)</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">Breakeven operacional</div>
+      <div class="kv" style="color:var(--green)">Mar/2027</div>
+      <div class="kd">9 meses após cobrar. FCL acumulado &gt; 0</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">VPL 5 anos · 25% a.a.</div>
+      <div class="kv" style="color:var(--green)">R$869K</div>
+      <div class="kd">Cenário base. Taxa de startup early-stage BR</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">LTV / CAC — Assinatura</div>
+      <div class="kv" style="color:var(--green)">19,6×</div>
+      <div class="kd">Meta SaaS saudável é &gt; 3×. CAC payback: 1 mês</div>
+    </div>
+  </div>
+  <p style="font-size:10px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-weight:700;margin-bottom:10px">TIR (IRR) por cenário</p>
+  <div class="scenarios">
+    <div class="sc sc-cons">
+      <div class="sc-lbl" style="color:var(--accent)">Conservador</div>
+      <div class="sc-val" style="color:var(--accent)">~180% a.a.</div>
+      <div class="sc-desc">Payback 22 meses<br>VPL R$159K</div>
+    </div>
+    <div class="sc sc-base">
+      <div class="sc-lbl" style="color:var(--green)">Base</div>
+      <div class="sc-val" style="color:var(--green)">~850% a.a.</div>
+      <div class="sc-desc">Payback 9 meses<br>VPL R$869K</div>
+    </div>
+    <div class="sc sc-opt">
+      <div class="sc-lbl" style="color:var(--green)">Otimista</div>
+      <div class="sc-val" style="color:var(--green)">&gt;2.000% a.a.</div>
+      <div class="sc-desc">Payback 6 meses<br>VPL R$4,5M</div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--muted);font-style:italic">
+    TIR elevada reflete investimento inicial próximo de zero — não ausência de risco.
+    O risco real é de execução e validação de mercado.
+  </p>
+</section>
+
+<!-- ══ S8 — VALUATION ════════════════════════════════════════ -->
+<section id="s8">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">08 · VALUATION E CAPTAÇÃO</div>
+    <div class="slide-num">08 / 11</div>
+  </div>
+  <h1>Não captar antes do breakeven.<br>Quando captar, com poder de barganha.</h1>
+  <div class="val-tiers">
+    <div class="vt" style="background:#14100a;border-color:#4a3a1a">
+      <div class="label" style="color:var(--accent);font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px">Floor · Pré-piloto</div>
+      <div style="font-family:Georgia,serif;font-size:36px;font-weight:700;color:var(--accent);margin-bottom:6px">R$3M</div>
+      <div style="font-size:11px;color:var(--muted);line-height:1.6">Pré Out/2026 · discount 25–30%<br>Sem ARR comprovado</div>
+    </div>
+    <div class="vt" style="background:#0a150d;border-color:var(--dgb)">
+      <div class="label" style="color:var(--green);font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px">Base · Pós 1º cliente</div>
+      <div style="font-family:Georgia,serif;font-size:36px;font-weight:700;color:var(--green);margin-bottom:6px">R$5M</div>
+      <div style="font-size:11px;color:var(--muted);line-height:1.6">Após Out/2026 · discount 20%<br>1 cliente pagante confirmado</div>
+    </div>
+    <div class="vt" style="background:#0a1814;border-color:#1d6e56">
+      <div class="label" style="color:var(--green);font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px">Otimista · Pós ARR</div>
+      <div style="font-family:Georgia,serif;font-size:36px;font-weight:700;color:var(--green);margin-bottom:6px">R$8M</div>
+      <div style="font-size:11px;color:var(--muted);line-height:1.6">ARR &gt; R$50K + Q1/2027<br>LTV/CAC &gt; 10× medido</div>
+    </div>
+  </div>
+  <div class="hl">
+    <b>Comparável:</b> Retraced (DPP compliance de moda, Europa) captou EUR 15M Série A com ~USD 3,2M ARR →
+    <strong style="color:var(--white)">múltiplo de 15× ARR.</strong>
+    <span style="color:var(--muted)"> DPP market CAGR 45,7% até 2030.</span>
+  </div>
+  <table class="tbl" style="margin-top:6px">
+    <thead>
+      <tr><th>Momento</th><th>Condição</th><th>Quanto</th><th>Instrumento</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="b">Antes Mar/2027</td>
+        <td>Apenas se B2B urgente exigir dev externo</td>
+        <td>R$100–200K</td>
+        <td style="color:var(--muted)">Exceção — SAFE cap R$3M</td>
+      </tr>
+      <tr>
+        <td class="b">Pós Mar/2027</td>
+        <td>ARR &gt; R$80K + LTV/CAC &gt; 5×</td>
+        <td>R$300–600K</td>
+        <td style="color:var(--green)">SAFE · cap R$5M</td>
+      </tr>
+      <tr>
+        <td class="b">Pós Dez/2027</td>
+        <td>ARR &gt; R$150K + churn &lt; 5%</td>
+        <td>R$1–2M</td>
+        <td style="color:var(--accent)">Série A · equity</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ S9 — PROTEÇÃO DE PI ═══════════════════════════════════ -->
+<section id="s9">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">09 · PROTEÇÃO DE PROPRIEDADE INTELECTUAL</div>
+    <div class="slide-num">09 / 11</div>
+  </div>
+  <h1>Trade secret é a proteção primária.<br>Patente de software é o caminho errado.</h1>
+  <div class="alert alert-red">
+    <span class="al-lbl" style="color:var(--red)">EU AI Act Art. 50 — deadline: 2 de agosto de 2026.</span>
+    Interfaces conversacionais de IA devem informar o usuário. Fichas técnicas geradas por IA precisam de marcação de proveniência.
+    Penalidade: até EUR 35M ou 7% do faturamento global.
+  </div>
+  <div class="ip-grid">
+    <div class="ipc">
+      <div class="ipt"><span style="color:var(--green)">1.</span> IP Assignment + NDA</div>
+      <div class="ipd">Todo colaborador antes de qualquer conversa externa. Sem isso a PI pode ser disputada em due diligence.</div>
+      <div class="ipf">
+        <span class="ipbadge br" style="border:1px solid #4a2020">R$3–7K</span>
+        <span class="ipt-prazo">Imediato</span>
+      </div>
+    </div>
+    <div class="ipc">
+      <div class="ipt"><span style="color:var(--green)">2.</span> Marca PHYLLOS — INPI</div>
+      <div class="ipd">Classes 25+42 (PHYLLOS) e 35+42 (Fashion OS). Programa prioritário INPI — janela fecha agosto/2026.</div>
+      <div class="ipf">
+        <span class="ipbadge br" style="border:1px solid #4a2020">R$6–10K</span>
+        <span class="ipt-prazo">Agosto/2026</span>
+      </div>
+    </div>
+    <div class="ipc">
+      <div class="ipt"><span style="color:var(--green)">3.</span> Registro de software INPI</div>
+      <div class="ipd">Fashion OS e AAO no e-Software INPI. Prova datada admissível em litígio. Sinaliza seriedade para investidores.</div>
+      <div class="ipf">
+        <span class="ipbadge" style="color:var(--accent);border:1px solid #4a3a1a">R$500–2K</span>
+        <span class="ipt-prazo">7 dias</span>
+      </div>
+    </div>
+    <div class="ipc">
+      <div class="ipt"><span style="color:var(--green)">4.</span> Conformidade EU AI Act</div>
+      <div class="ipd">Cláusulas nos Termos de Serviço antes de onboarding europeu. Marcação de proveniência em outputs de IA.</div>
+      <div class="ipf">
+        <span class="ipbadge br" style="border:1px solid #4a2020">R$2–5K</span>
+        <span class="ipt-prazo">02/08/2026</span>
+      </div>
+    </div>
+    <div class="ipc">
+      <div class="ipt"><span style="color:var(--green)">5.</span> Canary data no corpus PLC</div>
+      <div class="ipd">5–10 termos sentinela fabricados. Se aparecerem em concorrente: evidência direta de cópia do corpus.</div>
+      <div class="ipf">
+        <span class="ipbadge bg" style="border:1px solid var(--dgb)">Zero</span>
+        <span class="ipt-prazo">Imediato</span>
+      </div>
+    </div>
+    <div class="ipc">
+      <div class="ipt"><span style="color:var(--green)">6.</span> Secrets em vault</div>
+      <div class="ipd">System prompts dos 51 agentes em banco criptografado (Railway Secrets). API keys fora de código-fonte.</div>
+      <div class="ipf">
+        <span class="ipbadge bg" style="border:1px solid var(--dgb)">Zero</span>
+        <span class="ipt-prazo">Imediato</span>
+      </div>
+    </div>
+  </div>
+  <div class="hl" style="margin-top:2px">
+    <b>Estratégia OSS:</b> publicar o <strong style="color:var(--white)">DPP Schema JSON-LD</strong> como open source (Apache 2.0) no Q3/2026.
+    Posiciona a PHYLLOS como autora do padrão aberto antes da EU ESPR forçar outros a criar esquemas incompatíveis.
+    O motor (cálculos, lógica de evidência) permanece fechado.
+    Budget total imediato: <strong style="color:var(--white)">R$12–22K</strong>.
+  </div>
+</section>
+
+<!-- ══ S10 — ESTÁGIO ATUAL ════════════════════════════════════ -->
+<section id="s10">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">10 · ESTÁGIO ATUAL E DELIBERAÇÕES DO BOARD</div>
+    <div class="slide-num">10 / 11</div>
+  </div>
+  <h1>MVP construído. Board deliberou. Piloto em agosto.</h1>
+  <div class="cards g2">
+    <div class="card">
+      <div class="label" style="margin-bottom:12px">Timeline</div>
+      <div class="tl-item">
+        <div class="tl-dot tl-done"></div>
+        <div><div class="tl-date">Jun/2026 — Concluído</div><div class="tl-title">Backend DPP + Studio v0</div><div class="tl-desc">API + QR real + interface 7 etapas</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot tl-done"></div>
+        <div><div class="tl-date">Jun/2026 — Concluído</div><div class="tl-title">Análise financeira + board</div><div class="tl-desc">CFO model + 4 deliberações formais</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot tl-now"></div>
+        <div><div class="tl-date" style="color:var(--accent)">Jul/2026 — Agora</div><div class="tl-title">Recrutamento das marcas</div><div class="tl-desc">DM para 5 marcas. Meta: 3 confirmadas</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot tl-future"></div>
+        <div><div class="tl-date">Ago/2026</div><div class="tl-title">Piloto assistido 3–5 marcas</div><div class="tl-desc">60 min/sessão. Custo: R$27,50/mês</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot tl-future"></div>
+        <div><div class="tl-date">Out/2026</div><div class="tl-title">1º cliente pagante</div><div class="tl-desc">Infra sobe para R$253/mês</div></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot tl-future"></div>
+        <div><div class="tl-date">Mar/2027</div><div class="tl-title">Breakeven operacional</div><div class="tl-desc">FCL acumulado &gt; 0 · Valuation R$5M</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label" style="margin-bottom:12px">Deliberações do Board — 25 Jun 2026</div>
+      <div class="board-grid">
+        <div class="bd-item">
+          <div class="bd-title"><span class="bd-num">01 ·</span> Go-on do piloto em agosto/2026</div>
+          <div class="bd-desc">Data deslocada de julho → agosto. Critérios de go/no-go inalterados.</div>
+        </div>
+        <div class="bd-item">
+          <div class="bd-title"><span class="bd-num">02 ·</span> Seguir recomendação do CFO</div>
+          <div class="bd-desc">Breakeven antes de captar. First hire somente com ARR &gt; R$120K.</div>
+        </div>
+        <div class="bd-item">
+          <div class="bd-title"><span class="bd-num">03 ·</span> Política de não captação pré-breakeven</div>
+          <div class="bd-desc">Zero captação antes de Mar/2027. Exceção apenas para contrato B2B urgente.</div>
+        </div>
+        <div class="bd-item">
+          <div class="bd-title"><span class="bd-num">04 ·</span> Valuation revisado</div>
+          <div class="bd-desc">R$5M base (pós 1º cliente). R$8M otimista (ARR &gt; R$50K + Q1/2027).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ S11 — PRÓXIMOS PASSOS ═════════════════════════════════ -->
+<section id="s11">
+  <div class="slide-meta">
+    <div class="slide-logo"><span class="phi">Φ</span> <span class="brand">PHYLLOS</span> <span class="sub">wear</span></div>
+    <div class="kicker">11 · PRÓXIMOS PASSOS</div>
+    <div class="slide-num">11 / 11</div>
+  </div>
+  <h1>Três frentes. Trinta dias. Um piloto real.</h1>
+  <div class="frentes">
+    <div class="frente fr-prod">
+      <div class="fr-lbl" style="color:var(--green)">Produto</div>
+      <ul>
+        <li><span class="fr-arrow" style="color:var(--green)">→</span> Recrutar 5 marcas para piloto de agosto</li>
+        <li><span class="fr-arrow" style="color:var(--green)">→</span> Implementar warm-up cron job (evitar pausa Supabase free)</li>
+        <li><span class="fr-arrow" style="color:var(--green)">→</span> Testar QR em domínio público antes de etiqueta física</li>
+      </ul>
+    </div>
+    <div class="frente fr-legal">
+      <div class="fr-lbl" style="color:var(--red)">Legal / PI</div>
+      <ul>
+        <li><span class="fr-arrow" style="color:var(--red)">→</span> IP Assignment + NDA todos os colaboradores (R$3–7K)</li>
+        <li><span class="fr-arrow" style="color:var(--red)">→</span> Protocolar marca PHYLLOS no INPI — janela agosto/2026</li>
+        <li><span class="fr-arrow" style="color:var(--red)">→</span> Conformidade EU AI Act Art. 50 — deadline 02/08/2026</li>
+      </ul>
+    </div>
+    <div class="frente fr-fin">
+      <div class="fr-lbl" style="color:var(--accent)">Financeiro</div>
+      <ul>
+        <li><span class="fr-arrow" style="color:var(--accent)">→</span> Confirmar orçamento piloto: R$27,50/mês × 3 meses</li>
+        <li><span class="fr-arrow" style="color:var(--accent)">→</span> Definir forma de cobrança e emissão de NF do 1º DPP</li>
+        <li><span class="fr-arrow" style="color:var(--accent)">→</span> Publicar DPP Schema JSON-LD como OSS Apache 2.0 — Q3/2026</li>
+      </ul>
+    </div>
+  </div>
+  <div class="budget-bar">
+    <strong style="color:var(--green)">Budget imediato (30 dias):</strong>
+    R$12–22K legal/PI + R$27,50 infra = investimento total pré-piloto de
+    <strong style="color:var(--white)">R$12–26K all-in.</strong>
+  </div>
+  <div style="margin-top:18px;display:flex;justify-content:center">
+    <div class="quote">
+      "Você já sabe o que tem na sua peça.<br>
+      A PHYLLOS deixa qualquer pessoa descobrir isso com um QR."
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const sections = document.querySelectorAll('section');
+const navLinks  = document.querySelectorAll('nav a');
+const progress  = document.getElementById('progress');
+
+function onScroll(){
+  const scrollY = window.scrollY;
+  const total   = document.body.scrollHeight - window.innerHeight;
+  progress.style.width = (scrollY / total * 100) + '%';
+  let current = 0;
+  sections.forEach((sec,i)=>{ if(scrollY >= sec.offsetTop - window.innerHeight/3) current = i; });
+  navLinks.forEach((a,i)=>a.classList.toggle('active', i===current));
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+navLinks.forEach(a=>{
+  a.addEventListener('click', e=>{
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>

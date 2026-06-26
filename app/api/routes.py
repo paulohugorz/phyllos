@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from typing import List
+from datetime import datetime, timezone
+from types import SimpleNamespace
 import json
+import os
 import uuid
 import io
 
@@ -25,8 +30,28 @@ from app.schemas.schemas import (
     ISCMOut,
 )
 from app.api.fornecedores import _produto_para_materia_prima
+from app.services.dpp_calculator import (
+    DppCalculationError,
+    DppCalculationInput,
+    calculate_dpp_indicators,
+)
+from app.validators.dpp_validators import validate_dpp_publication
 
 router = APIRouter()
+
+DPP_BASE_URL = os.getenv("DPP_BASE_URL", "https://phyllos-production.up.railway.app").rstrip("/")
+
+
+def public_dpp_url(dpp_uuid: str) -> str:
+    return f"{DPP_BASE_URL}/p/{dpp_uuid}"
+
+
+def _find_peca_by_public_identifier(db: Session, identifier: str):
+    return db.query(Peca).filter(
+        (Peca.gtin == identifier)
+        | (Peca.dpp_uuid == identifier)
+        | (Peca.codigo == identifier)
+    ).first()
 
 
 # ---------- Coleções ----------
@@ -432,21 +457,89 @@ def publicar_dpp(codigo: str, db: Session = Depends(get_db)):
     peca = db.query(Peca).filter(Peca.codigo == codigo).first()
     if not peca:
         raise HTTPException(status_code=404, detail="Peça não encontrada")
-    if not peca.ficha_tecnica or not peca.ficha_tecnica.composicao_fibras:
-        raise HTTPException(status_code=400, detail="Ficha técnica incompleta: composicao_fibras obrigatória para publicar DPP")
-    if not peca.gtin:
-        raise HTTPException(status_code=400, detail="GTIN obrigatório para publicar DPP")
     if not peca.dpp_uuid:
         peca.dpp_uuid = str(uuid.uuid4())
+
+    ficha = peca.ficha_tecnica
+    if not ficha:
+        raise HTTPException(status_code=422, detail={"errors": ["Ficha tecnica obrigatoria para publicar DPP"]})
+
+    validation_ficha = SimpleNamespace(**{
+        column.name: getattr(ficha, column.name)
+        for column in FichaTecnica.__table__.columns
+    })
+    validation_peca = SimpleNamespace(**{
+        column.name: getattr(peca, column.name)
+        for column in Peca.__table__.columns
+    })
+    validation_peca.tem_pais_fabricacao = db.query(EtapaProducao).filter(
+        EtapaProducao.peca_id == peca.id,
+        EtapaProducao.pais.isnot(None),
+    ).first() is not None
+
+    calculated_fields = {}
+    tier2_inputs = (
+        peca.area_peca_m2,
+        peca.perda_corte_pct,
+        ficha.gramatura_g_m2,
+        ficha.agua_litros_kg,
+        ficha.energia_kwh_kg,
+        ficha.carbono_kgco2e_kg,
+    )
+    if all(value is not None for value in tier2_inputs):
+        try:
+            result = calculate_dpp_indicators(DppCalculationInput(
+                area_peca_m2=peca.area_peca_m2,
+                perda_corte_pct=peca.perda_corte_pct,
+                gramatura_g_m2=ficha.gramatura_g_m2,
+                agua_litros_kg=ficha.agua_litros_kg,
+                energia_kwh_kg=ficha.energia_kwh_kg,
+                carbono_kgco2e_kg=ficha.carbono_kgco2e_kg,
+            ))
+        except DppCalculationError as exc:
+            raise HTTPException(status_code=422, detail={"errors": [str(exc)]}) from exc
+
+        calculated_fields = {
+            "area_total_requerida_m2": result.area_total_requerida_m2,
+            "area_perdida_m2": result.area_perdida_m2,
+            "peso_peca_kg": result.peso_peca_kg,
+            "agua_peca_litros": result.agua_peca_litros,
+            "energia_peca_kwh": result.energia_peca_kwh,
+            "pegada_carbono_kgco2e": result.carbono_peca_kgco2e,
+        }
+
+    for field, value in calculated_fields.items():
+        setattr(validation_ficha, field, value)
+
+    validation = validate_dpp_publication(validation_peca, validation_ficha)
+    if not validation.can_publish:
+        raise HTTPException(
+            status_code=422,
+            detail={
+                "errors": validation.errors,
+                "warnings": validation.warnings,
+                "evidence_statuses": validation.evidence_statuses,
+            },
+        )
+
+    for field, value in calculated_fields.items():
+        setattr(ficha, field, value)
+
+    now = datetime.now(timezone.utc)
     peca.dpp_status = "publicado"
+    peca.dpp_version = peca.dpp_version or "1.0"
+    peca.data_publicacao = peca.data_publicacao or now
+    peca.data_atualizacao = now
+    ficha.evidencia_statuses = json.dumps(validation.evidence_statuses, ensure_ascii=False)
+
     db.commit()
     db.refresh(peca)
     return peca
 
 
-@router.get("/dpp/{gtin}", tags=["DPP"])
-def obter_dpp(gtin: str, db: Session = Depends(get_db)):
-    peca = db.query(Peca).filter(Peca.gtin == gtin).first()
+@router.get("/dpp/{identifier}", tags=["DPP"])
+def obter_dpp(identifier: str, db: Session = Depends(get_db)):
+    peca = _find_peca_by_public_identifier(db, identifier)
     if not peca or peca.dpp_status != "publicado":
         raise HTTPException(status_code=404, detail="DPP não encontrado ou não publicado")
     ficha = peca.ficha_tecnica
@@ -460,8 +553,28 @@ def obter_dpp(gtin: str, db: Session = Depends(get_db)):
         "description": ficha.descricao_tecnica if ficha else None,
         "material": json.loads(ficha.composicao_fibras) if ficha and ficha.composicao_fibras else [],
         "recycledContent": ficha.conteudo_reciclado_pct if ficha else None,
-        "carbonFootprint": {"value": ficha.pegada_carbono_kgco2e, "unitCode": "KGM"} if ficha and ficha.pegada_carbono_kgco2e else None,
+        "weight": {"value": ficha.peso_peca_kg, "unitCode": "KGM"} if ficha and ficha.peso_peca_kg is not None else None,
+        "carbonFootprint": {"value": ficha.pegada_carbono_kgco2e, "unitCode": "KGM"} if ficha and ficha.pegada_carbono_kgco2e is not None else None,
+        "waterFootprint": {"value": ficha.agua_peca_litros, "unitCode": "LTR"} if ficha and ficha.agua_peca_litros is not None else None,
+        "energyUse": {"value": ficha.energia_peca_kwh, "unitCode": "KWH"} if ficha and ficha.energia_peca_kwh is not None else None,
+        "impactFactorSources": {
+            "water": ficha.fonte_agua_litros_kg,
+            "energy": ficha.fonte_energia_kwh_kg,
+            "carbon": ficha.fonte_carbono_kgco2e_kg,
+            "methodology": ficha.metodologia_fatores_impacto,
+            "limitation": (
+                "Fatores estimados com base genérica (Ecoinvent/IPCC). "
+                "Valores reais dependem de dados primários do fornecedor e ACV oficial."
+                if ficha.metodologia_fatores_impacto and "estimativa genérica" in ficha.metodologia_fatores_impacto
+                else "Indicadores estimados não substituem ACV oficial ou auditoria ambiental."
+            ),
+        } if ficha else {},
+        "cutWaste": {
+            "areaLostM2": ficha.area_perdida_m2,
+            "lossPercent": peca.perda_corte_pct,
+        } if ficha and ficha.area_perdida_m2 is not None else None,
         "certifications": json.loads(ficha.certificacoes) if ficha and ficha.certificacoes else [],
+        "evidence": json.loads(ficha.evidencia_statuses) if ficha and ficha.evidencia_statuses else {},
         "repairInstructions": ficha.instrucoes_reparo if ficha else None,
         "endOfLifeInstructions": ficha.instrucoes_fim_de_vida if ficha else None,
         "durability": {"washCycles": ficha.durabilidade_ciclos_lavagem} if ficha and ficha.durabilidade_ciclos_lavagem else None,
@@ -472,16 +585,16 @@ def obter_dpp(gtin: str, db: Session = Depends(get_db)):
     }
 
 
-@router.get("/dpp/{gtin}/qr", tags=["DPP"])
-def obter_qr_dpp(gtin: str, db: Session = Depends(get_db)):
+@router.get("/dpp/{identifier}/qr", tags=["DPP"])
+def obter_qr_dpp(identifier: str, db: Session = Depends(get_db)):
     try:
         import qrcode
     except ImportError:
         raise HTTPException(status_code=501, detail="qrcode não instalado")
-    peca = db.query(Peca).filter(Peca.gtin == gtin).first()
+    peca = _find_peca_by_public_identifier(db, identifier)
     if not peca or peca.dpp_status != "publicado":
         raise HTTPException(status_code=404, detail="DPP não encontrado ou não publicado")
-    url = f"https://phyllos-production.up.railway.app/p/{peca.dpp_uuid}"
+    url = public_dpp_url(peca.dpp_uuid)
     img = qrcode.make(url)
     buf = io.BytesIO()
     img.save(buf, format="PNG")
@@ -518,7 +631,7 @@ def qr_peca(codigo: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Peça não encontrada")
     if not peca.dpp_uuid:
         raise HTTPException(status_code=400, detail="Peça sem UUID — recrie a peça para gerar o QR")
-    url = f"https://phyllos-production.up.railway.app/p/{peca.dpp_uuid}"
+    url = public_dpp_url(peca.dpp_uuid)
     b64 = _gerar_qr_base64(url)
     if not b64:
         raise HTTPException(status_code=501, detail="qrcode não instalado")

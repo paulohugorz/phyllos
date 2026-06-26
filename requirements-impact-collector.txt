@@ -1,0 +1,14 @@
+# PHYLLOS Impact Collector — dependências
+# Instalar: pip install -r requirements-impact-collector.txt
+
+# Parser de PDF (extração de texto de artigos LCA)
+pymupdf>=1.24.0
+
+# Parser de tabelas em PDF (para tabelas de resultados LCA)
+# camelot-py[cv]>=0.11.0  # requer Ghostscript — instalar separadamente se necessário
+
+# HTTP client mais robusto (opcional — o módulo usa urllib da stdlib por padrão)
+# httpx>=0.27.0
+
+# Anthropic SDK (opcional — o módulo usa urllib direto por padrão para reduzir deps)
+# anthropic>=0.30.0

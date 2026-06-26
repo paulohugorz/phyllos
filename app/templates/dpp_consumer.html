@@ -179,6 +179,74 @@
     .cert-badge.pending    { color: var(--amber); }
     .cert-badge.unverified { color: var(--muted); }
 
+    .evidence-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      max-width: 100%;
+      margin-top: 8px;
+      padding: 5px 9px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: .02em;
+    }
+    .evidence-badge.ausente { color: var(--muted); }
+    .evidence-badge.declarado { color: var(--amber); }
+    .evidence-badge.calculado { color: #3a8fc2; }
+    .evidence-badge.documentado,
+    .evidence-badge.verificado { color: var(--green); }
+
+    .metric-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .metric-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 6px 10px;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .metric-row:last-child { border-bottom: 0; }
+    .metric-name {
+      min-width: 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .metric-value {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .metric-row .evidence-badge {
+      grid-column: 1 / -1;
+      margin-top: 0;
+    }
+    .source-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+    .source-list strong {
+      color: var(--text);
+      font-size: 10px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
     /* ── Fornecedor origin pills ── */
     .origin-list {
       display: flex;
@@ -294,33 +362,35 @@
     <div class="gtin-tag">GTIN {{ peca_gtin }}</div>
   </div>
 
-  <div class="deck-label">Credenciais de sustentabilidade</div>
+  <div class="deck-label">Dados e evidências do passaporte</div>
 
   <div class="cards-track" id="track">
 
-    {# ── Card 1: Origem & Certificação (mandatory) ── #}
+    {# ── Card 1: Origem e certificações (mandatory) ── #}
     <div class="card" style="--accent: #4caf82">
       <div class="card-index">01 / {{ total_cards }}</div>
       <div class="card-icon">🌱</div>
       <div class="card-body">
-        <div class="card-title">Certificação de Origem</div>
+        <div class="card-title">Origem e certificações</div>
+        {% set cert_status = evidence_statuses.get('certificacoes', 'ausente') %}
+        <span class="evidence-badge {{ cert_status }}">{{ evidence_labels.get(cert_status, cert_status) }}</span>
 
         {% if certificacoes %}
           <div class="cert-list">
             {% for c in certificacoes %}
               {% set status = c.nivel_confianca | default('baixo') %}
               {% if status in ['alto', 'verificado'] %}
-                <span class="cert-badge verified">{{ c.tipo }}</span>
+                <span class="cert-badge verified">{{ c.tipo | default(c.nome, true) }}</span>
               {% elif status == 'medio' %}
-                <span class="cert-badge pending">{{ c.tipo }}</span>
+                <span class="cert-badge pending">{{ c.tipo | default(c.nome, true) }}</span>
               {% else %}
-                <span class="cert-badge unverified">{{ c.tipo }}</span>
+                <span class="cert-badge unverified">{{ c.tipo | default(c.nome, true) }}</span>
               {% endif %}
             {% endfor %}
           </div>
         {% else %}
           <div class="card-value apuracao">Em apuração</div>
-          <div class="card-sub">Certificações em processo de verificação.</div>
+          <div class="card-sub">Certificações ainda não informadas ou em revisão.</div>
         {% endif %}
 
         {% if fornecedores %}
@@ -340,50 +410,75 @@
       </div>
     </div>
 
-    {# ── Card 2: Pegada de Carbono (mandatory) ── #}
+    {# ── Card 2: Indicadores calculados (mandatory) ── #}
     <div class="card" style="--accent: #6cb4e4">
       <div class="card-index">02 / {{ total_cards }}</div>
       <div class="card-icon">💨</div>
       <div class="card-body">
-        <div class="card-title">Pegada de Carbono</div>
+        <div class="card-title">Indicadores calculados</div>
 
-        {% if carbono_kgco2e %}
-          {% set pct = [((carbono_kgco2e / 20) * 100) | int, 100] | min %}
-          <div class="card-value">{{ "%.1f"|format(carbono_kgco2e) }}</div>
-          <div class="card-unit">kg CO₂e por peça</div>
-          <div class="carbon-bar-wrap">
-            <div class="carbon-bar-track">
-              <div class="carbon-bar-fill" style="width: {{ pct }}%"></div>
-            </div>
-            <div class="carbon-benchmark">
-              <span>0 kg</span>
-              <span>Média fast fashion ~20 kg</span>
-            </div>
+        <div class="metric-list">
+          {% set carbon_status = evidence_statuses.get('carbono_peca_kgco2e', 'ausente') %}
+          <div class="metric-row">
+            <span class="metric-name">Carbono</span>
+            <strong class="metric-value">{% if carbono_kgco2e is not none %}{{ "%.2f"|format(carbono_kgco2e) }} kg CO₂e{% else %}Em apuração{% endif %}</strong>
+            <span class="evidence-badge {{ carbon_status }}">{{ evidence_labels.get(carbon_status, carbon_status) }}</span>
           </div>
-          <div class="card-sub" style="margin-top: 16px">
-            {% if carbono_kgco2e < 5 %}
-              Emissão muito baixa para o setor têxtil.
-            {% elif carbono_kgco2e < 10 %}
-              Emissão abaixo da média de coleções convencionais.
-            {% else %}
-              Rastreado. Compromisso de redução em andamento.
-            {% endif %}
+
+          {% set agua_status = evidence_statuses.get('agua_peca_litros', 'ausente') %}
+          <div class="metric-row">
+            <span class="metric-name">Água</span>
+            <strong class="metric-value">{% if agua_peca_litros is not none %}{{ "%.1f"|format(agua_peca_litros) }} L{% else %}Em apuração{% endif %}</strong>
+            <span class="evidence-badge {{ agua_status }}">{{ evidence_labels.get(agua_status, agua_status) }}</span>
+          </div>
+
+          {% set energia_status = evidence_statuses.get('energia_peca_kwh', 'ausente') %}
+          <div class="metric-row">
+            <span class="metric-name">Energia</span>
+            <strong class="metric-value">{% if energia_peca_kwh is not none %}{{ "%.2f"|format(energia_peca_kwh) }} kWh{% else %}Em apuração{% endif %}</strong>
+            <span class="evidence-badge {{ energia_status }}">{{ evidence_labels.get(energia_status, energia_status) }}</span>
+          </div>
+
+          {% set perda_status = evidence_statuses.get('perda_corte_pct', 'ausente') %}
+          <div class="metric-row">
+            <span class="metric-name">Perda de corte</span>
+            <strong class="metric-value">
+              {% if area_perdida_m2 is not none and perda_corte_pct is not none %}
+                {{ "%.2f"|format(area_perdida_m2) }} m² · {{ "%.1f"|format(perda_corte_pct) }}%
+              {% else %}
+                Em apuração
+              {% endif %}
+            </strong>
+            <span class="evidence-badge {{ perda_status }}">{{ evidence_labels.get(perda_status, perda_status) }}</span>
+          </div>
+        </div>
+
+        {% if carbono_kgco2e is not none or agua_peca_litros is not none or energia_peca_kwh is not none %}
+          <div class="card-sub" style="margin-top: 14px">
+            Estimativas calculadas a partir da área da peça, perda de corte, gramatura e fatores cadastrados. Não substitui ACV auditada.
+          </div>
+          <div class="source-list">
+            <strong>Fonte dos fatores</strong>
+            <span>Água: {{ impact_sources.agua or 'fonte não informada' }}</span>
+            <span>Energia: {{ impact_sources.energia or 'fonte não informada' }}</span>
+            <span>Carbono: {{ impact_sources.carbono or 'fonte não informada' }}</span>
+            {% if impact_sources.metodologia %}<span>Metodologia: {{ impact_sources.metodologia }}</span>{% endif %}
           </div>
         {% else %}
-          <div class="card-value apuracao">Em apuração</div>
           <div class="card-sub">
-            Análise de ciclo de vida em andamento. Dado disponível na próxima coleção.
+            Indicadores aguardam ficha técnica, fatores e evidências mínimas para publicação.
           </div>
         {% endif %}
       </div>
     </div>
-
     {# ── Card 3: Durabilidade (mandatory) ── #}
     <div class="card" style="--accent: #e8a246">
       <div class="card-index">03 / {{ total_cards }}</div>
       <div class="card-icon">⏳</div>
       <div class="card-body">
         <div class="card-title">Durabilidade</div>
+        {% set durabilidade_status = 'declarado' if durabilidade_ciclos else 'ausente' %}
+        <span class="evidence-badge {{ durabilidade_status }}">{{ evidence_labels.get(durabilidade_status, durabilidade_status) }}</span>
 
         {% if durabilidade_ciclos %}
           <div class="durability-number">
@@ -395,12 +490,12 @@
             <div class="card-unit" style="margin-top: 8px">≈ {{ anos }} ano{% if anos > 1 %}s{% endif %} de uso regular</div>
           {% endif %}
           <div class="card-sub">
-            Testado conforme ISO 6330. Siga as instruções de cuidado para maximizar a vida útil.
+            Dado declarado na ficha técnica. Siga as instruções de cuidado para maximizar a vida útil.
           </div>
         {% else %}
           <div class="card-value apuracao">Em apuração</div>
           <div class="card-sub">
-            Teste de resistência em andamento. Damos preferência a fibras comprovadamente duráveis.
+            Teste de resistência ainda não informado para esta peça.
           </div>
         {% endif %}
       </div>
@@ -413,6 +508,8 @@
       <div class="card-icon">🔬</div>
       <div class="card-body">
         <div class="card-title">Composição</div>
+        {% set composicao_status = evidence_statuses.get('composicao_fibras', 'ausente') %}
+        <span class="evidence-badge {{ composicao_status }}">{{ evidence_labels.get(composicao_status, composicao_status) }}</span>
         <div class="fibra-bars">
           {% for f in composicao %}
             <div class="fibra-row">
@@ -439,6 +536,7 @@
       <div class="card-icon">♻️</div>
       <div class="card-body">
         <div class="card-title">Cuidado & Fim de Vida</div>
+        <span class="evidence-badge declarado">{{ evidence_labels.get('declarado') }}</span>
         {% if instrucoes_reparo %}
           <div class="card-sub" style="margin-top: 6px; color: var(--text); font-size: 14px">
             <strong style="font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted)">Reparo</strong><br>
@@ -460,7 +558,7 @@
   <div class="dots" id="dots"></div>
 
   <div class="footer">
-    <span>Digital Product Passport · EU ESPR</span>
+    <span>DPP {{ dpp_version or 'rascunho' }} · evidências rotuladas</span>
     <a href="/">phyllos.com.br</a>
   </div>
 

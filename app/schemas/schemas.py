@@ -36,6 +36,13 @@ class PecaBase(BaseModel):
     gtin: Optional[str] = None
     dpp_uuid: Optional[str] = None
     dpp_status: Optional[str] = "rascunho"
+    area_peca_m2: Optional[float] = None
+    perda_corte_pct: Optional[float] = None
+    lote_quantidade: Optional[int] = None
+    pais_fabricacao: Optional[str] = None
+    dpp_version: Optional[str] = "1.0"
+    data_publicacao: Optional[datetime] = None
+    data_atualizacao: Optional[datetime] = None
 
 
 class PecaCreate(PecaBase):
@@ -55,6 +62,13 @@ class PecaUpdate(BaseModel):
     gtin: Optional[str] = None
     dpp_uuid: Optional[str] = None
     dpp_status: Optional[str] = None
+    area_peca_m2: Optional[float] = None
+    perda_corte_pct: Optional[float] = None
+    lote_quantidade: Optional[int] = None
+    pais_fabricacao: Optional[str] = None
+    dpp_version: Optional[str] = None
+    data_publicacao: Optional[datetime] = None
+    data_atualizacao: Optional[datetime] = None
 
 
 class PecaOut(PecaBase):
@@ -78,6 +92,20 @@ class FichaTecnicaBase(BaseModel):
     certificacoes: Optional[str] = None            # JSON string
     conteudo_reciclado_pct: Optional[float] = None
     pegada_carbono_kgco2e: Optional[float] = None
+    gramatura_g_m2: Optional[float] = None
+    agua_litros_kg: Optional[float] = None
+    energia_kwh_kg: Optional[float] = None
+    carbono_kgco2e_kg: Optional[float] = None
+    fonte_agua_litros_kg: Optional[str] = None
+    fonte_energia_kwh_kg: Optional[str] = None
+    fonte_carbono_kgco2e_kg: Optional[str] = None
+    metodologia_fatores_impacto: Optional[str] = None
+    area_total_requerida_m2: Optional[float] = None
+    area_perdida_m2: Optional[float] = None
+    peso_peca_kg: Optional[float] = None
+    agua_peca_litros: Optional[float] = None
+    energia_peca_kwh: Optional[float] = None
+    evidencia_statuses: Optional[str] = None
     durabilidade_ciclos_lavagem: Optional[int] = None
 
 
@@ -291,6 +319,86 @@ class MateriaPrimaOut(BaseModel):
 # ---------------------------------------------------------------------------
 # ISCM — Índice de Sustentabilidade da Cadeia de Moda
 # ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# MIE — Modelagem Intelligence Engine
+# ---------------------------------------------------------------------------
+
+class ModelagemSpecBase(BaseModel):
+    versao: Optional[str] = "1.0"
+    input_raw: Optional[str] = None
+    intencoes: Optional[str] = None           # JSON string
+    base_id: Optional[str] = None
+    categoria_peca: Optional[str] = None
+    silhueta: Optional[str] = None
+    # medidas corporais
+    altura_cm: Optional[float] = None
+    busto_cm: Optional[float] = None
+    cintura_cm: Optional[float] = None
+    quadril_cm: Optional[float] = None
+    ombro_cm: Optional[float] = None
+    costas_cm: Optional[float] = None
+    cava_cm: Optional[float] = None
+    braco_cm: Optional[float] = None
+    punho_cm: Optional[float] = None
+    gancho_cm: Optional[float] = None
+    coxa_cm: Optional[float] = None
+    joelho_cm: Optional[float] = None
+    entreperna_cm: Optional[float] = None
+    tornozelo_cm: Optional[float] = None
+    comprimento_total_cm: Optional[float] = None
+    # folgas
+    folga_busto: Optional[float] = None
+    folga_cintura: Optional[float] = None
+    folga_quadril: Optional[float] = None
+    folga_ombro: Optional[float] = None
+    folga_cava: Optional[float] = None
+    folga_coxa: Optional[float] = None
+    folga_gancho: Optional[float] = None
+    folga_entreperna: Optional[float] = None
+    grau_ajuste: Optional[str] = None
+    # construção
+    mecanismos: Optional[str] = None
+    linha_fio: Optional[str] = None
+    tecidos_recomendados: Optional[str] = None
+    tecidos_a_evitar: Optional[str] = None
+    # tecido
+    elasticidade: Optional[str] = None
+    caimento: Optional[str] = None
+    reducao_elastica_pct: Optional[float] = None
+    # graduação
+    grade_base: Optional[str] = None
+    regras_grading: Optional[str] = None
+
+
+class ModelagemSpecCreate(ModelagemSpecBase):
+    peca_id: int
+
+
+class ModelagemSpecUpdate(ModelagemSpecBase):
+    pass
+
+
+class ModelagemSpecRevisao(BaseModel):
+    """Payload exclusivo para o loop de feedback — revisão humana."""
+    status_revisao: str  # gerado | em_revisao | aprovado | reprovado
+    revisado_por: Optional[str] = None
+    notas_revisao: Optional[str] = None
+
+
+class ModelagemSpecOut(ModelagemSpecBase):
+    id: int
+    peca_id: int
+    status_revisao: str
+    revisado_por: Optional[str] = None
+    revisado_em: Optional[datetime] = None
+    notas_revisao: Optional[str] = None
+    criado_em: datetime
+    atualizado_em: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
 
 class ISCMDimensaoOut(BaseModel):
     pontos: float

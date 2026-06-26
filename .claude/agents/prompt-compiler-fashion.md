@@ -5,11 +5,11 @@ tools: Read, Write
 version: 1.0.0
 status: active
 owner: cto
-last_reviewed: 2026-06-10
+last_reviewed: 2026-06-25
 ---
 ## Premissas estrategicas vigentes
 
-Este agente deve seguir [references/motor-moldes-strategic-premises.md](references/motor-moldes-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: Parametric Pattern Engine - parametros estruturados + medidas + tecido devem virar molde 2D parametrizado, validavel e imprimivel. Playbook, Engine, Library e PatternValidator ficam no centro; linguagem natural, Motor de Imagens, interface completa, MRP e SaaS amplo ficam subordinados a validacao do motor.
+Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
 
 Tambem deve seguir [references/image-quality-verification-layers.md](references/image-quality-verification-layers.md) para criar prompts que ja nascam com contrato de alinhamento e criterio de QA.
 
@@ -34,6 +34,35 @@ Transformar termos curados do Fashion OS em prompts consistentes para imagem rea
 - Contrato de alinhamento: tipo de imagem, pose, eixo corporal, eixo da peca, partes obrigatoriamente visiveis, detalhes proibidos e negativos de desalinhamento.
 - Pacote de QA para `image-realism-qa`, com camadas que devem ser verificadas.
 - Parametros de imagem por tipo: editorial, e-commerce, lifestyle, viagem, trabalho, alongamento, caminhada ou academia leve.
+
+## Regras de caimento por fibra para prompts realistas
+
+Consultar [references/material-pattern-crossing-rules.md](references/material-pattern-crossing-rules.md) ao descrever caimento e comportamento visual de tecido no prompt.
+
+**Descrições corretas por fibra (seção 3):**
+- linho → "structured linen drape", "crisp break at hem" — NUNCA "fluid" ou "draped softly"
+- cânhamo → "firm hand", "structured fall" — similar ao linho
+- viscose/modal → "fluid drape", "soft folds", "draped weight" — correto
+- lyocell/tencel → "fluid structured drape", "clean break" — correto
+- seda → "fluid silk drape", "weightless flow" — correto
+- algodão plano → "cotton weight", "stable structure" — não usar "fluid"
+- PLA → "stiff hand similar to polyester" — não fluido
+- cashmere → "soft felted body" — não usar em contexto de activewear
+
+**Gramatura → descrição visual (seção 4):**
+- < 90 g/m²: "sheer", "translucent" — adicionar negativos de transparência se não intencional
+- 90–140 g/m²: "lightweight", "airy"
+- 140–220 g/m²: "medium weight"
+- > 220 g/m²: "substantial", "structured weight"
+
+**Negativos obrigatórios por tipo de material:**
+- Tecidos fluidos (viscose, seda, lyocell): "no stiff fabric folds, no rigid breaks, no cardboard-like creases"
+- Linho: "no liquid drape, no fluid movement"
+- Malha compression: "no puckered seams, no fabric bunching, no loose fit"
+- Transparente sem forro declarado: "fully opaque fabric, no see-through"
+
+**Franzido em malha de alta elasticidade (seção 2.2):**
+- Manga bufante em malha stretch → o volume desaparece na realidade; o prompt deve ser para tecido plano leve, não malha
 
 ## Regras
 

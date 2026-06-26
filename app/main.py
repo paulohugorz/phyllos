@@ -1,12 +1,15 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from app.core.database import Base, engine, run_migrations, SessionLocal
-from app.api.routes import router
+from app.api.routes import public_dpp_url, router
 from app.api.fornecedores import router as router_fornecedores
+from app.api.modelagem import router as router_modelagem, router_banco as router_banco_modelagem
+from app.api.catalogo import router as router_catalogo
+from app.validators.dpp_validators import EVIDENCE_LABELS
 import os, json
 
 run_migrations()
@@ -26,6 +29,8 @@ app.add_middleware(
 )
 
 templates = Jinja2Templates(directory=os.path.join(os.path.dirname(__file__), "templates"))
+repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+phyllos_site_dir = os.path.join(repo_root, "phyllos")
 
 images_dir = os.path.join(os.path.dirname(__file__), "../data/images")
 os.makedirs(images_dir, exist_ok=True)
@@ -33,10 +38,22 @@ app.mount("/static/images", StaticFiles(directory=images_dir), name="images")
 
 app.include_router(router)
 app.include_router(router_fornecedores)
+app.include_router(router_modelagem)
+app.include_router(router_banco_modelagem)
+app.include_router(router_catalogo)
 
 
 @app.get("/", response_class=HTMLResponse)
 async def frontend(request: Request):
+    dpp_studio_path = os.path.join(phyllos_site_dir, "dpp-studio.html")
+    if os.path.exists(dpp_studio_path):
+        return FileResponse(dpp_studio_path, media_type="text/html")
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+@app.get("/atelier", response_class=HTMLResponse)
+async def atelier(request: Request):
+    """Ateliê SPA — gestão de peças, modelagens e DPP."""
     return templates.TemplateResponse("index.html", {"request": request})
 
 
@@ -46,8 +63,17 @@ def _dpp_context(peca, request):
     ficha    = peca.ficha_tecnica
     materiais = peca.materiais
 
-    composicao = json.loads(ficha.composicao_fibras) if ficha and ficha.composicao_fibras else []
-    certs      = json.loads(ficha.certificacoes)     if ficha and ficha.certificacoes      else []
+    def json_or_empty(raw, fallback):
+        if not raw:
+            return fallback
+        try:
+            return json.loads(raw)
+        except json.JSONDecodeError:
+            return fallback
+
+    composicao = json_or_empty(ficha.composicao_fibras, []) if ficha else []
+    certs      = json_or_empty(ficha.certificacoes, []) if ficha else []
+    evidence_statuses = json_or_empty(ficha.evidencia_statuses, {}) if ficha else {}
 
     fornecedores_info = []
     seen = set()
@@ -71,9 +97,25 @@ def _dpp_context(peca, request):
         "peca_gtin":         peca.gtin,
         "peca_uuid":         peca.dpp_uuid,
         "peca_status":       peca.dpp_status,
+        "dpp_version":       peca.dpp_version,
+        "data_publicacao":   peca.data_publicacao,
         "composicao":        composicao,
         "certificacoes":     certs,
         "carbono_kgco2e":    ficha.pegada_carbono_kgco2e      if ficha else None,
+        "agua_peca_litros":  ficha.agua_peca_litros            if ficha else None,
+        "energia_peca_kwh":  ficha.energia_peca_kwh            if ficha else None,
+        "impact_sources": {
+            "agua": ficha.fonte_agua_litros_kg if ficha else None,
+            "energia": ficha.fonte_energia_kwh_kg if ficha else None,
+            "carbono": ficha.fonte_carbono_kgco2e_kg if ficha else None,
+            "metodologia": ficha.metodologia_fatores_impacto if ficha else None,
+        },
+        "area_perdida_m2":   ficha.area_perdida_m2             if ficha else None,
+        "peso_peca_kg":      ficha.peso_peca_kg                if ficha else None,
+        "perda_corte_pct":   peca.perda_corte_pct,
+        "lote_quantidade":   peca.lote_quantidade,
+        "evidence_statuses": evidence_statuses,
+        "evidence_labels":   EVIDENCE_LABELS,
         "durabilidade_ciclos": ficha.durabilidade_ciclos_lavagem if ficha else None,
         "instrucoes_reparo":  instrucoes_reparo,
         "instrucoes_fim_vida": instrucoes_fim_vida,
@@ -87,7 +129,10 @@ async def consumer_dpp(request: Request, uuid: str):
     from app.models.models import Peca
     db: Session = SessionLocal()
     try:
-        peca = db.query(Peca).filter(Peca.dpp_uuid == uuid).first()
+        peca = db.query(Peca).filter(
+            Peca.dpp_uuid == uuid,
+            Peca.dpp_status == "publicado",
+        ).first()
         if not peca:
             return HTMLResponse(
                 "<html><body style='font-family:sans-serif;padding:40px'>"
@@ -114,9 +159,13 @@ async def etiqueta_peca(request: Request, codigo: str):
             return HTMLResponse("<h2>Peça sem UUID — crie a peça novamente para gerar etiqueta</h2>", status_code=400)
 
         ctx = _dpp_context(peca, request)
-        passport_url = f"https://phyllos-production.up.railway.app/p/{peca.dpp_uuid}"
+        passport_url = public_dpp_url(peca.dpp_uuid)
         ctx["qr_b64"]       = _gerar_qr_base64(passport_url)
         ctx["passport_url"] = passport_url
     finally:
         db.close()
     return templates.TemplateResponse("etiqueta.html", ctx)
+
+
+if os.path.isdir(phyllos_site_dir):
+    app.mount("/", StaticFiles(directory=phyllos_site_dir, html=True), name="phyllos_site")

@@ -1,21 +1,23 @@
 # PHYLLOS Fashion OS - Especializacao da Plataforma
 
-Este documento orienta todos os agentes da PHYLLOS e do Fashion OS a partir de 2026-06-10. Ele deve ser usado junto com o racional de posicionamento vigente em `positioning-rationale-2026-06.md` e com as premissas estrategicas vigentes em `motor-moldes-strategic-premises.md`.
+Este documento orienta todos os agentes da PHYLLOS e do Fashion OS. Ele deve ser usado junto com o racional de posicionamento vigente em `positioning-rationale-2026-06.md` e com as premissas estrategicas vigentes em `dpp-integrado-strategic-premises.md`.
 
-## 0. Premissa vigente - 2026-06-11
+## 0. Premissa vigente - 2026-06-23
 
-O MVP imediato da PHYLLOS e o **Parametric Pattern Engine** da PHYLLOS Create.
+O MVP imediato da PHYLLOS agora e o **DPP Integrado** descrito em `dpp-integrado-strategic-premises.md`.
 
-O Fashion OS continua sendo a infraestrutura tecnica e operacional mais ampla, mas no curto prazo deve servir a um objetivo estreito: transformar parametros estruturados, medidas corporais, tecido e design em molde 2D parametrizado, validavel e exportavel em SVG/PDF A4.
+O Fashion OS continua sendo a infraestrutura tecnica e operacional mais ampla, mas no curto prazo deve servir a um objetivo estreito: transformar arquivos tecnicos de moda, especificacoes de produto, dados de materia-prima, area, perda e fatores de impacto em um DPP publicavel com QR e flashcards para consumidor.
 
-Tudo que nao ajuda a codificar o playbook, gerar uma base parametrica, validar geometria ou testar fisicamente o primeiro molde fica subordinado: linguagem natural, preview em tempo real, interface completa de gestao de colecao, Motor de Imagens, MRP, marketplace, agentes autonomos, e-commerce e SaaS amplo sao horizontes posteriores, nao escopo de MVP.
+O Parametric Pattern Engine deixa de ser o primeiro produto da V1. Ele permanece como horizonte tecnico futuro ou camada de integracao, mas nao deve bloquear o MVP. A V1 nao edita molde, nao ajusta desenho e nao substitui ferramentas como Audaces, Lectra, Gerber, CLO, Valentina, CAD, PLM ou ERP.
+
+Tudo que nao ajuda a importar/registrar dados tecnicos, calcular indicadores por peca, classificar evidencia e publicar flashcards fica subordinado: edicao de molde, criacao parametrica de desenho, preview de modelagem, MRP amplo, marketplace, agentes autonomos e SaaS completo sao horizontes posteriores, nao escopo de MVP.
 
 ## 1. Visao
 
 A PHYLLOS opera em duas camadas:
 
 1. **PHYLLOS Wear:** marca em desenvolvimento, usada como laboratorio de produto, criterio, linguagem e prova real.
-2. **Motor de Moldes / Fashion OS:** infraestrutura tecnica para transformar intencao de vestuario em especificacao, modelagem, molde e documentacao.
+2. **Fashion OS / DPP Studio:** infraestrutura tecnica para transformar especificacoes, arquivos tecnicos, materiais, lotes e evidencias em DPP interno, QR e flashcards publicos.
 
 A camada de produto fisico da PHYLLOS segue priorizando roupas de alta versatilidade, unindo:
 
@@ -27,16 +29,17 @@ A camada de produto fisico da PHYLLOS segue priorizando roupas de alta versatili
 - longevidade;
 - facilidade de manutencao.
 
-No horizonte amplo, o Fashion OS e o sistema operacional responsavel por transformar a intencao do usuario em:
+No horizonte amplo, o Fashion OS e o sistema operacional responsavel por transformar dados tecnicos de produto em:
 
-1. modelagem parametrizada;
-2. molde em tamanho real para reproducao;
-3. especificacao tecnica;
-4. kit de producao;
-5. documentacao completa;
-6. imagem realista da peca, quando houver necessidade de comunicacao ou visualizacao.
+1. cadastro de produto, material, fornecedor, lote e evidencia;
+2. ingestao de ficha tecnica, planilha, PDF, imagem ou arquivo de modelagem existente;
+3. calculo de area, consumo, perda, peso e indicadores;
+4. estados de evidencia por campo;
+5. DPP interno, QR e pagina publica;
+6. flashcards claros para consumidor;
+7. integracoes futuras com CAD, PLM, ERP, imagem, modelagem e API.
 
-No MVP atual, a ordem muda: **molde antes de imagem, logica antes de interface, validacao fisica antes de promessa de plataforma.**
+No MVP atual, a ordem muda: **dados tecnicos antes de desenho, calculo deterministico antes de IA, evidencia antes de claim e QR/flashcards antes de plataforma ampla.**
 
 ## 2. Posicionamento da Marca
 
@@ -197,6 +200,8 @@ Aplicacoes:
 
 ## 6. Fit Engine
 
+Status estrategico: conhecimento de produto e modulo futuro/subordinado para a V1. O Fit Engine pode orientar leitura tecnica, criterios de produto e integracoes futuras, mas nao deve recolocar criacao ou ajuste de molde como escopo imediato.
+
 Entradas:
 
 - peso;
@@ -219,6 +224,8 @@ Saidas:
 
 ## 7. Fabric Engine
 
+Status estrategico: componente central para o DPP quando traduzido em propriedades mensuraveis, fatores de impacto, composicao, gramatura, origem, durabilidade e evidencia. Na V1, deve alimentar calculos e flashcards, nao um motor autonomo de modelagem.
+
 Responsavel por calcular:
 
 - elasticidade;
@@ -233,15 +240,15 @@ Responsavel por calcular:
 
 Estas propriedades influenciam:
 
-- o molde;
-- o caimento;
-- a imagem gerada;
-- a ficha tecnica;
-- a sequencia de costura.
+- consumo, peso e perda por peca;
+- indicadores de agua, energia e carbono;
+- estados de evidencia;
+- flashcards publicos;
+- ficha tecnica, cuidados, durabilidade e, futuramente, molde, imagem e sequencia de costura.
 
 ## 8. Motor de Imagens
 
-Status estrategico: componente futuro/subordinado. O Motor de Imagens nao e o MVP imediato. Ele so deve virar prioridade depois que o Motor de Moldes provar precisao tecnica, uso real e valor para beta users.
+Status estrategico: componente futuro/subordinado. O Motor de Imagens nao e o MVP imediato. Ele so deve virar prioridade depois que o DPP Integrado provar uso real, valor para marcas/atelies e clareza para consumidores.
 
 Objetivo: gerar fotografias que respeitem:
 
@@ -277,20 +284,20 @@ Tipos de imagem:
 
 ## 9. Pattern Engine
 
-Status estrategico: centro do MVP atual. O Pattern Engine e a base tecnica do Motor de Moldes.
+Status estrategico: horizonte futuro/integracao. O Pattern Engine nao e o MVP da V1 e nao deve bloquear DPP Studio, calculos, evidencia, QR ou flashcards.
 
-Transforma `corpo 3D + tecido + design + mobilidade + construcao` em molde 2D parametrizado, validavel e graduavel.
+Quando voltar ao roadmap, transforma `corpo 3D + tecido + design + mobilidade + construcao` em molde 2D parametrizado, validavel e graduavel. Na V1, o papel pratico deste conhecimento e ajudar agentes a entenderem arquivos de modelagem recebidos, limites de area/perda, termos tecnicos e riscos de interpretacao.
 
 O Pattern Engine deve seguir a referencia profunda em [patternmaking-geometric-algorithmic-principles.md](patternmaking-geometric-algorithmic-principles.md), alem da sintese construtiva em [patternmaking-construction-techniques-marlene-mukai.md](patternmaking-construction-techniques-marlene-mukai.md).
 
-Tese operacional:
+Tese operacional futura:
 
 - uma roupa e uma superficie flexivel que sai de um plano, envolve um volume e volta a ser plano quando aberta;
 - pences, recortes, costuras, pregas, folgas, vies e elasticidade sao mecanismos para correlacionar volume 3D com molde 2D;
 - toda linha de molde deve explicar qual volume, movimento, tecido ou operacao construtiva ela resolve;
 - nenhum molde deve ser tratado como desenho solto: ele precisa de medidas finais, linha de fio, paineis, pontos de controle, margens, piques, validacao e regra de graduacao.
 
-Entradas minimas:
+Entradas minimas para um modulo futuro de modelagem:
 
 - medidas corporais e linhas de referencia;
 - tecido, elasticidade, recuperacao, caimento, encolhimento e estabilidade;
@@ -298,7 +305,7 @@ Entradas minimas:
 - movimentos obrigatorios;
 - maquinario, costuras, margem e tolerancias de producao.
 
-Saidas obrigatorias:
+Saidas obrigatorias para um modulo futuro de modelagem:
 
 - molde parametrizado;
 - base escolhida;
@@ -316,20 +323,18 @@ Saidas obrigatorias:
 
 ## 10. Kit PHYLLOS
 
-Apos aprovacao do molde e da logica tecnica, o sistema deve gerar:
+No DPP Integrado, o Kit PHYLLOS deve ser reinterpretado como pacote de dados publicaveis e auditaveis. Apos cadastro do produto, ingestao tecnica e calculo, o sistema deve gerar:
 
-- ficha tecnica;
-- tabela de medidas;
-- lista de materiais;
-- consumo de tecido;
-- sequencia operacional;
-- plano de corte;
-- moldes em tamanho real;
-- paginacao em A4;
-- mapa de montagem;
-- instrucoes de costura;
-- checklist de qualidade;
-- PDF final.
+- ficha tecnica ou resumo tecnico normalizado;
+- lista de materiais, composicao, fornecedor e lote;
+- area tecnica, consumo, perda e quantidade;
+- indicadores por peca com status de evidencia;
+- lacunas de dados;
+- DPP interno;
+- QR de etiqueta;
+- flashcards publicos;
+- exportacao JSON/CSV futura;
+- anexos tecnicos preservados como evidencia.
 
 ## 11. Primeira Familia de Produtos
 
@@ -341,20 +346,23 @@ Apos aprovacao do molde e da logica tecnica, o sistema deve gerar:
 
 ## 12. Roadmap
 
-- Fase 1: Playbook + Engine - saia reta parametrica, SVG estatico, PatternValidator, PDF A4 e validacao fisica.
-- Fase 2: blusa basica, tesselation mais robusta, testes geometricos e biblioteca modular.
-- Fase 3: calca reta, validadores avancados, grade inicial e feedback de fitting.
-- Fase 4: historico, projetos, usuarios e versionamento.
-- Fase 5: linguagem natural como camada sobre parametros confiaveis.
-- Fase futura: Motor de Imagens, prototipagem 3D, MRP, marketplace, API, biblioteca comercial ampliada e Atelier Digital Autonomo.
+- Fase 0: alinhamento da tese DPP, PRD, criterios de aceite e usuarios/piloto.
+- Fase 1: DPP Studio navegavel canonico, schema conceitual, formulas, evidencia por campo e flashcards.
+- Fase 2: backend interno com produto, material, arquivo tecnico, lote, indicador, DPP, flashcard e testes unitarios.
+- Fase 3: studio interno com QR funcional, preview publico, lacunas e exportacao simples.
+- Fase 4: piloto com 3 a 5 produtos reais, matriz de materiais, arquivos reais e relatorio de lacunas.
+- Fase 5: beta privado com login, organizacao, historico, storage, logs e deploy controlado.
+- Fase futura: parsers CSV/XLSX/PDF/DXF, integracoes CAD/PLM/ERP, Pattern Engine, Motor de Imagens, 3D, MRP, marketplace e API ampliada.
 
 ## Regras de Uso para Agentes
 
-1. Ao criar produto, imagem, ficha, molde, custo, briefing ou plano de producao, usar esta especializacao junto com `motor-moldes-strategic-premises.md` como fonte de verdade operacional.
+1. Ao criar produto, DPP, ficha, material, custo, briefing, plano de producao, conteudo, interface ou roadmap, usar esta especializacao junto com `dpp-integrado-strategic-premises.md` e `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md` como fonte de verdade operacional.
 2. Diferenciar prioridade de produto de promessa publica: nem todo atributo tecnico pode virar claim sem teste, documento ou evidencia.
 3. Toda recomendacao de tecido deve explicar efeito em caimento, mobilidade, manutencao e longevidade.
-4. Toda decisao do MVP deve priorizar Playbook, logica parametrica, validação geometrica, SVG estatico, PDF A4 e validacao fisica antes de imagem, dashboard, linguagem natural ou automacao ampla.
-5. Toda ficha tecnica deve mirar o Kit PHYLLOS completo, ainda que a fase atual entregue apenas parte dele.
-6. Toda decisao de roadmap deve respeitar a sequencia vigente: Playbook/Engine, saia reta, SVG/PDF A4, validadores, blusa/camiseta, calca, historico/usuarios, linguagem natural, depois imagem/3D/MRP/API.
-7. Toda tarefa de modelagem deve explicar como o volume 3D foi traduzido para o plano 2D e qual mecanismo resolve cada volume critico: pence, recorte, folga, elastico, vies, prega, franzido, painel ou costura.
+4. Toda decisao do MVP deve priorizar upload/input tecnico, cadastro de produto/material, calculos deterministicos, evidencia, QR e flashcards antes de imagem, dashboard amplo, linguagem natural, modelagem ou automacao extensa.
+5. Toda ficha tecnica deve mirar o Kit PHYLLOS DPP completo, ainda que a fase atual entregue apenas parte dele.
+6. Toda decisao de roadmap deve respeitar a sequencia vigente: alinhamento, prototipo canonico, backend MVP, studio interno, piloto, beta privado, depois parsers/integracoes.
+7. Toda tarefa de modelagem deve ficar clara como suporte tecnico ou modulo futuro. Se envolver area/perda extraida de arquivo existente, declarar origem, premissa, unidade, lacuna e status de evidencia.
 8. Nenhuma imagem pode virar referencia de produto sem passar pelas camadas de QA visual em [image-quality-verification-layers.md](image-quality-verification-layers.md). Falha critica de anatomia, alinhamento da roupa, fit/modelagem ou fidelidade reprova a imagem.
+9. Nenhum indicador ambiental, social, tecnico ou de durabilidade deve ser publicado sem status: declarado, calculado, documentado, verificado ou indisponivel.
+10. Nenhuma entrega deve trocar o bundle canonico `phyllos/dpp-studio.html` por uma versao anterior ou reconstruida sem nova decisao, novo hash e status de deploy.

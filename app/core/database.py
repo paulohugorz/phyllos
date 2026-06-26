@@ -3,8 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "../../data/database/fashion_os.db")
-DATABASE_URL = f"sqlite:///{os.path.abspath(DB_PATH)}"
+DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../data/database/fashion_os.db"))
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+DATABASE_URL = f"sqlite:///{DB_PATH}"
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -25,9 +26,17 @@ def _migrate(conn):
     add_if_missing("pecas", "gtin",       "VARCHAR")
     add_if_missing("pecas", "dpp_uuid",   "VARCHAR")
     add_if_missing("pecas", "dpp_status", "VARCHAR DEFAULT 'rascunho'")
+    add_if_missing("pecas", "area_peca_m2", "FLOAT")
+    add_if_missing("pecas", "perda_corte_pct", "FLOAT")
+    add_if_missing("pecas", "lote_quantidade", "INTEGER")
+    add_if_missing("pecas", "pais_fabricacao", "VARCHAR")
+    add_if_missing("pecas", "dpp_version", "VARCHAR DEFAULT '1.0'")
+    add_if_missing("pecas", "data_publicacao", "DATETIME")
+    add_if_missing("pecas", "data_atualizacao", "DATETIME")
 
-    conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_pecas_gtin     ON pecas(gtin)"))
-    conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_pecas_dpp_uuid ON pecas(dpp_uuid)"))
+    if _table_exists(conn, "pecas"):
+        conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_pecas_gtin     ON pecas(gtin)"))
+        conn.execute(text("CREATE UNIQUE INDEX IF NOT EXISTS ix_pecas_dpp_uuid ON pecas(dpp_uuid)"))
 
     # fichas_tecnicas — colunas DPP adicionadas depois da criação inicial
     add_if_missing("fichas_tecnicas", "composicao_fibras",          "TEXT")
@@ -36,6 +45,20 @@ def _migrate(conn):
     add_if_missing("fichas_tecnicas", "certificacoes",              "TEXT")
     add_if_missing("fichas_tecnicas", "conteudo_reciclado_pct",     "FLOAT")
     add_if_missing("fichas_tecnicas", "pegada_carbono_kgco2e",      "FLOAT")
+    add_if_missing("fichas_tecnicas", "gramatura_g_m2",             "FLOAT")
+    add_if_missing("fichas_tecnicas", "agua_litros_kg",             "FLOAT")
+    add_if_missing("fichas_tecnicas", "energia_kwh_kg",             "FLOAT")
+    add_if_missing("fichas_tecnicas", "carbono_kgco2e_kg",          "FLOAT")
+    add_if_missing("fichas_tecnicas", "fonte_agua_litros_kg",       "TEXT")
+    add_if_missing("fichas_tecnicas", "fonte_energia_kwh_kg",       "TEXT")
+    add_if_missing("fichas_tecnicas", "fonte_carbono_kgco2e_kg",    "TEXT")
+    add_if_missing("fichas_tecnicas", "metodologia_fatores_impacto","TEXT")
+    add_if_missing("fichas_tecnicas", "area_total_requerida_m2",    "FLOAT")
+    add_if_missing("fichas_tecnicas", "area_perdida_m2",            "FLOAT")
+    add_if_missing("fichas_tecnicas", "peso_peca_kg",               "FLOAT")
+    add_if_missing("fichas_tecnicas", "agua_peca_litros",           "FLOAT")
+    add_if_missing("fichas_tecnicas", "energia_peca_kwh",           "FLOAT")
+    add_if_missing("fichas_tecnicas", "evidencia_statuses",         "TEXT")
     add_if_missing("fichas_tecnicas", "durabilidade_ciclos_lavagem","INTEGER")
 
     # etapas_producao — coluna GLN adicionada depois
@@ -61,6 +84,11 @@ def _migrate(conn):
     # peca_materiais — quantidade e peso para ponderação mássica no ISCM
     add_if_missing("peca_materiais", "quantidade_m", "FLOAT")
     add_if_missing("peca_materiais", "peso_kg",      "FLOAT")
+
+    # impact_evidences — colunas adicionadas no Sprint 2
+    add_if_missing("impact_evidences", "fingerprint",       "VARCHAR")
+    add_if_missing("impact_evidences", "nota_curadoria",    "TEXT")
+    add_if_missing("impact_evidences", "energia_mj_por_kg", "FLOAT")
 
 
 def _table_exists(conn, name: str) -> bool:
