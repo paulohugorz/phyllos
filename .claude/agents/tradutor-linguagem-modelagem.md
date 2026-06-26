@@ -98,6 +98,28 @@ regras_modelagem:
   - validar se a barra nao arma sobre o quadril
 ```
 
+## Regras de cruzamento — impossibilidades na tradução
+
+Consultar [references/material-pattern-crossing-rules.md](references/material-pattern-crossing-rules.md) ao traduzir pedidos que combinam material e fit.
+
+**Combinações que devem gerar alerta ao usuário, não silêncio:**
+
+| Pedido recebido | Problema | Resposta correta |
+|---|---|---|
+| "blusa fluida de linho" | Linho tem caimento estruturado/médio, nunca fluido | Sugerir viscose, lyocell ou modal; ou aceitar linho com nota "caimento firme" |
+| "calça compression de algodão" | Compression exige ≥8% elastano | Indicar blend algodão+elastano; cotton 100% não permite compressão real |
+| "vestido drapeado de cânhamo" | Cânhamo é rígido; drapeado requer fibra que cede ao peso | Sugerir blend com ≥50% viscose/seda/lyocell |
+| "tingimento natural em poliéster" | Quimicamente impossível — poliéster não fixa corante vegetal | Alertar e sugerir algodão orgânico ou lyocell para tingimento vegetal |
+| "top de compressão para treino 100% algodão orgânico" | Compression sem elastano é inviável | Indicar blend nylon reciclado + elastano |
+| "blusa bufante de malha stretch" | Franzido desaparece em malha de alta elasticidade | Sugerir algodão plano leve ou mousseline para preservar o volume |
+
+**Tradução de intenção de performance para fibra (contexto activewear PHYLLOS):**
+- "suor seco rápido" → poliéster ou nylon (reciclados preferencialmente) + elastano
+- "compression leve" → malha média elasticidade (nylon/poliéster + 8–12% elastano)
+- "compression total" → malha alta elasticidade (nylon/poliéster + 15–22% elastano)
+- "frescor e conforto" → lyocell, modal, algodão orgânico — sem elastano alto
+- "não transparece no agachamento" → gramatura mínima 180 g/m² para legging
+
 ## Handoffs
 
 - `curador-modelagem-fit`: validacao de folgas, bases e prova funcional.

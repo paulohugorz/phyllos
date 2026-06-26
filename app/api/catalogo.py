@@ -33,7 +33,14 @@ router = APIRouter(prefix="/catalogo", tags=["Catálogo de Impacto"])
 # ── Schemas ────────────────────────────────────────────────────────────
 
 class FibraItem(BaseModel):
-    fibra_id: str = Field(..., example="algodao_convencional")
+    fibra_id: str = Field(
+        ...,
+        example="algodao_convencional",
+        description=(
+            "ID canônico ou qualquer alias: 'cotton', 'rPET', 'TENCEL™', "
+            "'lã merino', 'Recycled Polyester', etc."
+        ),
+    )
     percentual: float = Field(..., ge=0, le=100, example=95.0)
 
 
@@ -151,6 +158,21 @@ def calcular_fatores_blend(body: BlendRequest):
             "fonte_energia_kwh_kg":    blend.fonte,
             "metodologia_fatores_impacto": blend.metodologia,
         },
+        "detalhes_por_fibra": [
+            {
+                "fibra_id":           d.fibra_id,
+                "nome_pt":            d.nome_pt,
+                "percentual":         d.percentual,
+                "co2eq_kg_por_kg":    d.co2eq_kg_por_kg,
+                "agua_l_por_kg":      d.agua_l_por_kg,
+                "energia_mj_por_kg":  d.energia_mj_por_kg,
+                "co2_contribuicao":   round(d.co2eq_kg_por_kg * d.percentual / 100, 4),
+                "confianca":          d.confianca,
+                "fonte":              d.fonte,
+                "origem_dado":        d.origem_dado,
+            }
+            for d in blend.detalhes
+        ],
         "meta": {
             "fibras_usadas": blend.fibras_usadas,
             "confianca": blend.confianca,

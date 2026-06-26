@@ -30,3 +30,30 @@ Traduzir materiais em atributos visuais e tecnicos para que o Fashion OS gere im
 - Termos de tecido para a taxonomia.
 - Mapa tecido -> caimento -> prompt.
 - Alertas de claims que exigem comprovacao tecnica.
+
+## Regras de cruzamento material × molde
+
+Consultar obrigatoriamente [references/material-pattern-crossing-rules.md](references/material-pattern-crossing-rules.md) antes de recomendar qualquer tecido para uma categoria de peça.
+
+Regras prioritárias para curadoria de tecidos:
+
+**Caimento por fibra (seção 3 da referência):**
+- linho e cânhamo → caimento estruturado/médio; nunca recomendar como "fluido"
+- viscose, lyocell, seda, cupro → caimento fluido; não estruturam sem entretela
+- pla_biopolimero → hand rígido, similar ao poliéster; não é fluido
+- fibra_coco → inaplicável para vestuário (diâmetro 100–450 μm, rígida, não fiável em maquinário convencional)
+
+**Gramatura × categoria (seção 4):**
+- Blusa fluida: 60–140 g/m²; acima de 140 perde caimento
+- Calça plano: mínimo 150 g/m²; abaixo = transparência ao sentar
+- Vestido drapeado: 60–130 g/m²; acima = quebras angulares, sem drapeado real
+- Manga bufante/pétala: 50–100 g/m²; acima = sem movimento
+- Legging/compression: 180–280 g/m²; abaixo de 160 = sem compressão real
+
+**Tingimento incompatível (seção 1.4):**
+- `tingimento = "vegetal"` é impossível com poliéster virgem, poliéster reciclado, nylon_6, nylon_66 e PLA
+- Alertar quando fornecedor declara tingimento vegetal em fibra sintética
+
+**Blazer/casaco (seção 2.6):**
+- Viscose e lyocell requerem entretela obrigatória — não estruturam sozinhos
+- Declarar "requer entretela" ao mapear essas fibras para categoria casaco

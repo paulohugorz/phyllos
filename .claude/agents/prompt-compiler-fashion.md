@@ -35,6 +35,35 @@ Transformar termos curados do Fashion OS em prompts consistentes para imagem rea
 - Pacote de QA para `image-realism-qa`, com camadas que devem ser verificadas.
 - Parametros de imagem por tipo: editorial, e-commerce, lifestyle, viagem, trabalho, alongamento, caminhada ou academia leve.
 
+## Regras de caimento por fibra para prompts realistas
+
+Consultar [references/material-pattern-crossing-rules.md](references/material-pattern-crossing-rules.md) ao descrever caimento e comportamento visual de tecido no prompt.
+
+**Descrições corretas por fibra (seção 3):**
+- linho → "structured linen drape", "crisp break at hem" — NUNCA "fluid" ou "draped softly"
+- cânhamo → "firm hand", "structured fall" — similar ao linho
+- viscose/modal → "fluid drape", "soft folds", "draped weight" — correto
+- lyocell/tencel → "fluid structured drape", "clean break" — correto
+- seda → "fluid silk drape", "weightless flow" — correto
+- algodão plano → "cotton weight", "stable structure" — não usar "fluid"
+- PLA → "stiff hand similar to polyester" — não fluido
+- cashmere → "soft felted body" — não usar em contexto de activewear
+
+**Gramatura → descrição visual (seção 4):**
+- < 90 g/m²: "sheer", "translucent" — adicionar negativos de transparência se não intencional
+- 90–140 g/m²: "lightweight", "airy"
+- 140–220 g/m²: "medium weight"
+- > 220 g/m²: "substantial", "structured weight"
+
+**Negativos obrigatórios por tipo de material:**
+- Tecidos fluidos (viscose, seda, lyocell): "no stiff fabric folds, no rigid breaks, no cardboard-like creases"
+- Linho: "no liquid drape, no fluid movement"
+- Malha compression: "no puckered seams, no fabric bunching, no loose fit"
+- Transparente sem forro declarado: "fully opaque fabric, no see-through"
+
+**Franzido em malha de alta elasticidade (seção 2.2):**
+- Manga bufante em malha stretch → o volume desaparece na realidade; o prompt deve ser para tecido plano leve, não malha
+
 ## Regras
 
 - Usar termos tecnicos antes de adjetivos vagos.

@@ -1097,6 +1097,150 @@
     .inline-pct span { font-size: 14px; color: var(--muted); }
 
     ::selection { background: rgba(184,154,106,0.15); }
+
+    /* ── Banco de Modelagens ── */
+    .molde-secao {
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+    }
+    .molde-secao-titulo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--obsidian);
+      margin-bottom: 4px;
+    }
+    .molde-secao-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .molde-busca-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .molde-busca-row input {
+      flex: 1;
+      padding: 10px 13px;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 300;
+      outline: none;
+      background: #fff;
+      transition: border-color 0.15s;
+    }
+    .molde-busca-row input:focus { border-color: var(--gold); }
+    .molde-filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .molde-filtros select {
+      padding: 7px 10px;
+      border: 1px solid var(--border-md);
+      border-radius: 3px;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      background: #fff;
+      color: var(--obsidian);
+      outline: none;
+      cursor: pointer;
+    }
+    .molde-resultados {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .molde-card {
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 13px 15px;
+      cursor: pointer;
+      background: #fff;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .molde-card:hover { border-color: var(--gold); }
+    .molde-card.ativo {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 2px rgba(184,154,106,0.18);
+      background: #fdfaf5;
+    }
+    .molde-card-nome {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--obsidian);
+      margin-bottom: 3px;
+    }
+    .molde-card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .molde-card-medidas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .molde-medida {
+      font-size: 11px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 7px;
+      color: var(--obsidian);
+    }
+    .molde-card-footer {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .molde-codigo {
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .molde-usar-btn {
+      font-size: 11px;
+      padding: 4px 10px;
+      border: 1px solid var(--gold);
+      border-radius: 3px;
+      color: var(--gold);
+      background: transparent;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      transition: background 0.15s, color 0.15s;
+    }
+    .molde-usar-btn:hover, .molde-card.ativo .molde-usar-btn {
+      background: var(--gold);
+      color: #fff;
+    }
+    .molde-selecionado-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(184,154,106,0.12);
+      border: 1px solid rgba(184,154,106,0.35);
+      border-radius: 3px;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: var(--obsidian);
+      margin-top: 10px;
+    }
+    .molde-selecionado-badge button {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      padding: 0 0 0 4px;
+    }
+    .molde-empty { font-size: 13px; color: var(--muted); padding: 12px 0; text-align: center; }
   </style>
 </head>
 <body>
@@ -1608,6 +1752,65 @@
         </div>
       </div>
 
+      <!-- ── Banco de Modelagens ── -->
+      <div class="molde-secao">
+        <div class="molde-secao-titulo">Banco de modelagens</div>
+        <div class="molde-secao-sub">Encontre o molde base e a variação de tamanho e caimento para esta peça.</div>
+
+        <div class="molde-busca-row">
+          <input id="molde-q" type="text" placeholder="ex: saia midi semi-ajustada, calça folgada, blusa raglan…"
+            onkeydown="if(event.key==='Enter') App.buscarMoldes()" />
+          <button class="btn btn-outline" onclick="App.buscarMoldes()" style="white-space:nowrap;padding:0 16px">Buscar</button>
+        </div>
+
+        <div class="molde-filtros">
+          <select id="molde-genero" onchange="App.buscarMoldes()">
+            <option value="">Gênero</option>
+            <option value="feminino">Feminino</option>
+            <option value="masculino">Masculino</option>
+            <option value="infantil">Infantil</option>
+            <option value="unissex">Unissex</option>
+          </select>
+          <select id="molde-tamanho" onchange="App.buscarMoldes()">
+            <option value="">Tamanho</option>
+            <option value="PP">PP</option>
+            <option value="P">P</option>
+            <option value="M">M</option>
+            <option value="G">G</option>
+            <option value="GG">GG</option>
+            <option value="EGG">EGG</option>
+            <option value="36">36</option><option value="38">38</option>
+            <option value="40">40</option><option value="42">42</option>
+            <option value="44">44</option><option value="46">46</option>
+            <option value="48">48</option><option value="50">50</option>
+            <option value="52">52</option><option value="54">54</option>
+          </select>
+          <select id="molde-ajuste" onchange="App.buscarMoldes()">
+            <option value="">Caimento</option>
+            <option value="compressao">Compressão</option>
+            <option value="fitted">Ajustado</option>
+            <option value="semi">Semi-ajustado</option>
+            <option value="relaxed">Folgado</option>
+            <option value="oversized">Oversized</option>
+          </select>
+          <select id="molde-tecido" onchange="App.buscarMoldes()">
+            <option value="">Tecido</option>
+            <option value="plano">Plano</option>
+            <option value="malha">Malha</option>
+          </select>
+        </div>
+
+        <div id="molde-resultados" class="molde-resultados"></div>
+
+        <div id="molde-selecionado" style="display:none">
+          <div class="molde-selecionado-badge">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/></svg>
+            <span id="molde-selecionado-label"></span>
+            <button onclick="App.limparMolde()" title="Remover seleção">&#215;</button>
+          </div>
+        </div>
+      </div>
+
       <div class="screen-footer" style="margin-top:24px">
         <button class="btn btn-primary" onclick="App.irParaBusca()">Selecionar ou criar peça →</button>
       </div>
@@ -1985,6 +2188,7 @@
     etapas:      [],          // etapas carregadas
     catalogoFibrasMap: {},    // nome_pt → fibra_id (carregado do catálogo de impacto)
     ultimoBlend: null,        // último resultado de POST /catalogo/calcular-blend
+    moldeVariacao: null,      // variação de molde selecionada no banco de modelagens
   };
 
   /* ═══════════════════════════════════════════════════
@@ -2338,6 +2542,7 @@
       if (!State.pecaAtual) { App.irParaBusca(); return; }
       const p = State.pecaAtual;
       document.getElementById('ajustes-titulo').textContent = p.nome || p.codigo;
+      if (State.moldeVariacao) App._moldesMedidasParaAjustes(State.moldeVariacao);
       mostrarTela('screen-ajustes');
       App.setNavStage('ns-ajustes');
     },
@@ -3166,6 +3371,118 @@
         toast('Erro ao registrar etapa: ' + e.message, 'err');
       }
       setLoading(btn, false, 'Registrar');
+    },
+
+    /* ─── BANCO DE MODELAGENS ─── */
+
+    _moldeTimer: null,
+    _moldesResultados: [],
+
+    async buscarMoldes() {
+      const q          = document.getElementById('molde-q')?.value.trim();
+      const genero     = document.getElementById('molde-genero')?.value;
+      const tamanho    = document.getElementById('molde-tamanho')?.value;
+      const grau_ajuste= document.getElementById('molde-ajuste')?.value;
+      const tipo_tecido= document.getElementById('molde-tecido')?.value;
+
+      if (!q && !genero && !tamanho && !grau_ajuste && !tipo_tecido) return;
+
+      const res = document.getElementById('molde-resultados');
+      res.innerHTML = '<div class="molde-empty"><span class="spinner spinner-dark"></span></div>';
+
+      const params = new URLSearchParams();
+      if (q)           params.set('q', q);
+      if (genero)      params.set('genero', genero);
+      if (tamanho)     params.set('tamanho', tamanho);
+      if (grau_ajuste) params.set('grau_ajuste', grau_ajuste);
+      if (tipo_tecido) params.set('tipo_tecido', tipo_tecido);
+      params.set('limit', '8');
+
+      try {
+        const variacoes = await api('GET', `/modelagem/variacoes/buscar?${params}`);
+        App.renderMoldes(variacoes);
+      } catch (e) {
+        res.innerHTML = '<div class="molde-empty">Erro ao buscar moldes. Verifique se o banco de modelagens foi populado.</div>';
+      }
+    },
+
+    renderMoldes(variacoes) {
+      App._moldesResultados = variacoes;
+      const res = document.getElementById('molde-resultados');
+      if (!variacoes.length) {
+        res.innerHTML = '<div class="molde-empty">Nenhum molde encontrado. Tente outros termos ou filtros.</div>';
+        return;
+      }
+      const ativoId = State.moldeVariacao?.id;
+      res.innerHTML = variacoes.map((v, i) => {
+        const medidas = v.medidas || {};
+        const chips = [
+          medidas.busto              ? `Busto ${medidas.busto}cm` : null,
+          medidas.cintura            ? `Cintura ${medidas.cintura}cm` : null,
+          medidas.quadril            ? `Quadril ${medidas.quadril}cm` : null,
+          medidas.ombro              ? `Ombro ${medidas.ombro}cm` : null,
+          medidas.comprimento_total  ? `Comp. ${medidas.comprimento_total}cm` : null,
+          medidas.gancho             ? `Gancho ${medidas.gancho}cm` : null,
+        ].filter(Boolean).map(m => `<span class="molde-medida">${esc(m)}</span>`).join('');
+
+        const detalhe = [v.grau_ajuste, v.tipo_tecido, v.comprimento, v.manga]
+          .filter(Boolean).join(' · ');
+
+        const ativo = v.id === ativoId ? ' ativo' : '';
+        const btnLabel = v.id === ativoId ? 'Selecionado ✓' : 'Usar este molde';
+        return `
+          <div class="molde-card${ativo}" onclick="App.selecionarMolde(${i})">
+            <div class="molde-card-nome">${esc(v.molde_nome)} — ${esc(v.tamanho)}</div>
+            <div class="molde-card-desc">${esc(detalhe || v.molde_categoria || '')}</div>
+            ${chips ? `<div class="molde-card-medidas">${chips}</div>` : ''}
+            <div class="molde-card-footer">
+              <span class="molde-codigo">${esc(v.codigo)}</span>
+              <button class="molde-usar-btn" onclick="event.stopPropagation();App.selecionarMolde(${i})">${esc(btnLabel)}</button>
+            </div>
+          </div>`;
+      }).join('');
+    },
+
+    selecionarMolde(idx) {
+      const v = App._moldesResultados[idx];
+      if (!v) return;
+      State.moldeVariacao = v;
+
+      const badge = document.getElementById('molde-selecionado');
+      const label = document.getElementById('molde-selecionado-label');
+      if (badge && label) {
+        label.textContent = `${v.molde_nome} · ${v.tamanho} · ${v.grau_ajuste || ''} · ${v.tipo_tecido || ''}`;
+        badge.style.display = 'block';
+      }
+
+      // Atualiza visual dos cards sem re-fazer a busca
+      document.querySelectorAll('#molde-resultados .molde-card').forEach((card, i) => {
+        const sel = i === idx;
+        card.classList.toggle('ativo', sel);
+        const btn = card.querySelector('.molde-usar-btn');
+        if (btn) btn.textContent = sel ? 'Selecionado ✓' : 'Usar este molde';
+      });
+
+      toast(`Molde: ${v.molde_nome} ${v.tamanho}`);
+    },
+
+    limparMolde() {
+      State.moldeVariacao = null;
+      const badge = document.getElementById('molde-selecionado');
+      if (badge) badge.style.display = 'none';
+      document.getElementById('molde-resultados').innerHTML = '';
+    },
+
+    _moldesMedidasParaAjustes(v) {
+      const m = v?.medidas || {};
+      const set = (id, val) => {
+        const el = document.getElementById(id);
+        if (el && val) el.value = val;
+      };
+      set('med-busto',   m.busto);
+      set('med-cintura', m.cintura);
+      set('med-quadril', m.quadril);
+      set('med-ombro',   m.ombro);
     },
 
     /* ─── DPP & Etiqueta ─── */

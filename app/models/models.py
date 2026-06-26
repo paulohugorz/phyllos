@@ -390,6 +390,7 @@ class MoldeBase(Base):
         back_populates="molde_derivado",
     )
     tecidos_indicados = relationship("TecidoIndicadoMolde", back_populates="molde_base", cascade="all, delete-orphan")
+    variacoes = relationship("MoldeVariacao", back_populates="molde_base", cascade="all, delete-orphan")
 
 
 class MoldeParte(Base):
@@ -507,6 +508,63 @@ class FolgaVestibilidade(Base):
     # folga total em cm (dividida por 4 ao aplicar em 1/4 do molde)
     folga_total_cm = Column(Float, nullable=False)
     observacoes = Column(Text)
+
+
+class MoldeVariacao(Base):
+    """SKU de modelagem — combinação única e mensurável de molde base + tamanho + tecido + ajuste.
+    Cada registro tem medidas de molde pré-calculadas e descrição em linguagem natural
+    para matching semântico: descrição do usuário → SKU → base de medidas correta."""
+    __tablename__ = "moldes_variacoes"
+    __table_args__ = (
+        UniqueConstraint("molde_base_id", "tamanho", "tipo_tecido", "elasticidade", "grau_ajuste"),
+    )
+
+    id = Column(Integer, primary_key=True, index=True)
+    # ex: "saia-reta-40-plano-semi", "blusa-basica-M-malha-m-fitted"
+    codigo = Column(String, unique=True, nullable=False, index=True)
+    molde_base_id = Column(Integer, ForeignKey("moldes_base.id"), nullable=False)
+
+    tamanho = Column(String, nullable=False, index=True)      # 36-62 plano | PP-EGG malha | 2-16 inf
+    tipo_tecido = Column(String, nullable=False)               # plano | malha
+    elasticidade = Column(String, nullable=False, default="plano")  # plano | baixa | media | alta
+    # compression | fitted | semi | relaxed | oversized
+    grau_ajuste = Column(String, nullable=False, index=True)
+    genero = Column(String, nullable=False, default="feminino", index=True)
+
+    # Variações de construção (preenchidas com padrão de cada categoria)
+    # micro | curta | joelho | midi | longa | maxi | normal | cropped | comprida | bermuda | capri | 7_8
+    comprimento = Column(String)
+    # redondo | v | quadrado | barca | degage | colarinho | lapela | nenhum
+    decote = Column(String)
+    # sem_manga | curta | 3_4 | longa | raglan | japonesa | integrada | nenhum
+    manga = Column(String)
+    # zipper_lateral | zipper_traseiro | zipper_frente | botoes | elastico | amarracao | nenhum
+    fechamento = Column(String)
+    # alto | medio | baixo | elastico | nenhum
+    cos = Column(String)
+
+    # Medidas de molde pré-calculadas em cm
+    # = medida_corporal (tabela_medidas_padrao) + folga_vestibilidade
+    busto_molde        = Column(Float)
+    cintura_molde      = Column(Float)
+    quadril_molde      = Column(Float)
+    ombro_molde        = Column(Float)
+    costas_molde       = Column(Float)
+    largura_braco_molde= Column(Float)
+    altura_cava_molde  = Column(Float)
+    comprimento_total_molde = Column(Float)
+    gancho_molde       = Column(Float)
+    largura_joelho_molde = Column(Float)
+    largura_tornozelo_molde = Column(Float)
+
+    # Semântica para matching de descrições em linguagem natural
+    descricao_natural = Column(Text, nullable=False)
+    # JSON: termos normalizados + sinônimos populares para busca vetorial / RAG
+    tags = Column(Text)
+
+    criado_em = Column(DateTime(timezone=True), server_default=func.now())
+
+    molde_base = relationship("MoldeBase", back_populates="variacoes")
 
 
 # ---------------------------------------------------------------------------

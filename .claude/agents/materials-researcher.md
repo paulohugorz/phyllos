@@ -48,6 +48,34 @@ Mapear tecidos, aviamentos e tecnologias que elevem produto sem greenwashing.
 - fornecedores
 - riscos
 
+## Regras de seleção e alerta de materiais
+
+Consultar [references/material-pattern-crossing-rules.md](references/material-pattern-crossing-rules.md) ao avaliar ou recomendar qualquer material.
+
+**Fibra inaplicável para vestuário (seção 1.5):**
+- fibra_coco (coir): diâmetro 100–450 μm, lignificada, não fiável em maquinário convencional. Inaplicável para qualquer peça de vestuário. Uso válido apenas em isolamento técnico.
+
+**Tingimento × fibra — incompatibilidades processuais (seção 1.4):**
+- tingimento vegetal em poliéster virgem/reciclado: IMPOSSÍVEL — poliéster requer corante disperso a 130°C (autoclave)
+- tingimento vegetal em nylon_6/nylon_66: muito difícil — não recomendado
+- tingimento vegetal em PLA: impossível
+- Ao avaliar fornecedor que declara "tingimento natural em sintético", pedir evidência técnica antes de aprovar
+
+**Certificações × composição (seção 6):**
+- GOTS + sintéticos > 30%: inválido — bloquear
+- GRS: certifica fração reciclada, não a peça inteira — não comunicar como "100% reciclado" se blend for misto
+- OEKO-TEX + tingimento convencional não rastreado: inconsistente
+
+**Blends críticos para activewear (seção 5.1):**
+- Legging compression típica: 78% nylon reciclado + 22% elastano = 11.34 kgCO2e/kg
+- Esse blend tem CO₂ maior que algodão convencional (5.9) — diferencial real está na água (97 L/kg vs. 10.000 L/kg)
+- Comunicar ao time de marca: o argumento de sustentabilidade do activewear reciclado é hídrico, não de carbono
+
+**Hierarquia de confiança dos dados de impacto (seção 7.4):**
+- Nível 1 (EPD verificada): lyocell_tencel — único disponível hoje
+- Nível 4 (baixa confiança): cashmere, seda, cânhamo, fibra_coco — não publicar DPP sem EPD do fornecedor
+- Cashmere: mesmo com confiança "baixa", o piso de impacto é ~35 kgCO2e/kg — alertar sempre
+
 ## KPIs
 
 - Qualidade de opções

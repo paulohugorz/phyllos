@@ -45,7 +45,16 @@ _ALIASES: dict[str, list[str]] = {
         "ecovero", "eco vero", "tencel modal", "lenzing modal",
         "viscose/rayon", "viscose fiber", "viscose fibre",
         "bamboo viscose", "bamboo rayon", "bamboo fiber",
-        "modal (lenzing)", "cupro",
+        "modal (lenzing)",
+    ],
+    "cupro": [
+        "cupro", "cupra", "cuprammonium", "bemberg", "cuprammonium rayon",
+        "cupro fiber", "cupro fibre",
+    ],
+    "pla_biopolimero": [
+        "pla", "polylactic acid", "poly lactic acid", "biopolymer pla",
+        "pla fiber", "pla fibre", "corn fiber", "corn pla",
+        "pla biopolimero", "biopolimero pla", "pla (corn)",
     ],
     "linho": [
         "linen", "flax", "flax fiber", "flax fibre", "linen fiber",
@@ -123,8 +132,9 @@ def normalize_fiber_name(raw_name: str) -> str | None:
         return _ALIAS_INDEX[cleaned]
 
     # Busca por substring (nome composto que contém o alias)
+    # Mínimo 4 chars para evitar falsos positivos como "la" ⊂ "pla"
     for alias, fid in _ALIAS_INDEX.items():
-        if alias in cleaned or cleaned in alias:
+        if len(alias) >= 4 and (alias in cleaned or cleaned in alias):
             return fid
 
     return None

@@ -37,3 +37,27 @@ Conectar vocabulario de moda a caimento real, medidas e conforto no corpo.
 - Regras de construcao para bases PH001-PH005.
 - Taxonomia de mecanismos 3D -> 2D: pence, recorte, painel, folga, elastico, vies, prega, franzido e costura.
 - Regras de alinhamento visual por fit: o que deve estar reto, simetrico, visivel ou reprovado na imagem.
+
+## Regras de cruzamento molde × material
+
+Consultar obrigatoriamente [references/material-pattern-crossing-rules.md](references/material-pattern-crossing-rules.md) ao recomendar bases, folgas ou mecanismos de construção.
+
+**Impossibilidades físicas (seção 1):**
+- `grau_ajuste = "compression"` exige `elastano_spandex ≥ 8%` na composição — fibras 100% naturais não admitem compression (folga −4 cm no busto é fisicamente inviável sem recuperação elástica)
+- `tipo_tecido = "plano"` com `elasticidade = "alta"` não existe — tabela MEDIDAS_FEM_MALHA_ALTA (30% redução) é exclusiva de malha
+- `linha_fio = "vies"` em `tipo_tecido = "malha"` é inválido — viés é conceito de urdidura, inexistente em malha
+
+**Mecanismos incompatíveis com malha (seção 2.1 e 2.2):**
+- Pences em malha de média/alta elasticidade criam tensão irregular; a elasticidade já absorve a curvatura 3D
+- Franzido (bufante, pregueado) desaparece em malha de alta elasticidade — a recuperação elástica absorve o volume
+
+**Lacuna crítica para activewear (seção 8):**
+- Não existem MoldeBase para legging, top esportivo ou body — as peças centrais da tese PHYLLOS
+- As tabelas MEDIDAS_FEM_MALHA_* cobrem apenas tamanhos 36–46; plus size em malha não tem referência validada
+- `reducao_elastica_pct > 0` sem elastano na composição deve gerar alerta — o molde vai ficar apertado
+
+**Moldes específicos com restrição de material (seções 2.3–2.8):**
+- base-vestido-drapeado: mínimo 50% fibra fluida (viscose, seda, lyocell); linho/cânhamo = quebras angulares
+- base-saia-gode: janela de gramatura 120–200 g/m²; fora dessa faixa o viés das cunhas distorce
+- base-manga-petala/bufante: máximo 100 g/m²; tecido pesado elimina o efeito
+- base-vestido-tomara / base-calca-pijama: cós/elástico deve ser PecaMaterial separado com funcao="elastico"

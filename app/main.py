@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from app.core.database import Base, engine, run_migrations, SessionLocal
 from app.api.routes import public_dpp_url, router
 from app.api.fornecedores import router as router_fornecedores
-from app.api.modelagem import router as router_modelagem
+from app.api.modelagem import router as router_modelagem, router_banco as router_banco_modelagem
 from app.api.catalogo import router as router_catalogo
 from app.validators.dpp_validators import EVIDENCE_LABELS
 import os, json
@@ -39,6 +39,7 @@ app.mount("/static/images", StaticFiles(directory=images_dir), name="images")
 app.include_router(router)
 app.include_router(router_fornecedores)
 app.include_router(router_modelagem)
+app.include_router(router_banco_modelagem)
 app.include_router(router_catalogo)
 
 
@@ -47,6 +48,12 @@ async def frontend(request: Request):
     dpp_studio_path = os.path.join(phyllos_site_dir, "dpp-studio.html")
     if os.path.exists(dpp_studio_path):
         return FileResponse(dpp_studio_path, media_type="text/html")
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+@app.get("/atelier", response_class=HTMLResponse)
+async def atelier(request: Request):
+    """Ateliê SPA — gestão de peças, modelagens e DPP."""
     return templates.TemplateResponse("index.html", {"request": request})
 
 

@@ -163,6 +163,141 @@
       },
       "nota_curadoria": "Processo de produção ligeiramente mais intensivo que Nylon 6. Comum em tecidos de alta resistência.",
       "prioridade_frente_b": "baixa"
+    },
+    {
+      "fibra_id": "lyocell_tencel",
+      "nome_pt": "Lyocell / Tencel",
+      "nome_en": "Lyocell / Tencel",
+      "categoria": "celulosica_regenerada",
+      "origem": "generica",
+      "certificacoes_compativeis": ["FSC", "PEFC", "OEKO-TEX", "EU Ecolabel"],
+      "indicadores": {
+        "co2eq_kg_por_kg":   { "valor": 1.4,  "unidade": "kgCO2eq/kg", "confianca": "alta", "fonte": "lenzing_epd_2023_ibu" },
+        "agua_l_por_kg":     { "valor": 261,  "unidade": "L/kg",       "confianca": "alta", "fonte": "lenzing_epd_2023_ibu" },
+        "energia_mj_por_kg": { "valor": 37.2, "unidade": "MJ/kg",      "confianca": "alta", "fonte": "lenzing_epd_2023_ibu" }
+      },
+      "nota_curadoria": "EPD verificada por IBU (Institut Bauen und Umwelt). Processo closed-loop com 99.5% recuperação de solvente. Um dos melhores perfis de impacto entre fibras man-made.",
+      "prioridade_frente_b": "alta"
+    },
+    {
+      "fibra_id": "poliamida_reciclada",
+      "nome_pt": "Nylon Reciclado (Econyl / PA6 reciclada)",
+      "nome_en": "Recycled Nylon (Econyl)",
+      "categoria": "sintetica_reciclada",
+      "origem": "generica",
+      "certificacoes_compativeis": ["GRS", "RCS", "bluesign"],
+      "indicadores": {
+        "co2eq_kg_por_kg":   { "valor": 7.2,  "unidade": "kgCO2eq/kg", "confianca": "media", "fonte": "aquafil_econyl_lca_2021" },
+        "agua_l_por_kg":     { "valor": 40,   "unidade": "L/kg",       "confianca": "media", "fonte": "aquafil_econyl_lca_2021" },
+        "energia_mj_por_kg": { "valor": 70,   "unidade": "MJ/kg",      "confianca": "media", "fonte": "aquafil_econyl_lca_2021" }
+      },
+      "nota_curadoria": "Econyl (Aquafil) é referência de mercado. ~80% menos CO2 vs nylon virgem. Matéria-prima: redes de pesca, tapetes e resíduos de nylon pré-consumo.",
+      "prioridade_frente_b": "alta"
+    },
+    {
+      "fibra_id": "canamo",
+      "nome_pt": "Cânhamo (Hemp)",
+      "nome_en": "Hemp Fiber",
+      "categoria": "natural_vegetal",
+      "origem": "generica",
+      "certificacoes_compativeis": ["OEKO-TEX", "GOTS"],
+      "indicadores": {
+        "co2eq_kg_por_kg":   { "valor": 0.8,  "unidade": "kgCO2eq/kg", "confianca": "baixa", "fonte": "sei_2005_literatura" },
+        "agua_l_por_kg":     { "valor": 300,  "unidade": "L/kg",       "confianca": "baixa", "fonte": "water_footprint_network" },
+        "energia_mj_por_kg": { "valor": 12,   "unidade": "MJ/kg",      "confianca": "baixa", "fonte": "sei_2005_literatura" }
+      },
+      "nota_curadoria": "Uma das fibras mais sustentáveis. Cultivo sem pesticidas, sequestra CO2. Dado de baixa confiança por escassez de LCAs cradle-to-gate com processamento. Regulamentação BR ainda limitante.",
+      "prioridade_frente_b": "media"
+    },
+    {
+      "fibra_id": "algodao_reciclado",
+      "nome_pt": "Algodão Reciclado (Post-Consumer)",
+      "nome_en": "Recycled Cotton",
+      "categoria": "natural_reciclada",
+      "origem": "generica",
+      "certificacoes_compativeis": ["GRS", "RCS", "OCS (blended)"],
+      "indicadores": {
+        "co2eq_kg_por_kg":   { "valor": 1.5,  "unidade": "kgCO2eq/kg", "confianca": "baixa", "fonte": "literatura_sintetizada" },
+        "agua_l_por_kg":     { "valor": 500,  "unidade": "L/kg",       "confianca": "baixa", "fonte": "literatura_sintetizada" },
+        "energia_mj_por_kg": { "valor": 30,   "unidade": "MJ/kg",      "confianca": "baixa", "fonte": "literatura_sintetizada" }
+      },
+      "nota_curadoria": "Alta variação por tecnologia de reciclagem e pré-consumo vs pós-consumo. Geralmente blendado com algodão virgem por limitações de resistência. Dado de baixa confiança — priorizar laudo do fornecedor.",
+      "prioridade_frente_b": "media"
+    },
+    {
+      "fibra_id": "la_cashmere",
+      "nome_pt": "Cashmere (Lã de Caxemira)",
+      "nome_en": "Cashmere Wool",
+      "categoria": "natural_animal",
+      "origem": "generica",
+      "certificacoes_compativeis": ["GCS", "SFA"],
+      "indicadores": {
+        "co2eq_kg_por_kg":   { "valor": 150, "unidade": "kgCO2eq/kg", "confianca": "baixa", "fonte": "literature_oecd_2022" },
+        "agua_l_por_kg":     { "valor": 1200,"unidade": "L/kg",       "confianca": "baixa", "fonte": "literature_oecd_2022" },
+        "energia_mj_por_kg": { "valor": 185, "unidade": "MJ/kg",      "confianca": "baixa", "fonte": "literature_oecd_2022" }
+      },
+      "nota_curadoria": "Pegada por kg muito alta: cabras cachemira produzem <150g de fibra/ano vs ovelha (3–5 kg). Degradação de pastagem na Mongólia/China amplifica o impacto. Dado de baixa confiança — recomendado LCA primário de fornecedor.",
+      "prioridade_frente_b": "baixa"
+    },
+    {
+      "fibra_id": "seda",
+      "nome_pt": "Seda Natural",
+      "nome_en": "Natural Silk",
+      "categoria": "natural_animal",
+      "origem": "generica",
+      "certificacoes_compativeis": ["OEKO-TEX"],
+      "indicadores": {
+        "co2eq_kg_por_kg":   { "valor": 50,  "unidade": "kgCO2eq/kg", "confianca": "baixa", "fonte": "literatura_sintetizada" },
+        "agua_l_por_kg":     { "valor": 1500,"unidade": "L/kg",       "confianca": "baixa", "fonte": "literatura_sintetizada" },
+        "energia_mj_por_kg": { "valor": 150, "unidade": "MJ/kg",      "confianca": "baixa", "fonte": "literatura_sintetizada" }
+      },
+      "nota_curadoria": "Alta pegada por criação de bicho-da-seda e requerem cocção dos casulos. Dado de baixa confiança por falta de LCAs padronizados. Amplitude muito grande entre fontes (35–120 kgCO2e/kg).",
+      "prioridade_frente_b": "baixa"
+    },
+    {
+      "fibra_id": "cupro",
+      "nome_pt": "Cupro (Fibra de Celulose de Algodão)",
+      "nome_en": "Cupro / Bemberg",
+      "categoria": "celulosica_regenerada",
+      "origem": "generica",
+      "certificacoes_compativeis": ["OEKO-TEX"],
+      "indicadores": {
+        "co2eq_kg_por_kg":   { "valor": 3.8,  "unidade": "kgCO2eq/kg", "confianca": "baixa", "fonte": "literatura_sintetizada" },
+        "agua_l_por_kg":     { "valor": 600,  "unidade": "L/kg",       "confianca": "baixa", "fonte": "literatura_sintetizada" },
+        "energia_mj_por_kg": { "valor": 50,   "unidade": "MJ/kg",      "confianca": "baixa", "fonte": "literatura_sintetizada" }
+      },
+      "nota_curadoria": "Fibra de linha de algodão (linter) regenerada via processo de cobre-amônia. Produzida principalmente pela Asahi Kasei (Japão). Sensação de seda com custo menor. Dado de baixa confiança.",
+      "prioridade_frente_b": "baixa"
+    },
+    {
+      "fibra_id": "pla_biopolimero",
+      "nome_pt": "PLA (Ácido Polilático / Biopolímero)",
+      "nome_en": "PLA (Polylactic Acid)",
+      "categoria": "biopolimero",
+      "origem": "generica",
+      "certificacoes_compativeis": ["DIN CERTCO", "TÜV Austria"],
+      "indicadores": {
+        "co2eq_kg_por_kg":   { "valor": 2.7,  "unidade": "kgCO2eq/kg", "confianca": "baixa", "fonte": "ecoinvent_3.9_pla" },
+        "agua_l_por_kg":     { "valor": 120,  "unidade": "L/kg",       "confianca": "baixa", "fonte": "ecoinvent_3.9_pla" },
+        "energia_mj_por_kg": { "valor": 54,   "unidade": "MJ/kg",      "confianca": "baixa", "fonte": "ecoinvent_3.9_pla" }
+      },
+      "nota_curadoria": "Biopolímero de milho/beterraba. Pegada menor que sintéticos fósseis mas requer infraestrutura de compostagem industrial. Crescente em activewear, meias e fios técnicos.",
+      "prioridade_frente_b": "media"
+    },
+    {
+      "fibra_id": "fibra_coco",
+      "nome_pt": "Fibra de Coco (Coir)",
+      "nome_en": "Coconut Fiber / Coir",
+      "categoria": "natural_vegetal",
+      "origem": "generica",
+      "certificacoes_compativeis": [],
+      "indicadores": {
+        "co2eq_kg_por_kg":   { "valor": 0.5,  "unidade": "kgCO2eq/kg", "confianca": "baixa", "fonte": "literatura_sintetizada" },
+        "agua_l_por_kg":     { "valor": 100,  "unidade": "L/kg",       "confianca": "baixa", "fonte": "literatura_sintetizada" },
+        "energia_mj_por_kg": { "valor": 8,    "unidade": "MJ/kg",      "confianca": "baixa", "fonte": "literatura_sintetizada" }
+      },
+      "nota_curadoria": "Subproduto agroindustrial do coco. Fibra grossa — uso têxtil limitado mas crescente em blends técnicos e isolamento. Brasil é grande produtor de coco. Dado de baixa confiança.",
+      "prioridade_frente_b": "baixa"
     }
   ],
   "_calculo_blends": {
