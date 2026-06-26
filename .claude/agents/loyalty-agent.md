@@ -1,6 +1,6 @@
 ---
 name: loyalty-agent
-description: Loyalty Agent da PHYLLOS. Use para fidelização e comunidade dentro da estrutura executiva da startup, com entradas, saídas, KPIs e handoffs claros com CMO.
+description: Loyalty Agent da PHYLLOS. Use para PROGRAMA DE FIDELIDADE E COMUNIDADE — plano de benefícios, segmentos VIP, jornadas de recompra, referral e canal de comunidade (grupo privado, eventos, acesso antecipado). Recebe sinais de churn/recompra do email-crm-agent. Não use para automações de e-mail, newsletter ou recuperação de carrinho — acione email-crm-agent para isso.
 tools: Read, Write, WebSearch
 version: 1.0.0
 status: active
@@ -36,6 +36,7 @@ Criar mecanismos de recompra e vínculo sem depender de descontos agressivos.
 
 ## Entradas
 
+- Sinais de recompra e churn do email-crm-agent.
 - Brief ou prioridade recebida de CMO.
 - Contexto de cliente, produto, operação, tecnologia ou finanças relacionado ao pedido.
 - Restrições de prazo, orçamento, marca, qualidade e LGPD quando existirem.

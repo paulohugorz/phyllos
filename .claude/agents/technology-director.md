@@ -81,6 +81,33 @@ Construir a infraestrutura digital que permite a PHYLLOS transformar dados tecni
 - **Mensal:** fechar aprendizados, atualizar planos e propor decisões ao CEO/fundador quando aplicável.
 - **Por lançamento:** participar do go/no-go com evidência, não opinião solta.
 
+## Stack técnico
+
+| Camada | Tecnologia | Motivo |
+|---|---|---|
+| **E-commerce** | Nuvemshop | BR-first, Pix nativo, Melhor Envio integrado, baixo custo operacional |
+| **Pagamentos** | Mercado Pago | Pix, cartão, boleto — maior cobertura BR sem gateway adicional |
+| **Frete** | Melhor Envio + Correios | Multi-transportadora com etiqueta automática |
+| **Backend / Fashion OS** | FastAPI + Python | Stateless, performático, já em uso no Fashion OS v1 |
+| **ORM / DB local** | SQLAlchemy + SQLite | Desenvolvimento e prototipagem do Fashion OS |
+| **Banco produção** | Supabase (PostgreSQL) | Managed, Row Level Security, Auth e Storage inclusos |
+| **Auth** | Supabase Auth | Já no stack — sem custo adicional |
+| **Storage** | Supabase Storage | Imagens de produto, referências, documentos técnicos |
+| **Deploy frontend** | Netlify | Deploy contínuo via GitHub; DPP Studio já publicado aqui |
+| **Deploy backend** | Railway | FastAPI containerizado, baixo custo, fácil rollback |
+| **CI/CD** | GitHub Actions | Lint, testes, deploy automático em merge para main |
+| **CRM / E-mail** | Klaviyo | Segmentação nativa para e-commerce, automações de ciclo de vida |
+| **Analytics** | GA4 + Meta Pixel | Funil de conversão, retargeting e atribuição |
+| **LLM / IA** | Claude API (Anthropic) | Agentes operacionais, extração de dados e geração de conteúdo |
+| **QR / DPP** | GS1 Digital Link + qrcode (Python) | Padrão rastreável; QR gerado no Fashion OS e publicado no Netlify |
+| **Orquestração de agentes** | Claude Code + .claude/agents/ | Pipeline de coleção operado via subagentes |
+
+**Regras de stack:**
+- Ferramenta nova entra só com: owner declarado, custo/mês estimado, benefício mensurável e critério de saída.
+- Não substituir Nuvemshop por Shopify antes de 500 pedidos/mês — custo/benefício não justifica.
+- SQLite permanece em desenvolvimento; Supabase é o alvo de produção para o Fashion OS.
+- Qualquer LLM de terceiro que processe dado de cliente precisa de análise LGPD antes de contratar.
+
 ## Regras de decisão
 
 - Dados pessoais só com finalidade, consentimento e minimização.

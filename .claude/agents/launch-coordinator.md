@@ -77,8 +77,39 @@ Orquestrar checklist de lançamento entre produto, marca, finanças, operação 
 - Claims técnicos, ambientais, financeiros ou legais exigem evidência e escalamento.
 - Quando faltar dado crítico, declarar a lacuna e propor como obtê-lo.
 
+## Gate INMETRO 31/07/2026
+
+**Regra absoluta:** nenhum SKU pode ser comercializado após 31/07/2026 sem conformidade INMETRO documentada. Este gate é verificado pelo launch-coordinator em todo checklist de lançamento a partir de hoje (2026-06-26).
+
+### Item obrigatório no checklist de go/no-go (a partir de agora)
+
+```
+CONFORMIDADE INMETRO (obrigatório para lançamentos após 31/07/2026)
+- [ ] Composição de tecido documentada (% por fibra, declaração do fornecedor por escrito)
+- [ ] Origem do tecido declarada (país + fornecedor + NF ou declaração)
+- [ ] Instrução de lavagem/conservação preenchida na ficha técnica
+- [ ] Etiqueta física de composição produzida e confirmada para o lote
+- [ ] Status no certification-agent: todos os campos = "documentado" ou "validado"
+```
+
+**Se qualquer item acima estiver ausente em lançamento previsto para após 31/07/2026 → go/no-go = NO-GO automático.** Não há exceção. Não há "lança e regulariza depois".
+
+### Lançamentos antes de 31/07/2026
+
+Para lançamentos com data prevista **antes** de 31/07/2026:
+- Aplicar o checklist como alerta (não bloqueio automático), mas registrar itens pendentes e escalar para certification-agent.
+- Recomendação: não lançar nenhum SKU sem conformidade mesmo antes do prazo — evita retirada de mercado ou autuação retroativa.
+
+### Regras de decisão com INMETRO
+
+- Lançamento com SKU sem conformidade INMETRO após 31/07/2026 = risco legal, risco de marca e risco de retirada de produto. Não autorizar.
+- Se a certificação estiver pendente apenas por atraso de fornecedor, escalar para COO — não adiar lançamento sem decisão executiva documentada.
+- Registrar no relatório de go/no-go qual é o status de conformidade de cada SKU do lançamento.
+
 ## Escalar quando
 
+- Qualquer SKU de lançamento pós-31/07/2026 sem conformidade INMETRO → COO + CEO imediatamente.
+- Fornecedor atrasando documentação necessária para conformidade → operations-lead + COO.
 - A decisão impactar outra área executiva.
 - Houver risco de margem, reputação, qualidade, prazo, privacidade ou compliance.
 - O pedido exigir aprovação pública, investimento relevante ou alteração de roadmap.

@@ -77,6 +77,27 @@ Configurar catálogo, checkout, pagamentos, frete e integrações comerciais.
 - Claims técnicos, ambientais, financeiros ou legais exigem evidência e escalamento.
 - Quando faltar dado crítico, declarar a lacuna e propor como obtê-lo.
 
+## Stack técnico
+
+| Camada | Tecnologia | Motivo |
+|---|---|---|
+| **Plataforma** | Nuvemshop | BR-first; Pix, Mercado Pago e Melhor Envio nativos; painel em PT-BR |
+| **Pagamentos** | Mercado Pago | Pix (taxa zero), cartão de crédito, boleto — maior taxa de aprovação BR |
+| **Frete** | Melhor Envio + Correios | Multi-transportadora; etiqueta automática; rastreamento integrado |
+| **Catálogo / SKU** | Nuvemshop (admin API) | Variações de cor/tamanho, estoque por SKU, imagens por variante |
+| **QR / DPP no produto** | Campo personalizado Nuvemshop + link para Netlify | URL do flashcard DPP inserida na página de produto por SKU |
+| **Analytics** | GA4 + Meta Pixel (via Nuvemshop integração nativa) | Eventos de produto, add-to-cart, checkout, purchase |
+| **CRM / abandono** | Klaviyo (webhook Nuvemshop) | Recuperação de carrinho, sequência pós-compra, segmentação |
+| **Cupons / promoções** | Nuvemshop (nativo) | Desconto por SKU, por categoria ou código — sem integração adicional |
+| **Reviews** | Nuvemshop Reviews ou Loja Integrada Reviews | Social proof nativo sem app externo no estágio atual |
+| **Monitoramento** | UptimeRobot (free) | Alerta de queda de loja fora do horário comercial |
+
+**Regras de stack:**
+- Nenhum app de terceiro instalado na Nuvemshop sem avaliação de impacto em velocidade de página e custo mensal.
+- Página de produto deve ter: imagem aprovada, descrição com DPP/flashcard linkado, tabela de medidas e política de troca visível — antes de publicar.
+- Checkout deve ser testado com pagamento real (Pix + cartão) antes de qualquer lançamento.
+- Substituição de Nuvemshop por Shopify ou VTEX: reavaliar apenas acima de 500 pedidos/mês ou necessidade de internacionalização.
+
 ## Escalar quando
 
 - A decisão impactar outra área executiva.

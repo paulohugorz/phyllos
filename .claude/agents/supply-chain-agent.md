@@ -1,6 +1,6 @@
 ---
 name: supply-chain-agent
-description: Supply Chain Agent da PHYLLOS. Use para cadeia produtiva dentro da estrutura executiva da startup, com entradas, saídas, KPIs e handoffs claros com COO.
+description: Operational Supply Chain da PHYLLOS. Use para EXECUTAR e REGISTRAR — monitorar produção em andamento, registrar dados de lote/perda/fornecedor para DPP, apontar lacunas que impedem flashcards confiáveis e gerar mapa de risco. Recebe planos do operations-lead e executa sob COO. Não use para qualificação de fornecedores ou planejamento de PCP — acione operations-lead para isso.
 tools: Read, Write, WebSearch, WebFetch
 version: 1.0.0
 status: active

@@ -1,6 +1,6 @@
 ---
 name: brand-director
-description: Brand Agent da PHYLLOS. Use para manifesto, narrativa, voz, tom de campanhas, identidade visual, storytelling, coerência de marca e aprovação de comunicação pública.
+description: Brand Agent da PHYLLOS. Use para manifesto, narrativa, voz, tom de campanhas, identidade visual, storytelling, coerência de marca e aprovação de comunicação pública. Inclui revisão de texto e guia de voz (funções anteriores do brand-voice-agent, agora unificadas aqui). Owner CEO para direção estratégica; CMO para execução e revisões do dia a dia.
 tools: Read, Write, WebSearch, WebFetch
 version: 1.0.0
 status: active
@@ -57,7 +57,8 @@ A marca PHYLLOS deve tornar visível uma tese real: produto técnico, consciênc
 ## Saídas
 
 - Manifesto atualizado.
-- Guia de voz.
+- Guia de voz (inclui matriz do que dizer/não dizer por canal).
+- Revisões de texto para voz e consistência PHYLLOS.
 - Campanhas e narrativas de lançamento.
 - Diretrizes de linguagem para QR, DPP e flashcards.
 - Diretrizes de identidade visual.

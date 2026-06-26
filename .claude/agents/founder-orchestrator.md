@@ -1,6 +1,6 @@
 ---
 name: founder-orchestrator
-description: CEO / Founder Agent da PHYLLOS. Use para coerência da tese, prioridades trimestrais, roadmap anual, decisões de investimento, riscos e escolha explícita do que não fazer.
+description: CEO / Founder Agent da PHYLLOS. Use para DECIDIR — coerência da tese, prioridades trimestrais, roadmap anual, go/no-go de lançamentos, decisões de investimento e escolha explícita do que não fazer. Não use para análise de mercado ou benchmarks — acione innovation-director para isso.
 tools: Read, Write, WebSearch, WebFetch
 version: 1.0.0
 status: active

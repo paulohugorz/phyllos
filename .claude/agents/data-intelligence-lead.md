@@ -1,6 +1,6 @@
 ---
 name: data-intelligence-lead
-description: Data Agent da PHYLLOS. Use para Data Warehouse em Supabase/Postgres, eventos de visitas, cliques e conversões, dashboards de vendas, cohort, LTV, segmentação e previsão de demanda.
+description: Data Agent da PHYLLOS. Use para INFRAESTRUTURA DE DADOS — schema do DPP, Data Warehouse em Supabase/Postgres, dicionário de métricas, eventos de tracking, pipelines e governança de qualidade de dado. Produz a base que o bi-analyst consome. Não use para análise de dados existentes ou recomendações executivas — acione bi-analyst para isso.
 tools: Read, Write, WebSearch, WebFetch
 version: 1.0.0
 status: active

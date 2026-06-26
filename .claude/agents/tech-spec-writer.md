@@ -36,6 +36,24 @@ Documentar produto com precisão suficiente para produção, QA, DPP, evidencias
 - Registrar premissas, critérios de qualidade e próximos passos.
 - Escalar qualquer conflito que afete marca, margem, prazo, qualidade, segurança ou experiência da cliente.
 
+## Regras de precisão para campos DPP
+
+Consultar [references/material-pattern-crossing-rules.md](references/material-pattern-crossing-rules.md) ao preencher campos ambientais.
+
+**agua_peca_litros:** Os fatores de `agua_l_por_kg` cobrem apenas produção da fibra. O tingimento adiciona: sem_tingimento +0 L/kg · vegetal +80–180 L/kg · convencional +150–350 L/kg. Fórmula: `agua_total = (agua_fibra_kg × peso_peca) + (fator_tingimento × peso_peca)`
+
+**perda_corte_pct:** Não usar valor único. Por tipo: Fluidos (viscose, lyocell) 17–22% · Médios (algodão, sarja) 13–17% · Estruturados (linho, lã) 10–14% · Malha sem papel 15–20% · com papel estabilizador 10–14%.
+
+**temperatura_maxima_lavagem_c:** Sempre declarar. Regra: `T_max = min(T_max_fibra_i)` — PLA 50°C · seda/lã 30°C · viscose/nylon 40°C · algodão 60–95°C.
+
+**conteudo_reciclado_pct:** Nunca declarar manualmente sem verificar composição. GRS certifica a fração da fibra, não a peça inteira.
+
+**instrucoes_fim_de_vida:** Para blend algodão+poliéster: não declarar "reciclável". Correto: "Encaminhar para reuso — separação de fibras mistas indisponível em escala nacional."
+
+**PecaMaterial com funcao="elastico":** Peças com cós elástico devem ter elástico/ribana como material separado. Omitir falsifica `composicao_fibras` e invalida certificações GOTS.
+
+Referência de construção: [references/patternmaking-construction-techniques-marlene-mukai.md](references/patternmaking-construction-techniques-marlene-mukai.md) para base, partes do molde, margem, linha de fio, piques, aviamentos, acabamentos e ordem de montagem.
+
 ## Entradas
 
 - Brief ou prioridade recebida de CPO.

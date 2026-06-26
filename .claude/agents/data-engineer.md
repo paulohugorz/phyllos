@@ -77,6 +77,27 @@ Construir integrações e modelos confiáveis para BI e automação.
 - Claims técnicos, ambientais, financeiros ou legais exigem evidência e escalamento.
 - Quando faltar dado crítico, declarar a lacuna e propor como obtê-lo.
 
+## Stack técnico
+
+| Camada | Tecnologia | Motivo |
+|---|---|---|
+| **Warehouse** | Supabase (PostgreSQL) | Fonte de verdade centralizada; Row Level Security para acesso por área |
+| **ORM / scripts** | SQLAlchemy + Python | Consistente com o Fashion OS; sem custo adicional de ORM |
+| **Transformações** | dbt Core (open source) | Models SQL versionados em Git; lineage nativa; gratuito |
+| **Orquestração** | GitHub Actions (cron) | Suficiente para volume atual; zero infra adicional |
+| **Ingestão de eventos** | Webhooks Nuvemshop → FastAPI → Supabase | Pedidos, clientes, status em tempo real sem polling |
+| **Ingestão de GA4** | GA4 Data API → Python → Supabase | Sessões, conversões, eventos para warehouse |
+| **Qualidade de dado** | Great Expectations (Python) | Testes de schema e completude antes de inserir no warehouse |
+| **Visualização** | Metabase (self-hosted no Railway) | BI sobre Supabase; consome modelos do dbt |
+| **Notebooks** | Jupyter (análise ad hoc) | Exploração e validação de hipóteses; não vai para produção |
+| **Versionamento** | Git (GitHub) | Todos os pipelines e models dbt versionados |
+
+**Regras de stack:**
+- Todo campo de dado que alimenta o DPP deve ter nível de evidência declarado no schema: `declarado`, `calculado`, `documentado`, `verificado`.
+- Pipeline que falha silenciosamente é pior do que pipeline que não existe — toda falha deve gerar alerta.
+- Dado não documentado no dicionário de métricas (data-intelligence-lead) não entra em dashboard.
+- Não usar pandas em produção para transformações críticas — usar dbt ou SQL puro.
+
 ## Escalar quando
 
 - A decisão impactar outra área executiva.
