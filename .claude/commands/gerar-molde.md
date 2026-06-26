@@ -7,6 +7,7 @@ Referencias obrigatorias:
 - `.claude/agents/references/fashion-os-platform-specialization.md`
 - `.claude/agents/references/patternmaking-geometric-algorithmic-principles.md`
 - `.claude/agents/references/patternmaking-construction-techniques-marlene-mukai.md`
+- `.claude/agents/references/text-to-molde-contract-v0.md`
 
 Fluxo:
 modelagem -> curador-modelagem-fit -> design-tecnico -> ficha-tecnica -> qualidade
@@ -29,6 +30,7 @@ Entregue:
 - margens, piques e linha de fio;
 - riscos de modelagem;
 - criterios de prova fisica;
+- especificacao `text_to_molde_v0` com componentes detectados, operacoes geometricas e validacoes obrigatorias;
 - JSON inicial sugerido para endpoint `/molde`;
 - proximos ajustes necessarios antes de SVG/PDF A4.
 

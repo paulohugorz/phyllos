@@ -361,18 +361,27 @@ CONTEXTO_USO = {
 }
 
 
+def campo_textual(valor, fallback="nenhum"):
+    """Evita NULL em campos categóricos de construção.
+
+    Medidas numéricas continuam como NULL quando não se aplicam; isso impede que
+    o matcher confunda uma medida inexistente com valor real zero.
+    """
+    return fallback if valor is None else valor
+
+
 def gerar_descricao(nome, tamanho, tipo_tecido, elasticidade, grau_ajuste,
                     comprimento, decote, manga, fechamento, cos, genero):
     tecido_str = TECIDO_PT.get((tipo_tecido, elasticidade), tipo_tecido)
     fit_str = FIT_PT.get(grau_ajuste, grau_ajuste)
     partes = [nome, f"tamanho {tamanho}", f"em {tecido_str}", f"modelagem {fit_str}"]
-    if comprimento and comprimento not in ("nenhum", "normal"):
+    if comprimento and comprimento not in ("nenhum", "normal", "nao_aplica"):
         partes.append(f"comprimento {comprimento}")
-    if decote and decote not in ("nenhum",):
+    if decote and decote not in ("nenhum", "nao_aplica"):
         partes.append(f"decote {decote}")
-    if manga and manga not in ("nenhum", "sem_manga"):
+    if manga and manga not in ("nenhum", "sem_manga", "nao_aplica"):
         partes.append(f"manga {manga}")
-    if cos and cos not in ("nenhum",):
+    if cos and cos not in ("nenhum", "nao_aplica"):
         partes.append(f"cós {cos}")
     if genero in ("masculino", "infantil"):
         partes.append(genero)
@@ -398,17 +407,17 @@ def gerar_tags(base, tamanho, tipo_tecido, elasticidade, grau_ajuste,
         t.update(["plano", "tecido plano"])
     t.add(grau_ajuste)
     t.update(FIT_TAGS.get(grau_ajuste, []))
-    if comprimento:
+    if comprimento and comprimento not in ("nenhum", "nao_aplica"):
         t.add(comprimento)
         t.update(COMP_TAGS.get(comprimento, []))
-    if decote and decote not in ("nenhum",):
+    if decote and decote not in ("nenhum", "nao_aplica"):
         t.add(decote)
-    if cos and cos not in ("nenhum",):
+    if cos and cos not in ("nenhum", "nao_aplica"):
         t.add(cos)
         t.update(COS_TAGS.get(cos, []))
-    if manga and manga not in ("nenhum",):
+    if manga and manga not in ("nenhum", "nao_aplica"):
         t.add(manga)
-    if fechamento and fechamento not in ("nenhum",):
+    if fechamento and fechamento not in ("nenhum", "nao_aplica"):
         t.add(fechamento)
     t.add(base.genero)
     t.update(CONTEXTO_USO.get(base.codigo, []))
@@ -766,6 +775,30 @@ def planos_de_geracao(base):
     return plans
 
 
+def normalizar_skus_existentes(db):
+    """Preenche campos categóricos nulos em bancos já gerados."""
+    updates = 0
+    for sku in db.query(MoldeVariacao).all():
+        if sku.comprimento is None:
+            sku.comprimento = "nao_aplica"
+            updates += 1
+        if sku.decote is None:
+            sku.decote = "nenhum"
+            updates += 1
+        if sku.manga is None:
+            sku.manga = "nenhum"
+            updates += 1
+        if sku.fechamento is None:
+            sku.fechamento = "nenhum"
+            updates += 1
+        if sku.cos is None:
+            sku.cos = "nenhum"
+            updates += 1
+    if updates:
+        db.commit()
+        print(f"  Campos categóricos normalizados em {updates} ocorrências.")
+
+
 # ---------------------------------------------------------------------------
 # 8. Execução
 # ---------------------------------------------------------------------------
@@ -776,6 +809,7 @@ def gerar():
         # Verificar se já foi populado
         existing = db.query(MoldeVariacao).count()
         if existing:
+            normalizar_skus_existentes(db)
             print(f"Variações já existem ({existing} SKUs). Use --force para recriar.")
             return
 
@@ -816,11 +850,11 @@ def gerar():
                 }
 
                 # Variantes de construção (padrões por molde)
-                comp_opt   = COMPRIMENTO_POR_MOLDE.get(base.codigo)
-                decote_val = DECOTE_POR_MOLDE.get(base.codigo)
-                manga_val  = MANGA_POR_MOLDE.get(base.codigo)
-                fech_val   = FECHAMENTO_POR_MOLDE.get(base.codigo)
-                cos_val    = COS_POR_MOLDE.get(base.codigo)
+                comp_opt   = campo_textual(COMPRIMENTO_POR_MOLDE.get(base.codigo), "nao_aplica")
+                decote_val = campo_textual(DECOTE_POR_MOLDE.get(base.codigo))
+                manga_val  = campo_textual(MANGA_POR_MOLDE.get(base.codigo))
+                fech_val   = campo_textual(FECHAMENTO_POR_MOLDE.get(base.codigo))
+                cos_val    = campo_textual(COS_POR_MOLDE.get(base.codigo))
 
                 # Medidas de molde
                 def mm(ponto):
