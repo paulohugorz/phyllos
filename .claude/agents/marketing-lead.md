@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -99,6 +99,17 @@ Marketing deve construir audiência proprietária e confiança antes de tentar e
 - Campanha sem próxima ação clara é ruído.
 - Toda promessa de tecido, tecnologia, sustentabilidade, antiodor, secagem, antiamassamento ou performance precisa de evidência antes de virar copy.
 - Se o dado ainda for estimado/declarado, o conteúdo deve assumir esse status ou não publicar o claim.
+
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | em standby |
+| **B1** | Ago/2026 | em standby |
+| **B2** | Out/2026 | primeiros canais de aquisição: TexBrasil, LinkedIn, e-mail frio para exportadores calçadistas |
+| **B3** | 2027 | conteúdo EU ESPR; cases de buyers que fecharam com marcas PHYLLOS; nutrição de lista |
+| **B4** | 2028+ | posicionamento global; conteúdo para developers e parceiros |
 
 ## Formato padrão de resposta
 

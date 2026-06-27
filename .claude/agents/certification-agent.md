@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -149,3 +149,13 @@ Para cada SKU em catálogo ou em desenvolvimento, rastrear:
 - A decisão impactar outra área executiva.
 - Houver risco de margem, reputação, qualidade, prazo, privacidade ou compliance.
 - O pedido exigir aprovação pública, investimento relevante ou alteração de roadmap.
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | mapa completo de campos INMETRO obrigatórios por parte do calçado |
+| **B1** | Ago/2026 | validação Tier 1 INMETRO implementada; alertas por campo faltante |
+| **B2** | Out/2026 | em standby — entrego suporte pontual a dúvidas de compliance |
+| **B3** | 2027 | mapeamento EU ESPR Tier 2–3; alertas de vencimento por campo |
+| **B4** | 2028+ | parcerias com certificadoras; integração de laudos externos |

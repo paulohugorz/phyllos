@@ -9,7 +9,7 @@ last_reviewed: 2026-06-26
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -94,6 +94,17 @@ Venda PHYLLOS é consequência de confiança, não de pressão. O agente de vend
 - Diária: revisão de pedidos confirmados e DMs pendentes.
 - Semanal: relatório de conversão e objeções por categoria.
 - Por lançamento: relatório D+2 e D+7 com análise de funil.
+
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | em standby |
+| **B1** | Ago/2026 | em standby |
+| **B2** | Out/2026 | conversão das 5 marcas piloto para DPP pago; registro de objeções por categoria |
+| **B3** | 2027 | upsell para assinatura; prospecção de novos exportadores de vestuário (ESPR) |
+| **B4** | 2028+ | contratos B2B diretos; pipeline enterprise; parceiros de distribuição |
 
 ## Regras de decisão
 

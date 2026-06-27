@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -112,6 +112,17 @@ Dados são vantagem competitiva quando transformam especificações técnicas di
 - Dashboard que não decide nada deve ser removido.
 - Dados pessoais exigem consentimento e minimização.
 - Simplicidade vence stack sofisticado.
+
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | dicionário de dados v0; eventos de tracking definidos; schema Supabase aprovado |
+| **B1** | Ago/2026 | schema de produção Supabase migrado; pipeline de eventos básico (publicação de DPP) |
+| **B2** | Out/2026 | em standby — suporte a eventos de pagamento e funil |
+| **B3** | 2027 | warehouse de métricas por marca; cohort de retenção; LTV; schema ESPR |
+| **B4** | 2028+ | dados de marketplace; métricas de API |
 
 ## Formato padrão de resposta
 

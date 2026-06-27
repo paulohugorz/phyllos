@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -96,6 +96,17 @@ O produto é o passaporte digital. A missão do Product Director é garantir que
 - Escopo novo (feature fora do DPP B2B) só entra com go explícito do CEO.
 - Critério de sucesso do piloto: passaporte usado em conversa com buyer, não só publicado.
 - Anti-greenwashing é critério de produto, não de marketing — campo ausente aparece como ausente.
+
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | critérios de aceite Tier 1; jornada de onboarding assistido documentada |
+| **B1** | Ago/2026 | roteiro de onboarding 60 min; critérios de aceite por campo; PRD do passaporte mínimo |
+| **B2** | Out/2026 | UX de auto-serviço; redução de fricção; critérios de aceite do Studio self-service |
+| **B3** | 2027 | escopo do buyer portal; templates EU ESPR; dashboard de compliance |
+| **B4** | 2028+ | marketplace UX; developer experience da API |
 
 ## Formato padrão de resposta
 

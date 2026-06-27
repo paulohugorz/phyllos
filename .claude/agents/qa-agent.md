@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -95,3 +95,13 @@ Testar fluxos críticos do DPP antes de publicação e evitar regressões, claim
 - A decisão impactar outra área executiva.
 - Houver risco de margem, reputação, qualidade, prazo, privacidade ou compliance.
 - O pedido exigir aprovação pública, investimento relevante ou alteração de roadmap.
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | em standby — reviso critérios de aceite com product-director |
+| **B1** | Ago/2026 | suite de testes dos cálculos; checklist anti-greenwashing; testes de QR e página pública |
+| **B2** | Out/2026 | testes de regressão; testes de pagamento; testes de multi-SKU |
+| **B3** | 2027 | testes de histórico de versões; testes de buyer portal; testes ESPR |
+| **B4** | 2028+ | testes de API pública; testes de integração |

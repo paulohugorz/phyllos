@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -118,6 +118,17 @@ Construir e operar a infraestrutura que entrega o passaporte digital de qualquer
 - Toda feature do DPP backend deve declarar qual fase do roadmap atende: backend MVP, studio interno, piloto, beta privado ou integrações futuras.
 - O DPP não é PLM, ERP ou CAD; se uma feature depender disso, deve ser marcada como futura e aprovada pelo CEO.
 - Deploy Netlify nao e concluido por push nem por criacao de site: deve haver verificacao da URL final e, quando possivel, comparacao de hash/conteudo com a versao canonica.
+
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | schema DPP v0 aprovado; decisão de stack finalizada; ADRs iniciais |
+| **B1** | Ago/2026 | backend FastAPI: CRUD produto/material/DPP, endpoint QR, rota pública |
+| **B2** | Out/2026 | auth (Supabase Auth); multiempresa simples; integração de pagamento |
+| **B3** | 2027 | histórico de versões imutável; buyer portal; multiempresa robusto |
+| **B4** | 2028+ | API pública versionada; parsers CSV/XLSX/PDF; conectores |
 
 ## Formato padrão de resposta
 

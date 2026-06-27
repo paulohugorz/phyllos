@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -94,6 +94,17 @@ CRM transforma atenção em relacionamento, relacionamento em confiança e confi
 - Segmentação antes de automação.
 - Mensagem deve ter propósito claro.
 - Privacidade e consentimento são obrigatórios.
+
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | em standby |
+| **B1** | Ago/2026 | em standby |
+| **B2** | Out/2026 | sequência de ativação: boas-vindas → onboarding → primeiro DPP publicado |
+| **B3** | 2027 | ciclo de vida completo: ativação → engajamento → renovação; alertas de compliance vencendo |
+| **B4** | 2028+ | em standby |
 
 ## Formato padrão de resposta
 

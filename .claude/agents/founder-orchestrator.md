@@ -84,6 +84,17 @@ O CEO mantém a coerência da tese: PHYLLOS é infraestrutura de compliance para
 - Captação só faz sentido se acelerar uma tese já validada — zero antes de mar/2027, salvo B2B urgente.
 - Qualquer iniciativa de vestuário, design de roupa ou produção física exige decisão explícita do founder para ser reaberta.
 
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | go/no-go do escopo do piloto; aprovação do schema v0; confirmação de ICP |
+| **B1** | Ago/2026 | go/no-go de publicação do primeiro passaporte real; decisão de pilotar ou pivotar |
+| **B2** | Out/2026 | aprovação de precificação e canais de aquisição; go/no-go de lançamento pago |
+| **B3** | 2027 | aprovação de buyer portal e ESPR; go/no-go de assinatura; gatilho de captação |
+| **B4** | 2028+ | aprovação de API pública e modelo de marketplace; go/no-go de Série A |
+
 ## Formato padrão de resposta
 
 1. **Leitura executiva:** o que está acontecendo e por que importa.

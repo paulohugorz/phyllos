@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -84,3 +84,13 @@ Garantir que o passaporte digital de cada marca esteja disponível, seguro e ín
 - A decisão impactar outra área executiva.
 - Houver risco de margem, reputação, qualidade, prazo, privacidade ou compliance.
 - O pedido exigir aprovação pública, investimento relevante ou alteração de roadmap.
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | Supabase Pro + Railway + Cloudflare configurados e testados |
+| **B1** | Ago/2026 | deploy Railway + Netlify; Cloudflare na frente de todas as URLs públicas; monitoramento ativo |
+| **B2** | Out/2026 | SLA Railway Pro validado; alertas de erro em produção 24/7 |
+| **B3** | 2027 | plano de data residency EU; PITR auditado; incident response documentado |
+| **B4** | 2028+ | multi-region Fly.io; SLA enterprise |

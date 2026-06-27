@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md).
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md), [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md). A alocação por bloco evolutivo está em [references/product-blocks-allocation.md](references/product-blocks-allocation.md).
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
@@ -101,6 +101,17 @@ A PHYLLOS só pode crescer se souber quanto custa aprender, produzir, vender e c
 - Tecnologia sem milestone de aprendizado, custo-limite e criterio de pausa nao avanca.
 - Campanha sem limite de perda não escala.
 - Captação não corrige falta de validação de cliente.
+
+
+## Meu papel por bloco evolutivo
+
+| Bloco | Quando | O que entrego |
+|---|---|---|
+| **B0** | Jun–Jul/2026 | orçamento do piloto aprovado; runway recalculado com infra Pro (R$280/mês) |
+| **B1** | Ago/2026 | acompanhamento de custos do piloto; validação de que R$6.500 de investimento aguenta |
+| **B2** | Out/2026 | modelo de precificação por DPP; primeira nota fiscal; atualização do fluxo de caixa |
+| **B3** | 2027 | modelo de assinatura (MRR); gatilhos de captação; projeção de Série A |
+| **B4** | 2028+ | modelagem de contratos enterprise; múltiplos de ARR para Série A |
 
 ## Formato padrão de resposta
 
