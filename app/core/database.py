@@ -5,9 +5,24 @@ import os
 
 DB_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../data/database/fashion_os.db"))
 os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-DATABASE_URL = f"sqlite:///{DB_PATH}"
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+
+def resolve_database_url() -> str:
+    """Usa DATABASE_URL em produção e preserva SQLite como fallback local."""
+    configured_url = os.getenv("DATABASE_URL", "").strip()
+    if not configured_url:
+        return f"sqlite:///{DB_PATH}"
+    if configured_url.startswith("postgres://"):
+        return configured_url.replace("postgres://", "postgresql://", 1)
+    return configured_url
+
+
+def connect_args_for(database_url: str) -> dict:
+    return {"check_same_thread": False} if database_url.startswith("sqlite:") else {}
+
+
+DATABASE_URL = resolve_database_url()
+engine = create_engine(DATABASE_URL, connect_args=connect_args_for(DATABASE_URL))
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -100,6 +115,8 @@ def _table_exists(conn, name: str) -> bool:
 
 
 def run_migrations():
+    if engine.dialect.name != "sqlite":
+        return
     with engine.begin() as conn:
         _migrate(conn)
 

@@ -16,9 +16,9 @@ run_migrations()
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="Fashion OS v1",
-    description="Sistema operacional para criação, gestão, produção e lançamento de moda com IA, agentes Claude e stack gratuita.",
-    version="1.0.0",
+    title="PHYLLOS DPP",
+    description="Infraestrutura de dados para publicar passaportes digitais de produtos de moda.",
+    version="0.1.0",
 )
 
 app.add_middleware(
@@ -48,13 +48,13 @@ async def frontend(request: Request):
     dpp_studio_path = os.path.join(phyllos_site_dir, "dpp-studio.html")
     if os.path.exists(dpp_studio_path):
         return FileResponse(dpp_studio_path, media_type="text/html")
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html")
 
 
 @app.get("/atelier", response_class=HTMLResponse)
 async def atelier(request: Request):
     """Ateliê SPA — gestão de peças, modelagens e DPP."""
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(request, "index.html")
 
 
 def _dpp_context(peca, request):
@@ -143,7 +143,7 @@ async def consumer_dpp(request: Request, uuid: str):
         ctx = _dpp_context(peca, request)
     finally:
         db.close()
-    return templates.TemplateResponse("dpp_consumer.html", ctx)
+    return templates.TemplateResponse(request, "dpp_consumer.html", ctx)
 
 
 @app.get("/pecas/{codigo}/etiqueta", response_class=HTMLResponse)
@@ -164,7 +164,7 @@ async def etiqueta_peca(request: Request, codigo: str):
         ctx["passport_url"] = passport_url
     finally:
         db.close()
-    return templates.TemplateResponse("etiqueta.html", ctx)
+    return templates.TemplateResponse(request, "etiqueta.html", ctx)
 
 
 if os.path.isdir(phyllos_site_dir):

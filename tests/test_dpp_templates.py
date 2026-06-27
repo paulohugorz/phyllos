@@ -1,3 +1,4 @@
+import hashlib
 import unittest
 from pathlib import Path
 
@@ -60,19 +61,20 @@ class DppTemplateTests(unittest.TestCase):
 
         self.assertIn("Não substitui ACV auditada", template)
 
-    def test_dpp_studio_matches_seven_step_flow(self):
-        studio = (
-            Path(__file__).resolve().parents[1] / "phyllos" / "dpp-studio.html"
-        ).read_text(encoding="utf-8")
+    def test_dpp_studio_matches_canonical_bundle_and_macro_flow(self):
+        studio_path = Path(__file__).resolve().parents[1] / "phyllos" / "dpp-studio.html"
+        studio_bytes = studio_path.read_bytes()
+        studio = studio_bytes.decode("utf-8")
 
-        for step in ("ficha", "material", "lote", "area", "calculo", "evidencias", "qr"):
-            self.assertIn(f'data-step="{step}"', studio)
-            self.assertIn(f'data-panel="{step}"', studio)
+        self.assertEqual(
+            hashlib.sha256(studio_bytes).hexdigest(),
+            "560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2",
+        )
+        for macro_step in ("Intenção", "Materiais", "Especificações", "Indicadores"):
+            self.assertIn(macro_step, studio)
 
-        self.assertIn("const steps = ['ficha', 'material', 'lote', 'area', 'calculo', 'evidencias', 'qr'];", studio)
         self.assertNotIn("Publicar DPP e gerar QR", studio)
         self.assertNotIn("DPP publicado — QR ativo", studio)
-        self.assertIn("Gerar prévia QR/flashcards", studio)
 
 
 if __name__ == "__main__":

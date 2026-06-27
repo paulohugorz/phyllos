@@ -688,4 +688,9 @@ def calcular_iscm_peca(codigo: str, db: Session = Depends(get_db)):
 
 @router.get("/api/status", tags=["Status"])
 def root():
-    return {"status": "ok", "sistema": "Fashion OS v1"}
+    commit_sha = os.getenv("RAILWAY_GIT_COMMIT_SHA") or os.getenv("GIT_COMMIT_SHA")
+    return {
+        "status": "ok",
+        "sistema": "PHYLLOS DPP",
+        "commit": commit_sha,
+    }

@@ -359,7 +359,11 @@
   <div class="header">
     <div class="brand">Phyllos — Passaporte do Produto</div>
     <div class="peca-nome">{{ peca_nome }}</div>
-    <div class="gtin-tag">GTIN {{ peca_gtin }}</div>
+    {% if peca_gtin %}
+      <div class="gtin-tag">GTIN {{ peca_gtin }}</div>
+    {% else %}
+      <div class="gtin-tag">SKU {{ peca_codigo }}</div>
+    {% endif %}
   </div>
 
   <div class="deck-label">Dados e evidências do passaporte</div>

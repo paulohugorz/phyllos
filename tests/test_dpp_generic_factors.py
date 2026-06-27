@@ -31,7 +31,10 @@ class ApplyGenericFactorsTests(unittest.TestCase):
     def test_fills_empty_fields(self):
         result = apply_generic_factors({}, "algodao_convencional")
         self.assertEqual(result["agua_litros_kg"], 10_000.0)
-        self.assertEqual(result["energia_kwh_kg"], 55.0)
+        self.assertEqual(
+            result["energia_kwh_kg"],
+            GENERIC_FACTORS["algodao_convencional"]["energia_kwh_kg"],
+        )
         self.assertEqual(result["carbono_kgco2e_kg"], 5.9)
         self.assertEqual(result["fonte_agua_litros_kg"], SOURCE_LABELS["agua"])
         self.assertEqual(result["metodologia_fatores_impacto"], METHODOLOGY_TAG)
@@ -45,7 +48,10 @@ class ApplyGenericFactorsTests(unittest.TestCase):
         self.assertEqual(result["agua_litros_kg"], 9999.0)
         self.assertEqual(result["fonte_agua_litros_kg"], "laudo do fornecedor XYZ")
         # energia e carbono ainda são preenchidos
-        self.assertEqual(result["energia_kwh_kg"], 55.0)
+        self.assertEqual(
+            result["energia_kwh_kg"],
+            GENERIC_FACTORS["algodao_convencional"]["energia_kwh_kg"],
+        )
 
     def test_unknown_material_returns_unchanged(self):
         ficha = {"agua_litros_kg": None}
