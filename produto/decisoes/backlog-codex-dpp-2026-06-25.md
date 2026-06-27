@@ -53,7 +53,16 @@ Decisao operacional recebida em 2026-06-25:
 
 ### C7 - Preparacao do piloto assistido
 
-Status: definido, em preparacao.
+Status: preparacao tecnica concluida localmente em 2026-06-27; deploy publico pendente de autenticacao GitHub/Railway.
+
+Gate executado antes de nova implementacao:
+
+- app local iniciou com Uvicorn e `GET /api/status` retornou `200`;
+- publicacao Tier 1 sem GTIN foi criada por API e `GET /p/{uuid}` retornou HTML `200`;
+- QR do mesmo UUID retornou PNG `200`;
+- registro temporario do smoke test foi removido apos a validacao;
+- suite completa: 42 testes passando;
+- Railway respondeu `200` em `/api/status`, mas ainda servia uma versao anterior sem UUID automatico; commit local C7 `adca97b` aguarda push/deploy.
 
 - Usar `produto/decisoes/phyllos-dpp-v1-estrategia-piloto.md` como roteiro do piloto.
 - Usar Railway como ambiente publico inicial, com `DPP_BASE_URL=https://phyllos-production.up.railway.app`.
@@ -65,6 +74,21 @@ Status: definido, em preparacao.
 - Executar o piloto como servico assistido gratuito para 3 a 5 usuarios.
 - Manter QR ativo por 90 dias mesmo se a marca nao virar cliente.
 - Converter lacunas recorrentes em backlog tecnico ou decisao de oferta concierge.
+
+Artefatos preparados:
+
+- `scripts/dpp_pilot_preflight.py`: valida healthcheck, pagina publica e QR antes de liberar impressao/uso fisico;
+- `outputs/piloto-dpp-v1.csv`: schema alinhado ao roteiro, incluindo `qr_ativo_ate` para controlar os 90 dias;
+- `outputs/piloto-dpp-v1-candidatos.csv`: cinco slots de recrutamento sem inventar nomes de marcas;
+- `tests/test_dpp_public_route.py`: cobre pagina publica Tier 1 sem GTIN e UUID inexistente;
+- suporte a `DATABASE_URL` em `app/core/database.py`, mantendo SQLite como fallback local.
+
+Pendencias externas/operacionais:
+
+- autenticar o push de `adca97b` para `origin/main` e aguardar o deploy Railway;
+- criar um DPP tecnico no ambiente publicado e executar o preflight contra a URL real;
+- preencher os cinco slots com marcas reais, enviar as abordagens e agendar 3 a 5 onboardings;
+- registrar resultados reais no CSV e converter lacunas recorrentes em backlog/oferta concierge.
 
 ### C1 - Backend promovido para `app/`
 
