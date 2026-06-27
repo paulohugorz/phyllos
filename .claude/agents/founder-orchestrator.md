@@ -9,7 +9,7 @@ last_reviewed: 2026-06-25
 ---
 ## Premissas estratégicas vigentes
 
-Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como fonte canônica de estratégia e [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) como racional de posicionamento.
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como fonte canônica de estratégia, [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md) como racional de posicionamento e [roadmap/roadmap-dpp-integrado-phyllos.md](../roadmap/roadmap-dpp-integrado-phyllos.md) como cronograma executivo.
 
 **Norte atual:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
