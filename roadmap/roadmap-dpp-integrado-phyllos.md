@@ -3,7 +3,7 @@
 **Data:** 2026-06-23
 **Status:** plano executivo v0.2 - atualizado com bundle canonico do DPP Studio
 **Premissa:** toda a tecnologia deve ser desenvolvida internamente com apoio de Codex, Claude e agentes PHYLLOS.
-**Produto:** DPP middleware para moda - importacao/input tecnico, calculo por peca, evidencia, QR e flashcards.
+**Produto:** DPP middleware para moda - importacao/input tecnico, calculo por peca, evidencia, QR e passaporte público.
 **Versao atual do prototipo:** `phyllos/dpp-studio.html`, hash `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`, conforme `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`.
 
 ---
@@ -26,7 +26,7 @@ Motivo: a PHYLLOS consegue desenvolver internamente a primeira versao com Codex/
 - CRUD de produtos, materiais, lotes e DPPs.
 - Calculo deterministico de area, perda, peso, agua, energia e carbono.
 - Geracao de QR.
-- Pagina publica de flashcards.
+- Pagina publica de passaporte público.
 - Testes unitarios e regressao basica.
 - Documentacao tecnica, ADRs, runbooks e criterios de aceite.
 
@@ -56,7 +56,7 @@ Motivo: a PHYLLOS consegue desenvolver internamente a primeira versao com Codex/
 | Founder Orchestrator | Sequencia, foco, cortes e go/no-go | plano aprovado e cadencia semanal |
 | Product Director | ICP, jornada, escopo, criterios de aceite | PRD do DPP Integrado |
 | Technology Director | arquitetura, stack, seguranca, APIs | arquitetura e backlog tecnico |
-| Digital Products Lead | UX do Studio e flashcards | prototipo e fluxo navegavel |
+| Digital Products Lead | UX do Studio e passaporte público | prototipo e fluxo navegavel |
 | Data Intelligence Lead | modelo de dados, dicionario e metricas | schema e data dictionary |
 | Materials Lead | fatores, evidencias e metodologia | matriz de materiais/indicadores |
 | Supply Chain / Operations | lote, area, perda, producao e processo | fluxo operacional de dados |
@@ -88,7 +88,7 @@ DPP Studio
 ├── Indicator Engine
 ├── Evidence Ledger
 ├── DPP Publisher
-├── QR / Flashcard Viewer
+├── Passport Viewer
 └── QA / Audit Log
 ```
 
@@ -132,7 +132,7 @@ Entregas:
 
 - `phyllos/dpp-studio.html` substituido pela versao canonica fornecida pelo founder e validado por hash.
 - fluxo demonstrado: intencao -> tipo de peca -> materiais -> especificacoes -> indicadores -> dossie/QR.
-- contrato futuro segue mirando: upload/input tecnico -> produto -> material -> calculo -> evidencia -> flashcards.
+- contrato futuro segue mirando: upload/input tecnico -> produto -> material -> calculo -> evidencia -> passaporte público.
 - schema conceitual em SQL/Markdown, a partir de `produto/decisoes/dpp-data-contract-v0.md`.
 - dicionario de dados, a partir de `produto/decisoes/dpp-data-contract-v0.md`.
 - formulas documentadas.
@@ -154,7 +154,7 @@ Critério de aceite:
 
 - 3 pessoas entendem o fluxo sem explicacao longa;
 - calculos atualizam ao alterar area/perda/material;
-- flashcards deixam claro o que e estimado/declarado/documentado.
+- passaporte deixa claro o que e estimado/declarado/documentado.
 
 ### Fase 2 - Backend interno MVP (semanas 4-6)
 
@@ -162,7 +162,7 @@ Objetivo: sair de prototipo estatico para app interno funcional.
 
 Entregas:
 
-- FastAPI com entidades: produto, material, arquivo tecnico, lote, indicador, DPP, flashcard.
+- FastAPI com entidades: produto, material, arquivo tecnico, lote, indicador, DPP, passaporte público.
 - SQLite com migrations simples.
 - endpoint para calcular indicadores.
 - endpoint para gerar DPP rascunho.
@@ -187,7 +187,7 @@ Critério de aceite:
 - criar DPP completo por API;
 - recalcular indicadores com teste deterministico;
 - salvar arquivo/metadados;
-- publicar flashcards em rota local.
+- publicar passaporte em rota local.
 
 ### Fase 3 - Studio interno e QR funcional (semanas 7-9)
 
@@ -198,7 +198,7 @@ Entregas:
 - tela interna de cadastro de produto.
 - tela de material/fatores.
 - tela de arquivo tecnico e area/perda.
-- preview de flashcards.
+- preview do passaporte.
 - QR apontando para pagina publica local/staging.
 - status de evidencia por campo.
 - exportacao simples JSON/CSV.
@@ -245,7 +245,7 @@ Critério de aceite:
 - onboarding medio abaixo de 60 minutos para dados Tier 1;
 - 2 QRs compartilhados espontaneamente em canal real;
 - 1 marca pede cadastro de segunda peca;
-- usuarios entendem o valor dos flashcards;
+- usuários entendem o valor do passaporte;
 - lacunas recorrentes viram backlog;
 - nenhuma claim ambiental e publicada sem status de evidencia.
 
@@ -311,7 +311,7 @@ Critério de aceite:
 | Semana 1 | Alinhamento | tese e lideres sincronizados |
 | Semanas 2-3 | Prototipo + dados | fluxo testavel e schema |
 | Semanas 4-6 | Backend MVP | API, banco, calculos e DPP rascunho |
-| Semanas 7-9 | Studio interno | interface, QR e flashcards |
+| Semanas 7-9 | Studio interno | interface, QR e passaporte público |
 | Semanas 10-12 | Piloto real | 5 DPPs com dados reais |
 | Meses 4-5 | Beta privado | multiusuario basico e deploy |
 | Meses 6-8 | Parsers/integracoes | importacao parcial e API |
@@ -337,7 +337,7 @@ Critério de aceite:
 - Exportacao JSON/CSV.
 - Historico de versao.
 - Dashboard de lacunas.
-- Templates de flashcards.
+- Templates de passaporte.
 - Importacao CSV/XLSX.
 - Autenticacao simples.
 
