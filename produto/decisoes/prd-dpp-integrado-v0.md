@@ -2,14 +2,14 @@
 
 **Data:** 2026-06-25  
 **Status:** rascunho executivo para execucao no Codex  
-**Produto:** V1 - DPP middleware para moda  
+**Produto:** PHYLLOS DPP — plataforma SaaS B2B de passaporte digital para marcas de moda  
 **Fonte:** briefing consolidado no Claude em 2026-06-25, convertido em artefato operacional no repo
 
 ---
 
 ## 1. Problema
 
-Marcas de moda produzem fichas tecnicas, especificacoes de material e dados de cadeia produtiva em silos separados. Falta uma camada acessivel que una esses arquivos, calcule indicadores por peca e publique um passaporte digital verificavel que o consumidor consiga ler.
+Marcas de moda produzem fichas tecnicas, especificacoes de material e dados de cadeia produtiva em silos separados. Falta uma camada acessível que una esses arquivos, calcule indicadores por peça e publique um passaporte digital verificável que buyers internacionais e regulações exijam.
 
 A pressao regulatoria e comercial esta crescendo, mas marcas pequenas, medias e atelies nao tem estrutura para contratar consultorias caras ou operar ferramentas enterprise. O risco para a PHYLLOS e cair em dois extremos ruins: prometer sustentabilidade sem prova ou tentar construir um CAD/PLM completo antes de validar a dor.
 
@@ -30,7 +30,7 @@ Saida:
 
 - DPP interno;
 - QR code por peca/lote;
-- pagina publica com flashcards;
+- página pública do passaporte legível por buyer sem login;
 - status de evidencia visivel por campo;
 - lacunas que impedem claim indevido.
 
@@ -56,7 +56,7 @@ Entra:
 - calculo deterministico por peca: peso, agua, energia e carbono;
 - status de evidencia por campo;
 - QR para pagina publica;
-- flashcards para consumidor;
+- passaporte público por SKU com URL permanente;
 - dashboard interno simples de completude do DPP.
 
 Nao entra:
@@ -80,15 +80,15 @@ Marca de moda independente no Brasil, com lotes de 50 a 500 pecas por referencia
 Sinais:
 
 - 1 a 5 pessoas no time;
-- vende via Instagram, ecommerce proprio, marketplace ou loja pequena;
-- ja recebe perguntas sobre origem, tecido e impacto;
+- exporta ou quer exportar para Europa/EUA; ou precisa cumprir INMETRO calçados;
+- já recebe perguntas de buyers sobre composição, rastreabilidade e compliance;
 - tem ficha tecnica parcial ou informacoes de fornecedor;
-- quer diferenciar produto sem montar um PLM;
-- aceita pagar por assinatura leve ou por passaporte publicado.
+- quer usar o DPP como credencial de negociação, não só como obrigação legal;
+- aceita pagar por passaporte publicado (R$149–299/DPP) ou assinatura (R$490/mês).
 
 Job principal:
 
-> Gerar um QR na etiqueta que prove o que a marca sabe sobre a peca, sem contratar uma consultoria de sustentabilidade.
+> Publicar o passaporte da peça antes de uma reunião com buyer europeu — sem precisar de consultoria ou PLM.
 
 ### ICP secundario
 
@@ -98,9 +98,9 @@ Job principal:
 
 > Ter um documento honesto e publicavel mesmo quando parte dos dados ainda e declarada ou estimada.
 
-### ICP futuro
+### ICP Fase 2–3
 
-Marketplace, plataforma B2B2C ou operador de moda que precisa padronizar DPPs de multiplos fornecedores via API.
+Plataformas de compra B2B, associações de exportadores (TexBrasil, Fashion Label Brasil) e marketplaces que precisam padronizar DPPs de múltiplos fornecedores via API.
 
 ## 6. Jornada do usuario
 
@@ -113,7 +113,7 @@ Contrato funcional do DPP Studio:
 4. Calculo de indicadores
 5. Gestao de evidencias
 6. Geracao do QR
-7. Flashcards publicos
+7. Passaporte público
 ```
 
 Nota de versao: a interface canonica atual em `phyllos/dpp-studio.html` e o bundle registrado em `dpp-studio-versao-canonica-2026-06-25.md`. Ela demonstra o fluxo em macroetapas de intencao, materiais, especificacoes e indicadores. O contrato acima segue como alvo funcional de backend/produto.
@@ -196,9 +196,9 @@ O sistema:
 
 Regra: QR publico so deve ser impresso depois de dominio/rota publica testados.
 
-### Etapa 7 - Flashcards publicos
+### Etapa 7 - Passaporte público
 
-A pagina publica mostra dados estruturados, cada um com badge de evidencia. Nao ha campo livre de marketing e nenhum indicador aparece sem contexto de origem.
+A página pública mostra dados estruturados, cada um com badge de evidência. Não há campo livre de marketing e nenhum indicador aparece sem contexto de origem. A página é a credencial que o buyer acessa durante negociação — sem login.
 
 ## 7. Criterios de aceite do MVP
 
