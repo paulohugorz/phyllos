@@ -1,107 +1,125 @@
-# PHYLLOS DPP Integrado - Premissas Estrategicas Vigentes
+# PHYLLOS — Premissas Estratégicas Vigentes
 
-**Data:** 2026-06-23
-**Atualizacao de versao:** 2026-06-25
-**Status:** fonte vigente para roadmap tecnologico interno
-**Substitui no curto prazo:** prioridade anterior de MVP centrado em Motor de Moldes / Parametric Pattern Engine
+**Data:** 2026-06-26
+**Status:** fonte canônica para todos os agentes PHYLLOS
+**Substitui:** premissas anteriores centradas em marca de vestuário
 
 ---
 
-## 1. Decisao central
+## 1. Decisão central
 
-A V1 da PHYLLOS deve ser um **software de DPP integrado ao workflow tecnico da moda**, nao uma ferramenta propria de modelagem.
+A PHYLLOS é uma **plataforma SaaS B2B** que permite qualquer marca de moda publicar o passaporte digital de suas peças.
 
-O produto deve receber arquivos e especificacoes que marcas, modelistas, atelies e faccoes ja produzem e transformar esses dados em:
+O produto entrega dois valores indissociáveis:
 
-- DPP interno;
-- calculos de consumo, area, perda e indicadores;
-- estados de evidencia;
-- QR de etiqueta;
-- flashcards publicos para consumidor.
+1. **Compliance** — valida que a marca cumpre a regulação vigente (INMETRO 31/07/2026; EU ESPR ~2028)
+2. **Acesso a buyers** — o passaporte publicado é a credencial que buyers internacionais exigem para fechar pedidos
 
-## 1.1 Versao canonica do DPP Studio
+## 2. Produto em uma frase
 
-A interface vigente do DPP Studio e o bundle registrado em:
+PHYLLOS transforma os dados técnicos que a marca já tem no passaporte digital que regulação exige e buyers aceitam.
 
-- `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`
-- `phyllos/dpp-studio.html`
+## 3. Categoria
 
-Hash SHA-256 esperado:
+**Infraestrutura de compliance para moda.**
 
-```text
-560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2
-```
+Não é auditoria. Não é consultoria. É software que organiza, valida e publica — sem prometer mais do que está documentado.
 
-Regra para agentes: trabalhar apenas sobre essa ultima versao enquanto nao houver nova decisao do founder. Nao voltar ao prototipo anterior em HTML/CSS/JS separado, nem recriar o fluxo antigo de 7 etapas sem pedido explicito.
+## 4. Quem usa
 
-Essa versao e um HTML bundled/autonomo. `style.css` e `main.js` nao sao fonte da tela principal do DPP Studio atual.
+Marcas de moda independentes, ateliês, pequenas e médias que precisam:
+- Documentar suas peças para regulação nacional (INMETRO) ou europeia (EU ESPR)
+- Responder a buyers internacionais que exigem DPP como critério de compra
+- Sair da ficha técnica em Excel e ter um passaporte público por SKU
 
-Netlify: publicacao da ultima versao ainda depende de permissao/liberacao. O GitHub remoto ja contem o arquivo canonico, mas deploy publico so pode ser declarado depois de verificar a URL servida.
+## 5. O que o produto entrega
 
-## 2. O que sai da V1
+- Passaporte digital por SKU com URL pública
+- QR code para etiqueta física
+- Status de evidência por campo: declarado, calculado, documentado, verificado, ausente
+- Validação contra critérios INMETRO e EU ESPR
+- Página legível por buyer sem necessidade de login
 
-- Editar molde.
-- Ajustar desenho.
-- Criar molde parametrico.
-- Resolver encaixe automaticamente.
-- Validar geometria de modelagem.
-- Substituir Audaces, Lectra, Gerber, CLO, Valentina, CAD, PLM ou ERP.
+## 6. O que o produto não faz
 
-Esses pontos podem voltar no futuro como integracoes ou modulos, mas nao devem bloquear a primeira tecnologia interna.
+- Não emite certificações (GOTS, OEKO-TEX, etc.) — referencia as existentes
+- Não audita fornecedores
+- Não promete compliance que os dados não sustentam
+- Não cria fichas técnicas — recebe o que a marca já tem
+- Não é ferramenta de modelagem, encaixe ou CAD
 
-## 3. O que entra na V1
+## 7. Princípio anti-greenwashing
 
-- Upload ou input manual de arquivo tecnico.
-- Cadastro de produto.
-- Cadastro de materia-prima.
-- Area tecnica por peca ou por encaixe.
-- Perda de corte.
-- Quantidade do lote.
-- Fatores de agua, energia, carbono e durabilidade.
-- Calculo por peca.
-- Status de dado: ausente, declarado, calculado, documentado, verificado, publicavel.
-- QR e pagina publica em flashcards.
+Nenhum indicador aparece como verdade absoluta se for estimado ou declarado.
 
-## 4. Produto em uma frase
+Todo campo público carrega status de evidência visível:
+- **declarado** — fornecedor informou, sem documento
+- **calculado** — derivado de área, gramatura e fatores
+- **documentado** — existe arquivo de apoio
+- **verificado** — certificado ou laudo independente
+- **ausente** — dado não disponível
 
-PHYLLOS transforma arquivos tecnicos de moda e especificacoes de produto em passaportes digitais verificaveis para pecas acabadas.
+## 8. Modelo de negócio
 
-## 5. Categoria
+| Fase | Produto | Preço |
+|---|---|---|
+| Piloto (ago/2026) | Passaporte assistido | Gratuito |
+| Fase 1 (out/2026) | Por passaporte | R$149–299 / DPP |
+| Fase 2 | Assinatura | R$490/mês / marca |
+| Fase 3 | API / Plataforma B2B | USD 20–200K / contrato |
 
-**DPP middleware para moda.**
+## 9. Premissas financeiras
 
-Uma camada de traducao entre modelagem, ficha tecnica, materia-prima e consumidor.
+- Investimento até 1º cliente: **R$6.500** (revisado: inclui infra de produção)
+- Infra piloto (ago–out/2026): **R$280/mês** — Supabase Pro + Railway Starter + Netlify + Cloudflare Free
+- Infra Fase 1 (out/2026–mar/2027): **R$480/mês** — Railway Pro + Supabase Pro + Netlify Pro + Cloudflare Pro
+- Infra Fase 2 (escala 200+ marcas): **R$1.100/mês** — Fly.io multi-region + Supabase Pro + Cloudflare Pro + Sentry
+- Breakeven operacional: **Mar/2027** (mantido — impacto de R$2K no runway, absorvido)
+- Valuation base (pós 1º cliente): R$5M
+- Política: zero captação antes de breakeven (exceto B2B urgente)
 
-## 6. Principio anti-greenwashing
+**Racional da revisão de infra:** o DPP é acessado por buyers internacionais em momentos de negociação — indisponibilidade ou latência destroem a credencial. Supabase Free pausa banco com inatividade (bloqueante para produção). Cloudflare como edge CDN resolve performance global a custo zero. Supabase Pro é inegociável para o primeiro cliente real.
 
-Nenhum indicador deve aparecer como verdade absoluta se for estimado, declarado ou incompleto.
+## 9b. Requisitos de infraestrutura (não-negociáveis para produção)
 
-Todo flashcard publico precisa carregar um status de evidencia:
+| Requisito | Por quê | Como resolver | Custo |
+|---|---|---|---|
+| **Edge CDN global** | Buyer em EU/US acessando DPP com latência > 500ms = credencial fraca | Cloudflare Free à frente de Railway + Netlify | R$0 |
+| **DB sempre ligado / PITR** | Supabase Free pausa banco — QR que retorna 503 destrói a promessa | Supabase Pro | $25/mês |
+| **SLA de backend** | Railway Starter sem SLA = risco de indisponibilidade em negociação crítica | Railway Pro ou Fly.io | $20–40/mês |
+| **WAF + DDoS básico** | DPP público = surface de ataque; WAF protege sem custo no Cloudflare Free | Cloudflare Free WAF | R$0 |
+| **Backup e audit log** | Passaporte é documento com valor legal/regulatório — precisa de imutabilidade e histórico | Supabase PITR + Row-level audit via triggers | incluso no Pro |
+| **Data residency (futuro)** | EU ESPR pode exigir dados de marcas europeias em servidores UE | Planejar migração Supabase para região EU antes de Fase 2 | avaliar em 2027 |
 
-- declarado;
-- calculado;
-- documentado;
-- verificado;
-- indisponivel.
+**Critério de saída de cada ferramenta:**
+- Railway → Fly.io quando precisar de multi-region ou Railway Pro ficar acima de $40/mês
+- Netlify → Vercel quando DPP Studio tiver mais de 10K deploys/mês ou precisar de Edge Functions
+- Supabase → avaliar self-hosted apenas acima de 500 marcas ativas
 
-## 7. Formula base da V1
+## 10. Handoffs esperados por líder
 
-```text
-area_total_requerida = area_peca / (1 - perda_pct)
-area_perdida = area_total_requerida - area_peca
-peso_peca = area_total_requerida * gramatura_kg_m2
-agua_peca = peso_peca * agua_litros_kg
-energia_peca = peso_peca * energia_kwh_kg
-carbono_peca = peso_peca * carbono_kgco2e_kg
-```
+- **Founder:** go/no-go, prioridades, coerência da tese
+- **CTO:** stack, arquitetura, segurança, LGPD, EU AI Act
+- **Product Director:** escopo do passaporte, critérios de compliance, jornada de onboarding da marca
+- **Certification Agent:** mapeamento de requisitos INMETRO e EU ESPR por campo
+- **Data Intelligence Lead:** schema DPP, dicionário de métricas, eventos de tracking
+- **CFO:** runway, gatilhos de captação, modelagem financeira
+- **Marketing/Sales:** recrutamento de marcas piloto, buyers internacionais, posicionamento B2B
 
-## 8. Handoff esperado dos lideres
+## 11. Regulação vigente
 
-- Product Director: escopo, ICP, jornada e criterios de aceite.
-- Technology Director: arquitetura, stack, seguranca, APIs e backlog tecnico.
-- Digital Products Lead: UX, prototipo, pagina publica e fluxo de QR.
-- Data Intelligence Lead: modelo de dados, dicionario de metricas e eventos.
-- Materials Lead: fatores, materiais, evidencias e metodologia de indicadores.
-- Supply Chain / Operations: lote, producao, perda, responsabilidades e fluxo operacional.
-- QA: testes, validacao de calculo, regressao, acessibilidade e criterios go/no-go.
-- CFO: custo interno, runway, etapas de investimento e gatilhos de contratacao externa se necessario.
+- **INMETRO Portaria 459/2025 — calçados:** prazo fabricantes/importadores 31/07/2026 · varejo 31/12/2027 · campos: GTIN, composição por parte, país de fabricação, CNPJ, QR rastreável · multa até R$1,5M. Para vestuário: regulação equivalente ainda não publicada.
+- **EU ESPR (~2028):** DPP têxtil completo obrigatório para vender na Europa
+- **EU AI Act Art. 50 (02/08/2026):** interfaces de IA devem declarar proveniência de outputs
+
+## 12. Mecanismo de adoção antecipada
+
+Marcas adotam o DPP antes da obrigatoriedade quando percebem que ele gera resultado comercial — não quando temem a penalidade regulatória.
+
+**O passaporte funciona como credencial de acesso a um novo estágio de negociação.** A marca que chega com DPP publicado não está respondendo a um questionário de buyer — está iniciando a conversa com um nível diferente de credibilidade. Isso muda a posição da marca na mesa, não só o compliance.
+
+**Implicação para produto:** o DPP precisa ser percebido como ativo comercial, não como custo de conformidade. A página pública do passaporte deve ser apresentável como material de negociação — não apenas como documento técnico.
+
+**Implicação para vendas:** o argumento de entrada não é "evite a multa" nem "cumpra a lei". É "use o passaporte para abrir uma negociação que você não conseguia ter antes."
+
+**Implicação para o piloto:** o critério de sucesso não é "passaporte publicado". É "passaporte usado em uma conversa com buyer" — a marca enviou o link, o buyer leu, a negociação avançou.

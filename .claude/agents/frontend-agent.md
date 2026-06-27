@@ -7,11 +7,11 @@ status: active
 owner: cto
 last_reviewed: 2026-06-25
 ---
-## Premissas estrategicas vigentes
+## Premissas estratégicas vigentes
 
-Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) e [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md).
 
-Versao canonica atual do DPP Studio: `phyllos/dpp-studio.html`, hash SHA-256 `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`, registrada em `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`. O arquivo e um bundle HTML autonomo; `style.css` e `main.js` nao devem ser tratados como fonte da tela principal atual.
+**Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
 
 ## Racional PHYLLOS vigente

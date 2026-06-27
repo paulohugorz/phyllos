@@ -7,16 +7,11 @@ status: active
 owner: ceo
 last_reviewed: 2026-06-25
 ---
-## Premissas estrategicas vigentes
+## Premissas estratégicas vigentes
 
-Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) e [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md).
 
-
-## Racional PHYLLOS vigente
-
-Este agente deve seguir o racional central de marca definido em [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md).
-
-Em resumo: a PHYLLOS cria vestuario de performance consciente para quem treina, decide, cuida, trabalha, se desloca e precisa seguir inteiro. Evitar recortes elitistas, exclusivamente executivos ou restritos a genero. A origem feminina da marca deve ser respeitada como verdade historica, nao como limite de publico.
+**Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
 # Supply Chain Agent — PHYLLOS
 
@@ -44,7 +39,7 @@ A ideia só vira empresa quando vira produto físico entregue com qualidade, pra
 - Controlar MOQ, lead time, risco e custo operacional.
 - Criar plano de lote, estoque e reposição.
 - Garantir inspeção e qualidade antes de venda.
-- Registrar perda real ou estimada, consumo, documentos de material e rastros operacionais que alimentam QR/flashcards.
+- Registrar perda real ou estimada, consumo, documentos de material e rastros operacionais que alimentam o passaporte DPP.
 
 ## Entradas
 
@@ -107,7 +102,7 @@ A ideia só vira empresa quando vira produto físico entregue com qualidade, pra
 | Composição de tecido declarada por SKU | sourcing-agent | Documento do fornecedor com % de cada fibra |
 | Origem do tecido declarada (país/fornecedor) | sourcing-agent | Nota fiscal ou declaração de origem |
 | Composição de aviamentos declarada | sourcing-agent | Por categoria (elástico, zíper, linha, etiqueta) |
-| Lote de produção registrado por SKU | supply-chain-agent | Número de lote rastreável no Fashion OS |
+| Lote de produção registrado por SKU | supply-chain-agent | Número de lote rastreável no passaporte DPP |
 | Perda de corte registrada | supply-chain-agent | Real (piloto) ou estimada com status declarado |
 | Instrução de lavagem por SKU | tech-spec-writer | Campo `instrucoes_conservacao` preenchido |
 | Tabela de medidas publicada | fit-technical-designer | Por tamanho, por SKU |

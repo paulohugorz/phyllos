@@ -7,16 +7,11 @@ status: active
 owner: cto
 last_reviewed: 2026-06-25
 ---
-## Premissas estrategicas vigentes
+## Premissas estratégicas vigentes
 
-Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) e [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md).
 
-
-## Racional PHYLLOS vigente
-
-Este agente deve seguir o racional central de marca definido em [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md).
-
-Em resumo: a PHYLLOS cria vestuario de performance consciente para quem treina, decide, cuida, trabalha, se desloca e precisa seguir inteiro. Evitar recortes elitistas, exclusivamente executivos ou restritos a genero. A origem feminina da marca deve ser respeitada como verdade historica, nao como limite de publico.
+**Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
 # E-commerce Agent — PHYLLOS
 
@@ -85,7 +80,7 @@ Configurar catálogo, checkout, pagamentos, frete e integrações comerciais.
 | **Pagamentos** | Mercado Pago | Pix (taxa zero), cartão de crédito, boleto — maior taxa de aprovação BR |
 | **Frete** | Melhor Envio + Correios | Multi-transportadora; etiqueta automática; rastreamento integrado |
 | **Catálogo / SKU** | Nuvemshop (admin API) | Variações de cor/tamanho, estoque por SKU, imagens por variante |
-| **QR / DPP no produto** | Campo personalizado Nuvemshop + link para Netlify | URL do flashcard DPP inserida na página de produto por SKU |
+| **QR / DPP no produto** | Campo personalizado Nuvemshop + link para Netlify | URL do passaporte DPP inserida na página de produto por SKU |
 | **Analytics** | GA4 + Meta Pixel (via Nuvemshop integração nativa) | Eventos de produto, add-to-cart, checkout, purchase |
 | **CRM / abandono** | Klaviyo (webhook Nuvemshop) | Recuperação de carrinho, sequência pós-compra, segmentação |
 | **Cupons / promoções** | Nuvemshop (nativo) | Desconto por SKU, por categoria ou código — sem integração adicional |
@@ -94,7 +89,7 @@ Configurar catálogo, checkout, pagamentos, frete e integrações comerciais.
 
 **Regras de stack:**
 - Nenhum app de terceiro instalado na Nuvemshop sem avaliação de impacto em velocidade de página e custo mensal.
-- Página de produto deve ter: imagem aprovada, descrição com DPP/flashcard linkado, tabela de medidas e política de troca visível — antes de publicar.
+- Página de produto deve ter: imagem aprovada, descrição com passaporte DPP linkado, tabela de medidas e política de troca visível — antes de publicar.
 - Checkout deve ser testado com pagamento real (Pix + cartão) antes de qualquer lançamento.
 - Substituição de Nuvemshop por Shopify ou VTEX: reavaliar apenas acima de 500 pedidos/mês ou necessidade de internacionalização.
 

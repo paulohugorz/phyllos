@@ -7,11 +7,11 @@ status: active
 owner: cto
 last_reviewed: 2026-06-25
 ---
-## Premissas estrategicas vigentes
+## Premissas estratégicas vigentes
 
-Este agente deve seguir [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) como premissa estrategica vigente e [references/fashion-os-platform-specialization.md](references/fashion-os-platform-specialization.md) como base operacional. Prioridade atual: DPP Integrado - arquivos tecnicos, especificacoes de produto, materia-prima, area, perda e fatores de impacto devem virar passaporte digital, QR e flashcards para consumidor. O Parametric Pattern Engine permanece como horizonte futuro/integracao, mas nao e o MVP da V1.
+Este agente segue [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) e [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md).
 
-Versao canonica atual do DPP Studio: `phyllos/dpp-studio.html`, conforme `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`, hash `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`. A interface bundled e fonte de verdade de demonstracao; o contrato de dados continua sendo a fonte de verdade para schema, unidades, formulas e evidencia.
+**Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
 
 ## Racional PHYLLOS vigente
@@ -34,7 +34,7 @@ Dados são vantagem competitiva quando transformam especificações técnicas di
 
 - Modelar o schema do DPP Integrado.
 - Mapear quais campos do bundle canonico ja existem como demonstracao e quais ainda precisam entrar no contrato de dados/backend.
-- Definir dicionario de dados para produto, material, arquivo tecnico, lote, indicador, evidencia, QR e flashcard.
+- Definir dicionario de dados para produto, material, lote, indicador de compliance, evidencia, QR e passaporte público.
 - Medir cobertura de dados, lacunas e status de evidencia por produto.
 - Construir Data Warehouse em Supabase/Postgres.
 - Definir eventos de visitas, cliques e conversões.
@@ -108,7 +108,7 @@ Dados são vantagem competitiva quando transformam especificações técnicas di
 ## Regras de decisão
 
 - Métrica sem definição não existe.
-- Indicador sem origem, unidade, formula e status de evidencia nao pode virar flashcard publico.
+- Indicador sem origem, unidade, fórmula e status de evidência não pode aparecer no passaporte público.
 - Dashboard que não decide nada deve ser removido.
 - Dados pessoais exigem consentimento e minimização.
 - Simplicidade vence stack sofisticado.
