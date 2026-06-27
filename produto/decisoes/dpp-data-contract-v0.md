@@ -26,6 +26,21 @@ Regras:
 - Fatores editados pelo usuario devem mudar status para `declarado`, salvo upload de documento.
 - Todo fator de agua, energia e carbono precisa de uma fonte textual cadastrada antes da publicacao. Proxy de demonstracao nao e fonte publicavel.
 
+### Unidades canonicas obrigatorias
+
+Todo fator ambiental deve ser armazenado e calculado na unidade canonica abaixo. A unidade da fonte original deve ser registrada separadamente e a conversao documentada.
+
+| Indicador | Unidade canonica | Conversao comum |
+|---|---|---|
+| `agua_peca` | **L** (litros) | 1 m³ = 1.000 L |
+| `energia_peca` | **kWh** | 1 MJ = 0,2778 kWh |
+| `carbono_peca` | **kg CO2e** | — |
+| `fator_agua` | **L/kg** | se fonte usa m³/kg: multiplicar por 1.000 |
+| `fator_energia` | **kWh/kg** | se fonte usa MJ/kg: multiplicar por 0,2778 |
+| `fator_carbono` | **kg CO2e / kg** | — |
+
+Regra de bloqueio: fator cadastrado sem `unit_source` declarado nao pode ser usado em calculo publicavel. O sistema deve rejeitar na validacao, nao apenas alertar.
+
 ## 2. Entidades conceituais
 
 ```text
@@ -36,7 +51,7 @@ Produto
 ├── Indicador
 ├── Evidencia
 ├── DPP
-└── Flashcard
+└── Passaporte
 ```
 
 ## 3. Campos obrigatorios para publicacao
@@ -72,12 +87,21 @@ Produto
 | `area_total_requerida_m2` | float | calculado |
 | `area_perdida_m2` | float | calculado |
 | `peso_peca_kg` | float | calculado |
-| `agua_peca_litros` | float | calculado |
-| `energia_peca_kwh` | float | calculado |
-| `carbono_peca_kgco2e` | float | calculado |
-| `fonte_agua_litros_kg` | text | fonte obrigatoria do fator de agua |
-| `fonte_energia_kwh_kg` | text | fonte obrigatoria do fator de energia |
-| `fonte_carbono_kgco2e_kg` | text | fonte obrigatoria do fator de carbono |
+| `agua_peca_litros` | float | calculado — unidade canonica: L |
+| `energia_peca_kwh` | float | calculado — unidade canonica: kWh |
+| `carbono_peca_kgco2e` | float | calculado — unidade canonica: kg CO2e |
+| `fator_agua_litros_kg` | float | fator interno ja convertido para L/kg |
+| `fator_agua_unit_source` | string | unidade original da fonte (ex: "m³/kg") |
+| `fator_energia_kwh_kg` | float | fator interno ja convertido para kWh/kg |
+| `fator_energia_unit_source` | string | unidade original da fonte (ex: "MJ/kg") |
+| `fator_carbono_kgco2e_kg` | float | fator interno — unidade ja canonica |
+| `fonte_agua` | text | referencia bibliografica ou documento da fonte |
+| `fonte_energia` | text | referencia bibliografica ou documento da fonte |
+| `fonte_carbono` | text | referencia bibliografica ou documento da fonte |
+| `agua_peca_incerteza_min` | float | opcional — limite inferior da faixa (L) |
+| `agua_peca_incerteza_max` | float | opcional — limite superior da faixa (L) |
+| `carbono_peca_incerteza_min` | float | opcional — limite inferior da faixa (kg CO2e) |
+| `carbono_peca_incerteza_max` | float | opcional — limite superior da faixa (kg CO2e) |
 | `metodologia_fatores_impacto` | text | limitacao/metodologia comum aos fatores |
 
 ### Certificacoes e durabilidade
@@ -161,8 +185,24 @@ Regras:
 - Fator fora de limite de referencia deve exigir documento antes de `documentado` ou `verificado`.
 - Fator calculado sem fonte textual deve falhar.
 - Fonte contendo proxy interno, demonstracao, demo ou "nao usar em piloto" deve falhar.
+- Fator sem `unit_source` declarado nao pode ser usado em calculo publicavel — sistema rejeita, nao alerta.
+- Fator de agua em m³/kg deve ser convertido para L/kg (×1.000) antes de persistir; valor original e `unit_source` ficam registrados.
+- Fator de energia em MJ/kg deve ser convertido para kWh/kg (×0,2778) antes de persistir; valor original e `unit_source` ficam registrados.
 
-## 7. Payload de exemplo para prototipo
+## 7. Fontes de dados canonicas brasileiras
+
+Fontes publicas que devem ser os defaults para `fonte_agua`, `fonte_energia` e `fonte_carbono` para produtos fabricados no Brasil. Qualquer fator que nao referencie uma fonte conhecida deve falhar na validacao de publicacao.
+
+| Fonte | Sigla | URL | Uso |
+|---|---|---|---|
+| Sistema Brasileiro de Inventarios do Ciclo de Vida | IBICT | inventariodeciclodevida.ibict.br | fatores de carbono e energia por fibra/processo brasileiro |
+| Agencia Nacional de Aguas | ANA | snirh.gov.br | consumo hidrico regional; indice de escassez por bacia |
+| Higg Materials Sustainability Index | Higg MSI | higg.org | fatores globais por fibra; aceito na ausencia de dado brasileiro |
+| PACT Pathfinder | PACT | docs.carbon-transparency.org | troca de dados de carbono de produto entre fornecedores |
+
+Regra: preferir IBICT/ANA para producao brasileira. Higg MSI e aceito quando nao existe equivalente nacional. Fator de fonte nao listada acima precisa de documentacao adicional antes de publicacao.
+
+## 8. Payload de exemplo para prototipo
 
 ```json
 {
@@ -179,12 +219,14 @@ Regras:
   "area_peca_m2": 1.42,
   "perda_corte_pct": 14,
   "fatores": {
-    "agua_litros_kg": 320,
-    "energia_kwh_kg": 12,
-    "carbono_kgco2e_kg": 4.8,
-    "fonte_agua_litros_kg": "Fonte documentada do fornecedor ou base setorial textil indicada no piloto",
-    "fonte_energia_kwh_kg": "Fonte documentada do fornecedor ou base setorial textil indicada no piloto",
-    "fonte_carbono_kgco2e_kg": "Fonte documentada do fornecedor, Higg MSI, ecoinvent, IPCC ou GHG Protocol conforme material/processo",
+    "fator_agua_litros_kg": 320,
+    "fator_agua_unit_source": "L/kg",
+    "fator_energia_kwh_kg": 12,
+    "fator_energia_unit_source": "kWh/kg",
+    "fator_carbono_kgco2e_kg": 4.8,
+    "fonte_agua": "Higg MSI 2023 — poliester reciclado",
+    "fonte_energia": "Higg MSI 2023 — poliester reciclado",
+    "fonte_carbono": "Higg MSI 2023 — poliester reciclado",
     "metodologia_fatores_impacto": "Estimativa calculada por peso da peca; nao substitui ACV oficial ou auditoria ambiental"
   }
 }

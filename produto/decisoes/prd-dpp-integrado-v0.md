@@ -200,6 +200,20 @@ Regra: QR publico so deve ser impresso depois de dominio/rota publica testados.
 
 A página pública mostra dados estruturados, cada um com badge de evidência. Não há campo livre de marketing e nenhum indicador aparece sem contexto de origem. A página é a credencial que o buyer acessa durante negociação — sem login.
 
+**Feature planejada para B3 — "Como ler este passaporte":**
+
+Accordion ou tooltip guiado que educa o buyer com 7 perguntas antes de confiar em um número:
+
+1. O que exatamente foi medido?
+2. Qual parte da vida do produto entrou?
+3. O dado é medido, declarado ou estimado?
+4. Qual é a fonte, o ano e a versão?
+5. Existe contexto de lugar e período?
+6. É realmente comparável ao outro número?
+7. O que ficou de fora e quão incerto é?
+
+O buyer não precisa ser especialista. As respostas vêm dos próprios campos do passaporte — o accordion apenas direciona o olhar. Sem resposta em algum dos 7 pontos, o campo é exibido com badge `declarado` ou `ausente`, não como fato verificado.
+
 ## 7. Criterios de aceite do MVP
 
 Funcionais:

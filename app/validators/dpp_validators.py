@@ -32,6 +32,12 @@ REQUIRED_FACTOR_SOURCE_FIELDS = (
     ("fonte_carbono_kgco2e_kg", "fonte do fator de carbono", "pegada_carbono_kgco2e"),
 )
 
+# unit_source obrigatorio para publicacao — rejeita se ausente
+REQUIRED_UNIT_SOURCE_FIELDS = (
+    ("agua_unit_source", "unidade da fonte do fator de agua (ex: L/kg ou m3/kg)"),
+    ("energia_unit_source", "unidade da fonte do fator de energia (ex: kWh/kg ou MJ/kg)"),
+)
+
 
 @dataclass(frozen=True)
 class DppValidationResult:
@@ -215,6 +221,13 @@ def validate_dpp_publication(peca, ficha) -> DppValidationResult:
         source_text = _normalise_text(value) if _has_text(value) else ""
         if source_text and any(term in source_text for term in BLOCKED_FACTOR_SOURCE_TERMS):
             errors.append(f"{label} nao pode usar proxy de demonstracao para publicar DPP")
+
+    # unit_source obrigatorio para cada fator publicado
+    for unit_field, unit_label in REQUIRED_UNIT_SOURCE_FIELDS:
+        factor_field = unit_field.replace("_unit_source", "_litros_kg") if "agua" in unit_field else unit_field.replace("_unit_source", "_kwh_kg")
+        factor_is_public = _has_value(getattr(ficha, factor_field, None)) if ficha else False
+        if factor_is_public and not _has_text(getattr(ficha, unit_field, None) if ficha else None):
+            errors.append(f"{unit_label} obrigatoria para publicar fator de impacto")
 
     statuses = build_evidence_statuses(peca, ficha)
     for field in REQUIRED_TIER1_FIELDS:

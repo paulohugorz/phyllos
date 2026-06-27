@@ -75,6 +75,14 @@ def _migrate(conn):
     add_if_missing("fichas_tecnicas", "energia_peca_kwh",           "FLOAT")
     add_if_missing("fichas_tecnicas", "evidencia_statuses",         "TEXT")
     add_if_missing("fichas_tecnicas", "durabilidade_ciclos_lavagem","INTEGER")
+    # unidade original da fonte — obrigatoria para publicacao (B0 gate)
+    add_if_missing("fichas_tecnicas", "agua_unit_source",           "VARCHAR")
+    add_if_missing("fichas_tecnicas", "energia_unit_source",        "VARCHAR")
+    # faixas de incerteza — opcionais, ativadas em B3
+    add_if_missing("fichas_tecnicas", "agua_peca_incerteza_min",    "FLOAT")
+    add_if_missing("fichas_tecnicas", "agua_peca_incerteza_max",    "FLOAT")
+    add_if_missing("fichas_tecnicas", "carbono_peca_incerteza_min", "FLOAT")
+    add_if_missing("fichas_tecnicas", "carbono_peca_incerteza_max", "FLOAT")
 
     # etapas_producao — coluna GLN adicionada depois
     add_if_missing("etapas_producao", "instalacao_gln", "VARCHAR")

@@ -13,6 +13,8 @@ Este agente segue [references/dpp-integrado-strategic-premises.md](references/dp
 
 **Norte:** PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO / EU ESPR) e conectando com buyers internacionais.
 
+**Posicionamento central:** PHYLLOS não é uma calculadora. É uma camada de governança de dados ambientais — de calcular para governar dados.
+
 # Brand Agent — PHYLLOS
 
 **Departamento:** Identidade, narrativa e percepção  
@@ -93,7 +95,7 @@ A marca PHYLLOS deve tornar visível uma tese real: produto técnico, consciênc
 ## Regras de decisão
 
 - Sem prova, sem claim.
-- Flashcard publico deve explicar o dado e seu status de evidencia sem exagerar a certeza.
+- Passaporte público deve explicar o dado e seu status de evidência sem exagerar a certeza.
 - Sem clareza, sem sofisticação.
 - A marca não usa desconto como personalidade.
 - Narrativa deve aumentar confiança, não apenas atenção.

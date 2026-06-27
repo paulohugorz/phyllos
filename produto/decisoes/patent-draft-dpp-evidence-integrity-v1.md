@@ -437,6 +437,10 @@ Um meio não transitório legível por computador armazenando instruções que, 
 
 **14.** O sistema da Reivindicação 2, em que o repositório de perfis da alínea (c) é extensível por operadores autorizados e por autoridades regulatórias via interface de configuração, permitindo adição de novos instrumentos normativos sem alteração do código-fonte do sistema.
 
+**15.** O método da Reivindicação 1, em que cada campo de dado de natureza quantitativa armazena, adicionalmente ao valor pontual e ao tipo de evidência, uma faixa de incerteza composta por limite inferior e limite superior expressos na mesma unidade canônica do valor, sendo a faixa de incerteza exibida na página pública como representação visual diferenciada do valor pontual, de modo que o receptor possa distinguir o valor calculado da dispersão esperada, sem que a faixa de incerteza seja agregada com faixas de outros campos em índice composto.
+
+**16.** O método da Reivindicação 1, em que a unidade de medida da fonte de dados original é armazenada como atributo de primeiro nível do campo, separada da unidade canônica utilizada no cálculo, sendo a conversão entre unidade da fonte e unidade canônica documentada e reproduzível, e sendo o sistema configurado para rejeitar a publicação de campo com fator de impacto ambiental quando a unidade da fonte não estiver declarada.
+
 ---
 
 ## 6. Resumo (Abstract)
