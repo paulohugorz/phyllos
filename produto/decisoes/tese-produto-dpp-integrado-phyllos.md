@@ -1,23 +1,25 @@
 # Tese de Produto - PHYLLOS DPP Integrado
 
-**Data:** 2026-06-23
-**Status:** tese de produto v0.3 - refinada apos adoção do bundle canonico do DPP Studio
+**Data:** 2026-06-27 (revisada)
+**Status:** tese de produto v0.4 - atualizada com novo posicionamento SaaS B2B, terminologia passaporte publico e blocos B0-B4
 **Owner:** Founder / Product
-**Escopo:** PHYLLOS, Fashion OS, DPP, integracao com modelagem, indicadores de produto e experiencia de QR para consumidor
+**Escopo:** PHYLLOS DPP Studio — plataforma SaaS B2B de governança de dados ambientais para marcas de moda; compliance INMETRO/EU ESPR; acesso a buyers internacionais
 
 ---
 
 ## 1. Tese refinada
 
-A PHYLLOS deve ser um **software de DPP integrado ao workflow tecnico da moda**, nao uma ferramenta de modelagem propria na V1.
+A PHYLLOS deve ser uma **camada de governança de dados ambientais para marcas de moda** — não uma ferramenta de modelagem, não uma calculadora, não um PLM.
 
-O produto se integra a ferramentas e arquivos ja usados por modelistas, marcas, atelies e faccoes para gerar um passaporte digital da peca acabada. Ele combina:
+> Posicionamento central: **de calcular para governar dados.**
+
+O produto recebe dados técnicos que a marca já tem e os converte em passaporte digital verificável por SKU. Ele combina:
 
 1. especificacoes do produto cadastrado;
 2. dados vindos de arquivos de modelagem, encaixe, ficha tecnica ou planilhas;
-3. calculos de area, consumo de materia-prima e perda;
-4. indicadores de agua, energia, carbono, durabilidade e cobertura de dados;
-5. flashcards publicos exibidos ao consumidor quando o QR da etiqueta e escaneado.
+3. calculos de area, consumo de materia-prima e perda — deterministicos e auditaveis;
+4. indicadores de agua, energia, carbono com status de evidencia e rastreabilidade de fonte (unit_source);
+5. passaporte publico por SKU com URL permanente acessado pelo buyer sem login.
 
 A decisao critica da V1:
 
@@ -35,26 +37,26 @@ PHYLLOS como atelie virtual que ajuda a criar a peca, passar por modelagem, fich
 
 ### 2.2 Agora
 
-PHYLLOS como camada de DPP que entra **depois ou ao lado da modelagem**, recebendo os outputs tecnicos existentes e convertendo isso em:
+PHYLLOS como **camada de governança de dados** que entra depois ou ao lado da modelagem, recebendo outputs tecnicos existentes e convertendo em:
 
 - consumo material por peca;
 - perda estimada ou medida;
-- indicadores ambientais;
+- indicadores ambientais com unidade de fonte registrada (unit_source) e cadeia de evidencia auditavel;
 - dados de composicao, origem e durabilidade;
-- flashcards de transparencia para o consumidor;
-- registro interno com status de evidencia.
+- passaporte publico por SKU acessado pelo buyer;
+- registro interno com status de evidencia por campo (ausente/declarado/calculado/documentado/verificado).
 
 ### 2.3 Frase de produto
 
-> PHYLLOS transforma arquivos tecnicos de moda e especificacoes de produto em passaportes digitais verificaveis para pecas acabadas.
+> PHYLLOS transforma os dados tecnicos que a marca ja tem no passaporte digital que regulacao exige e buyers aceitam.
 
 ### 2.4 Categoria proposta
 
-**DPP middleware para moda.**
+**Infraestrutura de compliance para moda.**
 
 Mais especificamente:
 
-> Uma camada de traducao entre modelagem, ficha tecnica, materia-prima e consumidor.
+> Uma camada de governança de dados ambientais — de calcular para governar.
 
 ---
 
@@ -99,15 +101,16 @@ O usuario nao quer "mais uma ferramenta de desenho". Ele quer:
 
 ### 4.1 ICP primario
 
-**Pequena marca, atelie estruturado, faccao qualificada ou modelista tecnico que ja possui algum processo de modelagem/ficha tecnica.**
+**Marca de moda independente no Brasil que precisa publicar DPP por pressao regulatoria (INMETRO 31/07/2026) ou por exigencia de buyer internacional.**
 
 Sinais:
 
 - ja usa Audaces, Lectra, Gerber, CLO, Valentina, PDF, DXF, planilha ou ficha tecnica;
-- ja compra materia-prima com alguma especificacao;
-- tem necessidade de comunicar composicao, origem, cuidado, durabilidade ou impacto;
+- exporta ou quer exportar para Europa/EUA; ou produz calcados e precisa cumprir INMETRO Portaria 459/2025;
+- ja recebe perguntas de buyers sobre composicao, rastreabilidade e compliance;
 - nao tem PLM enterprise;
-- precisa gerar QR/passaporte por peca, modelo ou lote.
+- quer usar o DPP como credencial de negociacao, nao so como obrigacao legal;
+- aceita pagar por passaporte publicado (R$149-299/DPP) ou assinatura (R$490/mes).
 
 ### 4.2 ICP secundario
 
@@ -123,7 +126,7 @@ Costureira iniciante que precisa criar molde do zero. Ela pode ser usuaria futur
 
 ### JTBD principal
 
-Quando tenho uma peca pronta para produzir ou vender, quero importar os arquivos/especificacoes tecnicas e gerar um QR com flashcards claros para o consumidor, para transformar dados internos em rastreabilidade publicavel sem montar um PLM.
+Quando tenho uma peca pronta para produzir ou vender, quero importar os arquivos/especificacoes tecnicas e publicar um passaporte digital com QR para o buyer, para transformar dados internos em credencial de compliance e negociacao sem montar um PLM.
 
 ### JTBDs secundarios
 
@@ -143,10 +146,11 @@ Quando tenho uma peca pronta para produzir ou vender, quero importar os arquivos
 - Area de molde ou area cortada por peca.
 - Perda percentual ou perda calculada por encaixe.
 - Consumo de materia-prima por peca.
-- Indicadores derivados por kg/m2/unidade.
-- Estados de evidencia por campo.
+- Indicadores derivados por kg/m2/unidade com unidade de fonte (unit_source) obrigatoria.
+- Estados de evidencia por campo (ausente/declarado/calculado/documentado/verificado).
 - Geracao de QR/passaporte em rascunho.
-- Flashcards para consumidor.
+- Passaporte publico por SKU com URL permanente acessado pelo buyer sem login.
+- Validacao INMETRO Tier 1: composicao, GTIN/codigo, CNPJ, pais de fabricacao.
 
 ### 6.2 Fora
 
@@ -183,7 +187,7 @@ Arquivo tecnico / ficha / planilha
   -> estados de evidencia
   -> DPP interno
   -> QR
-  -> flashcards publicos
+  -> passaporte publico por SKU
 ```
 
 ### 7.1 Entradas aceitas na V1
@@ -202,10 +206,11 @@ Arquivo tecnico / ficha / planilha
 | Saida | Usuario |
 |---|---|
 | DPP interno completo | marca/atelie |
-| Flashcards publicos | consumidor |
-| QR de etiqueta | consumidor e varejo |
-| Relatorio de lacunas | time tecnico |
-| JSON/CSV futuro | integracoes |
+| Passaporte publico por SKU (URL permanente) | buyer sem login |
+| QR GS1 Digital Link por etiqueta | buyer e varejo |
+| Status de evidencia por campo | buyer e marca |
+| Relatorio de lacunas de compliance (INMETRO/EU ESPR) | marca |
+| JSON/CSV e API (B3/B4) | integracoes e plataformas B2B |
 
 ---
 
@@ -256,21 +261,28 @@ carbono_peca = peso_peca * carbono_kgco2e_kg
 
 ---
 
-## 9. Flashcards do consumidor
+## 9. Passaporte publico
 
-O QR da etiqueta nao deve abrir uma ficha tecnica fria. Deve abrir um conjunto de flashcards claros:
+O QR da etiqueta abre o passaporte publico da peca — a credencial que o buyer acessa durante negociacao, sem login.
 
-1. **Do que esta peca e feita** - composicao e material principal.
-2. **Quanto material ela usou** - area, peso ou consumo em linguagem simples.
-3. **Perda de corte** - percentual e o que a marca faz com sobra, se houver dado.
-4. **Indicadores estimados** - agua, energia e carbono com status "estimado" ou "verificado".
-5. **Durabilidade e cuidado** - ciclos, lavagem, reparo.
-6. **Origem e producao** - fornecedor, lote, etapa ou local quando publicavel.
-7. **Nivel de transparencia** - o que esta documentado e o que ainda falta.
+O passaporte exibe dados estruturados, cada um com badge de evidencia visivel. Nenhum indicador aparece sem contexto de origem.
 
-Principio:
+Campos obrigatorios visiveis:
 
-> O consumidor deve entender a informacao em 30 segundos, sem precisar saber o que e DPP.
+1. **Composicao** — fibras com percentual, status declarado/documentado.
+2. **Consumo de material** — area e peso por peca.
+3. **Indicadores ambientais** — agua, energia, carbono com status (estimado/documentado/verificado) e fonte.
+4. **Durabilidade e cuidado** — ciclos, lavagem, reparo.
+5. **Origem e producao** — pais de fabricacao, fornecedor, lote quando publicavel.
+6. **Nivel de transparencia** — o que esta documentado e o que ainda e declarado ou ausente.
+
+Principio anti-greenwashing:
+
+> Campo estimado exibe badge "estimativa calculada". Campo ausente nao aparece como numero. Score composto nao existe no passaporte.
+
+**Feature B3 — "Como ler este passaporte":**
+
+Accordion guiado com 7 perguntas que orientam o buyer antes de confiar em um numero: o que foi medido, qual metodologia, dado medido ou declarado, fonte e ano, contexto de lugar, comparabilidade e o que ficou de fora. As respostas vêm dos proprios campos — o accordion direciona o olhar, nao inventa dados.
 
 ---
 
@@ -283,7 +295,7 @@ Principio:
 | D03 | Upload/input tecnico substitui motor parametrico na V1 | Usa dados reais do usuario | Parsers podem ser limitados | Permitir input manual quando parser falhar |
 | D04 | Area e perda viram campos centrais | Sao ponte entre modelagem e indicadores | Dependem de qualidade do encaixe | Mostrar se dado e declarado, calculado ou medido |
 | D05 | Indicadores sao derivados do material + consumo | Evita impacto generico por SKU | Requer banco de fatores por material | Comecar com fatores declarados e metodologia visivel |
-| D06 | Flashcards sao a experiencia publica | Consumidor nao quer ficha tecnica bruta | Pode simplificar demais | Cada card deve manter status de evidencia |
+| D06 | Passaporte publico e a experiencia do buyer | Buyer nao quer ficha tecnica bruta | Pode simplificar demais | Cada campo deve manter badge de evidencia visivel |
 | D07 | DPP interno e mais completo que QR publico | Nem todo dado deve ser publicado | Exige camada de permissao | Campo publicavel deve ser separado do campo interno |
 | D08 | "Sustentabilidade" nao sera claim automatico | Dado preenchido nao e prova | Marketing fica mais cuidadoso | Usar transparencia, cobertura e evidencia |
 | D09 | Integracoes futuras, importacao manual agora | Garante MVP sem depender de APIs fechadas | Mais trabalho manual inicial | Medir quais arquivos mais aparecem nos pilotos |
@@ -295,19 +307,19 @@ Principio:
 
 ### 11.1 Fatia vertical
 
-**Um produto cadastrado + um arquivo tecnico enviado + uma materia-prima com indicadores + calculo por peca + QR com flashcards.**
+**Um produto cadastrado + um arquivo tecnico enviado + uma materia-prima com indicadores + calculo por peca + passaporte publico acessavel pelo buyer via QR.**
 
 ### 11.2 Fluxo V1
 
 1. Criar produto.
 2. Enviar arquivo tecnico ou preencher dados do arquivo.
 3. Informar area da peca/encaixe.
-4. Selecionar materia-prima cadastrada.
+4. Selecionar materia-prima cadastrada (com unit_source obrigatorio para cada fator).
 5. Informar perda e quantidade.
-6. Calcular indicadores.
-7. Revisar estados de evidencia.
-8. Publicar QR de rascunho.
-9. Ver flashcards do consumidor.
+6. Calcular indicadores deterministicos.
+7. Revisar estados de evidencia — gate anti-greenwashing bloqueia publicacao se faltar campo obrigatorio.
+8. Publicar QR GS1 Digital Link.
+9. Acessar passaporte publico por URL permanente (sem login).
 
 ### 11.3 Criterio de sucesso
 
@@ -315,7 +327,7 @@ O MVP e promissor se 5 marcas/atelies conseguirem, com seus proprios dados:
 
 - gerar um DPP em menos de 30 minutos;
 - entender o que e calculado, declarado e ausente;
-- usar os flashcards como pagina real de QR;
+- usar o passaporte publico como pagina real de QR para negociacao com buyer;
 - identificar campos que hoje ficam perdidos entre modelagem e ficha tecnica;
 - aceitar pagar para repetir o processo em mais pecas.
 
@@ -344,7 +356,7 @@ O prototipo atual mostra:
 - dossie lateral;
 - QR/passaporte em prototipo.
 
-O contrato de produto segue mirando a V1 completa de DPP middleware: arquivo tecnico, produto, material, lote, evidencia, QR publico e flashcards. O bundle atual e a interface de trabalho mais recente, nao a implementacao final de backend.
+O contrato de produto segue mirando a V1 completa de DPP middleware: arquivo tecnico, produto, material, lote, evidencia, QR publico e passaporte por SKU. O bundle atual e a interface de trabalho mais recente, nao a implementacao final de backend.
 
 Nao deve mostrar:
 
@@ -355,49 +367,62 @@ Nao deve mostrar:
 
 ---
 
-## 13. Roadmap
+## 13. Roadmap — Blocos evolutivos
 
-### Fase 0 - Prototipo navegavel
+Referencia completa: `.claude/agents/references/product-blocks-allocation.md`
 
-- bundle canonico preservado;
-- dados mockados/demonstrativos;
-- calculos visiveis;
-- dossie e QR/passaporte em prototipo;
-- teste de entendimento;
-- Netlify somente apos permissao e validacao da URL final.
+### B0 — Fundacao (Jun–Jul 2026)
 
-### Fase 1 - MVP manual assistido
+- Backend FastAPI funcional: CRUD produto/material/DPP.
+- Calculo deterministico com unit_source obrigatorio.
+- Gate anti-greenwashing antes de publicar.
+- Deploy Railway + Cloudflare na frente de URLs publicas.
+- Supabase Pro (Free proibido em producao).
 
-- upload de arquivos;
-- input manual de area/perda;
-- cadastro de materiais;
-- fatores de impacto por material;
-- QR publico;
-- exportacao simples.
+### B1 — Passaporte Minimo (Jul–Ago 2026)
 
-### Fase 2 - Parsers e integracoes
+- Passaporte publico por SKU com URL permanente (sem login para buyer).
+- QR GS1 Digital Link funcional.
+- Status de evidencia visivel em cada campo.
+- Validacao INMETRO Tier 1: composicao, GTIN, CNPJ, pais de fabricacao.
+- Piloto com 3–5 marcas, gratuito.
 
-- leitura estruturada de CSV/XLSX;
-- leitura parcial de DXF/AAMA/ASTM quando possivel;
-- conectores para ferramentas ou exports recorrentes;
-- versoes de DPP por lote.
+### B2 — Auto-servico (Set–Out 2026)
 
-### Fase 3 - Passport-ready
+- Onboarding da marca sem assistencia do founder.
+- Upload de ficha tecnica / CSV / planilha.
+- Cobranca ativada: pay-per-DPP R$149–299.
 
-- identificadores formais;
-- JSON-LD;
-- permissao de publicacao por campo;
-- assinatura/verificacao;
-- adequacao juridica por mercado.
+### B3 — Retencao (2027)
+
+- Assinatura R$490/mes.
+- Faixa de incerteza por campo (uncertainty_range) visivel no passaporte.
+- "Como ler este passaporte" — accordion guiado para buyer.
+- Historico de versoes do DPP por lote.
+- IBICT/ANA como fontes canonicas brasileiras sugeridas no onboarding.
+
+### B4 — Plataforma (2028+)
+
+- API B2B (USD 20K–200K/contrato).
+- JSON-LD e GS1 Digital Link formal.
+- Adequacao EU ESPR (~2028).
+- Multitenancy para plataformas e associacoes de exportadores.
 
 ---
 
 ## 14. Implicacao estrategica
 
-Essa mudanca melhora a tese porque a PHYLLOS deixa de tentar resolver modelagem e rastreabilidade ao mesmo tempo.
+A PHYLLOS nao e uma calculadora de impacto. E uma camada de governança de dados ambientais.
 
-O foco passa a ser:
+A diferenca nao e semantica: calculadoras produzem numeros. Governança de dados produz rastreabilidade — de onde o numero veio, qual unidade a fonte usava, qual cadeia de evidencia sustenta a afirmacao, o que esta documentado e o que ainda e declarado.
 
-> Capturar o dado tecnico onde ele ja nasce, calcular o que ainda nao esta claro e traduzir tudo em uma experiencia de transparencia para quem compra a peca.
+Essa e a posicao defensavel a longo prazo porque:
 
-Essa e uma tese mais enxuta, mais vendavel e mais facil de validar.
+- regulacao (INMETRO, EU ESPR) exige cadeia de evidencia, nao score;
+- buyers sofisticados rejeitam numero sem origem;
+- patente (claims 15-16) cobre uncertainty_range por campo e unit_source como atributo de primeiro nivel — prior art nao chega nessa granularidade;
+- fontes canonicas brasileiras (IBICT, ANA) diferenciam do Higg MSI global sem substituir — complemento, nao concorrencia.
+
+> Posicionamento: **de calcular para governar dados.**
+
+Tese mais enxuta, mais vendavel, mais facil de validar e mais defensavel contra concorrentes de maior porte.

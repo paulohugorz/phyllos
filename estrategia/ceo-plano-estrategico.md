@@ -1,7 +1,12 @@
 # Plano Estratégico de Produto — Fashion OS Web
 **PHYLLOS | CEO | Junho 2026**
 
-> **Nota vigente em 2026-06-11:** este plano registra a hipotese anterior de interface web do Fashion OS. A prioridade executiva atual e o **Parametric Pattern Engine**: Playbook, endpoint de molde, saia reta parametrica, SVG estatico, PDF A4, PatternValidator, validacao fisica e beta users. A interface completa e a linguagem natural passam a ser fases posteriores, nao MVP imediato.
+> **⚠️ ARQUIVO HISTÓRICO — supersedido em 2026-06-27.**
+> Este documento descreve a hipótese de Fashion OS Fase 2 (Next.js, interface interna, pipeline criativo). Essa direção foi abandonada.
+> **O plano estratégico vigente é o DPP Studio SaaS B2B.** Fontes canônicas: `produto/decisoes/prd-dpp-integrado-v0.md`, `produto/decisoes/tese-produto-dpp-integrado-phyllos.md` e `.claude/agents/references/dpp-integrado-strategic-premises.md`.
+> Manter este arquivo apenas como registro de decisão de pivô.
+
+> **Nota anterior (2026-06-11):** este plano registra a hipotese anterior de interface web do Fashion OS. A prioridade executiva atual e o **Parametric Pattern Engine**: Playbook, endpoint de molde, saia reta parametrica, SVG estatico, PDF A4, PatternValidator, validacao fisica e beta users. A interface completa e a linguagem natural passam a ser fases posteriores, nao MVP imediato.
 
 ## 1. Tese de produto
 

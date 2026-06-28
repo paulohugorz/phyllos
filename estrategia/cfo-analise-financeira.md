@@ -1,6 +1,11 @@
 # Análise Financeira e de Recursos — Fashion OS Fase 2
 
-> **Nota vigente em 2026-06-11:** atualizar qualquer leitura financeira deste documento pela premissa do Motor de Moldes. O risco principal agora e precisao tecnica + validacao de beta users, nao custo de interface web. Receita SaaS ampla so deve ser tratada como hipotese posterior a prova do patternmaking engine.
+> **⚠️ ARQUIVO HISTÓRICO — supersedido em 2026-06-27.**
+> Este documento analisa custos de stack para Fashion OS Fase 2 (Next.js vs Streamlit, SQLite local). Esse produto não é mais a prioridade.
+> **A análise financeira vigente é:** `produto/decisoes/analise-financeira-dpp-2026.md` (DPP Studio SaaS B2B, horizonte 2026–2030).
+> Manter apenas como registro de contexto financeiro do período pré-pivô.
+
+> **Nota anterior (2026-06-11):** atualizar qualquer leitura financeira deste documento pela premissa do Motor de Moldes. O risco principal agora e precisao tecnica + validacao de beta users, nao custo de interface web. Receita SaaS ampla so deve ser tratada como hipotese posterior a prova do patternmaking engine.
 **PHYLLOS / CFO / Junho 2026**
 
 ## Leitura Executiva

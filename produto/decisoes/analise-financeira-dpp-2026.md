@@ -80,12 +80,12 @@ Legenda:
 | Claude Code (desenvolvimento) | R$ 900 | 4 | R$ 3.600 | Opex | [F] ja no orcamento operacional |
 | Railway (deploy publico) | R$ 140 | 4 | R$ 560 | Opex | [H] plano Hobby ~USD 5/mes; Starter ~USD 20/mes |
 | Dominio proprio | R$ 80 | 1 (anual) | R$ 80 | Opex | [H] apos primeiro sinal real de piloto |
-| Supabase (Postgres) | R$ 0 | 4 | R$ 0 | Opex | [F] free tier suficiente ate ~500 DPPs |
+| Supabase Pro (Postgres) | R$ 125 | 4 | R$ 500 | Opex | [F] Supabase Free proibido em producao (pausa com inatividade — regra inegociavel) |
 | Cloudflare R2 (armazenamento QR/arquivos) | R$ 0 | 4 | R$ 0 | Opex | [F] 10GB permanentes gratis |
 | Ferramentas (Notion, GitHub, etc.) | R$ 50 | 4 | R$ 200 | Opex | [H] planos existentes |
 | Tempo do founder (custo de oportunidade) | R$ 15.000 | 4 | R$ 60.000 | Opex | [H] nao desembolso direto; burn implicito |
-| **Total desembolso real** | | | **R$ 4.440** | | excluindo custo de oportunidade |
-| **Total incluindo custo de oportunidade** | | | **R$ 64.440** | | referencia para analise de ROI |
+| **Total desembolso real** | | | **R$ 4.940** | | excluindo custo de oportunidade (inclui Supabase Pro obrigatorio) |
+| **Total incluindo custo de oportunidade** | | | **R$ 64.940** | | referencia para analise de ROI |
 
 ### 2.3 Observacoes sobre capital
 
@@ -192,7 +192,7 @@ Notas para 2028-2030:
 | Componente de COGS | Custo unitario | Nota |
 |---|---|---|
 | Computo por DPP | ~R$ 0,001 | Negligenciavel no Railway/Supabase |
-| Storage QR + flashcards | ~R$ 0,005 | Cloudflare R2 |
+| Storage QR + passaporte publico | ~R$ 0,005 | Cloudflare R2 |
 | Banda de rede (pagina publica) | ~R$ 0,002 | Cloudflare CDN |
 | **COGS total por DPP** | **~R$ 0,01** | [H] |
 
@@ -204,19 +204,19 @@ Notas para 2028-2030:
 |---|---|---|---|---|
 | Claude Code (desenvolvimento) | R$ 900 | R$ 900 | R$ 1.200 | R$ 1.500 |
 | Railway / infra deploy | R$ 140 | R$ 140 | R$ 280 | R$ 560 |
-| Supabase/Postgres | R$ 0 | R$ 0 | R$ 125 | R$ 250 |
+| Supabase Pro/Postgres | R$ 125 | R$ 125 | R$ 125 | R$ 250 |
 | Cloudflare R2 | R$ 0 | R$ 0 | R$ 15 | R$ 60 |
 | Dominio + SSL | R$ 7 | R$ 7 | R$ 7 | R$ 7 |
 | Email transacional (Resend/Sendgrid) | R$ 0 | R$ 27 | R$ 55 | R$ 110 |
 | Ferramentas (Notion, GitHub, etc.) | R$ 50 | R$ 50 | R$ 75 | R$ 150 |
 | Marketing (organico/referral) | R$ 0 | R$ 200 | R$ 500 | R$ 2.000 |
-| **Total Opex/mes** | **R$ 1.097** | **R$ 1.324** | **R$ 2.257** | **R$ 4.637** |
+| **Total Opex/mes** | **R$ 1.222** | **R$ 1.449** | **R$ 2.257** | **R$ 4.637** |
 
 ### 4.3 Gatilhos de scaling de custo (step-function)
 
 | Gatilho | Custo incremental | Momento esperado |
 |---|---|---|
-| Supabase Free → Pro (>500 DPPs ativos ou 2+ usuarios simultaneos) | +R$ 125/mes | ~50 clientes assinantes (Q1 2027 base) |
+| Supabase Pro (obrigatorio desde piloto — Free proibido em producao) | R$ 125/mes | Desde Jul/2026; ja no Opex pre-receita |
 | Railway Hobby → Pro (dominio custom + SLA) | +R$ 110/mes | Primeiro cliente B2B (2028) |
 | Primeiro dev/ops externo (10h/mes) | +R$ 3.000-5.000/mes | >100 clientes assinantes ou contrato B2B ativo |
 | Primeiro vendedor/CS externo | +R$ 5.000-8.000/mes | ARR > R$ 300K (2028-2029) |
@@ -272,16 +272,16 @@ Notas:
 
 | Mes | Receita | Opex real | FCL mes | FCL acumulado |
 |---|---|---|---|---|
-| Jul/26 (piloto) | R$ 0 | (R$ 1.097) | (R$ 1.097) | (R$ 1.097) |
-| Ago/26 (piloto) | R$ 0 | (R$ 1.097) | (R$ 1.097) | (R$ 2.194) |
-| Set/26 (piloto) | R$ 0 | (R$ 1.097) | (R$ 1.097) | (R$ 3.291) |
-| Out/26 | R$ 796 | (R$ 1.324) | (R$ 528) | (R$ 3.819) |
-| Nov/26 | R$ 1.194 | (R$ 1.324) | (R$ 130) | (R$ 3.949) |
-| Dez/26 | R$ 1.592 | (R$ 1.324) | R$ 268 | (R$ 3.681) |
-| Jan/27 | R$ 2.940 | (R$ 2.257) | R$ 683 | (R$ 2.998) |
-| Fev/27 | R$ 3.430 | (R$ 2.257) | R$ 1.173 | (R$ 1.825) |
-| Mar/27 | R$ 4.410 | (R$ 2.257) | R$ 2.153 | R$ 328 |
-| Abr/27 | R$ 4.900 | (R$ 2.257) | R$ 2.643 | R$ 2.971 |
+| Jul/26 (piloto) | R$ 0 | (R$ 1.222) | (R$ 1.222) | (R$ 1.222) |
+| Ago/26 (piloto) | R$ 0 | (R$ 1.222) | (R$ 1.222) | (R$ 2.444) |
+| Set/26 (piloto) | R$ 0 | (R$ 1.222) | (R$ 1.222) | (R$ 3.666) |
+| Out/26 | R$ 796 | (R$ 1.449) | (R$ 653) | (R$ 4.319) |
+| Nov/26 | R$ 1.194 | (R$ 1.449) | (R$ 255) | (R$ 4.574) |
+| Dez/26 | R$ 1.592 | (R$ 1.449) | R$ 143 | (R$ 4.431) |
+| Jan/27 | R$ 2.940 | (R$ 2.257) | R$ 683 | (R$ 3.748) |
+| Fev/27 | R$ 3.430 | (R$ 2.257) | R$ 1.173 | (R$ 2.575) |
+| Mar/27 | R$ 4.410 | (R$ 2.257) | R$ 2.153 | (R$ 422) |
+| Abr/27 | R$ 4.900 | (R$ 2.257) | R$ 2.643 | R$ 2.221 |
 | Mai/27 | R$ 5.880 | (R$ 2.257) | R$ 3.623 | R$ 6.594 |
 | Jun/27 | R$ 6.370 | (R$ 2.257) | R$ 4.113 | R$ 10.707 |
 | Jul/27 | R$ 7.350 | (R$ 2.257) | R$ 5.093 | R$ 15.800 |
@@ -291,7 +291,7 @@ Notas:
 | Nov/27 | R$ 10.780 | (R$ 2.257) | R$ 8.523 | R$ 44.012 |
 | Dez/27 | R$ 12.250 | (R$ 2.257) | R$ 9.993 | R$ 54.005 |
 
-**Breakeven operacional (FCL acumulado > 0): Marco/2027 — 9 meses apos o piloto**
+**Breakeven operacional (FCL acumulado > 0): Abril/2027 — 10 meses após o piloto** *(revisado: inclui Supabase Pro R$125/mês desde Jul/2026)*
 
 ### 6.2 FCL anual (apos 2027)
 
@@ -316,7 +316,7 @@ Notas:
 | Cenario | Investimento total ate receita | Break-even operacional | Payback |
 |---|---|---|---|
 | Conservador | R$ 3.600 (desembolso) | Mai/2028 | ~22 meses |
-| Base | R$ 4.440 (desembolso) | Mar/2027 | ~9 meses |
+| Base | R$ 4.940 (desembolso) | Abr/2027 | ~10 meses |
 | Otimista | R$ 4.440 (desembolso) | Dez/2026 | ~6 meses |
 
 [H] Payback inclui apenas desembolso direto (Claude Code + infra + dominio). Excluindo custo de oportunidade, o payback e curto porque o investimento real e minimo.
@@ -400,7 +400,7 @@ Notas:
 - [H] Pelo menos 1 cliente pagante ate Dez/2026.
 - [H] Churn nao supera 10%/mes.
 - [H] Founder mantem tempo de dedicacao ao produto.
-- [H] Infra permanece em free tier ate 50+ clientes.
+- [H] Infra permanece em tier atual (Supabase Pro obrigatorio desde piloto) ate 100+ clientes sem upgrade adicional.
 
 **Cenario base (condicoes necessarias):**
 - [H] 40% de conversao do piloto (2 de 5 marcas viram clientes pagantes).
@@ -421,7 +421,7 @@ Notas:
 
 | Gatilho | Custo incremental | Impacto no Opex |
 |---|---|---|
-| >500 DPPs ativos (Supabase Free → Pro) | +R$ 125/mes | +6% sobre Opex base |
+| Supabase Pro (ja obrigatorio desde piloto) | R$ 125/mes fixo | incluso no Opex desde Jul/2026 |
 | >10.000 req/mes (Railway Hobby → Pro) | +R$ 110/mes | +5% |
 | Dominio custom + SSL proprio | +R$ 80/ano | negligenciavel |
 | Primeiro dev externo (Fase 3) | +R$ 3.000-5.000/mes | +100-200% no burn |
@@ -458,7 +458,7 @@ Notas:
 
 ### 9.1 Runway atual (bootstrapped)
 
-[F] O custo real de caixa e de aproximadamente R$ 1.097/mes (fase de piloto) e R$ 1.324-2.257/mes (pos-piloto ate 2027).
+[F] O custo real de caixa e de aproximadamente R$ 1.222/mes (fase de piloto) e R$ 1.324-2.257/mes (pos-piloto ate 2027).
 
 [H] Assumindo que o founder financia esses custos do proprio bolso (ou do faturamento existente da PHYLLOS vestuario), o runway e indefinido — o projeto nao quebra por falta de caixa na infra.
 
@@ -468,7 +468,7 @@ Se o founder tem capacidade para dedicar 15-20h/semana ao DPP Studio, o runway e
 
 ### 9.2 Se/quando captar e quanto
 
-**Recomendacao: nao captar antes de Mar/2027 (breakeven operacional).**
+**Recomendacao: nao captar antes de Abr/2027 (breakeven operacional).**
 
 Razao: captar antes do breakeven sem receita validada dilui o founder sem necessidade. O produto pode chegar ao breakeven com investimento direto de R$ 4.440. Captar R$ 200K-500K agora implicaria ceder equity sem o poder de barganha de ter ARR provado.
 
@@ -521,7 +521,7 @@ Razao: captar antes do breakeven sem receita validada dilui o founder sem necess
 
 ### Tese financeira
 
-O DPP Studio tem estrutura economica de software puro: COGS proximo de zero, margens brutas de 99%+, e modelo de receita recorrente (assinatura) com LTV/CAC de 20x no cenario base. O payback operacional no cenario base e de 9 meses apos o inicio da cobranca.
+O DPP Studio tem estrutura economica de software puro: COGS proximo de zero, margens brutas de 99%+, e modelo de receita recorrente (assinatura) com LTV/CAC de 20x no cenario base. O payback operacional no cenario base e de 10 meses apos o inicio da cobranca (revisado: inclui Supabase Pro obrigatorio desde o piloto).
 
 O projeto nao precisa de captacao para validar o produto. Precisa de clientes pagantes.
 
@@ -529,14 +529,14 @@ O projeto nao precisa de captacao para validar o produto. Precisa de clientes pa
 
 1. **Go/no-go do piloto**: confirmar execucao do piloto em julho 2026 com os criterios de sucesso do documento `phyllos-dpp-v1-estrategia-piloto.md`.
 2. **Gatilho de first hire**: definir o ARR minimo para contratar o primeiro dev externo (recomendado: R$ 120K ARR).
-3. **Politica de captacao**: confirmar que nao havera captacao antes do breakeven operacional (Marco/2027 no cenario base), salvo contrato B2B urgente.
+3. **Politica de captacao**: confirmar que nao havera captacao antes do breakeven operacional (Abril/2027 no cenario base), salvo contrato B2B urgente.
 4. **Valuation cap do SAFE**: pre-aprovar o range de R$ 3M-5M para o caso de captacao em 2027.
 
 ### Proximos 90 dias (decisoes financeiras)
 
 | Acao | Prazo | Responsavel | KPI |
 |---|---|---|---|
-| Confirmar orcamento piloto (R$ 1.097/mes x 3 meses) | Jul/26 | CFO / Founder | Runway confirmado |
+| Confirmar orcamento piloto (R$ 1.222/mes x 3 meses) | Jul/26 | CFO / Founder | Runway confirmado |
 | Registrar pilotos em `outputs/piloto-dpp-v1.csv` | Jul-Set/26 | Product / Founder | 3+ pilotos concluidos |
 | Definir primeiro preco e forma de cobranca | Set/26 | CFO / Product | Precificacao aprovada |
 | Emitir primeira nota fiscal de servico DPP | Out/26 | CFO / Founder | Primeiro R$ na conta |
@@ -547,8 +547,8 @@ O projeto nao precisa de captacao para validar o produto. Precisa de clientes pa
 **KPIs afetados por este documento:**
 
 - Runway bootstrapped: indefinido (custo < R$ 2.300/mes, sem CLT).
-- Burn rate pre-receita: R$ 1.097/mes.
-- Breakeven operacional (cenario base): Marco/2027.
+- Burn rate pre-receita: R$ 1.222/mes.
+- Breakeven operacional (cenario base): Abril/2027.
 - MRR alvo em 12 meses: R$ 7.350 (cenario base).
 - ARR alvo em 24 meses: R$ 264.000 (cenario base).
 - LTV/CAC (assinatura, cenario base): 19,6x.
