@@ -1,105 +1,120 @@
 # PHYLLOS — Sistema Operacional de Agentes
 
-A PHYLLOS opera como uma startup real desde o início. Agentes só existem quando têm responsabilidade clara, entradas, saídas, KPIs e handoffs definidos.
+**Versão:** 2.0
+**Revisado em:** 2026-07-02
+**Norte:** PHYLLOS é infraestrutura SaaS B2B para transformar dados técnicos de moda em passaportes digitais publicáveis, verificáveis e úteis em negociações com buyers.
 
-## Norte estratégico vigente
+## Regra de autoridade
 
-Todos os agentes seguem [references/dpp-integrado-strategic-premises.md](references/dpp-integrado-strategic-premises.md) e [references/positioning-rationale-2026-06.md](references/positioning-rationale-2026-06.md).
+O founder humano decide direção, prioridades, investimento e trade-offs. Nenhum agente ocupa o papel de founder, CEO ou decisor substituto.
 
-**Em resumo:** a PHYLLOS é uma plataforma SaaS B2B que permite qualquer marca publicar o passaporte digital de suas peças — validando compliance (INMETRO 31/07/2026 · EU ESPR ~2028) e conectando com buyers internacionais. Nenhum agente deve produzir artefatos de vestuário, design ou produção física sem decisão explícita do founder.
+O ponto de entrada transversal é o [execution-orchestrator](execution-orchestrator.md): ele recebe o direcionamento, transforma em plano executável, distribui ações, acompanha dependências e devolve somente resultados, riscos e decisões que exigem o founder.
 
-## Regra de prioridade
+Todos os agentes seguem:
 
-1. Validar cliente (marca que precisa de compliance ou acesso a buyers).
-2. Validar produto (passaporte gerado, buyer aceita, regulação satisfeita).
-3. Proteger caixa (breakeven mar/2027, zero captação antes disso).
-4. Construir audiência e funil B2B.
-5. Instrumentar dados.
-6. Automatizar apenas o que já funciona.
+- [premissas estratégicas DPP](references/dpp-integrado-strategic-premises.md);
+- [modelo operacional e gates](references/agent-operating-model.md);
+- [alocação por bloco de produto](references/product-blocks-allocation.md).
 
-## Departamentos principais
+## Estrutura vigente — 26 agentes
 
-| Departamento | Arquivo | Responsabilidade central |
-|---|---|---|
-| CEO / Founder | [founder-orchestrator.md](founder-orchestrator.md) | Coerência da tese, OKRs, roadmap, go/no-go e decisões de investimento |
-| Strategy | [innovation-director.md](innovation-director.md) | Mercado DPP, TAM/SAM, benchmarks, unit economics e tese de captação |
-| Customer Research | [cx-lead.md](cx-lead.md) | ICP, entrevistas com marcas, dores, objeções e disposição a pagar |
-| Product | [product-director.md](product-director.md) | Escopo do passaporte, jornada de onboarding, critérios de compliance e roadmap |
-| Compliance | [certification-agent.md](certification-agent.md) | Requisitos INMETRO / EU ESPR / EU AI Act por campo do passaporte |
-| Technology | [technology-director.md](technology-director.md) | Stack, arquitetura, segurança, LGPD, APIs e backlog técnico |
-| Digital Products | [digital-products-lead.md](digital-products-lead.md) | UX do DPP Studio, página pública, QR e fluxo de onboarding |
-| Frontend | [frontend-agent.md](frontend-agent.md) | Interface web do Studio e página pública do passaporte |
-| Data | [data-intelligence-lead.md](data-intelligence-lead.md) | Schema DPP, dicionário de métricas, eventos de tracking e warehouse |
-| BI | [bi-analyst.md](bi-analyst.md) | Dashboards, insights executivos e recomendações acionáveis |
-| Data Engineer | [data-engineer.md](data-engineer.md) | Pipelines, modelagem e qualidade de dados |
-| Finance | [cfo.md](cfo.md) | Caixa, margem, runway, cenários e gatilhos de captação |
-| Investor Relations | [pr-press-agent.md](pr-press-agent.md) | Pitch deck, data room, projeções e narrativa de captação |
-| Brand | [brand-director.md](brand-director.md) | Narrativa B2B, voz da plataforma, identidade e aprovação de comunicação |
-| Marketing | [marketing-lead.md](marketing-lead.md) | Audiência B2B, canais, SEO, conteúdo e lançamentos |
-| Growth | [analytics-agent.md](analytics-agent.md) | Funil, CAC, conversão, retenção e A/B tests |
-| Paid Media | [paid-media-agent.md](paid-media-agent.md) | Mídia paga para aquisição de marcas clientes |
-| SEO / Blog | [seo-blog-agent.md](seo-blog-agent.md) | Conteúdo orgânico sobre DPP, compliance e moda internacional |
-| Social Media | [social-media-lead.md](social-media-lead.md) | Presença social e calendário editorial B2B |
-| Content | [content-creator.md](content-creator.md) | Conteúdo orgânico para marcas e buyers |
-| CRM | [email-crm-agent.md](email-crm-agent.md) | Automações, nutrição, onboarding e ciclo de vida de clientes |
-| Loyalty | [loyalty-agent.md](loyalty-agent.md) | Retenção, recompra e comunidade de marcas |
-| Vendas | [vendas.md](vendas.md) | Prospecção e conversão de marcas B2B |
-| Support | [support-agent.md](support-agent.md) | Atendimento a marcas clientes |
-| Returns | [returns-agent.md](returns-agent.md) | Trocas, devoluções e resolução de problemas |
-| Operations | [operations-lead.md](operations-lead.md) | Operações da plataforma, SLAs e processos internos |
-| DevOps / Security | [devops-security-agent.md](devops-security-agent.md) | Infraestrutura, segurança, LGPD e EU AI Act |
-| Integration | [integration-agent.md](integration-agent.md) | Integrações com ferramentas de moda (Audaces, CLO, etc.) |
-| QA | [qa-agent.md](qa-agent.md) | Testes, validação de cálculo, regressão e anti-greenwashing |
-| Product Testing | [product-testing-agent.md](product-testing-agent.md) | Testes de produto digital e critérios de aceite |
-| Product Innovation | [product-innovation-agent.md](product-innovation-agent.md) | Novas hipóteses de produto e expansão de escopo |
-| Trend Intelligence | [trend-intelligence-agent.md](trend-intelligence-agent.md) | Tendências regulatórias, de mercado e de buyers internacionais |
-| Launch Coordinator | [launch-coordinator.md](launch-coordinator.md) | Coordenação de lançamentos e onboarding de novos clientes |
-| E-commerce | [ecommerce-agent.md](ecommerce-agent.md) | Plataforma de venda e self-service de passaportes |
-| Influencer / Collab | [influencer-collab-agent.md](influencer-collab-agent.md) | Parcerias com referências do setor de moda e compliance |
-| Communication | [communication-lead.md](communication-lead.md) | PR, imprensa e narrativa pública |
-| Voice Evolution | [voice-evolution-agent.md](voice-evolution-agent.md) | Evolução da linguagem e tom da plataforma |
-| AI Ops | [ai-ops-agent.md](ai-ops-agent.md) | Operação dos agentes de IA internos |
-| AI Automation | [ai-automation-lead.md](ai-automation-lead.md) | Memória, automações, relatórios e RAG |
-| Daily Briefing | [daily-executive-briefing-agent.md](daily-executive-briefing-agent.md) | Síntese diária, próximos passos, riscos e pauta para o founder |
+### Direção e controle
 
-## Fluxo recomendado
+| Agente | Responsabilidade central |
+|---|---|
+| [execution-orchestrator](execution-orchestrator.md) | Traduz direção em ações, owners, dependências, critérios de aceite e acompanhamento |
+| [innovation-intelligence-lead](innovation-intelligence-lead.md) | Radar contínuo de mercado, tecnologia, regulação, concorrentes e buyers |
+| [cfo](cfo.md) | Caixa, realizado versus previsto, premissas, metas, cenários e unit economics |
 
-1. **CEO** define OKRs e o que não fazer.
-2. **Strategy** atualiza mercado, benchmarks e tese de captação.
-3. **Customer Research** entrevista marcas — dores, objeções e disposição a pagar.
-4. **Compliance** mapeia requisitos INMETRO / EU ESPR por campo do passaporte.
-5. **Product** fecha escopo, jornada de onboarding e critérios de aceite.
-6. **Technology / Data** definem schema, API, cálculos e estados de evidência.
-7. **Digital Products / Frontend** evoluem o DPP Studio e a página pública.
-8. **QA** valida fórmulas, acessibilidade, anti-greenwashing e regressão.
-9. **Finance** calcula custo, margem, runway e gatilhos de captação.
-10. **Brand / Marketing** constroem narrativa e audiência B2B.
-11. **Vendas** prospecta marcas para o piloto (ago/2026).
-12. **AI / Daily Briefing** fecham o ciclo com memória, automação e síntese executiva.
+### Produto
 
-## Gates de decisão
+| Agente | Responsabilidade central |
+|---|---|
+| [product-director](product-director.md) | Problema, resultado, funcionalidades, PRD, prioridade e critérios de aceite |
+| [product-design-lead](product-design-lead.md) | Pesquisa de UX, fluxos, UI, protótipos, design system e design QA |
+| [customer-insights-agent](customer-insights-agent.md) | Entrevistas com marcas e buyers, ICP, dores, objeções e disposição a pagar |
+| [certification-agent](certification-agent.md) | Requisitos regulatórios e critérios de evidência por campo do DPP |
 
-| Gate | Dono | Pergunta |
-|---|---|---|
-| Tese | CEO | Esta iniciativa fortalece compliance B2B ou dispersa foco? |
-| Cliente | Customer Research | A marca tem dor real e disposição a pagar? |
-| Compliance | Certification | O passaporte satisfaz INMETRO e/ou EU ESPR? |
-| Produto | Product | O Studio gera passaporte que buyer aceita? |
-| Caixa | Finance | Cabe no runway e preserva margem? |
-| Mercado | Marketing / Vendas | Conseguimos recrutar marcas mensuravelmente? |
-| Dados | Data / BI | Estamos medindo o que importa? |
-| Síntese | Daily Briefing | O founder tem clareza sobre o que foi feito e o que decidir? |
+### Engenharia de software
 
-## Como escolher rapidamente
+| Agente | Responsabilidade central |
+|---|---|
+| [software-engineering-lead](software-engineering-lead.md) | Arquitetura, planejamento técnico, ADRs, qualidade e releases integrados |
+| [backend-engineer](backend-engineer.md) | APIs, regras de negócio, persistência, migrations e serviços |
+| [frontend-engineer](frontend-engineer.md) | Interfaces integradas às APIs reais, acessibilidade e performance |
+| [integration-engineer](integration-engineer.md) | Contratos, integração frontend/backend/dados e testes ponta a ponta |
+| [qa-release-agent](qa-release-agent.md) | Estratégia de testes, regressão, anti-greenwashing e gate de release |
+| [devops-security-agent](devops-security-agent.md) | CI/CD, ambientes, observabilidade, backup, segurança e resposta a incidentes |
 
-- Decisão estratégica → [founder-orchestrator.md](founder-orchestrator.md)
-- Pesquisa com marcas clientes → [cx-lead.md](cx-lead.md)
-- Requisitos regulatórios → [certification-agent.md](certification-agent.md)
-- Escopo do passaporte → [product-director.md](product-director.md)
-- Stack e arquitetura → [technology-director.md](technology-director.md)
-- Caixa e margem → [cfo.md](cfo.md)
-- Captação → [pr-press-agent.md](pr-press-agent.md)
-- Audiência B2B → [marketing-lead.md](marketing-lead.md)
-- Dados e schema → [data-intelligence-lead.md](data-intelligence-lead.md)
-- IA e memória → [ai-automation-lead.md](ai-automation-lead.md)
-- Síntese diária → [daily-executive-briefing-agent.md](daily-executive-briefing-agent.md)
+### Dados
+
+| Agente | Responsabilidade central |
+|---|---|
+| [data-platform-lead](data-platform-lead.md) | Contrato de dados, schema, dicionário, eventos, linhagem e governança |
+| [data-engineer](data-engineer.md) | Migrations, pipelines, tracking, backfills e qualidade operacional dos dados |
+| [bi-analyst](bi-analyst.md) | Métricas certificadas, dashboards e análises para produto, marketing, finanças e operação |
+
+### Operações
+
+| Agente | Responsabilidade central |
+|---|---|
+| [operations-lead](operations-lead.md) | Operação do SaaS, SLAs, filas, runbooks, incidentes e qualidade operacional |
+| [customer-success-onboarding-agent](customer-success-onboarding-agent.md) | Onboarding assistido, adoção, suporte e feedback de clientes |
+
+### Marketing e receita
+
+| Agente | Responsabilidade central |
+|---|---|
+| [marketing-director](marketing-director.md) | Estratégia GTM, metas, orçamento, canais e coordenação de marketing |
+| [product-marketing-brand-agent](product-marketing-brand-agent.md) | Posicionamento, mensagem, marca, packaging, lançamentos e sales enablement |
+| [content-seo-agent](content-seo-agent.md) | Conteúdo, SEO e distribuição social B2B |
+| [demand-generation-agent](demand-generation-agent.md) | Campanhas, landing pages, experimentos, mídia e geração de demanda |
+| [lifecycle-crm-agent](lifecycle-crm-agent.md) | CRM, nutrição, ativação, retenção e automações de ciclo de vida |
+| [sales-agent](sales-agent.md) | Prospecção, qualificação, pipeline, negociação e objeções |
+| [partnerships-communications-agent](partnerships-communications-agent.md) | Associações, parceiros, especialistas, imprensa e comunicação institucional |
+
+### IA interna
+
+| Agente | Responsabilidade central |
+|---|---|
+| [ai-automation-lead](ai-automation-lead.md) | Memória operacional, automações internas, RAG e confiabilidade dos agentes |
+
+## Fluxo padrão
+
+1. Founder fornece direção ao `execution-orchestrator`.
+2. Orquestrador cria um Execution Brief com resultado, não objetivos vagos.
+3. Product Management define funcionalidade e critérios de aceite.
+4. Product Design define experiência e estados de interface.
+5. Engineering e Data fecham arquitetura, API, schema, eventos e plano de testes.
+6. Backend, Frontend e Integration implementam o mesmo fluxo.
+7. QA/Release valida código, dados, documentação, deploy e experiência ponta a ponta.
+8. Operations e Customer Success colocam o fluxo em uso real.
+9. Marketing e Sales transformam valor entregue em aquisição, adoção e receita.
+10. BI, CFO e Execution Orchestrator devolvem métricas, desvios e decisões pendentes.
+
+## Roteamento em linguagem natural
+
+O founder não precisa memorizar nomes. Exemplos:
+
+- “Transforme este direcionamento em plano e distribua” → Execution Orchestrator.
+- “O que mudou no mercado esta semana?” → Innovation Intelligence.
+- “Quero saber previsto, realizado e premissas” → CFO.
+- “Defina a próxima funcionalidade” → Product Director.
+- “Desenhe e valide a jornada” → Product Design.
+- “Implemente frontend e backend integrados” → Software Engineering Lead.
+- “Garanta que os dados trafeguem e sejam medidos” → Data Platform + Integration.
+- “Prepare aquisição e lançamento” → Marketing Director.
+- “Converta contas-alvo em clientes” → Sales.
+
+## Funções consolidadas
+
+- Daily Briefing passou a ser saída do `execution-orchestrator`.
+- Trend Intelligence foi incorporado a `innovation-intelligence-lead`.
+- Product Testing foi incorporado a Product Design e QA/Release.
+- Social, SEO e Content foram consolidados em `content-seo-agent`.
+- Paid Media e Growth foram consolidados em `demand-generation-agent`.
+- Voice Evolution foi incorporado a Product Marketing & Brand.
+- Launch, Support e Loyalty foram consolidados em Customer Success e Operations.
+- AI Ops foi incorporado a `ai-automation-lead`.
+- E-commerce de varejo e Returns foram aposentados; cobrança SaaS pertence a Produto e Backend.
+- Investor Relations fica sob gatilho explícito do founder, atendido por CFO + Partnerships & Communications.

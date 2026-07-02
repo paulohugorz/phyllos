@@ -294,12 +294,12 @@ pip install "qrcode[pil]"
 
 ## 10. Proximos Passos Imediatos
 
-1. **CPO valida** esta especificacao e aprova ou ajusta escopo da Fase 2.
-2. **CTO provisiona** o dominio `dpp.phyllos.com.br` e configura resolvedor antes de qualquer impressao de etiqueta.
-3. **COO confirma** lista de GTINs a serem registrados para as pecas da primeira colecao com venda planejada ate 31/07/2026 (deadline INMETRO).
-4. **Tech Spec Writer** documenta no tech pack de cada peca os campos DPP obrigatorios para que o time de produto preencha corretamente `composicao_fibras` e `certificacoes` antes da publicacao.
-5. **QA** executa teste de fluxo completo: criar peca com GTIN → criar ficha tecnica com composicao → adicionar etapas → publicar DPP → validar JSON-LD → gerar QR → resolver URL.
+1. **Product Director valida** esta especificacao e aprova ou ajusta o escopo funcional da Fase 2.
+2. **Software Engineering Lead + DevOps & Security** provisionam o dominio `dpp.phyllos.com.br`, configuram o resolvedor e registram o runbook antes de qualquer uso real do QR.
+3. **Operations Lead + Customer Success** confirmam os identificadores e dados reais necessários ao piloto antes do onboarding.
+4. **Certification Agent + Data Platform Lead + Backend Engineer** documentam campos obrigatorios, regras, evidencias e validacoes no contrato de dados e na API.
+5. **QA & Release Agent** executa o fluxo completo: criar peca com GTIN → criar ficha tecnica com composicao → adicionar etapas → publicar DPP → validar JSON-LD → gerar QR → resolver URL.
 
 ---
 
-*Documento gerado pelo Tech Spec Writer — PHYLLOS. Versionar junto ao codigo em `docs/decisoes/`. Atualizar a cada ciclo de implementacao que altere modelo, endpoints ou regras de publicacao.*
+*Documento mantido por Product Director, Software Engineering Lead e Data Platform Lead. Versionar junto ao codigo e atualizar a cada ciclo que altere modelo, endpoints ou regras de publicacao.*

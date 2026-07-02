@@ -98,13 +98,16 @@ Todo campo público carrega status de evidência visível:
 
 ## 10. Handoffs esperados por líder
 
-- **Founder:** go/no-go, prioridades, coerência da tese
-- **CTO:** stack, arquitetura, segurança, LGPD, EU AI Act
-- **Product Director:** escopo do passaporte, critérios de compliance, jornada de onboarding da marca
+- **Founder humano:** direção, prioridades, investimento e go/no-go
+- **Execution Orchestrator:** decomposição, owners, dependências, acompanhamento e escalonamento
+- **Software Engineering Lead:** arquitetura, APIs, segurança, qualidade e release
+- **Product Director:** problema, funcionalidades, prioridade e critérios de aceite
+- **Product Design Lead:** jornada, UI, UX, acessibilidade e design QA
 - **Certification Agent:** mapeamento de requisitos INMETRO e EU ESPR por campo
-- **Data Intelligence Lead:** schema DPP, dicionário de métricas, eventos de tracking
-- **CFO:** runway, gatilhos de captação, modelagem financeira
-- **Marketing/Sales:** recrutamento de marcas piloto, buyers internacionais, posicionamento B2B
+- **Data Platform Lead:** contrato e schema DPP, dicionário, eventos e qualidade
+- **Operations Lead:** SLAs, runbooks, filas, incidentes e readiness operacional
+- **CFO:** realizado, comprometido, forecast, premissas, runway e unit economics
+- **Marketing Director e Sales:** recrutamento, demanda, pipeline e posicionamento B2B
 
 ## 11. Regulação vigente
 

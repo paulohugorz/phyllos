@@ -1,7 +1,7 @@
 # Roadmap e Cronograma - PHYLLOS DPP Integrado
 
-**Data:** 2026-06-23
-**Status:** plano executivo v0.2 - atualizado com bundle canonico do DPP Studio
+**Data:** 2026-07-02
+**Status:** plano executivo v0.3 - atualizado para o sistema operacional de agentes 2.0
 **Premissa:** toda a tecnologia deve ser desenvolvida internamente com apoio de Codex, Claude e agentes PHYLLOS.
 **Produto:** DPP middleware para moda - importacao/input tecnico, calculo por peca, evidencia, QR e passaporte público.
 **Versao atual do prototipo:** `phyllos/dpp-studio.html`, hash `560add24d6e31860fee858805644270b31e030b0a5d0d5ab273d21d52194b8c2`, conforme `produto/decisoes/dpp-studio-versao-canonica-2026-06-25.md`.
@@ -53,15 +53,18 @@ Motivo: a PHYLLOS consegue desenvolver internamente a primeira versao com Codex/
 
 | Lider | Responsabilidade no roadmap | Entregavel principal |
 |---|---|---|
-| Founder Orchestrator | Sequencia, foco, cortes e go/no-go | plano aprovado e cadencia semanal |
-| Product Director | ICP, jornada, escopo, criterios de aceite | PRD do DPP Integrado |
-| Technology Director | arquitetura, stack, seguranca, APIs | arquitetura e backlog tecnico |
-| Digital Products Lead | UX do Studio e passaporte público | prototipo e fluxo navegavel |
-| Data Intelligence Lead | modelo de dados, dicionario e metricas | schema e data dictionary |
-| Materials Lead | fatores, evidencias e metodologia | matriz de materiais/indicadores |
-| Supply Chain / Operations | lote, area, perda, producao e processo | fluxo operacional de dados |
-| QA Agent | testes, acessibilidade e regressao | plano de QA e suite minima |
-| CFO | custo, runway, milestones e payback | orçamento e gatilhos financeiros |
+| Founder humano | Direção, prioridades, investimento e go/no-go | decisões e limites aprovados |
+| Execution Orchestrator | Decomposição, owners, dependências e acompanhamento | Execution Brief e cadência semanal |
+| Product Director | Problema, resultado, funcionalidades e critérios de aceite | PRD do DPP Integrado |
+| Product Design Lead | UX, UI, jornadas, estados e design QA | protótipo e especificação de experiência |
+| Software Engineering Lead | arquitetura, plano técnico, qualidade e release | ADRs e backlog técnico integrado |
+| Data Platform Lead | contrato de dados, schema, eventos e métricas | data contract e data dictionary |
+| Operations Lead | operação do SaaS, SLAs, filas, runbooks e incidentes | service blueprint e readiness operacional |
+| Marketing Director | GTM, ICP, canais, campanhas e demanda | plano de marketing e pipeline |
+| QA & Release Agent | testes, acessibilidade, regressão e gate de release | plano de QA e evidências de publicação |
+| CFO | realizado, comprometido, forecast, premissas e unit economics | controles, orçamento e gatilhos financeiros |
+
+O founder humano decide. O Execution Orchestrator organiza e acompanha a execução, sem substituir essa autoridade.
 
 ---
 
@@ -113,10 +116,13 @@ Entregas:
 
 Responsaveis:
 
-- Founder Orchestrator.
+- Execution Orchestrator.
 - Product Director.
-- Technology Director.
-- Digital Products Lead.
+- Product Design Lead.
+- Software Engineering Lead.
+- Data Platform Lead.
+- Marketing Director.
+- CFO.
 
 Critério de aceite:
 
@@ -140,10 +146,10 @@ Entregas:
 
 Responsaveis:
 
-- Digital Products Lead.
-- Data Intelligence Lead.
-- Materials Lead.
-- QA Agent.
+- Product Design Lead.
+- Data Platform Lead.
+- Certification Agent.
+- QA & Release Agent.
 
 Uso de Codex/Claude:
 
@@ -172,10 +178,11 @@ Entregas:
 
 Responsaveis:
 
-- Technology Director.
-- Data Intelligence Lead.
-- QA Agent.
-- Tech Spec Writer.
+- Software Engineering Lead.
+- Backend Engineer.
+- Data Platform Lead e Data Engineer.
+- Integration Engineer.
+- QA & Release Agent.
 
 Uso de Codex/Claude:
 
@@ -205,10 +212,12 @@ Entregas:
 
 Responsaveis:
 
-- Digital Products Lead.
-- Frontend Agent.
-- Technology Director.
-- QA Agent.
+- Product Design Lead.
+- Frontend Engineer.
+- Backend Engineer.
+- Integration Engineer.
+- Data Platform Lead.
+- QA & Release Agent.
 
 Critério de aceite:
 
@@ -234,10 +243,12 @@ Entregas:
 Responsaveis:
 
 - Product Director.
-- Materials Lead.
-- Supply Chain / Operations.
-- Founder Orchestrator.
-- QA Agent.
+- Customer Insights Agent.
+- Customer Success & Onboarding Agent.
+- Operations Lead.
+- Marketing Director e Sales Agent.
+- QA & Release Agent.
+- Execution Orchestrator, que leva o go/no-go ao founder.
 
 Critério de aceite:
 
@@ -266,9 +277,12 @@ Entregas:
 
 Responsaveis:
 
-- Technology Director.
-- Digital Products Lead.
-- QA Agent.
+- Software Engineering Lead.
+- Product Design Lead.
+- Data Platform Lead.
+- DevOps & Security Agent.
+- Customer Success & Onboarding Agent.
+- QA & Release Agent.
 - CFO.
 
 Critério de aceite:
@@ -292,9 +306,11 @@ Entregas:
 
 Responsaveis:
 
-- Technology Director.
-- Data Intelligence Lead.
-- QA Agent.
+- Software Engineering Lead.
+- Integration Engineer.
+- Backend Engineer.
+- Data Platform Lead e Data Engineer.
+- QA & Release Agent.
 
 Critério de aceite:
 
