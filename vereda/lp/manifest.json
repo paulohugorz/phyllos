@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-09-30",
+  "experiment": "VEREDA-LP-AB-2026-09-30",
+  "variants": [
+    {
+      "segment": "textil-confeccao",
+      "segment_label": "Moda, têxteis e confecção",
+      "variant": "a",
+      "hypothesis": "A mensagem orientada a risco e lacunas gera mais conversas entre empresas sob pressão de requisitos.",
+      "route": "/lp/textil-confeccao/a/",
+      "title": "Descubra o que falta antes que uma pergunta do buyer vire um bloqueio."
+    },
+    {
+      "segment": "textil-confeccao",
+      "segment_label": "Moda, têxteis e confecção",
+      "variant": "b",
+      "hypothesis": "A mensagem orientada a oportunidade gera mais conversas entre empresas buscando compradores e parceiros.",
+      "route": "/lp/textil-confeccao/b/",
+      "title": "Transforme dados de produto em uma resposta que acompanha a próxima negociação."
+    },
+    {
+      "segment": "calcados-couro",
+      "segment_label": "Calçados e couro",
+      "variant": "a",
+      "hypothesis": "A mensagem orientada a risco e lacunas gera mais conversas entre empresas sob pressão de requisitos.",
+      "route": "/lp/calcados-couro/a/",
+      "title": "Veja onde a documentação do calçado ainda quebra antes de responder ao mercado."
+    },
+    {
+      "segment": "calcados-couro",
+      "segment_label": "Calçados e couro",
+      "variant": "b",
+      "hypothesis": "A mensagem orientada a oportunidade gera mais conversas entre empresas buscando compradores e parceiros.",
+      "route": "/lp/calcados-couro/b/",
+      "title": "Apresente materiais, origem e evidências do calçado com mais clareza."
+    },
+    {
+      "segment": "agro",
+      "segment_label": "Agro",
+      "variant": "a",
+      "hypothesis": "A mensagem orientada a risco e lacunas gera mais conversas entre empresas sob pressão de requisitos.",
+      "route": "/lp/agro/a/",
+      "title": "Encontre as lacunas de origem e cadeia antes que o mercado de destino as encontre."
+    },
+    {
+      "segment": "agro",
+      "segment_label": "Agro",
+      "variant": "b",
+      "hypothesis": "A mensagem orientada a oportunidade gera mais conversas entre empresas buscando compradores e parceiros.",
+      "route": "/lp/agro/b/",
+      "title": "Transforme registros da cadeia em uma resposta verificável para novos mercados."
+    },
+    {
+      "segment": "manufatura",
+      "segment_label": "Manufatura",
+      "variant": "a",
+      "hypothesis": "A mensagem orientada a risco e lacunas gera mais conversas entre empresas sob pressão de requisitos.",
+      "route": "/lp/manufatura/a/",
+      "title": "Identifique o ponto fraco entre especificação, processo e evidência."
+    },
+    {
+      "segment": "manufatura",
+      "segment_label": "Manufatura",
+      "variant": "b",
+      "hypothesis": "A mensagem orientada a oportunidade gera mais conversas entre empresas buscando compradores e parceiros.",
+      "route": "/lp/manufatura/b/",
+      "title": "Converta registros industriais em informação pronta para a conversa comercial."
+    },
+    {
+      "segment": "cooperativas",
+      "segment_label": "Cooperativas",
+      "variant": "a",
+      "hypothesis": "A mensagem orientada a risco e lacunas gera mais conversas entre empresas sob pressão de requisitos.",
+      "route": "/lp/cooperativas/a/",
+      "title": "Torne visíveis as lacunas entre o registro individual e a resposta coletiva."
+    },
+    {
+      "segment": "cooperativas",
+      "segment_label": "Cooperativas",
+      "variant": "b",
+      "hypothesis": "A mensagem orientada a oportunidade gera mais conversas entre empresas buscando compradores e parceiros.",
+      "route": "/lp/cooperativas/b/",
+      "title": "Transforme registros distribuídos em uma apresentação coerente da rede."
+    }
+  ]
+}

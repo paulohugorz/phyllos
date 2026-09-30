@@ -1,0 +1,490 @@
+{
+  "checked_at": "2026-09-30T15:37:10.552Z",
+  "base_url": "https://vereda-dpp.netlify.app",
+  "pages": 10,
+  "viewport_checks": 30,
+  "router_checks": 5,
+  "result": "passed",
+  "checks": [
+    {
+      "route": "/lp/textil-confeccao/a/",
+      "viewport": "mobile",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "textil-confeccao",
+        "variant": "a",
+        "formSegment": "textil-confeccao",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/textil-confeccao/a/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "textil-confeccao",
+        "variant": "a",
+        "formSegment": "textil-confeccao",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/textil-confeccao/a/",
+      "viewport": "desktop",
+      "screenshot": "/Users/paulonascimento/.codex/worktrees/a79c/meu-primeiro-repo/vereda/previews/lp-textil-confeccao-a-desktop.png",
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "textil-confeccao",
+        "variant": "a",
+        "formSegment": "textil-confeccao",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/textil-confeccao/b/",
+      "viewport": "mobile",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "textil-confeccao",
+        "variant": "b",
+        "formSegment": "textil-confeccao",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/textil-confeccao/b/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "textil-confeccao",
+        "variant": "b",
+        "formSegment": "textil-confeccao",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/textil-confeccao/b/",
+      "viewport": "desktop",
+      "screenshot": "/Users/paulonascimento/.codex/worktrees/a79c/meu-primeiro-repo/vereda/previews/lp-textil-confeccao-b-desktop.png",
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "textil-confeccao",
+        "variant": "b",
+        "formSegment": "textil-confeccao",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/calcados-couro/a/",
+      "viewport": "mobile",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "calcados-couro",
+        "variant": "a",
+        "formSegment": "calcados-couro",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/calcados-couro/a/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "calcados-couro",
+        "variant": "a",
+        "formSegment": "calcados-couro",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/calcados-couro/a/",
+      "viewport": "desktop",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "calcados-couro",
+        "variant": "a",
+        "formSegment": "calcados-couro",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/calcados-couro/b/",
+      "viewport": "mobile",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "calcados-couro",
+        "variant": "b",
+        "formSegment": "calcados-couro",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/calcados-couro/b/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "calcados-couro",
+        "variant": "b",
+        "formSegment": "calcados-couro",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/calcados-couro/b/",
+      "viewport": "desktop",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "calcados-couro",
+        "variant": "b",
+        "formSegment": "calcados-couro",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/agro/a/",
+      "viewport": "mobile",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "agro",
+        "variant": "a",
+        "formSegment": "agro",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/agro/a/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "agro",
+        "variant": "a",
+        "formSegment": "agro",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/agro/a/",
+      "viewport": "desktop",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "agro",
+        "variant": "a",
+        "formSegment": "agro",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/agro/b/",
+      "viewport": "mobile",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "agro",
+        "variant": "b",
+        "formSegment": "agro",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/agro/b/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "agro",
+        "variant": "b",
+        "formSegment": "agro",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/agro/b/",
+      "viewport": "desktop",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "agro",
+        "variant": "b",
+        "formSegment": "agro",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/manufatura/a/",
+      "viewport": "mobile",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "manufatura",
+        "variant": "a",
+        "formSegment": "manufatura",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/manufatura/a/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "manufatura",
+        "variant": "a",
+        "formSegment": "manufatura",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/manufatura/a/",
+      "viewport": "desktop",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "manufatura",
+        "variant": "a",
+        "formSegment": "manufatura",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/manufatura/b/",
+      "viewport": "mobile",
+      "screenshot": "/Users/paulonascimento/.codex/worktrees/a79c/meu-primeiro-repo/vereda/previews/lp-manufatura-b-mobile.png",
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "manufatura",
+        "variant": "b",
+        "formSegment": "manufatura",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/manufatura/b/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "manufatura",
+        "variant": "b",
+        "formSegment": "manufatura",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/manufatura/b/",
+      "viewport": "desktop",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "manufatura",
+        "variant": "b",
+        "formSegment": "manufatura",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/cooperativas/a/",
+      "viewport": "mobile",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "cooperativas",
+        "variant": "a",
+        "formSegment": "cooperativas",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/cooperativas/a/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "cooperativas",
+        "variant": "a",
+        "formSegment": "cooperativas",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/cooperativas/a/",
+      "viewport": "desktop",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "cooperativas",
+        "variant": "a",
+        "formSegment": "cooperativas",
+        "formVariant": "a",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/cooperativas/b/",
+      "viewport": "mobile",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "segment": "cooperativas",
+        "variant": "b",
+        "formSegment": "cooperativas",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/cooperativas/b/",
+      "viewport": "tablet",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "segment": "cooperativas",
+        "variant": "b",
+        "formSegment": "cooperativas",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    },
+    {
+      "route": "/lp/cooperativas/b/",
+      "viewport": "desktop",
+      "screenshot": null,
+      "layout": {
+        "h1Count": 1,
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "segment": "cooperativas",
+        "variant": "b",
+        "formSegment": "cooperativas",
+        "formVariant": "b",
+        "utmSource": "qa",
+        "viewEvent": true
+      }
+    }
+  ]
+}

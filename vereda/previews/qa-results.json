@@ -1,0 +1,166 @@
+{
+  "width360": {
+    "viewport": {
+      "width": 360,
+      "height": 800
+    },
+    "outputPath": null,
+    "layout": {
+      "bodyWidth": 360,
+      "clientWidth": 360,
+      "scrollWidth": 360,
+      "scrollHeight": 9905,
+      "headingCount": 1,
+      "images": [
+        {
+          "src": "assets/brand/vereda-wordmark-v2-referencia-raster.png",
+          "naturalWidth": 477,
+          "naturalHeight": 96
+        },
+        {
+          "src": "assets/images/hero-territorio.webp",
+          "naturalWidth": 1672,
+          "naturalHeight": 941
+        },
+        {
+          "src": "assets/images/processo-industrial.webp",
+          "naturalWidth": 1536,
+          "naturalHeight": 1024
+        },
+        {
+          "src": "assets/images/fibras-materiais.webp",
+          "naturalWidth": 1536,
+          "naturalHeight": 1024
+        },
+        {
+          "src": "assets/brand/vereda-wordmark-v2-referencia-raster.png",
+          "naturalWidth": 477,
+          "naturalHeight": 96
+        }
+      ]
+    }
+  },
+  "mobile": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "outputPath": "/Users/paulonascimento/.codex/worktrees/555c/meu-primeiro-repo/vereda/previews/vereda-mobile-390.png",
+    "layout": {
+      "bodyWidth": 390,
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "scrollHeight": 9425,
+      "headingCount": 1,
+      "images": [
+        {
+          "src": "assets/brand/vereda-wordmark-v2-referencia-raster.png",
+          "naturalWidth": 477,
+          "naturalHeight": 96
+        },
+        {
+          "src": "assets/images/hero-territorio.webp",
+          "naturalWidth": 1672,
+          "naturalHeight": 941
+        },
+        {
+          "src": "assets/images/processo-industrial.webp",
+          "naturalWidth": 1536,
+          "naturalHeight": 1024
+        },
+        {
+          "src": "assets/images/fibras-materiais.webp",
+          "naturalWidth": 1536,
+          "naturalHeight": 1024
+        },
+        {
+          "src": "assets/brand/vereda-wordmark-v2-referencia-raster.png",
+          "naturalWidth": 477,
+          "naturalHeight": 96
+        }
+      ]
+    }
+  },
+  "tablet": {
+    "viewport": {
+      "width": 768,
+      "height": 900
+    },
+    "outputPath": null,
+    "layout": {
+      "bodyWidth": 768,
+      "clientWidth": 768,
+      "scrollWidth": 768,
+      "scrollHeight": 7114,
+      "headingCount": 1,
+      "images": [
+        {
+          "src": "assets/brand/vereda-wordmark-v2-referencia-raster.png",
+          "naturalWidth": 477,
+          "naturalHeight": 96
+        },
+        {
+          "src": "assets/images/hero-territorio.webp",
+          "naturalWidth": 1672,
+          "naturalHeight": 941
+        },
+        {
+          "src": "assets/images/processo-industrial.webp",
+          "naturalWidth": 1536,
+          "naturalHeight": 1024
+        },
+        {
+          "src": "assets/images/fibras-materiais.webp",
+          "naturalWidth": 1536,
+          "naturalHeight": 1024
+        },
+        {
+          "src": "assets/brand/vereda-wordmark-v2-referencia-raster.png",
+          "naturalWidth": 477,
+          "naturalHeight": 96
+        }
+      ]
+    }
+  },
+  "desktop": {
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "outputPath": "/Users/paulonascimento/.codex/worktrees/555c/meu-primeiro-repo/vereda/previews/vereda-desktop-1440.png",
+    "layout": {
+      "bodyWidth": 1440,
+      "clientWidth": 1440,
+      "scrollWidth": 1440,
+      "scrollHeight": 6217,
+      "headingCount": 1,
+      "images": [
+        {
+          "src": "assets/brand/vereda-wordmark-v2-referencia-raster.png",
+          "naturalWidth": 477,
+          "naturalHeight": 96
+        },
+        {
+          "src": "assets/images/hero-territorio.webp",
+          "naturalWidth": 1672,
+          "naturalHeight": 941
+        },
+        {
+          "src": "assets/images/processo-industrial.webp",
+          "naturalWidth": 1536,
+          "naturalHeight": 1024
+        },
+        {
+          "src": "assets/images/fibras-materiais.webp",
+          "naturalWidth": 1536,
+          "naturalHeight": 1024
+        },
+        {
+          "src": "assets/brand/vereda-wordmark-v2-referencia-raster.png",
+          "naturalWidth": 477,
+          "naturalHeight": 96
+        }
+      ]
+    }
+  }
+}
